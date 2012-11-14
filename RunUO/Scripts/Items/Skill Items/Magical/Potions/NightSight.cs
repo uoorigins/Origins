@@ -1,0 +1,64 @@
+using System;
+using Server;
+using Server.Network;
+
+namespace Server.Items
+{
+	public class NightSightPotion : BasePotion
+	{
+		[Constructable]
+		public NightSightPotion() : base( 0xF06, PotionEffect.Nightsight )
+		{
+		}
+
+		public NightSightPotion( Serial serial ) : base( serial )
+		{
+		}
+
+        public override void OnSingleClick(Mobile from)
+        {
+            if (this.Name != null)
+            {
+                from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", this.Name));
+            }
+            else
+            {
+                from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a Nightsight potion"));
+            }
+        }
+
+		public override void Serialize( GenericWriter writer )
+		{
+			base.Serialize( writer );
+
+			writer.Write( (int) 0 ); // version
+		}
+
+		public override void Deserialize( GenericReader reader )
+		{
+			base.Deserialize( reader );
+
+			int version = reader.ReadInt();
+		}
+
+		public override void Drink( Mobile from )
+		{
+			if ( from.BeginAction( typeof( LightCycle ) ) )
+			{
+				new LightCycle.NightSightTimer( from ).Start();
+				from.LightLevel = LightCycle.DungeonLevel / 2;
+
+				from.FixedParticles( 0x376A, 9, 32, 5007, EffectLayer.Waist );
+				from.PlaySound( 0x1E3 );
+
+				BasePotion.PlayDrinkEffect( from );
+
+				this.Consume();
+			}
+			else
+			{
+				from.SendAsciiMessage( "You already have nightsight." );
+			}
+		}
+	}
+}

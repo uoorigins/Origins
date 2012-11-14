@@ -1,0 +1,129 @@
+using System;
+using Server.Network;
+using Server.Items;
+
+namespace Server.Items
+{
+	[FlipableAttribute( 0x143E, 0x143F )]
+	public class Halberd : BasePoleArm
+	{
+        public override WeaponAbility PrimaryAbility { get { return WeaponAbility.WhirlwindAttack; } }
+        public override WeaponAbility SecondaryAbility { get { return WeaponAbility.ConcussionBlow; } }
+
+        public override int AosStrengthReq { get { return 95; } }
+        public override int AosMinDamage { get { return 18; } }
+        public override int AosMaxDamage { get { return 19; } }
+        public override int AosSpeed { get { return 25; } }
+
+        public override int OldStrengthReq { get { return 45; } }
+        public override int OldMinDamage { get { return 10; } }
+        public override int OldMaxDamage { get { return 35; } }
+        public override int OldSpeed { get { return 25; } }
+
+        public override int InitMinHits { get { return 31; } }
+        public override int InitMaxHits { get { return 80; } }
+
+		[Constructable]
+		public Halberd() : base( 0x143E )
+		{
+			Weight = 16.0;
+		}
+
+		public Halberd( Serial serial ) : base( serial )
+		{
+		}
+
+        public override void OnSingleClick(Mobile from)
+        {
+
+            string durabilitylevel = GetDurabilityString();
+            string accuracylevel = GetAccuracyString();
+            string damagelevel = GetDamageString();
+            string beginning;
+
+            if ((durabilitylevel == "indestructible") || (accuracylevel == "accurate") || (accuracylevel == "eminently accurate") || (accuracylevel == "exceedingly accurate"))
+            {
+                beginning = "an ";
+            }
+            else
+            {
+                beginning = "a ";
+            }
+
+            if (this.Name != null)
+            {
+                from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", this.Name));
+            }
+            else
+            {
+                if (this.Quality == WeaponQuality.Exceptional)
+                {
+                    if (this.Crafter != null)
+                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("an exceptional halberd (crafted by {0})", this.Crafter.Name)));
+                    else
+                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "an exceptional halberd"));
+                }
+                else if ((this.IsInIDList(from) == false) && ((this.DamageLevel != WeaponDamageLevel.Regular) || (Slayer == SlayerName.Silver) || (Effect != WeaponEffect.None) || (this.DurabilityLevel != WeaponDurabilityLevel.Regular) || (this.AccuracyLevel != WeaponAccuracyLevel.Regular)))
+                {
+                    from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a magic halberd"));
+                }
+                else if (IsInIDList(from) || from.AccessLevel >= AccessLevel.GameMaster)
+                {
+                    if ((this.DamageLevel > WeaponDamageLevel.Regular || Effect != WeaponEffect.None) && ((this.DurabilityLevel == WeaponDurabilityLevel.Regular) && (this.AccuracyLevel == WeaponAccuracyLevel.Regular)))
+                    {
+                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a halberd " + damagelevel));
+                    }
+                    else if ((this.DurabilityLevel > WeaponDurabilityLevel.Regular) && ((this.DamageLevel == WeaponDamageLevel.Regular && Effect == WeaponEffect.None) && (this.AccuracyLevel == WeaponAccuracyLevel.Regular)))
+                    {
+                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + durabilitylevel + " halberd"));
+                    }
+                    else if ((this.AccuracyLevel > WeaponAccuracyLevel.Regular) && ((this.DamageLevel == WeaponDamageLevel.Regular && Effect == WeaponEffect.None) && (this.DurabilityLevel == WeaponDurabilityLevel.Regular)))
+                    {
+                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + accuracylevel + " halberd"));
+                    }
+
+
+
+                    else if (((this.DamageLevel > WeaponDamageLevel.Regular || Effect != WeaponEffect.None) && (this.DurabilityLevel > WeaponDurabilityLevel.Regular)) && (this.AccuracyLevel == WeaponAccuracyLevel.Regular))
+                    {
+                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + durabilitylevel + " halberd " + damagelevel));
+                    }
+                    else if ((this.DamageLevel > WeaponDamageLevel.Regular || Effect != WeaponEffect.None) && (this.AccuracyLevel > WeaponAccuracyLevel.Regular) && (this.DurabilityLevel == WeaponDurabilityLevel.Regular))
+                    {
+                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + accuracylevel + " halberd " + damagelevel));
+                    }
+                    else if ((this.DurabilityLevel > WeaponDurabilityLevel.Regular) && (this.AccuracyLevel > WeaponAccuracyLevel.Regular) && (this.DamageLevel == WeaponDamageLevel.Regular && Effect == WeaponEffect.None))
+                    {
+                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + durabilitylevel + ", " + accuracylevel + " halberd"));
+                    }
+                    else if ((this.DurabilityLevel > WeaponDurabilityLevel.Regular) && (this.AccuracyLevel > WeaponAccuracyLevel.Regular) && (this.DamageLevel > WeaponDamageLevel.Regular || Effect != WeaponEffect.None))
+                    {
+                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + durabilitylevel + ", " + accuracylevel + " halberd " + damagelevel));
+                    }
+                    else
+                    {
+                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a halberd"));
+                    }
+                }
+                else
+                {
+                    from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a halberd"));
+                }
+            }
+        }
+
+		public override void Serialize( GenericWriter writer )
+		{
+			base.Serialize( writer );
+
+			writer.Write( (int) 0 ); // version
+		}
+
+		public override void Deserialize( GenericReader reader )
+		{
+			base.Deserialize( reader );
+
+			int version = reader.ReadInt();
+		}
+	}
+}

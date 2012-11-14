@@ -1,0 +1,50 @@
+2.0 Changelog 
+- Renaming of RegionStone.cs
+	- RegionStone.cs renamed to RegionControl.cs to properly reflect the name of the Class. (functionality is still the same)
+
+- New RegionControl Constructors
+	- RegionControl(Rectangle3D rect) to create a RegionControl with an optional area specified by a Rectangle3D.		
+	- RegionControl(Rectangle2D[] rects) to create a RegionControl with an optional area specified by a Rectangle2D array.
+	- RegionControl(Rectangle3D[] rects) to create a RegionControl with an optional area specified by a Rectangle3D array.
+
+- New "Active" Property for RegionControl
+	- Set RegionControl.Active to TRUE (Default) then the Region is active.
+	- Set RegionControl.Active to FALSE then the Region is inactive.
+
+- Changes to Rift's Custom Region Mods
+	- NoPlayerCorpses has been split up into DeletePlayerCorpse and DeleteNPCCorpse, to allow more customization.
+	- NoItemDrop has been split up into NoPlayerItemDrop and NoNPCItemDrop, to allow more customization.
+
+- New RegionControl Flags
+	- EmptyNPCCorpse, if set to TRUE all the items from an NPC's corpse, on death, will be placed outside of the corpse on to the ground.
+	- EmptyPlayerCorpse, if set to TRUE all the items from a Player's corpse, on death, will be placed outside of the corpse on to the ground.
+	- DeleteNPCCorpse, if set to TRUE any NPC's corpse, on death, will be deleted.
+	- DeletePlayerCorpse, if set to TRUE any Player's corpse, on death, will be deleted.
+	- ResNPCOnDeath, if set to TRUE any NPC that dies will have a new instance created in the spot that it died.
+	- ResPlayerOnDeath, if set to TRUE any Player that dies will be resurrected in the spot that they died.
+	- MoveNPCOnDeath, if set to TRUE any NPC that dies will be moved to a spot you designate.
+		- Set MoveNPCToLoc to the Point3D that you wish to move the NPC to.
+		- Set MoveNPCToMap to the Map that you wish to move the NPC to.
+	- MovePlayerOnDeath, if set to TRUE any Player that dies will be moved to a spot you designate.
+		- Set MovePlayerToLoc to the Point3D that you wish to move the Player to.
+		- Set MovePlayerToMap to the Map that you wish to move the Player to.
+	- NoPlayerItemDrop, if set to TRUE any Player that dies will not drop their backpack Items to their corpse.
+	- NoNPCItemDrop, if set to TRUE any NPC that dies will not drop their backpack Items to their corpse.		
+
+- Changes to [RegionBounds command
+	- Targeting a Mobile shows their Region outlined in blue still.
+	- Targeting a RegionControl that has its Active property set to TRUE outlines the region in green.
+	- Targeting a RegionControl that has its Active property set to FALSE outlines the region in red.
+
+- Changes to RegionControl Flags
+	- CannotLootOwnCorpse property changed to CanLootOwnCorpse
+	- CannotEnter property changed to CanEnter
+
+- Fixed some spelling mistakes
+	- All instances of "AllowBenifit" changed to "AllowBenefit".
+
+- Prevention of identical RegionName
+	- On Deserialize, if a region control has the same RegionName as another the region it will have a 1 or 2 etc. added to its name to distinguish it.
+	For eg. If a region is called "Custom Region" and another region is already called "Custom Region" it will get called "Custom Region 1", if "Custom Region 1" already exists too then it will be called "Custom Region 2" etc. This is because of the new way that Regions are registered on to maps in RunUO 2.0.
+	- On creation, a new Region Control will be called "Custom Region" and as before each new "Custom Region" will have a number added after its name.
+	- On setting of RegionName, if a Region Control already exists with the RegionName that the user tries to specify by using [props etc. the RegionName will not be changed and a Warning will be displayed in the Console.

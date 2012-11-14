@@ -1,0 +1,47 @@
+using System;
+using System.Collections.Generic;
+using Server.Items;
+
+namespace Server.Mobiles
+{
+	public class SBHelmetArmor: SBInfo
+	{
+		private List<GenericBuyInfo> m_BuyInfo = new InternalBuyInfo();
+		private IShopSellInfo m_SellInfo = new InternalSellInfo();
+
+		public SBHelmetArmor()
+		{
+		}
+
+		public override IShopSellInfo SellInfo { get { return m_SellInfo; } }
+		public override List<GenericBuyInfo> BuyInfo { get { return m_BuyInfo; } }
+
+		public class InternalBuyInfo : List<GenericBuyInfo>
+		{
+			public InternalBuyInfo()
+			{
+                Add(new GenericBuyInfo(typeof(PlateHelm), 171, 9, 0x1412, 0));
+                Add(new GenericBuyInfo(typeof(CloseHelm), 165, 9, 0x1408, 0));
+                Add(new GenericBuyInfo(typeof(CloseHelm), 165, 9, 0x1409, 0));
+                Add(new GenericBuyInfo(typeof(Helmet), 182, 9, 0x140A, 0));
+                Add(new GenericBuyInfo(typeof(Helmet), 168, 9, 0x140B, 0));
+                Add(new GenericBuyInfo(typeof(NorseHelm), 165, 9, 0x140E, 0));
+                Add(new GenericBuyInfo(typeof(NorseHelm), 169, 9, 0x140F, 0));
+                Add(new GenericBuyInfo(typeof(Bascinet), 128, 9, 0x140C, 0));
+                Add(new GenericBuyInfo(typeof(PlateHelm), 170, 9, 0x1419, 0));
+			}
+		}
+
+		public class InternalSellInfo : GenericSellInfo
+		{
+			public InternalSellInfo()
+			{
+				Add( typeof( Bascinet ), 62 );
+				Add( typeof( CloseHelm ), 83 );
+				Add( typeof( Helmet ), 84 );
+				Add( typeof( NorseHelm ), 83 );
+				Add( typeof( PlateHelm ), 85 );
+			}
+		}
+	}
+}
