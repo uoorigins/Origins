@@ -871,10 +871,9 @@ namespace Server.Mobiles
             }
 
             if (system == null)
-                system = new ChatSystem(from);
+                system = new ChatSystem();
 
             system.AddPlayer(from);
-            from.SendAsciiMessage(0x49, "You have joined the Chat System! Type [chat <message> to talk.");
             
             if (from.Player)
             {

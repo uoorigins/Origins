@@ -10,6 +10,7 @@ using Server.Gumps;
 using Server.Network;
 using Server.Commands;
 using System.Collections;
+using Server.Targeting;
 
 namespace Server.Gumps
 {
@@ -21,6 +22,40 @@ namespace Server.Gumps
         public static void Initialize()
         {
             CommandSystem.Register("Chat", AccessLevel.Player, new CommandEventHandler(Chat_OnCommand));
+            CommandSystem.Register("Squelch", AccessLevel.Counselor, new CommandEventHandler(Squelch_OnCommand));
+        }
+
+        [Usage("Squelch")]
+        [Description("Squelches a player in the chat system gump.")]
+        public static void Squelch_OnCommand(CommandEventArgs e)
+        {
+            Mobile caller = e.Mobile;
+            ChatSystem system = null;
+
+            foreach (Item item in World.Items.Values)
+            {
+                if (item is ChatSystem)
+                    system = item as ChatSystem;
+            }
+
+            caller.Target = new GetMobile(system);
+
+        }
+
+        private class GetMobile : Target
+        {
+            private ChatSystem m_System;
+
+            public GetMobile(ChatSystem chat) : base(15, false, TargetFlags.None)
+            {
+                m_System = chat;
+            }
+
+            protected override void OnTarget(Mobile from, object targ)
+            {
+                if (targ is Mobile)
+                    m_System.SquelchPlayer(((Mobile)targ));
+            }
         }
 
         [Usage("Chat")]
@@ -38,7 +73,7 @@ namespace Server.Gumps
             }
 
             if (system == null)
-                system = new ChatSystem(caller);
+                system = new ChatSystem();
 
             if (e.Length >= 1)
             {
@@ -73,7 +108,6 @@ namespace Server.Gumps
                         caller.CloseGump(typeof(ChatGump));
 
                     system.AddPlayer(caller);
-                    caller.SendAsciiMessage(0x49, "You have joined the Chat System! Type [chat <message> to talk.");
                 }
             }
         }
@@ -95,6 +129,9 @@ namespace Server.Gumps
             string players = "";
             foreach (Mobile m in m_System.m_Players.Keys)
             {
+                if (m.Deleted || m == null)
+                    m_System.m_Players.Remove(m);
+
                 bool visible = true;
                 m_System.m_Players.TryGetValue(m,out visible);
 

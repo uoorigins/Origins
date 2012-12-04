@@ -11,18 +11,20 @@ namespace Server.Gumps
     public class ChatSystem : Item
     {
         public Dictionary<Mobile,bool> m_Players;
+        public List<Mobile> m_Squelched;
         public List<string> m_Chat;
 
         [Constructable]
-        public ChatSystem(Mobile from)
+        public ChatSystem()
         {
+            if (m_Squelched == null)
+                m_Squelched = new List<Mobile>();
+
             if (m_Players == null)
                 m_Players = new Dictionary<Mobile,bool>();
             
             if (m_Chat == null)
                 m_Chat = new List<string>();
-
-            AddPlayer(from);
         }
 
         public ChatSystem(Serial serial) : base(serial)
@@ -44,15 +46,24 @@ namespace Server.Gumps
             
             m_Chat = new List<string>();
             m_Players = new Dictionary<Mobile, bool>();
+            m_Squelched = new List<Mobile>();
         }
 
         public void AddPlayer(Mobile from)
         {
+            if (m_Squelched.Contains(from))
+            {
+                from.SendAsciiMessage("You have been squelched from the chat system and cannot join.");
+                return;
+            }
+
             if (!m_Players.ContainsKey(from))
             {
                 m_Players.Add(from,from.AccessLevel == AccessLevel.Player);
             }
-            UpdateGump();
+
+            from.SendAsciiMessage(0x49, "You have joined the Chat System! Type [chat <message> to talk.");
+            UpdateGump();   
         }
 
         public void ToggleVisible(Mobile from)
@@ -68,10 +79,26 @@ namespace Server.Gumps
                 m_Players.Add(from, true);
         }
 
+        public void SquelchPlayer(Mobile from)
+        {
+            if (m_Squelched.Contains(from))
+            {
+                m_Squelched.Remove(from);
+            }
+            else
+            {
+                m_Squelched.Add(from);
+                RemovePlayer(from);
+            }
+        }
+
         public void RemovePlayer(Mobile from)
         {
             m_Players.Remove(from);
             UpdateGump();
+
+            if (from.HasGump(typeof(ChatGump)))
+                from.CloseGump(typeof(ChatGump));
         }
 
         public void Say(Mobile from, string msg)
