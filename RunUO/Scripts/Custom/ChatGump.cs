@@ -130,7 +130,10 @@ namespace Server.Gumps
             foreach (Mobile m in m_System.m_Players.Keys)
             {
                 if (m.Deleted || m == null)
+                {
                     m_System.m_Players.Remove(m);
+                    continue;
+                }
 
                 bool visible = true;
                 m_System.m_Players.TryGetValue(m,out visible);
