@@ -22,10 +22,10 @@ namespace Server.Gumps
         public static void Initialize()
         {
             CommandSystem.Register("Chat", AccessLevel.Player, new CommandEventHandler(Chat_OnCommand));
-            CommandSystem.Register("Squelch", AccessLevel.Counselor, new CommandEventHandler(Squelch_OnCommand));
+            CommandSystem.Register("ChatSquelch", AccessLevel.Counselor, new CommandEventHandler(Squelch_OnCommand));
         }
 
-        [Usage("Squelch")]
+        [Usage("ChatSquelch")]
         [Description("Squelches a player in the chat system gump.")]
         public static void Squelch_OnCommand(CommandEventArgs e)
         {
