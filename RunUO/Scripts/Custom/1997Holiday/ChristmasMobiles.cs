@@ -24,7 +24,6 @@ namespace Server.Mobiles
             SetInt(15, 25);
 
             Body = 400;
-            Name = NameList.RandomName("male");
 
             HairItemID = 8251;
             HairHue = 0;
