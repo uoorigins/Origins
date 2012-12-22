@@ -14,7 +14,7 @@ namespace Server.Mobiles
             Name = "Santa";
             Title = "the bringer of cheer";
 
-            Karma = 50;
+            Karma = 1;
 
             Hue = 0x83ea;
             SpeechHue = Utility.RandomDyedHue();
