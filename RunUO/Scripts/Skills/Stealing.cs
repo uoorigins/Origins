@@ -196,7 +196,7 @@ namespace Server.SkillHandlers
 				{
                     m_Thief.SendAsciiMessage(1060025, "", 0x66D); // You're not skilled enough to attempt the theft of this item.
 				}*/
-				else if ( toSteal.Parent is Mobile )
+				else if ( toSteal.Parent is Mobile && !(toSteal.Parent is Santa) )
 				{
                     m_Thief.SendAsciiMessage("You cannot steal items which are equiped."); // You cannot steal items which are equiped.
 				}

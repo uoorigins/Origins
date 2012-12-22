@@ -18,7 +18,9 @@ namespace Server.Items
 		Liquor,
 		Milk,
 		Wine,
-		Water
+		Water,
+        Eggnog,
+        Champagne
 	}
 
 	public interface IHasQuantity
@@ -46,8 +48,10 @@ namespace Server.Items
 			{
 				switch ( Content )
 				{
+                    case BeverageType.Eggnog:
 					case BeverageType.Ale: return 0x99F;
 					case BeverageType.Cider: return 0x99F;
+                    case BeverageType.Champagne:
 					case BeverageType.Liquor: return 0x99B;
 					case BeverageType.Milk: return 0x99B;
 					case BeverageType.Wine: return 0x9C7;
@@ -105,6 +109,14 @@ namespace Server.Items
                     else if (this.Content == BeverageType.Water)
                     {
                         Drink = " of water";
+                    }
+                    else if (this.Content == BeverageType.Eggnog)
+                    {
+                        Drink = " of eggnog";
+                    }
+                    else if (this.Content == BeverageType.Champagne)
+                    {
+                        Drink = " of champagne";
                     }
 
                     from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", GetQuantityString() + "bottle" + Drink + "."));

@@ -1228,7 +1228,7 @@ namespace Server.Items
 		}
 	}
 
-#if false
+#if true
 	public class Pizza : Food
 	{
 		[Constructable]

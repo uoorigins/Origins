@@ -973,6 +973,40 @@ namespace Server.Mobiles
                 }
             }*/
 
+            //Christmas
+            if (from is PlayerMobile)
+            {
+                bool GiveAniv = true;
+                Account myAccount = (Account)from.Account;
+
+                if (myAccount.LastLogin.Day >= 25 && myAccount.LastLogin.Month == 12 && myAccount.LastLogin.Year == 2012)
+                {
+                    ArrayList myAccounts = Server.Gumps.AdminGump.GetSharedAccounts(myAccount.LoginIPs);
+
+                    if (myAccount.GetTag("Christmas1") != null && myAccount.GetTag("Christmas1") == "true")
+                    {
+                        GiveAniv = false;
+                    }
+                    else
+                    {
+                        foreach (Account accnt in myAccounts)
+                        {
+                            if (accnt.GetTag("Christmas1") != null && accnt.GetTag("Christmas1") == "true")
+                            {
+                                GiveAniv = false;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (GiveAniv)
+                    {
+                        Server.Misc.ChristmasGifts.AddGifts(from);
+                        myAccount.SetTag("Aniv1", "true");
+                    }
+                }
+            }
+
             //Beta reward
             if (from is PlayerMobile)
             {
