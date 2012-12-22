@@ -9,7 +9,7 @@ namespace Server.Mobiles
     {
         [Constructable]
         public Santa()
-            : base(AIType.AI_Mage, FightMode.Closest, 10, 1, 0.2, 0.4) 
+            : base(AIType.AI_Mage, FightMode.Aggressor, 10, 1, 0.2, 0.4) 
         {
             Name = "Santa";
             Title = "the bringer of cheer";
@@ -131,7 +131,7 @@ namespace Server.Mobiles
     {
         [Constructable]
         public Reindeer()
-            : base(AIType.AI_Melee, FightMode.Closest, 15, 7, 0.4, 0.75)
+            : base(AIType.AI_Melee, FightMode.Aggressor, 15, 7, 0.4, 0.75)
         {
             Body = 234;
             Name = Utility.RandomBool() ? "Prancer" : "Dancer";
