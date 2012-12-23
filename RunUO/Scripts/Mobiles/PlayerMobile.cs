@@ -979,7 +979,7 @@ namespace Server.Mobiles
                 bool GiveAniv = true;
                 Account myAccount = (Account)from.Account;
 
-                if (myAccount.LastLogin.Day >= 25 && myAccount.LastLogin.Month == 12 && myAccount.LastLogin.Year == 2012)
+                if (true)// (myAccount.LastLogin.Day >= 25 && myAccount.LastLogin.Month == 12 && myAccount.LastLogin.Year == 2012)
                 {
                     ArrayList myAccounts = Server.Gumps.AdminGump.GetSharedAccounts(myAccount.LoginIPs);
 
@@ -1002,7 +1002,7 @@ namespace Server.Mobiles
                     if (GiveAniv)
                     {
                         Server.Misc.ChristmasGifts.AddGifts(from);
-                        myAccount.SetTag("Aniv1", "true");
+                        myAccount.SetTag("Christmas1", "true");
                     }
                 }
             }

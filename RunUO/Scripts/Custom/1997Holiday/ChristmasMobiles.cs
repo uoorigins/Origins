@@ -61,8 +61,8 @@ namespace Server.Mobiles
             if (!this.InRange(m, 5) || this.InRange(oldLocation, 5))
                 return; // only talk when they enter 5 tile range
 
-            if (50 > Utility.Random(100))
-                return; // 50% chance to do nothing; 50% chance to talk
+            //if (50 > Utility.Random(100))
+            //    return; // 50% chance to do nothing; 50% chance to talk
 
             switch (Utility.Random(17))
             {

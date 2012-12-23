@@ -178,7 +178,7 @@ namespace Server.Misc
         public static void AddGifts(Mobile m)
         {
 
-            if (!m.Player || !(m.Account is Account))
+            /*if (!m.Player || !(m.Account is Account))
                 return;
             Account acct = (Account)m.Account;
 
@@ -186,7 +186,7 @@ namespace Server.Misc
                 return;
 
             if (m is PlayerMobile && ((PlayerMobile)m).GameTime < TimeSpan.FromHours(1))
-                return;
+                return;*/
 
             m.AddToBackpack(new GiftBag(m.Karma > -40));
         }
