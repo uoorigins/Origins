@@ -974,7 +974,7 @@ namespace Server.Mobiles
             }*/
 
             //Christmas
-            if (from is PlayerMobile)
+            /*if (from is PlayerMobile)
             {
                 bool GiveAniv = true;
                 Account myAccount = (Account)from.Account;
@@ -1005,7 +1005,7 @@ namespace Server.Mobiles
                         myAccount.SetTag("Christmas1", "true");
                     }
                 }
-            }
+            }*/
 
             //Beta reward
             if (from is PlayerMobile)
