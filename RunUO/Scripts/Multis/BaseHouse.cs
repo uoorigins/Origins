@@ -182,8 +182,6 @@ namespace Server.Multis
 
 		public virtual bool CheckDecay()
 		{
-            RefreshDecay();
-
 			if ( !Deleted && this.DecayLevel == DecayLevel.Collapsed )
 			{
 				Timer.DelayCall( TimeSpan.Zero, new TimerCallback( Decay_Sandbox ) );

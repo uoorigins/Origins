@@ -267,8 +267,6 @@ namespace Server.Multis
 			writer.Write( m_Hold );
 			writer.Write( m_Anchored );
 			writer.Write( m_ShipName );
-
-			CheckDecay();
 		}
 
 		public override void Deserialize( GenericReader reader )
