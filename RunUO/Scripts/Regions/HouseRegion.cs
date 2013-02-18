@@ -214,7 +214,7 @@ namespace Server.Regions
         {
             if (o is Item)
             {
-                if (Region.Find(m.Location, m.Map) != this && ((Item)o).Z > m_House.Z + 13)
+                if (Region.Find(m.Location, m.Map) != this && ((Item)o).Z >= m_House.Z + 7)
                     return false;
             }
 
