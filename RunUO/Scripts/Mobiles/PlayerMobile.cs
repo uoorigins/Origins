@@ -2464,7 +2464,7 @@ namespace Server.Mobiles
 			{
 				Item deathRobe = new DeathRobe();
 
-				if ( !EquipItem( deathRobe ) )
+				if ( !EquipItem( deathRobe ) || (this.Backpack != null && this.Backpack.Items.Count > 125) )
 					deathRobe.Delete();
 			}
 		}

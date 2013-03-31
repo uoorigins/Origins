@@ -230,15 +230,6 @@ namespace Server.Regions
 		{
 			base.OnAggressed( aggressor, aggressed, criminal );
 
-            /*if (IsPet(aggressed as BaseCreature))
-            {
-                BaseCreature bc = aggressed as BaseCreature;
-                Mobile master = bc.GetMaster();
-
-                if (!IsDisabled() && ((aggressor != aggressed && criminal) || (master.Karma > -110 && master.Karma < 0) && !aggressed.Criminal))
-                    CheckGuardCandidate(aggressor);
-            }*/
-
             if (!IsDisabled() && ((aggressor != aggressed && criminal) || (aggressed.Karma > -110 && aggressed.Karma < 0) && !aggressed.Criminal))
                 CheckGuardCandidate(aggressor);
 		}
@@ -365,7 +356,6 @@ namespace Server.Regions
 					}
 
 					MakeGuard( m );
-					//m.SendLocalizedMessage( 502276 ); // Guards can no longer be called on you.
                     m.SendAsciiMessage("Guards can no longer be called on you.");
 					break;
 				}
@@ -388,7 +378,7 @@ namespace Server.Regions
                 }
             }
 
-            return ((m.Karma <= -110 && m.Player) || m.Criminal || (m is BaseCreature && (m.Body.IsMonster || ((BaseCreature)m).AlwaysMurderer)));
+            return ((m.Karma <= -110 && m.Player) || m.Criminal || (m is BaseCreature && (m.Body.IsMonster || ((BaseCreature)m).AlwaysMurderer) && ((BaseCreature)m).Controlled == false && ((BaseCreature)m).ControlMaster == null));
 		}
 
         public static bool IsPet(BaseCreature c)
@@ -414,7 +404,6 @@ namespace Server.Regions
 				if ( m_Table.ContainsKey( m_Mobile ) )
 				{
 					m_Table.Remove( m_Mobile );
-					//m_Mobile.SendLocalizedMessage( 502276 ); // Guards can no longer be called on you.
                     m_Mobile.SendAsciiMessage("Guards can no longer be called on you.");
 				}
 			}

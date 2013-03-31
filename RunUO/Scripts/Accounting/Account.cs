@@ -607,7 +607,7 @@ namespace Server.Accounting
 			m_Created = m_LastLogin = DateTime.Now;
 			m_TotalGameTime = TimeSpan.Zero;
 
-			m_Mobiles = new Mobile[6];
+			m_Mobiles = new Mobile[5];
 
 			m_IPRestrictions = new string[0];
 			m_LoginIPs = new IPAddress[0];
@@ -1124,7 +1124,7 @@ namespace Server.Accounting
 		/// </summary>
 		public int Limit
 		{
-			get { return ( Core.AOS ? 6 : 5 ); }
+			get { return 5; }
 		}
 
 		/// <summary>

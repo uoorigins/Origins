@@ -3,35 +3,53 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{4F431287-077B-4341-8CD6-FF82213966C2}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Scripts</RootNamespace>
+    <ProjectGuid>{1E1DE8EA-7BE1-4F41-B724-BF82ED1D410D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <NoStandardLibraries>false</NoStandardLibraries>
     <AssemblyName>Scripts</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>Scripts</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="Accounting\AccessRestrictions.cs" />
     <Compile Include="Accounting\Account.cs" />
@@ -128,18 +146,18 @@
     <Compile Include="Custom\Events\Halloween\GraveStones.cs" />
     <Compile Include="Custom\Furs.cs" />
     <Compile Include="Custom\Hireables\BaseHire.cs" />
-    <Compile Include="Custom\Hireables\HireWarrior.cs" />
-    <Compile Include="Custom\Hireables\HireMercenary.cs" />
     <Compile Include="Custom\Hireables\HireBard.cs" />
     <Compile Include="Custom\Hireables\HireBeggar.cs" />
     <Compile Include="Custom\Hireables\HireFighter.cs" />
     <Compile Include="Custom\Hireables\HireMage.cs" />
+    <Compile Include="Custom\Hireables\HireMercenary.cs" />
     <Compile Include="Custom\Hireables\HirePaladin.cs" />
     <Compile Include="Custom\Hireables\HirePeasant.cs" />
     <Compile Include="Custom\Hireables\HirePirate.cs" />
     <Compile Include="Custom\Hireables\HireRanger.cs" />
     <Compile Include="Custom\Hireables\HireSailor.cs" />
     <Compile Include="Custom\Hireables\HireThief.cs" />
+    <Compile Include="Custom\Hireables\HireWarrior.cs" />
     <Compile Include="Custom\HumanJerky.cs" />
     <Compile Include="Custom\New Guild\GuildMenu.cs" />
     <Compile Include="Custom\New Guild\GuildRosterMenu.cs" />
@@ -189,6 +207,7 @@
     <Compile Include="Custom\ResNowOption.cs" />
     <Compile Include="Custom\ResurrectGump.cs" />
     <Compile Include="Custom\SayCommand.cs" />
+    <Compile Include="Custom\SimpleInvasionSpawner.cs" />
     <Compile Include="Custom\SpeechHelper.cs" />
     <Compile Include="Custom\StaffCloak.cs" />
     <Compile Include="Custom\StaticExport.cs" />
@@ -1781,7 +1800,6 @@
     <Compile Include="Items\Weapons\Axes\Axe.cs" />
     <Compile Include="Items\Weapons\Axes\BaseAxe.cs" />
     <Compile Include="Items\Weapons\Axes\BattleAxe.cs" />
-    <Compile Include="Items\Weapons\Axes\Copy of WarAxe.cs" />
     <Compile Include="Items\Weapons\Axes\DoubleAxe.cs" />
     <Compile Include="Items\Weapons\Axes\ExecutionersAxe.cs" />
     <Compile Include="Items\Weapons\Axes\Hatchet.cs" />
@@ -2665,120 +2683,43 @@
     <Compile Include="Targets\PickMoveTarget.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Commands\Statics.cs.bak" />
-    <None Include="Context Menus\Context Menus - Shortcut.lnk" />
-    <None Include="Engines\AI\Creature\BaseCreature.cs.bak" />
-    <None Include="Engines\Craft\Core\CraftItem.cs.bak" />
-    <None Include="Engines\Craft\DefBlacksmithy.cs.bak" />
-    <None Include="Engines\Factions\Mobiles\Guards\Types\.svn\all-wcprops" />
-    <None Include="Engines\Factions\Mobiles\Guards\Types\.svn\entries" />
-    <None Include="Engines\Factions\Mobiles\Guards\Types\.svn\text-base\FactionBerserker.cs.svn-base" />
-    <None Include="Engines\Factions\Mobiles\Guards\Types\.svn\text-base\FactionDeathKnight.cs.svn-base" />
-    <None Include="Engines\Factions\Mobiles\Guards\Types\.svn\text-base\FactionDragoon.cs.svn-base" />
-    <None Include="Engines\Factions\Mobiles\Guards\Types\.svn\text-base\FactionHenchman.cs.svn-base" />
-    <None Include="Engines\Factions\Mobiles\Guards\Types\.svn\text-base\FactionKnight.cs.svn-base" />
-    <None Include="Engines\Factions\Mobiles\Guards\Types\.svn\text-base\FactionMercenary.cs.svn-base" />
-    <None Include="Engines\Factions\Mobiles\Guards\Types\.svn\text-base\FactionNecromancer.cs.svn-base" />
-    <None Include="Engines\Factions\Mobiles\Guards\Types\.svn\text-base\FactionPaladin.cs.svn-base" />
-    <None Include="Engines\Factions\Mobiles\Guards\Types\.svn\text-base\FactionSorceress.cs.svn-base" />
-    <None Include="Engines\Factions\Mobiles\Guards\Types\.svn\text-base\FactionWizard.cs.svn-base" />
-    <None Include="Engines\Harvest\Fishing.cs.bak" />
-    <None Include="Engines\Party\DeclineTimer.cs.bak" />
-    <None Include="Engines\Party\Party.cs.bak" />
-    <None Include="Engines\Pathing\Movement.cs.bak" />
-    <None Include="Engines\Quests\Collector\Items\.svn\all-wcprops" />
-    <None Include="Engines\Quests\Collector\Items\.svn\entries" />
-    <None Include="Engines\Quests\Collector\Items\.svn\text-base\EnchantedPaints.cs.svn-base" />
-    <None Include="Engines\Quests\Collector\Items\.svn\text-base\ImageType.cs.svn-base" />
-    <None Include="Engines\Quests\Collector\Items\.svn\text-base\Obsidian.cs.svn-base" />
-    <None Include="Engines\Quests\Collector\Items\.svn\text-base\PaintedImage.cs.svn-base" />
-    <None Include="Engines\Quests\Dark Tides\Mobiles\Mardoth.cs.bak" />
-    <None Include="Engines\Quests\Dark Tides\Objectives.cs.bak" />
-    <None Include="Engines\Quests\Emino%27s Undertaking\Mobiles\Emino.cs.bak" />
-    <None Include="Engines\Quests\Emino%27s Undertaking\Mobiles\Zoel.cs.bak" />
-    <None Include="Engines\Quests\Uzeraan Turmoil\Mobiles\Schmendrick.cs.bak" />
-    <None Include="Engines\Quests\Uzeraan Turmoil\Mobiles\Uzeraan.cs.bak" />
-    <None Include="Engines\VeteranRewards\RewardSystem.cs.bak" />
-    <None Include="Gumps\ClientGump.cs.bak" />
-    <None Include="Gumps\ResurrectGump.cs.backup" />
-    <None Include="Items\Addons\BaseAddon.cs.bak" />
-    <None Include="Items\Addons\BaseAddonDeed.cs.bak" />
-    <None Include="Items\Clothing\OuterTorso.cs.bak" />
-    <None Include="Items\Misc\BulletinBoards.cs.no" />
-    <None Include="Items\Misc\Corpses\Corpse.cs.bak" />
-    <None Include="Items\Misc\InteriorDecorator.cs.bak" />
-    <None Include="Items\Misc\LOSBlocker.cs.bak" />
-    <None Include="Items\Misc\PublicMoongate.cs.bak" />
-    <None Include="Items\Misc\Static.cs.bak" />
-    <None Include="Items\Skill Items\Fishing\Misc\SpecialFishingNet.cs.bak" />
-    <None Include="Items\Skill Items\Magical\Misc\Moongate.cs.bak" />
-    <None Include="Items\Skill Items\Magical\Spellbook.cs.bak" />
-    <None Include="Items\Skill Items\Thief\DisguiseKit.cs.bak" />
-    <None Include="Items\Special\MiniHouses.cs.bak" />
-    <None Include="Items\Special\MonsterStatuette.cs.bak" />
-    <None Include="Items\Special\Veteran Rewards\AnkhOfSacrifice.cs.bak" />
-    <None Include="Items\Wands\GreaterHealWand.cs.disable" />
-    <None Include="Items\Wands\HealWand.cs.disable" />
-    <None Include="Mobiles\Animals\Mounts\Ethereals.cs.bak" />
-    <None Include="Mobiles\Vendors\BaseVendor.cs.bak" />
-    <None Include="Mobiles\Vendors\PlayerBarkeeper.cs.bak" />
-    <None Include="Multis\BaseHouse.cs.bak" />
-    <None Include="Multis\Boats\BaseBoat.cs.bak" />
-    <None Include="Multis\Boats\BaseDockedBoat.cs.bak" />
-    <None Include="Multis\Boats\LargeBoat.cs.bak" />
-    <None Include="Multis\Boats\LargeDragonBoat.cs.bak" />
-    <None Include="Multis\Boats\MediumBoat.cs.bak" />
-    <None Include="Multis\Boats\MediumDragonBoat.cs.bak" />
-    <None Include="Multis\Boats\SmallBoat.cs.bak" />
-    <None Include="Multis\Boats\SmallDragonBoat.cs.bak" />
-    <None Include="Multis\Boats\Strandedness.cs.bak" />
-    <None Include="Multis\Boats\TillerMan.cs.bak" />
-    <None Include="Multis\Camps\BaseCamp.cs.bak" />
-    <None Include="Multis\Camps\OrcCamp.cs.bak" />
-    <None Include="Multis\Camps\RatCamp.cs.bak" />
-    <None Include="Multis\Deeds.cs.bak" />
-    <None Include="Multis\HouseFoundation.cs.bak" />
-    <None Include="Multis\HousePlacement.cs.backup" />
-    <None Include="Multis\HousePlacement.cs.bak" />
-    <None Include="Multis\Houses.cs.bak" />
-    <None Include="Regions\Spawning\SpawnDefinition.cs.bak" />
-    <None Include="Spells\Second\Protection.cs.backup" />
-    <None Include="Spells\Spellweaving\ArcaneCircle.cs.bak" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Custom\Custom Regions\CustomRegions V4.0 Changelog.txt" />
     <Content Include="Custom\XmlSpawner\installation 2.0.txt" />
     <Content Include="Custom\XmlSpawner\Instructions for importing maps.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.XML" />
+    <None Include="app.config" />
+    <None Include="Gumps\ResurrectGump.cs.backup" />
+    <None Include="Items\Misc\BulletinBoards.cs.no" />
+    <None Include="Items\Wands\GreaterHealWand.cs.disable" />
+    <None Include="Items\Wands\HealWand.cs.disable" />
+    <None Include="Items\Weapons\Axes\Copy of WarAxe.cs.backp" />
+    <None Include="Multis\HousePlacement.cs.backup" />
+    <None Include="Spells\Second\Protection.cs.backup" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Custom\Chat\" />
     <Folder Include="Engines\Factions\Mobiles\Guards\Types\.svn\prop-base\" />
     <Folder Include="Engines\Factions\Mobiles\Guards\Types\.svn\props\" />
+    <Folder Include="Engines\Factions\Mobiles\Guards\Types\.svn\text-base\" />
     <Folder Include="Engines\Factions\Mobiles\Guards\Types\.svn\tmp\prop-base\" />
     <Folder Include="Engines\Factions\Mobiles\Guards\Types\.svn\tmp\props\" />
     <Folder Include="Engines\Factions\Mobiles\Guards\Types\.svn\tmp\text-base\" />
     <Folder Include="Engines\Quests\Collector\Items\.svn\prop-base\" />
     <Folder Include="Engines\Quests\Collector\Items\.svn\props\" />
+    <Folder Include="Engines\Quests\Collector\Items\.svn\text-base\" />
     <Folder Include="Engines\Quests\Collector\Items\.svn\tmp\prop-base\" />
     <Folder Include="Engines\Quests\Collector\Items\.svn\tmp\props\" />
     <Folder Include="Engines\Quests\Collector\Items\.svn\tmp\text-base\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Server\Server.csproj">
-      <Project>{121049D3-D86A-4CA6-B717-20E98B9A341E}</Project>
+      <Project>{0c679c5e-9663-4a0f-af48-baf99399fb72}</Project>
       <Name>Server</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
+  <ProjectExtensions>
+    <VisualStudio AllowExistingFolder="true" />
+  </ProjectExtensions>
 </Project>

@@ -3850,7 +3850,7 @@ namespace Server.Network
 	{
 		public CharacterListOld( IAccount a, CityInfo[] info ) : base( 0xA9 )
 		{
-			this.EnsureCapacity( 9 + (a.Length * 60) + (info.Length * 63) );
+			this.EnsureCapacity( 5 + (a.Length * 60) + (info.Length * 63) );
 
 			int highSlot = -1;
 

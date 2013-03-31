@@ -27,7 +27,7 @@ namespace Server.Mobiles
 				Add( new GenericBuyInfo( typeof( Arrow ), 3, 9, 0xF3F, 0 ) );
 				Add( new GenericBuyInfo( typeof( Bolt ), 6, 9, 0x1BFB, 0 ) );
 
-				Add( new GenericBuyInfo( typeof( Backpack ), 15, 9, 0x9B2, 0 ) );
+				Add( new GenericBuyInfo( typeof( Backpack ), 18, 9, 0x9B2, 0 ) );
 				Add( new GenericBuyInfo( typeof( Pouch ), 6, 9, 0xE79, 0 ) );
 				Add( new GenericBuyInfo( typeof( Bag ), 6, 9, 0xE76, 0 ) );
 				
@@ -111,7 +111,7 @@ namespace Server.Mobiles
 			{
 				Add( typeof( Arrow ), 1 );
 				Add( typeof( Bolt ), 2 );
-				Add( typeof( Backpack ), 7 );
+				Add( typeof( Backpack ), 9 );
 				Add( typeof( Pouch ), 3 );
 				Add( typeof( Bag ), 3 );
 				Add( typeof( Candle ), 3 );

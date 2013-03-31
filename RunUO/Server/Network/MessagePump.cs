@@ -139,6 +139,36 @@ namespace Server.Network
 		private const int BufferSize = 4096;
 		private BufferPool m_Buffers = new BufferPool( "Processor", 4, BufferSize );
 
+        static uint FirstClientKey = 0x383477BC;
+        static uint SecondClientKey = 0x02345CC6;
+
+        uint CurrentKey0 = 0;
+        uint CurrentKey1 = 0;
+        uint EncryptionSeed = 0;
+
+        void InitializeKeys()
+        {
+            // EncryptionSeed is the 32-bit integer value sent before the 0x80 packet.
+            CurrentKey0 = (uint)((((~EncryptionSeed) ^ 0x00001357) << 16) | ((EncryptionSeed ^ 0xFFFFAAAA) & 0x0000FFFF));
+            CurrentKey1 = (uint)(((EncryptionSeed ^ 0x43210000) >> 16) | (((~EncryptionSeed) ^ 0xABCDFFFF) & 0xFFFF0000));
+        }
+
+        void Decrypt(ref byte[] data)
+        {
+            int len = data.Length;
+
+            for (int i = 0; i < len; i++)
+            {
+                data[i] = (byte)(CurrentKey0 ^ data[i]);
+
+                uint newkey1 = ((CurrentKey1 >> 1) | (CurrentKey0 << 0x1F)) ^ FirstClientKey;
+                uint newkey0 = ((CurrentKey1 << 0x1F) | (CurrentKey0 >> 1)) ^ SecondClientKey;
+
+                CurrentKey0 = newkey0;
+                CurrentKey1 = newkey1;
+            }
+        }
+
 		public bool HandleReceive( NetState ns )
 		{
 			ByteQueue buffer = ns.Buffer;
@@ -158,29 +188,40 @@ namespace Server.Network
 						// 0xEF	= 239 =	multicast IP, so this should never appear in a normal seed.	 So	this is	backwards compatible with older	clients.
 						ns.Seeded =	true;
 					}
-					else if ( buffer.Length >= 4 )
-					{
-						buffer.Dequeue( m_Peek, 0, 4 );
+                    else if (buffer.Length >= 4)
+                    {
+                        buffer.Dequeue(m_Peek, 0, 4);
 
-						int seed = (m_Peek[0] << 24) | (m_Peek[1] << 16) | (m_Peek[2] << 8) | m_Peek[3];
+                        int seed = (m_Peek[0] << 24) | (m_Peek[1] << 16) | (m_Peek[2] << 8) | m_Peek[3];
 
-						if ( seed == 0 )
-						{
-							Console.WriteLine( "Login: {0}: Invalid client detected, disconnecting", ns );
-							ns.Dispose();
-							return false;
-						}
+                        if (seed == 0)
+                        {
+                            Console.WriteLine("Login: {0}: Invalid client detected, disconnecting", ns);
+                            ns.Dispose();
+                            return false;
+                        }
 
-						ns.m_Seed = seed;
-						ns.Seeded = true;
+                        ns.m_Seed = seed;
+                        ns.Seeded = true;
 
-						length = buffer.Length;
-					}
-					else
-					{
-						return true;
-					}
+                        EncryptionSeed = (uint)seed;
+                        InitializeKeys();
+
+
+                        length = buffer.Length;
+                    }
+                    else
+                    {
+                        return true;
+                    }
 				}
+
+                /*int lgth = buffer.Length;
+                byte[] temp = new byte[lgth];
+
+                buffer.Dequeue(temp, 0, lgth);
+                Decrypt(ref temp);
+                buffer.Enqueue(temp, 0, lgth);*/
 
 				while ( length > 0 && ns.Running )
 				{

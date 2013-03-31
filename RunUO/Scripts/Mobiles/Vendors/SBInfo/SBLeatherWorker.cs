@@ -21,8 +21,7 @@ namespace Server.Mobiles
 			public InternalBuyInfo() 
 			{ 
 				Add( new GenericBuyInfo( typeof( Hides ), 4, 9, 0x1078, 0 ) ); 
-				Add( new GenericBuyInfo( typeof( ThighBoots ), 56, 9, 0x1711, 0 ) ); 
-			} 
+            } 
 		} 
 
 		public class InternalSellInfo : GenericSellInfo 
@@ -30,7 +29,6 @@ namespace Server.Mobiles
 			public InternalSellInfo() 
 			{ 
 				Add( typeof( Hides ), 2 ); 
-				Add( typeof( ThighBoots ), 28 ); 
 			} 
 		} 
 	} 

@@ -224,11 +224,11 @@ namespace Server.Network {
 			Version502b			= Version500a  | BuffIcon,
 			Version6000			= Version502b  | NewHaven,
 			Version6017			= Version6000  | ContainerGridLines,
-			Version60142			= Version6017  | ExtendedSupportedFeatures,
+			Version60142		= Version6017  | ExtendedSupportedFeatures,
 			Version7000			= Version60142 | StygianAbyss,
 			Version7090			= Version7000  | HighSeas,
-			Version70130			= Version7090  | NewCharacterList,
-			Version70160			= Version70130 | NewCharacterCreation
+			Version70130		= Version7090  | NewCharacterList,
+			Version70160		= Version70130 | NewCharacterCreation
 		}
 
 		public bool NewSpellbook { get { return ((_ProtocolChanges & ProtocolChanges.NewSpellbook) != 0); } }

@@ -20,10 +20,10 @@ namespace Server.Mobiles
 		{ 
 			public InternalBuyInfo() 
 			{ 	
-				Add( new GenericBuyInfo( typeof( ThighBoots ), 15, 9, 0x1711, Utility.RandomNeutralHue() ) ); 
-				Add( new GenericBuyInfo( typeof( Shoes ), 8, 9, 0x170f, Utility.RandomNeutralHue() ) ); 
-				Add( new GenericBuyInfo( typeof( Boots ), 10, 9, 0x170b, Utility.RandomNeutralHue() ) );
-				Add( new GenericBuyInfo( typeof( Sandals ), 5, 9, 0x170d, Utility.RandomNeutralHue() ) ); 
+				Add( new GenericBuyInfo( typeof( ThighBoots ), 80, 9, 0x1711, Utility.RandomNeutralHue() ) ); 
+				Add( new GenericBuyInfo( typeof( Shoes ), 50, 9, 0x170f, Utility.RandomNeutralHue() ) ); 
+				Add( new GenericBuyInfo( typeof( Boots ), 56, 9, 0x170b, Utility.RandomNeutralHue() ) );
+				Add( new GenericBuyInfo( typeof( Sandals ), 20, 9, 0x170d, Utility.RandomNeutralHue() ) ); 
  
 			} 
 		} 
@@ -32,10 +32,10 @@ namespace Server.Mobiles
 		{ 
 			public InternalSellInfo() 
 			{ 
-				Add( typeof( Shoes ), 4 ); 
-				Add( typeof( Boots ), 5 ); 
-				Add( typeof( ThighBoots ), 7 ); 
-				Add( typeof( Sandals ), 2 ); 
+				Add( typeof( Shoes ), 25 ); 
+				Add( typeof( Boots ), 28 ); 
+				Add( typeof( ThighBoots ), 40 ); 
+				Add( typeof( Sandals ), 10 ); 
 			} 
 		} 
 	} 
