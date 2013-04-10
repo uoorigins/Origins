@@ -48,7 +48,7 @@ namespace Server.Spells.Eighth
                     Mobile m = targets[i];
 
                     double damage;
-                    damage = ((m.Hits - (m.Str / 2)) * (50 + Caster.Skills[SkillName.Magery].Value / 100));
+                    damage = ((m.Hits - (m.HitsMax / 2)) * (50 + Caster.Skills[SkillName.Magery].Value / 100));
 
                     if (!m.Player)
                         damage /= 4;
