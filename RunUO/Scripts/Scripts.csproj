@@ -1965,6 +1965,7 @@
     <Compile Include="Misc\Titles.cs" />
     <Compile Include="Misc\TreasureMapProtection.cs" />
     <Compile Include="Misc\uoamVendors.cs" />
+    <Compile Include="Misc\ValidationQueue.cs" />
     <Compile Include="Misc\VendorGenerator.cs" />
     <Compile Include="Misc\Weather.cs" />
     <Compile Include="Misc\WebStatus.cs" />
@@ -2301,6 +2302,7 @@
     <Compile Include="Mobiles\Townfolk\Banker.cs" />
     <Compile Include="Mobiles\Townfolk\BaseEscortable.cs" />
     <Compile Include="Mobiles\Townfolk\BrideGroom.cs" />
+    <Compile Include="Mobiles\Townfolk\EscortableHealer.cs" />
     <Compile Include="Mobiles\Townfolk\EscortableMage.cs" />
     <Compile Include="Mobiles\Townfolk\Gypsy.cs" />
     <Compile Include="Mobiles\Townfolk\HarborMaster.cs" />
@@ -2688,7 +2690,6 @@
     <Content Include="Custom\XmlSpawner\Instructions for importing maps.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="Gumps\ResurrectGump.cs.backup" />
     <None Include="Items\Misc\BulletinBoards.cs.no" />
     <None Include="Items\Wands\GreaterHealWand.cs.disable" />
