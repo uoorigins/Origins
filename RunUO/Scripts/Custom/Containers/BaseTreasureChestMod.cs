@@ -33,6 +33,17 @@ namespace Server.Items
 		{
 		}
 
+        public override bool TryDropItem(Mobile from, Item dropped, bool sendFullMessage)
+        {
+            if (from == null)
+            {
+                DropItem(dropped);
+                return true;
+            }
+
+            return base.TryDropItem(from, dropped, sendFullMessage);
+        }
+
         public override void OnSingleClick(Mobile from)
         {
             if (ItemID == 0xE3C || ItemID == 0xE3E || ItemID == 0x9a9)

@@ -746,6 +746,9 @@ namespace Server
 
 		private static bool IsInTokuno( Mobile m )
 		{
+            if (m == null)
+                return false;
+
 			if ( m.Region.IsPartOf( "Fan Dancer's Dojo" ) )
 				return true;
 
@@ -1101,6 +1104,12 @@ namespace Server
                 else if (item is BaseInstrument)
                 {
                     SlayerName slayer = SlayerName.None;
+
+                    if (from == null)
+                    {
+                        item.Delete();
+                        return null;
+                    }
 
                     if (Core.AOS)
                         slayer = BaseRunicTool.GetRandomSlayer();

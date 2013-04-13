@@ -450,6 +450,26 @@ namespace Server
 
         }
 
+        public static Item RandomFood()
+        {
+            switch (Utility.Random(2))
+            {
+                default:
+                case 0: return new BreadLoaf();
+                case 1: return new CheeseWheel();
+            }
+        }
+
+        public static Item RandomLightSource()
+        {
+            switch (Utility.Random(2))
+            {
+                default:
+                case 0: return new Torch();
+                case 1: return new Candle();
+            }
+        }
+
         public static BaseClothing RandomMagicClothing()
         {
             BaseClothing item = Construct(m_ClothingTypes) as BaseClothing;

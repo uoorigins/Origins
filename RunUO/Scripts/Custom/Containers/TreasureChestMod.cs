@@ -25,18 +25,34 @@ namespace Server.Items
 			MaxLockLevel = this.RequiredSkill;
 			TrapType = TrapType.MagicTrap;
 			TrapPower = 1 * Utility.Random( 1, 25 );
-			DropItem( new Gold( 30, 100 ) );
-			DropItem( Loot.RandomWeapon() );
-			DropItem( Loot.RandomArmorOrShield() );
-			DropItem( Loot.RandomClothing() );
-			DropItem( Loot.RandomJewelry() );
-			DropItem( new Bolt( 10 ) );
-            		for( int i = 1; i > 1; i-- )
-        	        {
-	                	Item GemLoot = Loot.RandomGem();
-                		GemLoot.Amount = Utility.Random( 1, 3 );
-        	        	DropItem( GemLoot );
-	                }
+
+            //Base
+			DropItem( Loot.RandomBeverage() );
+			DropItem( Loot.RandomFood() );
+			DropItem( Loot.RandomLightSource() );
+
+            //Broke template
+            if (Utility.RandomBool())
+                DropItem(Loot.RandomClothing());
+            else 
+                DropItem(Loot.RandomArmorOrShield());
+
+            if (Utility.RandomBool())
+                DropItem(new Arrow(10));
+            else
+                DropItem(new Bolt(10));
+
+            if (Utility.RandomBool())
+                DropItem(Loot.RandomArmor());
+            else
+                DropItem(Loot.RandomReagent());
+
+            if (Utility.RandomBool())
+                DropItem(Loot.RandomPotion());
+            else
+                DropItem(Loot.RandomWeapon());
+
+            DropItem(new Gold(100, 175));
 		}
 
 		public TreasureLevel1( Serial serial ) : base( serial ) 
@@ -73,29 +89,34 @@ namespace Server.Items
 			MaxLockLevel = this.RequiredSkill;
 			TrapType = TrapType.MagicTrap;
 			TrapPower = 1 * Utility.Random( 1, 25 );
-			DropItem( new Gold( 10, 40 ) );
-			DropItem( new Bolt( 5 ) );
-			switch ( Utility.Random( 6 )) 
-			{ 
-				case 0: DropItem( new Candelabra()  ); break; 
-				case 1: DropItem( new Candle() ); break; 
-				case 2: DropItem( new CandleLarge() ); break; 
-				case 3: DropItem( new CandleLong() ); break; 
-				case 4: DropItem( new CandleShort() ); break; 
-				case 5: DropItem( new CandleSkull() ); break; 
-			}
-			switch ( Utility.Random( 2 )) 
-			{ 
-				case 0: DropItem( new Shoes( Utility.Random( 1, 2 ) ) ); break; 
-				case 1: DropItem( new Sandals( Utility.Random( 1, 2 ) ) ); break; 
-			}
 
-			switch ( Utility.Random( 3 )) 
-			{ 
-				case 0: DropItem( new BeverageBottle(BeverageType.Ale) ); break;
-				case 1: DropItem( new BeverageBottle(BeverageType.Liquor) ); break;
-				case 2: DropItem( new Jug(BeverageType.Cider) ); break;
-			}
+            //Base
+            DropItem(Loot.RandomBeverage());
+            DropItem(Loot.RandomFood());
+            DropItem(Loot.RandomLightSource());
+
+            //Broke template
+            if (Utility.RandomBool())
+                DropItem(Loot.RandomClothing());
+            else
+                DropItem(Loot.RandomArmorOrShield());
+
+            if (Utility.RandomBool())
+                DropItem(new Arrow(10));
+            else
+                DropItem(new Bolt(10));
+
+            if (Utility.RandomBool())
+                DropItem(Loot.RandomArmor());
+            else
+                DropItem(Loot.RandomReagent());
+
+            if (Utility.RandomBool())
+                DropItem(Loot.RandomPotion());
+            else
+                DropItem(Loot.RandomWeapon());
+
+            DropItem(new Gold(100, 175));
 
 		} 
 
@@ -133,27 +154,9 @@ namespace Server.Items
 			MaxLockLevel = this.RequiredSkill;
 			TrapType = TrapType.MagicTrap;
 			TrapPower = 2 * Utility.Random( 1, 25 );
-			DropItem( new Gold( 70, 100 ) );
-			DropItem( new Arrow( 10 ) );
-            		for( int i = Utility.Random( 1, 2 ); i > 1; i-- )
-        		{
-	                	Item ReagentLoot = Loot.RandomReagent();
-                		ReagentLoot.Amount = Utility.Random( 1, 2 );
-        	        	DropItem( ReagentLoot );
-	            	}
-      		        for( int i = Utility.Random( 1, 2 ); i > 1; i-- )
-        	        {
-	                	Item ScrollLoot = Loot.RandomScroll( 0, 39, SpellbookType.Regular );
-                		ScrollLoot.Amount = Utility.Random( 1, 8 );
-        	        	DropItem( ScrollLoot );
-	                }
-			DropItem( Loot.RandomPotion() );
-            		for( int i = Utility.Random( 1, 2 ); i > 1; i-- )
-        	        {
-	                	Item GemLoot = Loot.RandomGem();
-                		GemLoot.Amount = Utility.Random( 1, 6 );
-        	        	DropItem( GemLoot );
-	                }
+
+            LootPack.OldAverage.Generate(null, this, true, 100);
+            LootPack.AveragePile.Generate(null, this, true, 100);
 		} 
 
 		public TreasureLevel2( Serial serial ) : base( serial ) 
@@ -190,63 +193,9 @@ namespace Server.Items
 			MaxLockLevel = this.RequiredSkill;
 			TrapType = TrapType.MagicTrap;
 			TrapPower = 3 * Utility.Random( 1, 25 );
-			DropItem( new Gold( 180, 240 ) );
-			DropItem( new Arrow( 10 ) );
-            		for( int i = Utility.Random( 1, 3 ); i > 1; i-- )
-        		{
-	                	Item ReagentLoot = Loot.RandomReagent();
-                		ReagentLoot.Amount = Utility.Random( 1, 9 );
-        	        	DropItem( ReagentLoot );
-	            	}
-      		        for( int i = Utility.Random( 1, 3 ); i > 1; i-- )
-        	        {
-	                	Item ScrollLoot = Loot.RandomScroll( 0, 47, SpellbookType.Regular );
-                		ScrollLoot.Amount = Utility.Random( 1, 12 );
-        	        	DropItem( ScrollLoot );
-	                }
-            		for ( int i = Utility.Random( 1, 3 ); i > 1; i-- )
-		        {
-  		                Item PotionLoot = Loot.RandomPotion();
-                		DropItem( PotionLoot );
-            		}
-            		for( int i = Utility.Random( 1, 3 ); i > 1; i-- )
-        	        {
-	                	Item GemLoot = Loot.RandomGem();
-                		GemLoot.Amount = Utility.Random( 1, 9 );
-        	        	DropItem( GemLoot );
-	                }
-			for( int i = Utility.Random( 1, 3 ); i > 1; i-- )
-				DropItem( Loot.RandomWand() );
-		      // Magical ArmorOrWeapon
-            		for( int i = Utility.Random( 1, 3 ); i > 1; i-- )
-	        	{
-	                	Item item = Loot.RandomArmorOrShieldOrWeapon();
 
-	        	        if( item is BaseWeapon )
-		                {
-                	    		BaseWeapon weapon = (BaseWeapon)item;
-                    			weapon.DamageLevel = (WeaponDamageLevel)Utility.Random( 3 );
-                    			weapon.AccuracyLevel = (WeaponAccuracyLevel)Utility.Random( 3 );
-                			weapon.DurabilityLevel = (WeaponDurabilityLevel)Utility.Random( 3 );
-        	        		weapon.Quality = WeaponQuality.Regular;
-	                	}
-                		else if( item is BaseArmor )
-        	        	{
-	                    		BaseArmor armor = (BaseArmor)item;
-                    			armor.ProtectionLevel = (ArmorProtectionLevel)Utility.Random( 3 );
-                	    		armor.Durability = (ArmorDurabilityLevel)Utility.Random( 3 );
-        	            		armor.Quality = ArmorQuality.Regular;
-	                	}
-
-        	        	DropItem( item );
-	            	}
-		      // End
-			for( int i = Utility.Random( 1, 2 ); i > 1; i-- )
-		                DropItem( Loot.RandomClothing() );
-			for( int i = Utility.Random( 1, 2 ); i > 1; i-- )
-				DropItem( Loot.RandomJewelry() );
-// Magic clothing (not implemented)
-// Magic jewelry (not implemented)
+            LootPack.OldUltraRich.Generate(null, this, true, 100);
+            LootPack.UltraRichPile.Generate(null, this, true, 100);
 		} 
 
 		public TreasureLevel3( Serial serial ) : base( serial ) 
@@ -281,65 +230,9 @@ namespace Server.Items
 			MaxLockLevel = this.RequiredSkill;
 			TrapType = TrapType.MagicTrap;
 			TrapPower = 4 * Utility.Random( 1, 25 );
-			DropItem( new Gold( 200, 400 ) );
-            		for( int i = Utility.Random( 1, 4 ); i > 1; i-- )
-        		{
-	                	Item ReagentLoot = Loot.RandomReagent();
-                		ReagentLoot.Amount = Utility.Random( 6, 12 );
-        	        	DropItem( ReagentLoot );
-	            	}
-      		        for( int i = Utility.Random( 1, 4 ); i > 1; i-- )
-        	        {
-	                	Item ScrollLoot = Loot.RandomScroll( 0, 47, SpellbookType.Regular );
-                		ScrollLoot.Amount = Utility.Random( 8, 16 );
-        	        	DropItem( ScrollLoot );
-	                }
-			DropItem( new BlankScroll( Utility.Random( 1, 4 ) ) );
-            		for ( int i = Utility.Random( 1, 4 ); i > 1; i-- )
-		        {
-  		                Item PotionLoot = Loot.RandomPotion();
-                		DropItem( PotionLoot );
-            		}
-            		for( int i = Utility.Random( 1, 4 ); i > 1; i-- )
-        	        {
-	                	Item GemLoot = Loot.RandomGem();
-                		GemLoot.Amount = Utility.Random( 6, 12 );
-        	        	DropItem( GemLoot );
-	                }
-			for( int i = Utility.Random( 1, 4 ); i > 1; i-- )
-				DropItem( Loot.RandomWand() );
 
-		      // Magical ArmorOrWeapon
-            		for( int i = Utility.Random( 1, 4 ); i > 1; i-- )
-	        	{
-	                	Item item = Loot.RandomArmorOrShieldOrWeapon();
-
-	        	        if( item is BaseWeapon )
-		                {
-                	    		BaseWeapon weapon = (BaseWeapon)item;
-                    			weapon.DamageLevel = (WeaponDamageLevel)Utility.Random( 4 );
-                    			weapon.AccuracyLevel = (WeaponAccuracyLevel)Utility.Random( 4 );
-                			weapon.DurabilityLevel = (WeaponDurabilityLevel)Utility.Random( 4 );
-        	        		weapon.Quality = WeaponQuality.Regular;
-	                	}
-                		else if( item is BaseArmor )
-        	        	{
-	                    		BaseArmor armor = (BaseArmor)item;
-                    			armor.ProtectionLevel = (ArmorProtectionLevel)Utility.Random( 4 );
-                	    		armor.Durability = (ArmorDurabilityLevel)Utility.Random( 4 );
-        	            		armor.Quality = ArmorQuality.Regular;
-	                	}
-
-        	        	DropItem( item );
-	            	}
-		      // End
-			for( int i = Utility.Random( 1, 2 ); i > 1; i-- )
-		                DropItem( Loot.RandomClothing() );
-			for( int i = Utility.Random( 1, 2 ); i > 1; i-- )
-				DropItem( Loot.RandomJewelry() );
-			//DropItem( new MagicCrystalBall() );
-// Magic clothing (not implemented)
-// Magic jewelry (not implemented)
+            LootPack.OldSpecial.Generate(null, this, true, 100);
+            LootPack.SpecialPile.Generate(null, this, true, 100);
 		} 
 
 		public TreasureLevel4( Serial serial ) : base( serial ) 
