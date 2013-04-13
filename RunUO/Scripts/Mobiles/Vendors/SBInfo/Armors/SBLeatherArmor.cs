@@ -42,15 +42,15 @@ namespace Server.Mobiles
 				Add( typeof( LeatherGloves ), 30 );
 				Add( typeof( LeatherGorget ), 37 );
 				Add( typeof( LeatherLegs ), 40 );
-				Add( typeof( LeatherCap ), 5 );
+                Add(typeof(Bonnet), 14);
 
 
-				Add( typeof( FemaleLeatherChest ), 18 );
-				Add( typeof( FemaleStuddedChest ), 25 );
-				Add( typeof( LeatherShorts ), 14 );
-				Add( typeof( LeatherSkirt ), 11 );
-				Add( typeof( LeatherBustierArms ), 11 );
-				Add( typeof( StuddedBustierArms ), 27 );
+                Add(typeof(FemaleLeatherChest), 63);
+                Add(typeof(FemaleStuddedChest), 72);
+                Add(typeof(LeatherShorts), 43);
+                Add(typeof(LeatherSkirt), 43);
+                Add(typeof(LeatherBustierArms), 55);
+                Add(typeof(StuddedBustierArms), 67);
 			}
 		}
 	}
