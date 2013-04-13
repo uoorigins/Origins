@@ -36,7 +36,6 @@ namespace Server.Menus.Questions
         public override void OnResponse(NetState state, int index)
         {
             Mobile from = state.Mobile;
-            BulletinBoardPost post = null;
 
             if (index == 0)
             {
@@ -51,9 +50,6 @@ namespace Server.Menus.Questions
                         if (killer is PlayerMobile)
                         {
                             ((PlayerMobile)killer).ResetKillTime();
-
-                            //do they have an existing post?
-                            post = ReportMurdererGump.FindPost(((PlayerMobile)killer));
 
                             //have they killed too many?
                             if (killer.Kills > 10)
@@ -88,10 +84,7 @@ namespace Server.Menus.Questions
                                 }
 
                                 //make new bounty post
-                                if (post != null)
-                                    ReportMurdererGump.FindEditPost(((PlayerMobile)killer), post);
-                                else
-                                    ReportMurdererGump.MakePost(((PlayerMobile)killer));
+                                new BountyMessage(killer);
                             }
                         }
                     }

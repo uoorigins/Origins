@@ -1,251 +1,95 @@
-//#define BULLETIN_DEBUG 
 using System;
-using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using Server;
-using Server.Mobiles;
 using Server.Network;
+using Server.Mobiles;
+using System.IO;
 
 namespace Server.Items
 {
-    #region Bulletin Board Item
-    [FlipableAttribute(0x1E5E, 0x1E5F)]
-    public class BulletinBoard : Item
+    public class EscortMessage : BulletinMessage
     {
-        [CommandProperty(AccessLevel.GameMaster)]
-        public bool RemoveAllPosts
+        private Mobile m_Mobile;
+
+        public Mobile Escort { get { return m_Mobile; } }
+
+        public EscortMessage(Mobile m) : base(m, null, "", null)
         {
-            get { return false; }
-            set
+            m_Mobile = m;
+
+            BaseEscortable escort = m as BaseEscortable;
+            String subtext = "";
+
+            switch (m.GetType().Name)
             {
-                if (value == true)
-                {
-                    Console.WriteLine("Removing all posts on bulletin board '{0}' {1}", this.Name, this.Serial);
-                    int BasePostCount = this.Items.Count;
-                    this.Items.Clear();
-                    Console.WriteLine("All posts removed from bulletin board {0} {1}. Removed a total of {3} post(s)", this.Name, this.Serial, BasePostCount);
-                }
-            }
-        }
-
-        public override bool Decays
-        {
-            get { return false; }
-        }
-
-        [Constructable]
-        public BulletinBoard()
-            : base(0x1E5E)
-        {
-            this.Movable = false;
-            this.Name = "Bounty Board";
-        }
-
-        public BulletinBoard(Serial serial)
-            : base(serial)
-        {
-        }
-
-        public override void Serialize(GenericWriter writer)
-        {
-            base.Serialize(writer);
-
-            writer.Write((int)0);
-        }
-
-        public override void Deserialize(GenericReader reader)
-        {
-            base.Deserialize(reader);
-
-            int version = reader.ReadInt();
-        }
-
-        public override void OnSingleClick(Mobile from)
-        {
-            List<Item> list = new List<Item>();
-
-            list.Clear();
-
-            foreach (Item item in World.Items.Values)
-            {
-                if (item is BulletinBoardPost)
-                    list.Add(item);
+                case "EscortableHealer": subtext = "Greetings! I am a poor healer who seeks a worthy escort. I can offer some small pay to any doughty warrior able to assist me. It is imperative that I reach my destination, or innocents may perish!"; break;
+                case "EscortablePeasant": subtext = "'Tis a terrible thing to be a parent with an ungrateful child! Yet such is my situation. Because of the poor behavior and lack of character of this offspring of mine, I am obliged to foster them away from home. So now I am in need of an able escort of good character who might serve as role model, and who can ensure that my child reaches their destination safely. I shall let my child post their whereabouts so that thou mayst meet with them and arrange terms." + "---"; break;
+                case "BrideGroom": subtext = "I am so happy! I am to be married, and my life will finally be complete! Alas, I am no warrior, and the wedding is not to take place here. I am in need of an escort, for the roads are treacherous and my future spouse would be sad indeed to hear that an ettin ate me before the wedding."; break;
+                case "EscortableMage": subtext = "Wizard seeks escort to a conference."; break;
+                case "EscortableMurchant": subtext = "Reputable merchant seeks able warriors to serve as mercantile escort. Pay is scale; we prefer to hire experienced mercenaries."; break;
+                case "EscortableMessenger": subtext = "I am one of Lord British's couriers, and I seek an able warrior to escort me safely, as the message I carry is of utmost importance to the realm!"; break;
+                case "EscortableNoble": subtext = "'Tis a bit of a problem to admit it, but our normally trustworthy household guard seem to have broken his leg! If thou art able with a weapon, we are pleased to take applications for his replacement, to serve as guard and escort on our forthcoming journey."; break;
+                default:
+                case "SeekerOfAdventure": subtext = "I've always wished for adventure! Now I can have it at last! My weaponsmaster in school always said I was a dab hand with a blade, and I am afire with the love of adventure! Plus I have money. So if you are willing to hire on as my bodyguard and join me as we seek the deepest depths of the Abyss, and as we conquer dragons with the rapid flick of our sharp swords, disregarding all danger and ignorant of fear, seek me out! Cowards need not apply!"; break;
             }
 
-            from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a bounty board with {0} posted bounties", list.Count)));
-        }
-
-        public override void OnDoubleClick(Mobile from)
-        {
-            // Make sure the character is within range to open the board 
-            if (from.InRange(this.GetWorldLocation(), 2) == true)
+            switch (Utility.Random(9))
             {
-                NetState state = from.NetState;
-
-                // Open the bulletin board 
-                    from.Send(new BulletinBoardOpenPacket(this));
-
-                // Send the list of items 
-                    if (state.ContainerGridLines)
-                        from.Send(new BulletinBoardFillItemsPacket(this));
-                    else
-                        from.Send(new BulletinBoardFillItemsPacket6(this));
+                case 0: Subject = "Escort needed"; break;
+                case 1: Subject = "Guard needed"; break;
+                case 2: Subject = "I need an escort!"; break;
+                case 3: Subject = "Traveling companion?"; break;
+                case 4: Subject = "Seeking companion"; break;
+                case 5: Subject = "Now hiring"; break;
+                case 6: Subject = "Hiring a guard"; break;
+                case 7: Subject = "Hiring an escort"; break;
+                case 8: Subject = "Seeking escort"; break;
             }
+
+            double distance;
+            BulletinBoard board = FindClosestBB(m, out distance);
+
+            String direction;
+
+            if (m.GetDirectionTo(board) == Direction.North)
+                direction = "North";
+            else if (m.GetDirectionTo(board) == Direction.South)
+                direction = "South";
+            else if (m.GetDirectionTo(board) == Direction.East)
+                direction = "East";
+            else if (m.GetDirectionTo(board) == Direction.West)
+                direction = "West";
+            else if (m.GetDirectionTo(board) == Direction.Up)
+                direction = "Northwest";
+            else if (m.GetDirectionTo(board) == Direction.Left)
+                direction = "Southwest";
+            else if (m.GetDirectionTo(board) == Direction.Right)
+                direction = "Northeast";
+            else if (m.GetDirectionTo(board) == Direction.Down)
+                direction = "Southeast";
             else
-                from.LocalOverheadMessage(MessageType.Regular, 0x3B2, true, "I can't reach that."); // I can't reach that.
-        }
-    }
-    #endregion
+                direction = "in some direction.";
 
-    #region Bulletin Board Global Post List
-    internal class BulletinBoardGlobalPostList
-    {
-        /// <summary> 
-        /// Contains the list of global post items. 
-        /// </summary> 
-        internal static List<Item> m_GlobalPostList = new List<Item>();
-        //internal static ArrayList m_GlobalPostList = new ArrayList();
+            String line = String.Format("{0} I can be found {1} {2} of here. When thou dost find me, look at me close to accept the task of taking me to {3}. {4}", subtext, (distance < 50 ? "a fair distance" : "a long way"), direction, escort.Destination, escort.Name);
+            Lines = MakeLines(line);
 
-        /// <summary> 
-        /// Loads the global post list with all global posts in the world. 
-        /// </summary> 
-        public static void Initialize()
-        {
-            // Find each global post in the world 
-            foreach (Item item in World.Items.Values)
-            {
-                // Add each global post to the global post list 
-                if (item is BulletinBoardGlobalPost)
-                    m_GlobalPostList.Add(item);
-            }
-        }
-    }
-    #endregion
-
-    #region Bulletin Board Global Post Item
-    public class BulletinBoardGlobalPost : BulletinBoardPost
-    {
-        [Constructable]
-        public BulletinBoardGlobalPost(string Subject, string Author, string[] Message) :
-            base(Subject, Author, Message)
-        {
+            board.AddItem(this);
         }
 
-        public BulletinBoardGlobalPost(Serial serial)
+        public EscortMessage(Serial serial)
             : base(serial)
         {
-        }
-
-        public static bool AddGlobalPost(BulletinBoardGlobalPost GlobalPost)
-        {
-            BulletinBoardGlobalPostList.m_GlobalPostList.Add(GlobalPost);
-            return true;
-        }
-
-        public static BulletinBoardGlobalPost AddGlobalPost(string Subject, string Author, string[] Message)
-        {
-            BulletinBoardGlobalPost GlobalPost = new BulletinBoardGlobalPost(Subject, Author, Message);
-            BulletinBoardGlobalPostList.m_GlobalPostList.Add(GlobalPost);
-            return GlobalPost;
-        }
-
-        public static bool RemoveGlobalPost(BulletinBoardGlobalPost GlobalPost)
-        {
-            BulletinBoardGlobalPostList.m_GlobalPostList.Remove(GlobalPost);
-            return true;
-        }
-
-        public override void OnDelete()
-        {
-            // If the item is deleted, remove the post from the global list 
-            BulletinBoardGlobalPostList.m_GlobalPostList.Remove(this);
-            base.OnDelete();
-        }
-
-        public override void Serialize(GenericWriter writer)
-        {
-            base.Serialize(writer);
-        }
-
-        public override void Deserialize(GenericReader reader)
-        {
-            base.Deserialize(reader);
-        }
-    }
-    #endregion
-
-    #region Bulletin Board Post Item
-    public class BulletinBoardPost : Item
-    {
-        private string _Subject = string.Empty;
-        private string _Author = string.Empty;
-        private string _Date = string.Empty;
-        private string[] _Message = new string[0];
-
-        public string Subject
-        {
-            get { return this._Subject; }
-            set { this._Subject = value; }
-        }
-
-        public string Author
-        {
-            get { return this._Author; }
-        }
-
-        public string Date
-        {
-            get { return this._Date; }
-        }
-
-        public string[] Message
-        {
-            get { return this._Message; }
-            set { this._Message = value; }
-        }
-
-        [Constructable]
-        public BulletinBoardPost()
-        {
-            this.Movable = false;
-        }
-
-        [Constructable]
-        public BulletinBoardPost(string Subject, string Author, string[] Message)
-        {
-            this.Movable = false;
-            DateTime PostTime = DateTime.Now;
-            this._Subject = Subject;
-            this._Author = Author;
-            this._Date = "Day " + PostTime.DayOfYear + " @ " + PostTime.ToString("t");
-            this._Message = Message;
-        }
-
-        public BulletinBoardPost(Serial serial)
-            : base(serial)
-        {
-        }
-
-        public override void OnParentDeleted(object Parent)
-        {
-            // Delete the post if the parent object is deleted 
-            if (this.Deleted == false)
-                this.Delete();
         }
 
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
 
-            writer.Write((int)0);
+            writer.Write((int)0); // version
 
-            writer.Write(this._Subject);
-            writer.Write(this._Author);
-            writer.Write(this._Date);
-            writer.Write(this._Message.Length);
-            for (int x = 0; x < this._Message.Length; x++)
-                writer.Write(this._Message[x]);
+            writer.Write(m_Mobile);
         }
 
         public override void Deserialize(GenericReader reader)
@@ -257,590 +101,971 @@ namespace Server.Items
             switch (version)
             {
                 case 0:
-                    {
-                        this._Subject = reader.ReadString();
-                        this._Author = reader.ReadString();
-                        this._Date = reader.ReadString();
+                    m_Mobile = reader.ReadMobile();
+                    break;
+            }
+        }
+    }
 
-                        int MessageLength = reader.ReadInt();
-                        this._Message = new string[MessageLength];
-                        for (int x = 0; x < this._Message.Length; x++)
-                            this._Message[x] = reader.ReadString();
+    public class BountyMessage : BulletinMessage
+    {
+        private Mobile m_Mobile;
+        private String m_Subtext1;
+        private String m_Subtext2;
 
-                        break;
-                    }
+
+        public Mobile BountyPlayer { get { return m_Mobile; } }
+
+        public String Subtext1 { get { return m_Subtext1; } }
+        public String Subtext2 { get { return m_Subtext2; } }
+
+        public BountyMessage(Mobile m) : base(m, null, "", null)
+        {
+            m_Mobile = m;
+            PlayerMobile from = m as PlayerMobile;
+
+            switch (Utility.Random(18))
+            {
+                case 0: m_Subtext1 = "hath murdered one too many!"; break;
+                case 1: m_Subtext1 = "shall not slay again!"; break;
+                case 2: m_Subtext1 = "hath slain too many!"; break;
+                case 3: m_Subtext1 = "cannot continue to kill!"; break;
+                case 4: m_Subtext1 = "must be stopped."; break;
+                case 5: m_Subtext1 = "is a bloodthirsty monster."; break;
+                case 6: m_Subtext1 = "is a killer of the worst sort."; break;
+                case 7: m_Subtext1 = "hath no conscience!"; break;
+                case 8: m_Subtext1 = "hath cowardly slain many."; break;
+                case 9: m_Subtext1 = "must die for all our sakes."; break;
+                case 10: m_Subtext1 = "sheds innocent blood!"; break;
+                case 11: m_Subtext1 = "must fall to preserve us."; break;
+                case 12: m_Subtext1 = "must be taken care of."; break;
+                case 13: m_Subtext1 = "is a thug and must die."; break;
+                case 14: m_Subtext1 = "cannot be redeemed."; break;
+                case 15: m_Subtext1 = "is a shameless butcher."; break;
+                case 16: m_Subtext1 = "is a callous monster."; break;
+                case 17: m_Subtext1 = "is a cruel, casual killer."; break;
+            }
+
+            switch (Utility.Random(7))
+            {
+                case 0: m_Subtext2 = "A bounty is hereby offered"; break;
+                case 1: m_Subtext2 = "Lord British sets a price"; break;
+                case 2: m_Subtext2 = "Claim the reward! 'Tis"; break;
+                case 3: m_Subtext2 = "Lord Blackthorn set a price"; break;
+                case 4: m_Subtext2 = "The Paladins set a price"; break;
+                case 5: m_Subtext2 = "The Merchants set a price"; break;
+                case 6: m_Subtext2 = "Lord British's bounty"; break;
+            }
+
+            Subject = MakeSubject();
+            String line = String.Format("The foul scum known as {0} {1} For {2} is responsible for {3} murders. {4} of {5} gold pieces for {6} head!", from.Name, Subtext1, (from.Body.IsFemale ? "she" : "he"), from.Kills, Subtext2, (from.Bounty == 0 ? "alas, zero" : from.Bounty.ToString()), (from.Body.IsFemale ? "her" : "his"));
+            Lines = MakeLines(line);
+
+            BaseBulletinBoard.MasterBoard.AddItem(this);
+        }
+
+        public BountyMessage(Serial serial) : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((int)0); // version
+
+            writer.Write(m_Mobile);
+            writer.Write(m_Subtext1);
+            writer.Write(m_Subtext2);
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+
+            int version = reader.ReadInt();
+
+            switch (version)
+            {
+                case 0:
+                    m_Mobile = reader.ReadMobile();
+                    m_Subtext1 = reader.ReadString();
+                    m_Subtext2 = reader.ReadString();
+                    break;
             }
         }
 
-        public static void Initialize()
+        public static void UpdateBounty(Mobile m)
         {
-            // Register the packet handler for packet type 0x71 
-            PacketHandlers.Register(0x71, 0, true, new OnPacketReceive(BulletinBoardMessage));
-        }
+            PlayerMobile from = m as PlayerMobile;
 
-        public static void BulletinBoardMessage(NetState state, PacketReader pvSrc)
-        {
-            try
+            if (from.BountyMark == false)
             {
-                // Log the incoming packet 
-                BulletinPacket.LogPacket("BulletinSendPostMessage", pvSrc.Buffer);
+                return;
+            }
 
-                // Get the player character who performed the action that sent the packet 
-                Mobile from = state.Mobile;
-
-#if BULLETIN_DEBUG 
-                // Log to the console information about the selected posting 
-                Console.WriteLine( "BulletinSendPostMessage: Post Requested from Mobile '{0}' {1}", from.Name, from.Serial ); 
-#endif
-
-                // Get the type of bulletin message (packet sub type) 
-                BulletinPacket.PacketSubType SubType = (BulletinPacket.PacketSubType)pvSrc.ReadByte();
-#if BULLETIN_DEBUG 
-                Console.WriteLine( "BulletinSendPostMessage: Sub-Type={0}", SubType.ToString() ); 
-#endif
-
-                // Find the bulletin board this packet is referring to 
-                BulletinBoard Board = World.FindItem(pvSrc.ReadInt32()) as BulletinBoard;
-                if (Board == null)
+            foreach (BountyMessage bm in BaseBulletinBoard.MasterBoard.Items)
+            {
+                if (bm != null && bm.BountyPlayer == m)
+                {
+                    bm.Subject = bm.MakeSubject();
+                    String line = String.Format("The foul scum known as {0} {1} For {2} is responsible for {3} murders. {4} of {5} gold pieces for {6} head!", from.Name, bm.Subtext1, (from.Body.IsFemale ? "she" : "he"), from.Kills, bm.Subtext2, (from.Bounty == 0 ? "alas, zero" : from.Bounty.ToString()), (from.Body.IsFemale ? "her" : "his"));
+                    bm.Lines = MakeLines(line);
                     return;
-
-#if BULLETIN_DEBUG 
-                // Log to the console information about the selected posting 
-                Console.WriteLine( "BulletinSendPostMessage: Post Requested from Bulletin Board '{0}' {1} - Total Items = {2}", Board.Name, Board.Serial, Board.Items.Count ); 
-#endif
-
-                // Switch the message sub-type 
-                switch (SubType)
-                {
-                    // Client wants to post a new message 
-                    case BulletinPacket.PacketSubType.RequestPostCreation:
-                        {
-                            from.SendAsciiMessage("You cannot post messages on this board.");
-                            return;
-                            // Make sure the client is still close enough to interact with the bulletin board 
-                            if (!from.InRange(Board.GetWorldLocation(), 2))
-                            {
-                                from.SendMessage("You are too far away from the board to post a message.");
-                                return;
-                            }
-
-                            // Read in the next 4 bytes to see if this is a reply 
-                            BulletinBoardPost ReplyToPost = World.FindItem(pvSrc.ReadInt32()) as BulletinBoardPost;
-
-                            // Check if the reply is to a global posting 
-                            if (ReplyToPost is BulletinBoardGlobalPost)
-                            {
-                                // Tell the player that they can not reply to this message 
-                                state.Mobile.SendMessage("You may not reply to this message.");
-                                return;
-                            }
-
-                            // Get the length of the subject 
-                            short SubjectLength = pvSrc.ReadByte();
-
-                            // Get the subject line including the terminatin NULL 
-                            string Subject = pvSrc.ReadString();
-
-                            // Get the number of message lines 
-                            short MessageLines = pvSrc.ReadByte();
-
-                            // Retrieve all of the lines in the message 
-                            string[] Message = new string[MessageLines];
-                            for (int x = 0; x < Message.Length; x++)
-                            {
-                                short CurrentLineLength = pvSrc.ReadByte();
-                                Message[x] = pvSrc.ReadString();
-                            }
-
-                            // Now that all of the data has been collected, create a BulletinBoardPost item 
-                            BulletinBoardPost NewPost = new BulletinBoardPost(Subject, from.Name, Message);
-
-                            // Check if this is a reply to a previous post 
-                            if (ReplyToPost != null)
-                            {
-                                // Check if the post being replied to is a base post 
-                                // on the board.  Only base posts can be replied to. 
-                                // This code ensures that replies can only be done to 
-                                // base posts, and not to other replies 
-                                if (ReplyToPost.Parent == Board)
-                                    ReplyToPost.AddItem(NewPost);
-                                else
-                                    ((Item)(ReplyToPost.Parent)).AddItem(NewPost);
-
-                                // Send update to the client that a reply was posted 
-                                // This shows the new reply immediately on the board 
-                                // (Strange, but the client automatically does this part 
-                                //  if the posting is not a reply) 
-                                from.Send(new AddPostReplyItemPacket(NewPost));
-                            }
-                            else
-                            {
-                                // This is a new post, so add it to the boards item list 
-                                Board.AddItem(NewPost);
-                            }
-
-#if BULLETIN_DEBUG 
-                        // Log to the console information about the selected posting 
-                        Console.WriteLine( "BulletinSendPostMessage: Added New Post {0} to Bulletin Board '{1}' {2} - Total Items = {3}", NewPost.Serial, Board.Name, Board.Serial, Board.Items.Count ); 
-#endif
-                            break;
-                        }
-
-                    // Client is requesting a summary of a posted message 
-                    case BulletinPacket.PacketSubType.RequestPostSummary:
-                        {
-                            // Try to find the post that this message is referring to 
-                            int PostSerial = pvSrc.ReadInt32();
-                            BulletinBoardPost Post = World.FindItem(PostSerial) as BulletinBoardPost;
-                            if (Post == null)
-                            {
-                                Console.WriteLine("Unknown Bulletin Board Post Item - Serial: {0}", PostSerial);
-                                return;
-                            }
-
-                            from.Send(new BulletinBoardSendPostSummaryPacket(Board, Post));
-                            break;
-                        }
-
-                    // Client is requesting the full details of the post (the entire message) 
-                    case BulletinPacket.PacketSubType.RequestPostMessage:
-                        {
-                            // Make sure the client is still close enough to interact with the bulletin board 
-                            if (!from.InRange(Board.GetWorldLocation(), 2))
-                            {
-                                from.SendMessage("You are too far away from the board to read the message.");
-                                return;
-                            }
-
-                            // Try to find the post that this message is referring to 
-                            int PostSerial = pvSrc.ReadInt32();
-                            BulletinBoardPost Post = World.FindItem(PostSerial) as BulletinBoardPost;
-                            if (Post == null)
-                            {
-                                Console.WriteLine("Unknown Bulletin Board Post Item - Serial: {0}", PostSerial);
-                                return;
-                            }
-
-                            from.Send(new BulletinBoardPostPacket(Post));
-                            break;
-                        }
-
-                    // Client is requesting to remove a post 
-                    case BulletinPacket.PacketSubType.RequestPostRemove:
-                        {
-                            // Don't handle this situation at the moment 
-                            // The T2A client and the UOTD client behave differently 
-                            // so therefore, it's not handled at all for simplicity 
-                            /* 
-                            // Try to find the post that this message is referring to 
-                            int PostSerial = pvSrc.ReadInt32(); 
-                            BulletinBoardPost Post = World.FindItem( PostSerial ) as BulletinBoardPost; 
-                            if ( Post == null ) 
-                            { 
-                                Console.WriteLine( "Unknown Bulletin Board Post Item - Serial: {0}", PostSerial ); 
-                                return; 
-                            } 
-
-                            // Delete the post item 
-                            Post.Delete(); 
-                            */
-                            break;
-                        }
-
-                    default:
-                        {
-                            Console.WriteLine("BulletinBoardPost: Unknown Bulletin Board Message SubType: ", SubType);
-                            break;
-                        }
                 }
             }
-            catch (System.Exception se)
+        }
+
+        public string MakeSubject()
+        {
+            PlayerMobile from = m_Mobile as PlayerMobile;
+
+            return String.Format("{0}: {1} gold pieces", from.Name, from.Bounty);
+        }
+    }
+
+	[Flipable( 0x1E5E, 0x1E5F )]
+	public class BulletinBoard : BaseBulletinBoard
+	{
+		[Constructable]
+		public BulletinBoard() : base( 0x1E5E )
+		{
+		}
+
+		public BulletinBoard( Serial serial ) : base( serial )
+		{
+		}
+
+		public override void Serialize( GenericWriter writer )
+		{
+			base.Serialize( writer );
+
+			writer.Write( (int) 0 ); // version
+		}
+
+		public override void Deserialize( GenericReader reader )
+		{
+			base.Deserialize( reader );
+
+			int version = reader.ReadInt();
+		}
+	}
+
+	public abstract class BaseBulletinBoard : Container
+	{
+		private string m_BoardName;
+
+        private static BulletinBoard m_MasterBoard;
+        public static BulletinBoard MasterBoard
+        {
+            get {
+                if (m_MasterBoard == null)
+                    m_MasterBoard = new BulletinBoard();
+
+                return m_MasterBoard;
+            }
+        }
+
+		[CommandProperty( AccessLevel.GameMaster )]
+		public string BoardName
+		{
+			get{ return m_BoardName; }
+			set{ m_BoardName = value; }
+		}
+
+		public BaseBulletinBoard( int itemID ) : base( itemID )
+		{
+			m_BoardName = "bulletin board";
+			Movable = false;
+
+		}
+
+		// Threads will be removed six hours after the last post was made
+		private static TimeSpan ThreadDeletionTime = TimeSpan.FromHours( 6.0 );
+
+		// A player may only create a thread once every two minutes
+		private static TimeSpan ThreadCreateTime = TimeSpan.FromMinutes( 2.0 );
+
+		// A player may only reply once every thirty seconds
+		private static TimeSpan ThreadReplyTime = TimeSpan.FromSeconds( 30.0 );
+
+		public static bool CheckTime( DateTime time, TimeSpan range )
+		{
+			return (time + range) < DateTime.Now;
+		}
+
+		public static string FormatTS( TimeSpan ts )
+		{
+			int totalSeconds = (int)ts.TotalSeconds;
+			int seconds = totalSeconds % 60;
+			int minutes = totalSeconds / 60;
+
+			if ( minutes != 0 && seconds != 0 )
+				return String.Format( "{0} minute{1} and {2} second{3}", minutes, minutes==1?"":"s", seconds, seconds==1?"":"s" );
+			else if ( minutes != 0 )
+				return String.Format( "{0} minute{1}", minutes, minutes==1?"":"s" );
+			else
+				return String.Format( "{0} second{1}", seconds, seconds==1?"":"s" );
+		}
+
+        public override void OnSingleClick(Mobile from)
+        {
+            from.Send(new AsciiMessage(this.Serial, this.ItemID, MessageType.Label, 0, 3, "", "a bulletin board"));
+        }
+
+		public virtual void Cleanup()
+		{
+			List<Item> items = this.Items;
+
+			for ( int i = items.Count - 1; i >= 0; --i )
+			{
+				if ( i >= items.Count )
+					continue;
+
+				BulletinMessage msg = items[i] as BulletinMessage;
+
+				if ( msg == null )
+					continue;
+
+                // Bounty Clean-up
+                BountyMessage bm = msg as BountyMessage;
+                if (bm != null)
+                {
+                    if (!((PlayerMobile)bm.BountyPlayer).BountyMark)
+                    {
+                        msg.Delete();
+                        RecurseDelete( msg );
+                    }
+
+                    continue;
+                }
+                // End Bounty Clean-up
+
+                //Stop escort messages from being deleted
+                if (msg is EscortMessage)
+                    continue;
+
+				if ( msg.Thread == null && CheckTime( msg.LastPostTime, ThreadDeletionTime ) )
+				{
+					msg.Delete();
+					RecurseDelete( msg ); // A root-level thread has expired
+				}
+			}
+		}
+
+		private void RecurseDelete( BulletinMessage msg )
+		{
+			List<Item> found = new List<Item>();
+			List<Item> items = this.Items;
+
+			for ( int i = items.Count - 1; i >= 0; --i )
+			{
+				if ( i >= items.Count )
+					continue;
+
+				BulletinMessage check = items[i] as BulletinMessage;
+
+				if ( check == null )
+					continue;
+
+				if ( check.Thread == msg )
+				{
+					check.Delete();
+					found.Add( check );
+				}
+			}
+
+			for ( int i = 0; i < found.Count; ++i )
+				RecurseDelete( (BulletinMessage)found[i] );
+		}
+
+		public virtual bool GetLastPostTime( Mobile poster, bool onlyCheckRoot, ref DateTime lastPostTime )
+		{
+			List<Item> items = this.Items;
+			bool wasSet = false;
+
+			for ( int i = 0; i < items.Count; ++i )
+			{
+				BulletinMessage msg = items[i] as BulletinMessage;
+
+				if ( msg == null || msg.Poster != poster )
+					continue;
+
+				if ( onlyCheckRoot && msg.Thread != null )
+					continue;
+
+				if ( msg.Time > lastPostTime )
+				{
+					wasSet = true;
+					lastPostTime = msg.Time;
+				}
+			}
+
+			return wasSet;
+		}
+
+		public override void OnDoubleClick( Mobile from )
+		{
+			if ( CheckRange( from ) )
+			{
+				Cleanup();
+
+				NetState state = from.NetState;
+
+				state.Send( new BBDisplayBoard( this ) );
+
+                if (state.ContainerGridLines)
+                {
+                    state.Send(new BBContainerContent6017(from, this));
+                }
+                else
+                    state.Send(new BBContainerContent(from, this));
+			}
+			else
+			{
+                from.LocalOverheadMessage(MessageType.Regular, 0x3B2, true, "I can't reach that."); // I can't reach that.
+			}
+		}
+
+        private class BulletinComparer : IComparer<Item>
+        {
+            public int Compare(Item x, Item y)
             {
-                Console.WriteLine(se.ToString());
+                if (((BulletinMessage)x) == null && ((BulletinMessage)y) == null)
+                    return 0;
+                else if (((BulletinMessage)x) == null)
+                    return -1;
+                else if (((BulletinMessage)y) == null)
+                    return 1;
+
+                return ((BulletinMessage)x).LastPostTime.CompareTo(((BulletinMessage)y).LastPostTime);
+            }
+        }
+
+        private sealed class BBContainerContent6017 : Packet
+        {
+            public BBContainerContent6017(Mobile beholder, Item beheld) : base(0x3C)
+            {
+                List<Item> items = new List<Item>();
+
+                items.InsertRange(0, MasterBoard.Items);
+                items.InsertRange(0, beheld.Items);
+
+                items.Sort(new BulletinComparer());
+                
+                int count = items.Count;
+
+                this.EnsureCapacity(5 + (count * 20));
+
+                long pos = m_Stream.Position;
+
+                int written = 0;
+
+                m_Stream.Write((ushort)0);
+
+                for (int i = 0; i < count; ++i)
+                {
+                    Item child = items[i];
+
+                    if (!child.Deleted)
+                    {
+                        Point3D loc = child.Location;
+
+                        m_Stream.Write((int)child.Serial);
+                        m_Stream.Write((ushort)child.ItemID);
+                        m_Stream.Write((byte)0); // signed, itemID offset
+                        m_Stream.Write((ushort)child.Amount);
+                        m_Stream.Write((short)loc.X);
+                        m_Stream.Write((short)loc.Y);
+                        m_Stream.Write((byte)0); // Grid Location?
+                        m_Stream.Write((int)beheld.Serial);
+                        m_Stream.Write((ushort)child.Hue);
+
+                        ++written;
+                    }
+                }
+
+                m_Stream.Seek(pos, SeekOrigin.Begin);
+                m_Stream.Write((ushort)written);
+            }
+        }
+
+        private sealed class BBContainerContent : Packet
+        {
+            public BBContainerContent(Mobile beholder, Item beheld)
+                : base(0x3C)
+            {
+                List<Item> items = new List<Item>();
+
+                items.InsertRange(0, MasterBoard.Items);
+                items.InsertRange(0, beheld.Items);
+
+                items.Sort(new BulletinComparer());
+
+                int count = items.Count;
+
+                this.EnsureCapacity(5 + (count * 19));
+
+                long pos = m_Stream.Position;
+
+                int written = 0;
+
+                m_Stream.Write((ushort)0);
+
+                for (int i = 0; i < count; ++i)
+                {
+                    Item child = items[i];
+
+                    if (!child.Deleted)
+                    {
+                        Point3D loc = child.Location;
+
+                        m_Stream.Write((int)child.Serial);
+                        m_Stream.Write((ushort)child.ItemID);
+                        m_Stream.Write((byte)0); // signed, itemID offset
+                        m_Stream.Write((ushort)child.Amount);
+                        m_Stream.Write((short)loc.X);
+                        m_Stream.Write((short)loc.Y);
+                        m_Stream.Write((int)beheld.Serial);
+                        m_Stream.Write((ushort)child.Hue);
+
+                        ++written;
+                    }
+                }
+
+                m_Stream.Seek(pos, SeekOrigin.Begin);
+                m_Stream.Write((ushort)written);
+            }
+        }
+
+		public virtual bool CheckRange( Mobile from )
+		{
+			if ( from.AccessLevel >= AccessLevel.GameMaster )
+				return true;
+
+			return ( from.Map == this.Map && from.InRange( GetWorldLocation(), 2 ) );
+		}
+
+		public void PostMessage( Mobile from, BulletinMessage thread, string subject, string[] lines )
+		{
+			if ( thread != null )
+				thread.LastPostTime = DateTime.Now;
+
+            BulletinMessage newbm = new BulletinMessage(from, thread, subject, lines);
+			
+            AddItem( newbm );
+
+            from.Send(new BBMessageHeader(this, newbm));
+		}
+
+		public BaseBulletinBoard( Serial serial ) : base( serial )
+		{
+		}
+
+		public override void Serialize( GenericWriter writer )
+		{
+			base.Serialize( writer );
+
+			writer.Write( (int) 0 ); // version
+
+			writer.Write( (string) m_BoardName );
+
+            writer.Write(m_MasterBoard);
+		}
+
+		public override void Deserialize( GenericReader reader )
+		{
+			base.Deserialize( reader );
+
+			int version = reader.ReadInt();
+
+			switch ( version )
+			{
+				case 0:
+				{
+					m_BoardName = reader.ReadString();
+                    m_MasterBoard = (BulletinBoard)reader.ReadItem();
+					break;
+				}
+			}
+		}
+
+		public static void Initialize()
+		{
+			PacketHandlers.Register( 0x71, 0, true, new OnPacketReceive( BBClientRequest ) );
+		}
+
+		public static void BBClientRequest( NetState state, PacketReader pvSrc )
+		{
+			Mobile from = state.Mobile;
+
+			int packetID = pvSrc.ReadByte();
+			BaseBulletinBoard board = World.FindItem( pvSrc.ReadInt32() ) as BaseBulletinBoard;
+
+			if ( board == null || !board.CheckRange( from ) )
+				return;
+
+			switch ( packetID )
+			{
+				case 3: BBRequestContent( from, board, pvSrc ); break;
+				case 4: BBRequestHeader( from, board, pvSrc ); break;
+				case 5: BBPostMessage( from, board, pvSrc ); break;
+				case 6: BBRemoveMessage( from, board, pvSrc ); break;
+			}
+		}
+
+		public static void BBRequestContent( Mobile from, BaseBulletinBoard board, PacketReader pvSrc )
+		{
+			BulletinMessage msg = World.FindItem( pvSrc.ReadInt32() ) as BulletinMessage;
+
+			if ( msg == null /*|| msg.Parent != board*/ )
+				return;
+
+			from.Send( new BBMessageContent( board, msg ) );
+		}
+
+		public static void BBRequestHeader( Mobile from, BaseBulletinBoard board, PacketReader pvSrc )
+		{
+			BulletinMessage msg = World.FindItem( pvSrc.ReadInt32() ) as BulletinMessage;
+
+			if ( msg == null /*|| msg.Parent != board*/ )
+				return;
+
+			from.Send( new BBMessageHeader( board, msg ) );
+		}
+
+		public static void BBPostMessage( Mobile from, BaseBulletinBoard board, PacketReader pvSrc )
+		{
+			BulletinMessage thread = World.FindItem( pvSrc.ReadInt32() ) as BulletinMessage;
+
+            /*if ( thread != null && thread.Parent != board )
+                thread = null;*/
+
+            int breakout = 0;
+
+			while ( thread != null && thread.Thread != null && breakout++ < 10 )
+				thread = thread.Thread;
+
+			DateTime lastPostTime = DateTime.MinValue;
+
+			if ( board.GetLastPostTime( from, ( thread == null ), ref lastPostTime ) )
+			{
+				if ( !CheckTime( lastPostTime, (thread == null ? ThreadCreateTime : ThreadReplyTime) ) )
+				{
+					if ( thread == null )
+						from.SendAsciiMessage( "You must wait {0} before creating a new thread.", FormatTS( ThreadCreateTime ) );
+					else
+                        from.SendAsciiMessage( "You must wait {0} before replying to another thread.", FormatTS( ThreadReplyTime ) );
+
+					return;
+				}
+			}
+
+			string subject = pvSrc.ReadUTF8StringSafe( pvSrc.ReadByte() );
+
+			if ( subject.Length == 0 )
+				return;
+
+			string[] lines = new string[pvSrc.ReadByte()];
+
+			if ( lines.Length == 0 )
+				return;
+
+			for ( int i = 0; i < lines.Length; ++i )
+				lines[i] = pvSrc.ReadUTF8StringSafe( pvSrc.ReadByte() );
+
+			board.PostMessage( from, thread, subject, lines );
+		}
+
+		public static void BBRemoveMessage( Mobile from, BaseBulletinBoard board, PacketReader pvSrc )
+		{
+			BulletinMessage msg = World.FindItem( pvSrc.ReadInt32() ) as BulletinMessage;
+
+			if ( msg == null /*|| msg.Parent != board*/ )
+				return;
+
+			if ( from.AccessLevel < AccessLevel.GameMaster && msg.Poster != from )
+				return;
+
+			msg.Delete();
+		}
+	}
+
+	public struct BulletinEquip
+	{
+		public int itemID;
+		public int hue;
+
+		public BulletinEquip( int itemID, int hue )
+		{
+			this.itemID = itemID;
+			this.hue = hue;
+		}
+	}
+
+	public class BulletinMessage : Item
+	{
+		private Mobile m_Poster;
+		private string m_Subject;
+		private DateTime m_Time, m_LastPostTime;
+		private BulletinMessage m_Thread;
+		private string m_PostedName;
+		private int m_PostedBody;
+		private int m_PostedHue;
+		private BulletinEquip[] m_PostedEquip;
+		private string[] m_Lines;
+
+		public string GetTimeAsString()
+		{
+            return "Day " + m_Time.DayOfYear + " @ " + m_Time.ToString("t");
+		}
+
+		public override bool CheckTarget( Mobile from, Server.Targeting.Target targ, object targeted )
+		{
+			return false;
+		}
+
+		public override bool IsAccessibleTo( Mobile check )
+		{
+			return false;
+		}
+
+		public BulletinMessage( Mobile poster, BulletinMessage thread, string subject, string[] lines ) : base( 0xEB0 )
+		{
+			Movable = false;
+
+			m_Poster = poster;
+			m_Subject = subject;
+			m_Time = DateTime.Now;
+			m_LastPostTime = m_Time;
+			m_Thread = thread;
+            m_PostedName = (this as BountyMessage) != null ? "" : m_Poster.Name;
+            m_PostedBody = (int)m_Poster.Body;
+			m_PostedHue = m_Poster.Hue;
+			m_Lines = lines;
+
+			List<BulletinEquip> list = new List<BulletinEquip>();
+
+            for (int i = 0; i < poster.Items.Count; ++i)
+            {
+                Item item = poster.Items[i];
+
+                if (item.Layer >= Layer.OneHanded && item.Layer <= Layer.Mount)
+                    list.Add(new BulletinEquip(item.ItemID, item.Hue));
             }
 
-            return;
-        }
-    }
-    #endregion
+			m_PostedEquip = list.ToArray();
+		}
 
-    #region Bulletin Board Packet Abstract Class
-    public abstract class BulletinPacket : Packet
-    {
-        public BulletinPacket(int packetID)
-            : base(packetID)
+		public Mobile Poster{ get{ return m_Poster; } }
+		public BulletinMessage Thread{ get{ return m_Thread; } }
+        public string Subject { get { return m_Subject; } set { m_Subject = value; } }
+		public DateTime Time{ get{ return m_Time; } }
+		public DateTime LastPostTime{ get{ return m_LastPostTime; } set{ m_LastPostTime = value; } }
+		public string PostedName{ get{ return m_PostedName; } }
+		public int PostedBody{ get{ return m_PostedBody; } }
+		public int PostedHue{ get{ return m_PostedHue; } }
+		public BulletinEquip[] PostedEquip{ get{ return m_PostedEquip; } }
+        public string[] Lines { get { return m_Lines; } set { m_Lines = value; } }
+
+		public BulletinMessage( Serial serial ) : base( serial )
+		{
+		}
+
+		public override void Serialize( GenericWriter writer )
+		{
+			base.Serialize( writer );
+
+			writer.Write( (int) 1 ); // version
+
+			writer.Write( (Mobile) m_Poster );
+			writer.Write( (string) m_Subject );
+			writer.Write( (DateTime) m_Time );
+			writer.Write( (DateTime) m_LastPostTime );
+			writer.Write( (bool) (m_Thread != null) );
+			writer.Write( (Item) m_Thread );
+			writer.Write( (string) m_PostedName );
+			writer.Write( (int) m_PostedBody );
+			writer.Write( (int) m_PostedHue );
+
+			writer.Write( (int) m_PostedEquip.Length );
+
+			for ( int i = 0; i < m_PostedEquip.Length; ++i )
+			{
+				writer.Write( (int) m_PostedEquip[i].itemID );
+				writer.Write( (int) m_PostedEquip[i].hue );
+			}
+
+			writer.Write( (int) m_Lines.Length );
+
+			for ( int i = 0; i < m_Lines.Length; ++i )
+				writer.Write( (string) m_Lines[i] );
+		}
+
+		public override void Deserialize( GenericReader reader )
+		{
+			base.Deserialize( reader );
+
+			int version = reader.ReadInt();
+
+			switch ( version )
+			{
+				case 1:
+				case 0:
+				{
+					m_Poster = reader.ReadMobile();
+					m_Subject = reader.ReadString();
+					m_Time = reader.ReadDateTime();
+					m_LastPostTime = reader.ReadDateTime();
+					bool hasThread = reader.ReadBool();
+					m_Thread = reader.ReadItem() as BulletinMessage;
+					m_PostedName = reader.ReadString();
+					m_PostedBody = reader.ReadInt();
+					m_PostedHue = reader.ReadInt();
+
+					m_PostedEquip = new BulletinEquip[reader.ReadInt()];
+
+					for ( int i = 0; i < m_PostedEquip.Length; ++i )
+					{
+						m_PostedEquip[i].itemID = reader.ReadInt();
+						m_PostedEquip[i].hue = reader.ReadInt();
+					}
+
+					m_Lines = new string[reader.ReadInt()];
+
+					for ( int i = 0; i < m_Lines.Length; ++i )
+						m_Lines[i] = reader.ReadString();
+
+					if ( hasThread && m_Thread == null )
+						Delete();
+
+					if ( version == 0 )
+						ValidationQueue<BulletinMessage>.Add( this );
+
+					break;
+				}
+			}
+		}
+
+		public void Validate()
+		{
+			if ( !( Parent is BulletinBoard && ((BulletinBoard)Parent).Items.Contains( this ) ) )
+				Delete();
+		}
+
+        public static BulletinBoard FindClosestBB(Mobile m, out double distance)
         {
-        }
+            BulletinBoard closest = null;
+            distance = double.MaxValue;
+            double tempdist = 0;
 
-        public BulletinPacket(int packetID, int length)
-            : base(packetID, length)
-        {
-        }
-
-        public enum PacketSubType : byte
-        {
-            DisplayBoard = 0,
-            SendPostSummary = 1,
-            SendPostMessage = 2,
-            RequestPostMessage = 3,
-            RequestPostSummary = 4,
-            RequestPostCreation = 5,
-            RequestPostRemove = 6
-        }
-
-        public static void LogPacket(string Description, byte[] Data)
-        {
-#if BULLETIN_DEBUG 
-            Console.WriteLine( "{0}: Size={1}", Description, Data.Length ); 
-            foreach( byte b in Data ) 
-                Console.Write( ( b < 0x10 ? "0" : "" ) + string.Format( "{0:X} ", b ) ); 
-            Console.WriteLine( string.Empty ); 
-#endif
-        }
-    }
-    #endregion
-
-    public sealed class BulletinBoardOpenPacket : BulletinPacket
-    {
-        public BulletinBoardOpenPacket(BulletinBoard Board)
-            : base(0x71)
-        {
-            // Don't need much room here (just enough to take into account a 
-            // non-default bulletin board name) 
-            EnsureCapacity(256);
-
-            // Get the name of the bulletin board 
-            string BoardName = Board.Name == null ? "Bulletin Board" : Board.Name;
-
-            // Fill the packet data 
-            UnderlyingStream.Write((byte)BulletinPacket.PacketSubType.DisplayBoard);
-            UnderlyingStream.Write((int)Board.Serial);
-            UnderlyingStream.WriteAsciiNull(BoardName);
-
-            // Log the raw packet info 
-            BulletinPacket.LogPacket("BulletinBoardOpenPacket", UnderlyingStream.ToArray());
-        }
-    }
-
-    public sealed class BulletinBoardFillItemsPacket6 : BulletinPacket
-    {
-        public BulletinBoardFillItemsPacket6(BulletinBoard Board)
-            : base(0x3c)
-        {
-            // Since the maximum size of a packet is 65535 and the overhead of the 
-            // segment is 19 characters, lets ensure the maximum capacity is available 
-            EnsureCapacity(65535);
-
-            // There will be a check to allow only a maximum of 3072 posts to be shown 
-            // on a single bulletin board 
-            // 3072x19 bytes for an item segment = 58368 bytes (should be very safe) 
-
-            // Get all of the items associated with this bulletin board 
-            //ArrayList OriginalPosts = Board.Items;
-            //List<Item> OriginalPosts = Board.Items;
-            List<Item> OriginalPosts = new List<Item>();
             foreach (Item item in World.Items.Values)
             {
-                // Add each global post to the global post list 
-                if (item is BulletinBoardPost)
+                if (item is BulletinBoard)
                 {
-                    //all posts go on every messagebaord
-                    //if (item.Parent == Board)
-                    OriginalPosts.Add(item);
-                }
-            }
-
-            // Do a deep copy of each post on the board (need to do this so that 
-            // the replies can be added to the outgoing message without modifiying 
-            // the original array list) 
-            List<Item> AllPosts = new List<Item>();
-            //ArrayList AllPosts = new ArrayList(OriginalPosts.Count);
-            foreach (BulletinBoardPost OriginalPost in OriginalPosts)
-                AllPosts.Add(OriginalPost);
-
-            // Add any global posts to the top of the new list. 
-            // Global posts can not be replied to since they don't belong to 
-            // a specific bulletin board. 
-            if (BulletinBoardGlobalPostList.m_GlobalPostList.Count > 0)
-                AllPosts.InsertRange(0, BulletinBoardGlobalPostList.m_GlobalPostList);
-
-            // Collect any replies to posts and insert them into the array list 
-            // as long as the array list contains less than 3072 items 
-            for (int x = 0; x < AllPosts.Count; x++)
-            {
-                // Get the current post object in the list 
-                BulletinBoardPost Post = AllPosts[x] as BulletinBoardPost;
-
-                // Check if the object retrieved from the list was a post 
-                if (Post != null)
-                {
-                    // Check to see if this post item has any child posts 
-                    if (Post.Items.Count > 0)
+                    tempdist = m.GetDistanceToSqrt(item.Location);
+                    if (tempdist < distance)
                     {
-                        // Collect all child posts (replies) and insert them 
-                        // into the original array list after the current posts 
-                        // position. 
-                        foreach (BulletinBoardPost Reply in Post.Items)
-                            AllPosts.Add(Reply); // Add the reply posts to the end 
+                        closest = item as BulletinBoard;
+                        distance = tempdist;
                     }
                 }
             }
 
-            // Fill in the mandatory pieces of the packet 
-            UnderlyingStream.Write((short)AllPosts.Count);
-
-            // Check each root item for any children 
-            foreach (BulletinBoardPost Post in AllPosts)
-            {
-                UnderlyingStream.Write((int)Post.Serial);
-                UnderlyingStream.Write((byte)0x0E); // Model High 
-                UnderlyingStream.Write((byte)0xB0); // Model Low 
-                UnderlyingStream.Write((byte)0x00); // Unknown 
-                UnderlyingStream.Write((byte)0x00); // Items In Stack High 
-                UnderlyingStream.Write((byte)0x00); // Items In Stack Low 
-                UnderlyingStream.Write((byte)0x00); // X Position High 
-                UnderlyingStream.Write((byte)0x3A); // X Position Low 
-                UnderlyingStream.Write((byte)0x00); // Y Position High 
-                UnderlyingStream.Write((byte)0x3A); // Y Position Low 
-                UnderlyingStream.Write((int)Board.Serial);
-                UnderlyingStream.Write((byte)0x00); // Colour High 
-                UnderlyingStream.Write((byte)0x00); // Colour Low 
-            }
-
-            // Log the raw packet info 
-            BulletinPacket.LogPacket("BulletinBoardFillItemsPacket6", UnderlyingStream.ToArray());
+            return closest;
         }
-    }
 
-    public sealed class BulletinBoardFillItemsPacket : BulletinPacket
-    {
-        public BulletinBoardFillItemsPacket(BulletinBoard Board)
-            : base(0x3c)
+        public static string[] MakeLines(String text)
         {
-            // Since the maximum size of a packet is 65535 and the overhead of the 
-            // segment is 19 characters, lets ensure the maximum capacity is available 
-            EnsureCapacity(65535);
+            int current = 0;
+            int lineCount = 25;
+            List<String> linesList = new List<string>();
 
-            // There will be a check to allow only a maximum of 3072 posts to be shown 
-            // on a single bulletin board 
-            // 3072x19 bytes for an item segment = 58368 bytes (should be very safe) 
+            string[] lines = new string[lineCount];
+            char space = ' ';
 
-            // Get all of the items associated with this bulletin board 
-            //ArrayList OriginalPosts = Board.Items;
-            //List<Item> OriginalPosts = Board.Items;
-            List<Item> OriginalPosts = new List<Item>();
-            foreach (Item item in World.Items.Values)
+            // break up the text into single line length pieces
+            while (text != null && current < text.Length)
             {
-                // Add each global post to the global post list 
-                if (item is BulletinBoardPost)
+                // make each line 25 chars long
+                int length = text.Length - current;
+
+                if (length > 25)
                 {
-                    //all posts go on every messagebaord
-                    //if (item.Parent == Board)
-                        OriginalPosts.Add(item);
+                    length = 25;
+
+                    while (text[current + length] != space)
+                        length--;
+
+                    length++;
+                    linesList.Add(text.Substring(current, length));
                 }
-            }
-
-            // Do a deep copy of each post on the board (need to do this so that 
-            // the replies can be added to the outgoing message without modifiying 
-            // the original array list) 
-            List<Item> AllPosts = new List<Item>();
-            //ArrayList AllPosts = new ArrayList(OriginalPosts.Count);
-            foreach (BulletinBoardPost OriginalPost in OriginalPosts)
-                AllPosts.Add(OriginalPost);
-
-            // Add any global posts to the top of the new list. 
-            // Global posts can not be replied to since they don't belong to 
-            // a specific bulletin board. 
-            if (BulletinBoardGlobalPostList.m_GlobalPostList.Count > 0)
-                AllPosts.InsertRange(0, BulletinBoardGlobalPostList.m_GlobalPostList);
-
-            // Collect any replies to posts and insert them into the array list 
-            // as long as the array list contains less than 3072 items 
-            for (int x = 0; x < AllPosts.Count; x++)
-            {
-                // Get the current post object in the list 
-                BulletinBoardPost Post = AllPosts[x] as BulletinBoardPost;
-
-                // Check if the object retrieved from the list was a post 
-                if (Post != null)
+                else
                 {
-                    // Check to see if this post item has any child posts 
-                    if (Post.Items.Count > 0)
-                    {
-                        // Collect all child posts (replies) and insert them 
-                        // into the original array list after the current posts 
-                        // position. 
-                        foreach (BulletinBoardPost Reply in Post.Items)
-                            AllPosts.Add(Reply); // Add the reply posts to the end 
-                    }
+                    linesList.Add(String.Format("{0} ", text.Substring(current, length)));
                 }
+
+                current += length;
             }
 
-            // Fill in the mandatory pieces of the packet 
-            UnderlyingStream.Write((short)AllPosts.Count);
-
-            // Check each root item for any children 
-            foreach (BulletinBoardPost Post in AllPosts)
-            {
-                UnderlyingStream.Write((int)Post.Serial);
-                UnderlyingStream.Write((byte)0x0E); // Model High 
-                UnderlyingStream.Write((byte)0xB0); // Model Low 
-                UnderlyingStream.Write((byte)0x00); // Unknown 
-                UnderlyingStream.Write((byte)0x00); // Items In Stack High 
-                UnderlyingStream.Write((byte)0x00); // Items In Stack Low 
-                UnderlyingStream.Write((byte)0x00); // X Position High 
-                UnderlyingStream.Write((byte)0x3A); // X Position Low 
-                UnderlyingStream.Write((byte)0x00); // Y Position High 
-                UnderlyingStream.Write((byte)0x3A); // Y Position Low 
-                UnderlyingStream.Write((byte)0x00);
-                UnderlyingStream.Write((int)Board.Serial);
-                UnderlyingStream.Write((byte)0x00); // Colour High 
-                UnderlyingStream.Write((byte)0x00); // Colour Low 
-            }
-
-            // Log the raw packet info 
-            BulletinPacket.LogPacket("BulletinBoardFillItemsPacket", UnderlyingStream.ToArray());
+            return linesList.ToArray();
         }
-    }
+	}
 
-    public sealed class BulletinBoardSendPostSummaryPacket : BulletinPacket
-    {
-        public BulletinBoardSendPostSummaryPacket(BulletinBoard Board, BulletinBoardPost Post)
-            : base(0x71)
-        {
-            // Set the maximum size 
-            EnsureCapacity(1024);
+	public class BBDisplayBoard : Packet
+	{
+		public BBDisplayBoard( BaseBulletinBoard board ) : base( 0x71 )
+		{
+			string name = board.BoardName;
 
-            // Fill the packet data 
-            UnderlyingStream.Write((byte)BulletinPacket.PacketSubType.SendPostSummary);
-            int BoardSerial = Board.Serial;
-            if ((Post.RootParent != null) && (Post.RootParent is BulletinBoard))
-                BoardSerial = (((Item)(Post.RootParent)).Serial);
-            UnderlyingStream.Write((int)BoardSerial); // Bulletin Board Serial 
-            UnderlyingStream.Write((int)Post.Serial); // Post Serial 
-            int ParentSerial = Board.Serial;
-            if ((Post.Parent != null) && ((Post.Parent is BulletinBoard) || (Post.Parent is BulletinBoardPost)))
-                ParentSerial = (((Item)(Post.Parent)).Serial);
-            UnderlyingStream.Write((int)(ParentSerial == BoardSerial ? 0 : ParentSerial)); // Parent Serial (if it is a reply) 
-            UnderlyingStream.Write((byte)(Post.Author.Length + 1));
-            UnderlyingStream.WriteAsciiNull(Post.Author);
-            UnderlyingStream.Write((byte)(Post.Subject.Length + 1));
-            UnderlyingStream.WriteAsciiNull(Post.Subject);
-            UnderlyingStream.Write((byte)(Post.Date.Length + 1));
-            UnderlyingStream.WriteAsciiNull(Post.Date);
+			if ( name == null )
+                name = "bulletin board";
 
-            // Log the raw packet info 
-            BulletinPacket.LogPacket("BulletinBoardSendPostSummaryPacket", UnderlyingStream.ToArray());
-        }
-    }
+			EnsureCapacity( 38 );
 
-    public sealed class BulletinBoardPostPacket : BulletinPacket
-    {
-        public BulletinBoardPostPacket(BulletinBoardPost Post)
-            : base(0x71)
-        {
-            // Set the maximum size 
-            EnsureCapacity(65535);
+			byte[] buffer = Utility.UTF8.GetBytes( name );
 
-            // Fill the packet data 
-            UnderlyingStream.Write((byte)BulletinPacket.PacketSubType.SendPostMessage);
-            int BoardSerial = 0;
-            if ((Post.RootParent != null) && (Post.RootParent is BulletinBoard))
-                BoardSerial = (((Item)(Post.RootParent)).Serial);
-            UnderlyingStream.Write((int)BoardSerial); // Bulletin Board Serial 
-            UnderlyingStream.Write((int)Post.Serial); // Post Serial 
-            UnderlyingStream.Write((byte)(Post.Author.Length + 1));
-            UnderlyingStream.WriteAsciiNull(Post.Author);
-            UnderlyingStream.Write((byte)(Post.Subject.Length + 1));
-            UnderlyingStream.WriteAsciiNull(Post.Subject);
-            UnderlyingStream.Write((byte)(Post.Date.Length + 1));
-            UnderlyingStream.WriteAsciiNull(Post.Date);
+            m_Stream.Write((byte)0x00); // PacketID
+            m_Stream.Write((int)board.Serial); // Bulletin board serial
 
-            #region Unknown Constant
-            // Some constant that is needed (DON'T Change Anything in here unless 
-            // you've figured out what the contents of the packet do) 
-            //"\x01\x90\x83\xea\x06\x15\x2e\x07\x1d\x17\x0f\x07\x37\x1f\x7b 
-            // \x05\xeb\x20\x3d\x04\x66\x20\x4d\x04\x66\x0e\x75\x00\x00" 
-            UnderlyingStream.Write((byte)0x01);
-            UnderlyingStream.Write((byte)0x90);
-            UnderlyingStream.Write((byte)0x83);
-            UnderlyingStream.Write((byte)0xEA);
-            UnderlyingStream.Write((byte)0x06);
-            UnderlyingStream.Write((byte)0x15);
-            UnderlyingStream.Write((byte)0x2E);
-            UnderlyingStream.Write((byte)0x07);
-            UnderlyingStream.Write((byte)0x1D);
-            UnderlyingStream.Write((byte)0x17);
-            UnderlyingStream.Write((byte)0x0F);
-            UnderlyingStream.Write((byte)0x07);
-            UnderlyingStream.Write((byte)0x37);
-            UnderlyingStream.Write((byte)0x1F);
-            UnderlyingStream.Write((byte)0x7B);
-            UnderlyingStream.Write((byte)0x05);
-            UnderlyingStream.Write((byte)0xEB);
-            UnderlyingStream.Write((byte)0x20);
-            UnderlyingStream.Write((byte)0x3D);
-            UnderlyingStream.Write((byte)0x04);
-            UnderlyingStream.Write((byte)0x66);
-            UnderlyingStream.Write((byte)0x20);
-            UnderlyingStream.Write((byte)0x4D);
-            UnderlyingStream.Write((byte)0x04);
-            UnderlyingStream.Write((byte)0x66);
-            UnderlyingStream.Write((byte)0x0E);
-            UnderlyingStream.Write((byte)0x75);
-            UnderlyingStream.Write((byte)0x00);
-            UnderlyingStream.Write((byte)0x00);
-            #endregion
+			// Bulletin board name
+			if ( buffer.Length >= 29 )
+			{
+				m_Stream.Write( buffer, 0, 29 );
+				m_Stream.Write( (byte) 0 );
+			}
+			else
+			{
+				m_Stream.Write( buffer, 0, buffer.Length );
+				m_Stream.Fill( 30 - buffer.Length );
+			}
+		}
+	}
 
-            // Lets assume that all of the previous data that is of varying size 
-            // was completely full (255 characters for Author, Subject, and Date) 
-            // The total size of the packet so far would then be (in bytes): 
-            // 1+2+1+4+4+1+255+1+255+1+255+29 = 809 Bytes 
-            // That leaves 65535-809 = 64726 Bytes for the remaining lines of the 
-            // message.  Each line can contain a maximum of 255 characters (including the terminating null) 
-            // And there can only be a total of 255 lines so, to be safe we are only 
-            // going to allow 250 lines max!  That will result in a total of 
-            // 250x256 = 64000 Bytes total for a complete message (way under the 64766 limit) 
+	public class BBMessageHeader : Packet
+	{
+		public BBMessageHeader( BaseBulletinBoard board, BulletinMessage msg ) : base( 0x71 )
+		{
+			string poster = SafeString( msg.PostedName );
+			string subject = SafeString( msg.Subject );
+			string time = SafeString( msg.GetTimeAsString() );
 
-            // Set the maximum number of lines 
-            int MaxLines = (Post.Message.Length < 250 ? Post.Message.Length : 250);
-            UnderlyingStream.Write((byte)MaxLines);
+			EnsureCapacity( 22 + poster.Length + subject.Length + time.Length );
 
-            // Add each line (up to the maximum number of lines) 
-            for (int x = 0; ((x < Post.Message.Length) && (x < 250)); x++)
-            {
-                UnderlyingStream.Write((byte)(Post.Message[x].Length + 1));
-                UnderlyingStream.WriteAsciiNull(Post.Message[x]);
-            }
+			m_Stream.Write( (byte) 0x01 ); // PacketID
+			m_Stream.Write( (int) board.Serial ); // Bulletin board serial
+			m_Stream.Write( (int) msg.Serial ); // Message serial
 
-            // Log the raw packet info 
-            BulletinPacket.LogPacket("BulletinBoardPostPacket", UnderlyingStream.ToArray());
-        }
-    }
+			BulletinMessage thread = msg.Thread;
 
-    public sealed class AddPostReplyItemPacket : BulletinPacket
-    {
-        public AddPostReplyItemPacket(BulletinBoardPost Post)
-            : base(0x25, 21)
-        {
-            
-            // Add the post to the bulletin board 
-            UnderlyingStream.Write((int)Post.Serial);
-            UnderlyingStream.Write((byte)0x0e); // Model High 
-            UnderlyingStream.Write((byte)0xb0); // Model Low 
-            UnderlyingStream.Write((byte)0x00); // Unknown 
-            UnderlyingStream.Write((byte)0x00); // Item Count High 
-            UnderlyingStream.Write((byte)0x00); // Item Count Low 
-            UnderlyingStream.Write((byte)0x00); // X Location High 
-            UnderlyingStream.Write((byte)0x00); // X Location Low 
-            UnderlyingStream.Write((byte)0x00); // Y Location High 
-            UnderlyingStream.Write((byte)0x00); // Y Location Low 
-            UnderlyingStream.Write((byte)0x00);
-            UnderlyingStream.Write((int)(((Item)(Post.RootParent)).Serial)); // Parent item serial number 
-            UnderlyingStream.Write((byte)0x00); // Colour High 
-            UnderlyingStream.Write((byte)0x00); // Colour Low 
+			if ( thread == null )
+				m_Stream.Write( (int) 0 ); // Thread serial--root
+			else
+				m_Stream.Write( (int) thread.Serial ); // Thread serial--parent
 
-            BulletinPacket.LogPacket("AddPostReplyItemPacket", UnderlyingStream.ToArray());
-        }
-    }
+			WriteString( poster );
+			WriteString( subject );
+			WriteString( time );
+		}
+
+		public void WriteString( string v )
+		{
+			byte[] buffer = Utility.UTF8.GetBytes( v );
+			int len = buffer.Length + 1;
+
+			if ( len > 255 )
+				len = 255;
+
+			m_Stream.Write( (byte) len );
+			m_Stream.Write( buffer, 0, len-1 );
+			m_Stream.Write( (byte) 0 );
+		}
+
+		public string SafeString( string v )
+		{
+			if ( v == null )
+				return String.Empty;
+
+			return v;
+		}
+	}
+
+	public class BBMessageContent : Packet
+	{
+		public BBMessageContent( BaseBulletinBoard board, BulletinMessage msg ) : base( 0x71 )
+		{
+			string poster = SafeString( msg.PostedName );
+			string subject = SafeString( msg.Subject );
+			string time = SafeString( msg.GetTimeAsString() );
+
+			EnsureCapacity( 22 + poster.Length + subject.Length + time.Length );
+
+			m_Stream.Write( (byte) 0x02 ); // PacketID
+			m_Stream.Write( (int) board.Serial ); // Bulletin board serial
+			m_Stream.Write( (int) msg.Serial ); // Message serial
+
+			WriteString( poster );
+			WriteString( subject );
+			WriteString( time );
+
+			m_Stream.Write( (short) msg.PostedBody );
+			m_Stream.Write( (short) msg.PostedHue );
+
+			int len = msg.PostedEquip.Length;
+
+			if ( len > 255 )
+				len = 255;
+
+			m_Stream.Write( (byte) len );
+
+			for ( int i = 0; i < len; ++i )
+			{
+				BulletinEquip eq = msg.PostedEquip[i];
+
+				m_Stream.Write( (short) eq.itemID );
+				m_Stream.Write( (short) eq.hue );
+			}
+
+			len = msg.Lines.Length;
+
+			if ( len > 255 )
+				len = 255;
+
+			m_Stream.Write( (byte) len );
+
+			for ( int i = 0; i < len; ++i )
+				WriteString( msg.Lines[i], true );
+		}
+
+		public void WriteString( string v )
+		{
+			WriteString( v, false );
+		}
+
+		public void WriteString( string v, bool padding )
+		{
+			byte[] buffer = Utility.UTF8.GetBytes( v );
+			int tail = padding ? 2 : 1;
+			int len = buffer.Length + tail;
+
+			if ( len > 255 )
+				len = 255;
+
+			m_Stream.Write( (byte) len );
+			m_Stream.Write( buffer, 0, len - tail );
+
+			if ( padding )
+				m_Stream.Write( (short) 0 ); // padding compensates for a client bug
+			else
+				m_Stream.Write( (byte) 0 );
+		}
+
+		public string SafeString( string v )
+		{
+			if ( v == null )
+				return String.Empty;
+
+			return v;
+		}
+	}
 }

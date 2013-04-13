@@ -9,6 +9,7 @@ Backups/
 Spawns/
 *.lnk
 *.log
+Server.exe
 
 #################
 ## Eclipse

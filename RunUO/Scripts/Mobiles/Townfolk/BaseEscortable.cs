@@ -17,6 +17,8 @@ namespace Server.Mobiles
 		private DateTime m_DeleteTime;
 		private Timer m_DeleteTimer;
 
+        private EscortMessage m_Message;
+
 		public override bool Commandable{ get{ return false; } } // Our master cannot boss us around!
 
 		[CommandProperty( AccessLevel.GameMaster )]
@@ -40,6 +42,8 @@ namespace Server.Mobiles
 			InitBody();
 			InitOutfit();
 		}
+
+
 
 		public virtual void InitBody()
 		{
@@ -146,6 +150,11 @@ namespace Server.Mobiles
 				Say( true, String.Format("Lead on! Payment will be made when we arrive in {0}.", (dest.Name == "Ocllo" && m.Map == Map.Trammel) ? "Haven" : dest.Name ) );
 				m_EscortTable[m] = this;
 				StartFollow();
+
+                // We have an escort, Remove bulletin board post
+                if (m_Message != null)
+                    m_Message.Delete();
+
 				return true;
 			}
 
@@ -274,6 +283,15 @@ namespace Server.Mobiles
 			return master;
 		}
 
+        public override void OnDelete()
+        {
+            // We have been deleted, remove bulletin board post
+            if (m_Message != null)
+                m_Message.Delete();
+
+            base.OnDelete();
+        }
+
 		public virtual void BeginDelete()
 		{
 			if ( m_DeleteTimer != null )
@@ -285,7 +303,7 @@ namespace Server.Mobiles
 			m_DeleteTimer.Start();
 		}
 
-		public virtual bool CheckAtDestination()
+        public virtual bool CheckAtDestination()
 		{
 			EDI dest = GetDestination();
 
@@ -349,6 +367,8 @@ namespace Server.Mobiles
 
 			if ( m_DeleteTimer != null )
 				writer.WriteDeltaTime( m_DeleteTime );
+
+            writer.Write(m_Message);
 		}
 
 		public override void Deserialize( GenericReader reader )
@@ -366,6 +386,8 @@ namespace Server.Mobiles
 				m_DeleteTimer = new DeleteTimer( this, m_DeleteTime - DateTime.Now );
 				m_DeleteTimer.Start();
 			}
+
+            m_Message = reader.ReadItem() as EscortMessage;
 		}
 
 		public override bool CanBeRenamedBy( Mobile from )
@@ -397,10 +419,22 @@ namespace Server.Mobiles
 		{
 			return m_TownNames;
 		}
+        protected override void OnLocationChange(Point3D oldLocation)
+        {
+            base.OnLocationChange(oldLocation);
+
+            if (oldLocation == Point3D.Zero)
+            {
+                EDI dest = GetDestination();
+
+                if (dest != null && m_Message == null)
+                    m_Message = new EscortMessage(this);
+            }
+        }
 
 		public virtual string PickRandomDestination()
 		{
-			if ( Map.Felucca.Regions.Count == 0 || Map == null || Map == Map.Internal || Location == Point3D.Zero )
+			if ( Map.Felucca.Regions.Count == 0 /*|| Map == null || Map == Map.Internal || Location == Point3D.Zero*/ )
 				return null; // Not yet fully initialized
 
 			string[] possible = GetPossibleDestinations();

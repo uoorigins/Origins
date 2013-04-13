@@ -126,27 +126,6 @@ namespace Server.Mobiles
             }
         }
 
-        public void FindDeletePost(PlayerMobile from)
-        {
-            List<Item> list = new List<Item>();
-
-            foreach (Item item in World.Items.Values)
-            {
-                if (item is BulletinBoardPost)
-                {
-                    BulletinBoardPost bm = item as BulletinBoardPost;
-
-                    if (bm.Subject == String.Format("{0}: {1} gold pieces", from.Name, from.Bounty))
-                        list.Add(bm);
-                }
-            }
-
-            foreach (BulletinBoardPost post in list)
-                post.Delete();
-
-            list.Clear();
-        }
-
         public override bool OnDragDrop( Mobile from, Item dropped )
         {
             if (dropped is Head)
@@ -169,7 +148,6 @@ namespace Server.Mobiles
                         Say(true, "Ah, a head!  Let me check to see if there is a bounty on this.");
                         if (Banker.Deposit(from, pm.Bounty))
                         {
-                            FindDeletePost(pm);
                             Timer m_timer = new GiveBountyTimer(pm, this, ph, from);
                             m_timer.Start();
                             ph.Delete();

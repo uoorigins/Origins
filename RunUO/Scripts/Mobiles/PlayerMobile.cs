@@ -237,10 +237,8 @@ namespace Server.Mobiles
         {
             get { return m_Bounty; }
             set {
-                BulletinBoardPost post = ReportMurdererGump.FindPost(this);
                 m_Bounty = value;
-                if (post != null)
-                    ReportMurdererGump.FindEditPost(this, post);
+                BountyMessage.UpdateBounty(this);
             }
         }
 
@@ -1115,8 +1113,6 @@ namespace Server.Mobiles
 				if ( items == null )
 					return;
 
-				bool moved = false;
-
 				int str = this.Str;
 				int dex = this.Dex;
 				int intel = this.Int;
@@ -1148,7 +1144,7 @@ namespace Server.Mobiles
 						else if ( ethic != Ethics.Ethic.Hero )
 						{
 							from.AddToBackpack( item );
-							moved = true;
+
 							continue;
 						}
 					}
@@ -1161,7 +1157,7 @@ namespace Server.Mobiles
 						else if ( ethic != Ethics.Ethic.Evil )
 						{
 							from.AddToBackpack( item );
-							moved = true;
+
 							continue;
 						}
 					}
@@ -1191,7 +1187,7 @@ namespace Server.Mobiles
 
 							from.SendLocalizedMessage( 1062001, name ); // You can no longer wield your ~1_WEAPON~
 							from.AddToBackpack( weapon );
-							moved = true;
+
 						}
 					}
 					else if ( item is BaseArmor )
@@ -1239,7 +1235,7 @@ namespace Server.Mobiles
 								from.SendLocalizedMessage( 1062002, name ); // You can no longer wear your ~1_ARMOR~
 
 							from.AddToBackpack( armor );
-							moved = true;
+
 						}
 					}
 					else if ( item is BaseClothing )
@@ -1280,7 +1276,7 @@ namespace Server.Mobiles
                             from.SendAsciiMessage("You can no longer wear some of your equipment.");
 
 							from.AddToBackpack( clothing );
-							moved = true;
+
 						}
 					}
 
@@ -1300,13 +1296,10 @@ namespace Server.Mobiles
 						if ( drop )
 						{
 							from.AddToBackpack( item );
-							moved = true;
+
 						}
 					}
 				}
-
-				//if ( moved )
-				//	from.SendLocalizedMessage( 500647 ); // Some equipment has been moved to your backpack.
 			}
 			catch ( Exception e )
 			{
@@ -3453,10 +3446,8 @@ namespace Server.Mobiles
 				m_LongTermElapse += TimeSpan.FromHours( 12.0/*40*/ );
                 if (Kills > 0)
                 {
-                    BulletinBoardPost post = ReportMurdererGump.FindPost(this);
                     --Kills;
-                    if (post != null)
-                        ReportMurdererGump.FindEditPost(this, post);
+                    BountyMessage.UpdateBounty(this);
                 }
 			}
 
@@ -3890,9 +3881,7 @@ namespace Server.Mobiles
                     this.Karma -= 25;
             }
 
-            BulletinBoardPost post = ReportMurdererGump.FindPost(this);
-            if (post != null)
-                ReportMurdererGump.FindEditPost(this, post);
+            BountyMessage.UpdateBounty(this);
 
 			InvalidateMyRunUO();
 		}
