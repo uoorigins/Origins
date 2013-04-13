@@ -155,7 +155,7 @@ namespace Server.Items
 		{
 			private BaseTreasureChestMod m_Chest;
 			
-			public ChestTimer( BaseTreasureChestMod chest ) : base ( TimeSpan.FromMinutes( Utility.Random( 30, 45 ) ) )
+			public ChestTimer( BaseTreasureChestMod chest ) : base ( TimeSpan.FromMinutes( Utility.Random( 15, 30 ) ) )
 			{
 				m_Chest = chest;
 				Priority = TimerPriority.OneMinute;
