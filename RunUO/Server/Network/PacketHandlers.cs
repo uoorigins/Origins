@@ -2392,7 +2392,7 @@ namespace Server.Network
 
 		public static void GameLogin( NetState state, PacketReader pvSrc )
 		{
-            string myversion = null;
+            //string myversion = null;
 
 			if ( state.SentFirstPacket )
 			{
