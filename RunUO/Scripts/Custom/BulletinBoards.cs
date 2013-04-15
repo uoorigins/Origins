@@ -54,21 +54,21 @@ namespace Server.Items
             String direction;
 
             if (m.GetDirectionTo(board) == Direction.North)
-                direction = "North";
-            else if (m.GetDirectionTo(board) == Direction.South)
                 direction = "South";
+            else if (m.GetDirectionTo(board) == Direction.South)
+                direction = "North";
             else if (m.GetDirectionTo(board) == Direction.East)
-                direction = "East";
-            else if (m.GetDirectionTo(board) == Direction.West)
                 direction = "West";
+            else if (m.GetDirectionTo(board) == Direction.West)
+                direction = "East";
             else if (m.GetDirectionTo(board) == Direction.Up)
-                direction = "Northwest";
-            else if (m.GetDirectionTo(board) == Direction.Left)
-                direction = "Southwest";
-            else if (m.GetDirectionTo(board) == Direction.Right)
-                direction = "Northeast";
-            else if (m.GetDirectionTo(board) == Direction.Down)
                 direction = "Southeast";
+            else if (m.GetDirectionTo(board) == Direction.Left)
+                direction = "Northeast";
+            else if (m.GetDirectionTo(board) == Direction.Right)
+                direction = "Southwest";
+            else if (m.GetDirectionTo(board) == Direction.Down)
+                direction = "Northwest";
             else
                 direction = "in some direction.";
 
