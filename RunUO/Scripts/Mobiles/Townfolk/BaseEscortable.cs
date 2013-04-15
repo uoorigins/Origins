@@ -93,7 +93,7 @@ namespace Server.Mobiles
 
 			if ( escorter == null )
 			{
-				Say( true, String.Format("I am looking to go to {0}, will you take me?", (dest.Name == "Ocllo" && m.Map == Map.Trammel) ? "Haven" : dest.Name ));
+                Say(true, String.Format("I am waiting for my escort to {0}. If thou art interested, check the local bulletin board for details, or just say 'I will take thee.'", (dest.Name == "Ocllo" && m.Map == Map.Trammel) ? "Haven" : dest.Name));
 				return true;
 			}
 			else if ( escorter == m )
@@ -104,6 +104,19 @@ namespace Server.Mobiles
 
 			return false;
 		}
+
+        public override void OnMovement(Mobile m, Point3D oldLocation)
+        {
+            base.OnMovement(m, oldLocation);
+
+            if (!m.Player || (m.Hidden && m.AccessLevel > AccessLevel.Player))
+                return;
+
+            if (!this.InRange(m, 10) || this.InRange(oldLocation, 10))
+                return;
+
+            SayDestinationTo(m);
+        }
 
 		private static Hashtable m_EscortTable = new Hashtable();
 
