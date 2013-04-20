@@ -75,7 +75,10 @@ namespace Server.Items
             String line = String.Format("{0} I can be found {1} {2} of here. When thou dost find me, look at me close to accept the task of taking me to {3}. {4}", subtext, (distance < 50 ? "a fair distance" : "a long way"), direction, escort.Destination, escort.Name);
             Lines = MakeLines(line);
 
-            board.AddItem(this);
+            if (board != null)
+                board.AddItem(this);
+            else
+                Delete();
         }
 
         public EscortMessage(Serial serial)
