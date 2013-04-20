@@ -51,7 +51,7 @@ namespace Server.Mobiles
 
 			VirtualArmor = 90;
 
-			//PackItem( new Longsword() );
+			PackItem( new Longsword() );
 		}
 
 		public override void GenerateLoot()
@@ -63,7 +63,7 @@ namespace Server.Mobiles
 		}
 
 		public override bool CanRummageCorpses{ get{ return true; } }
-        public override bool AutoDispel { get { return true; } }
+        public override bool AutoDispel { get { return false; } }
 		public override Poison PoisonImmune{ get{ return Poison.Deadly; } }
 		public override int TreasureMapLevel{ get{ return 5; } }
 		public override int Meat{ get{ return 1; } }
