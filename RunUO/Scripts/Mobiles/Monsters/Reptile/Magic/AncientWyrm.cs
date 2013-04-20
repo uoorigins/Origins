@@ -72,7 +72,7 @@ namespace Server.Mobiles
 
 		public override bool ReacquireOnMovement{ get{ return true; } }
 		public override bool HasBreath{ get{ return true; } } // fire breath enabled
-		public override bool AutoDispel{ get{ return true; } }
+		public override bool AutoDispel{ get{ return false; } }
 		public override int Hides{ get{ return 40; } }
 		public override int Meat{ get{ return 19; } }
         public override Poison PoisonImmune { get { return Poison.Deadly; } }
