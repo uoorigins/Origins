@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Server;
 using Server.Misc;
 using Server.Gumps;
 using Server.Mobiles;
+using Server.Accounting;
 
 namespace Server.Gumps
 {
@@ -35,7 +37,9 @@ namespace Server.Gumps
         {
             base.Serialize(writer);
 
-            writer.Write((int)0);
+            writer.Write((int)1);
+
+            writer.WriteMobileList(m_Squelched);
         }
 
         public override void Deserialize(GenericReader reader)
@@ -46,15 +50,37 @@ namespace Server.Gumps
             
             m_Chat = new List<string>();
             m_Players = new Dictionary<Mobile, bool>();
-            m_Squelched = new List<Mobile>();
+
+            if (version > 0)
+            {
+                ArrayList arrayList = reader.ReadMobileList();
+
+                if (arrayList != null)
+                {
+                    m_Squelched = new List<Mobile>(arrayList.Count);
+
+                    foreach (Mobile item in arrayList)
+                        m_Squelched.Add(item);
+                }
+                else
+                {
+                    m_Squelched = new List<Mobile>();
+                }
+            }
         }
 
         public void AddPlayer(Mobile from)
         {
-            if (m_Squelched.Contains(from))
+            Account myAccount = (Account)from.Account;
+            ArrayList myAccounts = Server.Gumps.AdminGump.GetSharedAccounts(myAccount.LoginIPs);
+
+            foreach (Account account in myAccounts)
             {
-                from.SendAsciiMessage("You have been squelched from the chat system and cannot join.");
-                return;
+                if (account.GetTag("squelched") != null)
+                {
+                    from.SendAsciiMessage("You have been squelched from the chat system and cannot join.");
+                    return;
+                }
             }
 
             if (!m_Players.ContainsKey(from))
@@ -81,14 +107,27 @@ namespace Server.Gumps
 
         public void SquelchPlayer(Mobile from)
         {
+            Account myAccount = (Account)from.Account;
+
             if (m_Squelched.Contains(from))
             {
                 m_Squelched.Remove(from);
+
+                ArrayList myAccounts = Server.Gumps.AdminGump.GetSharedAccounts(myAccount.LoginIPs);
+
+                foreach (Account account in myAccounts)
+                {
+                    if (account.GetTag("squelched") != null)
+                    {
+                        account.RemoveTag("squelched");
+                    }
+                }
             }
             else
             {
                 m_Squelched.Add(from);
                 RemovePlayer(from);
+                myAccount.AddTag("squelched", "true");
             }
         }
 
