@@ -39,6 +39,9 @@ namespace Server.Gumps
 
             writer.Write((int)1);
 
+            if (m_Squelched == null)
+                m_Squelched = new List<Mobile>();
+
             writer.WriteMobileList(m_Squelched, false);
         }
 
