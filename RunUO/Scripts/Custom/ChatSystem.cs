@@ -39,7 +39,7 @@ namespace Server.Gumps
 
             writer.Write((int)1);
 
-            writer.WriteMobileList(m_Squelched);
+            writer.WriteMobileList(m_Squelched, false);
         }
 
         public override void Deserialize(GenericReader reader)
