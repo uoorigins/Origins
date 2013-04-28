@@ -11,6 +11,7 @@ using Server.Network;
 using Server.Commands;
 using System.Collections;
 using Server.Targeting;
+using System.Collections.Generic;
 
 namespace Server.Gumps
 {
@@ -127,11 +128,14 @@ namespace Server.Gumps
             AddLabel(40, 11, 0, @"UO: Origins Chat");
 
             string players = "";
+
+            List<Mobile> toRemove = new List<Mobile>();
+
             foreach (Mobile m in m_System.m_Players.Keys)
             {
                 if (m.Deleted || m == null)
                 {
-                    m_System.m_Players.Remove(m);
+                    toRemove.Add(m);
                     continue;
                 }
 
@@ -142,6 +146,11 @@ namespace Server.Gumps
                     players += String.Format("{1} <BR>", players, (m == null ? "" : (m.AccessLevel > AccessLevel.Player ? "@" + m.Name : m.Name)));
                 else if (from.AccessLevel > AccessLevel.Player)
                     players += String.Format("{1} <BR>", players, (m == null ? "" :  "#" + m.Name));
+            }
+
+            foreach (Mobile m in toRemove)
+            {
+                m_System.m_Players.Remove(m);
             }
 
             AddHtml(10, 50, 163, 188, players, (bool)true, (bool)true);
