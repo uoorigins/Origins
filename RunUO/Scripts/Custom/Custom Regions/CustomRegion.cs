@@ -361,6 +361,11 @@ namespace Server.Regions
             return base.GetLogoutDelay(m);
         }
 
+        public override bool OnTarget(Mobile m, Targeting.Target t, object o)
+        {
+            return base.OnTarget(m, t, o);
+        }
+
         public override bool OnDoubleClick(Mobile m, object o)
         {
             if (o is BasePotion && !m_Controller.CanUsePotions)
