@@ -2487,10 +2487,16 @@
     <Compile Include="Multis\Boats\TillerMan.cs" />
     <Compile Include="Multis\Camps\BankerCamp.cs" />
     <Compile Include="Multis\Camps\BaseCamp.cs" />
+    <Compile Include="Multis\Camps\BrigandCamp.cs" />
+    <Compile Include="Multis\Camps\EvilMageTower.cs" />
+    <Compile Include="Multis\Camps\GoodMageTower.cs" />
+    <Compile Include="Multis\Camps\GypsyCamp.cs" />
+    <Compile Include="Multis\Camps\LizardmanCamp.cs" />
     <Compile Include="Multis\Camps\HealerCamp.cs" />
     <Compile Include="Multis\Camps\MageCamp.cs" />
     <Compile Include="Multis\Camps\OrcCamp.cs" />
     <Compile Include="Multis\Camps\RatCamp.cs" />
+    <Compile Include="Multis\Camps\WarlordsKeep.cs" />
     <Compile Include="Multis\ComponentVerification.cs" />
     <Compile Include="Multis\Deeds.cs" />
     <Compile Include="Multis\HouseFoundation.cs" />
