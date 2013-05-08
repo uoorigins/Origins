@@ -56,6 +56,8 @@ namespace Server.Mobiles
                 AddItem(new LongPants(Utility.RandomAllColors()));
             }
 
+            SpeechHue = Utility.RandomDyedHue();
+
             AddItem(RandomBoots());
 
             AddItem(new BodySash(Utility.RandomAllColors()));
