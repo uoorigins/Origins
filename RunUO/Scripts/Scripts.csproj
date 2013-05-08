@@ -2701,7 +2701,6 @@
     <None Include="Items\Wands\GreaterHealWand.cs.disable" />
     <None Include="Items\Wands\HealWand.cs.disable" />
     <None Include="Items\Weapons\Axes\Copy of WarAxe.cs.backp" />
-    <None Include="Multis\HousePlacement.cs.backup" />
     <None Include="Spells\Second\Protection.cs.backup" />
   </ItemGroup>
   <ItemGroup>
