@@ -15,7 +15,9 @@ namespace Server.SkillHandlers
 
 		public static TimeSpan OnUse( Mobile m )
 		{
-			if ( m.Skills[SkillName.Lockpicking].Value < 50 )
+            m.SendAsciiMessage("This skill has been disabled for historical accuracy.");
+            return TimeSpan.FromSeconds(0.0);
+			/*if ( m.Skills[SkillName.Lockpicking].Value < 50 )
 			{
                 m.SendAsciiMessage("You do not know enough about locks.  Become better at picking locks."); // You do not know enough about locks.  Become better at picking locks.
 			}
@@ -30,7 +32,7 @@ namespace Server.SkillHandlers
                 m.SendAsciiMessage("Wich trap will you attempt to disarm?"); // Wich trap will you attempt to disarm?
 			}
 
-			return TimeSpan.FromSeconds( 10.0 ); // 10 second delay before beign able to re-use a skill
+			return TimeSpan.FromSeconds( 10.0 ); // 10 second delay before beign able to re-use a skill*/
 		}
 
 		private class InternalTarget : Target
