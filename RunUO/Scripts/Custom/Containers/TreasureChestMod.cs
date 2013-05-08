@@ -15,8 +15,6 @@ namespace Server.Items
 	[FlipableAttribute( 0xe3e, 0xe3f )] 
 	public class TreasureLevel1 : BaseTreasureChestMod 
 	{ 
-		public override int DefaultGumpID{ get{ return 0x49; } }
-
 		[Constructable] 
 		public TreasureLevel1() : base( Utility.RandomList( 0xE3C, 0xE3E, 0x9a9 ) )
 		{ 
@@ -79,8 +77,6 @@ namespace Server.Items
 	[FlipableAttribute( 0xe3e, 0xe3f )] 
 	public class TreasureLevel1h : BaseTreasureChestMod 
 	{ 
-		public override int DefaultGumpID{ get{ return 0x49; } }
-
 		[Constructable] 
 		public TreasureLevel1h() : base( Utility.RandomList( 0xE3C, 0xE3E, 0x9a9 ) ) 
 		{ 
