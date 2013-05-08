@@ -6,9 +6,112 @@ using Server;
 using Server.Network;
 using Server.Mobiles;
 using System.IO;
+using Server.Multis;
 
 namespace Server.Items
 {
+    public class PrisonerMessage : BulletinMessage
+    {
+        private BaseCamp m_Camp;
+
+        public BaseCamp Camp { get { return m_Camp; } }
+
+        public PrisonerMessage(BaseCamp c, BaseEscortable escort) : base(c.Prisoner, null, "", null)
+        {
+            m_Camp = c;
+
+            switch (Utility.Random(13))
+            {
+                case 0: Subject = "A kidnapping!"; break;
+                case 1: Subject = "Help!"; break;
+                case 2: Subject = "Help us, please!"; break;
+                case 3: Subject = "Adventurers needed!"; break;
+                case 4: Subject = "Seeking assistance"; break;
+                case 5: Subject = "In need of aid"; break;
+                case 6: Subject = "Canst thou help us?"; break;
+                case 7: Subject = "Shall any save our friend?"; break;
+                case 8: Subject = "A friend was kidnapped!"; break;
+                case 9: Subject = "Heroes wanted!"; break;
+                case 10: Subject = "Can any assist us?"; break;
+                case 11: Subject = "Kidnapped!"; break;
+                case 12: Subject = "Taken prisoner"; break;
+            }
+
+            double distance;
+            BulletinBoard board = FindClosestBB(c.Prisoner, out distance);
+
+            List<String> myLines = new List<String>();
+            string[] subtext1 = {"foul", "vile", "evil", "dark", "cruel", "vicious", "scoundrelly", "dastardly", "cowardly", "craven", "foul and monstrous", "monstrous", "hideous", "terrible", "cruel, evil", "truly vile", "vicious and cunning", ""};
+
+            string camp;
+
+            switch (c.Camp)
+            {
+                default:
+                case CampType.Default: camp = ""; break;
+                case CampType.EvilMage: camp = "evil mages"; break;
+                case CampType.GoodMage: camp = "mages"; break;
+                case CampType.Lizardman: camp = "lizardmen"; break;
+                case CampType.Orc: camp = "orcs"; break;
+                case CampType.Ratman: camp = "ratmen"; break;
+                case CampType.Brigand: camp = "brigands"; break;
+                case CampType.Gypsy: camp = "gypsys"; break;
+                case CampType.Warlord: camp = "a warlord"; break;
+            }
+
+            myLines.Add(String.Format("Help us please! {0} hath", escort.Name));
+            myLines.Add(String.Format("been kidnapped by "));
+            myLines.Add(String.Format("{0} {1}!", subtext1[Utility.Random(subtext1.Length)], camp));
+            myLines.Add(String.Format("We believe that {0} is held at", escort.Female ? "she" : "he"));
+            
+            int xLong = 0, yLat = 0;
+            int xMins = 0, yMins = 0;
+            bool xEast = false, ySouth = false;
+
+            if (Sextant.Format(c.Location, c.Map, ref xLong, ref yLat, ref xMins, ref yMins, ref xEast, ref ySouth))
+            {
+                myLines.Add(String.Format("{0}o {1}'{2}, {3}o {4}'{5}", yLat, yMins, ySouth ? "S" : "N", xLong, xMins, xEast ? "E" : "W"));
+            }
+            /*myLines.Add(String.Format("{0}"));
+            myLines.Add(String.Format("{0}."));
+            myLines.Add(String.Format("{0}"));*/
+
+            Lines = myLines.ToArray();
+
+            if (board != null)
+                board.AddItem(this);
+            else
+                Delete();
+        }
+
+        public PrisonerMessage(Serial serial) : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((int)0); // version
+
+            writer.Write(m_Camp);
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+
+            int version = reader.ReadInt();
+
+            switch (version)
+            {
+                case 0:
+                    m_Camp = reader.ReadItem() as BaseCamp;
+                    break;
+            }
+        }
+    }
+
     public class EscortMessage : BulletinMessage
     {
         private Mobile m_Mobile;

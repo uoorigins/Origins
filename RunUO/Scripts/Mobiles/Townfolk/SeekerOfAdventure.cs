@@ -2,6 +2,7 @@ using System;
 using Server;
 using Server.Items;
 using EDI = Server.Mobiles.EscortDestinationInfo;
+using Server.Multis;
 
 namespace Server.Mobiles
 {
@@ -19,8 +20,12 @@ namespace Server.Mobiles
 			return m_Dungeons;
 		}
 
-		[Constructable]
-		public SeekerOfAdventure()
+        [Constructable]
+        public SeekerOfAdventure() : this(null)
+        {
+        }
+
+		public SeekerOfAdventure(BaseCamp c) : base(c)
 		{
 			Title = "the seeker of adventure";
 		}

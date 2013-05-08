@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -14,14 +14,14 @@ namespace Scripts.Multis.Camps
 
     namespace Scripts.Multis.Camps
     {
-        class RatCamp : BaseCamp
+        class LizardmanCamp : BaseCamp
         {
-            public virtual Mobile Ratmen { get { return new Ratman(); } }
+            public virtual Mobile Lizardmen { get { return new Lizardman(); } }
 
-            public override CampType Camp { get { return CampType.Ratman; } }
+            public override CampType Camp { get { return CampType.Lizardman; } }
 
             [Constructable]
-            public RatCamp()
+            public LizardmanCamp()
                 : base(4334)
             {
             }
@@ -36,10 +36,10 @@ namespace Scripts.Multis.Camps
                 AddItem(new Static(3555), 0, 7, 0);
                 AddItem(new Static(2420), 0, 7, 0);
 
-                AddMobile(Ratmen, 6, 4, 4, 0);
-                AddMobile(Ratmen, 6, 4, -4, 0);
-                AddMobile(Ratmen, 6, -4, 4, 0);
-                AddMobile(Ratmen, 6, -4, -4, 0);
+                AddMobile(Lizardmen, 6, 4, 4, 0);
+                AddMobile(Lizardmen, 6, 4, -4, 0);
+                AddMobile(Lizardmen, 6, -4, 4, 0);
+                AddMobile(Lizardmen, 6, -4, -4, 0);
 
                 if (Utility.RandomBool())
                     Prisoner = new EscortableNoble(this);
@@ -61,7 +61,7 @@ namespace Scripts.Multis.Camps
                 AddItem(new TreasureLevel2(), -2, -2, 0);
             }
 
-            public RatCamp(Serial serial)
+            public LizardmanCamp(Serial serial)
                 : base(serial)
             {
             }

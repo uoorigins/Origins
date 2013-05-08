@@ -7,6 +7,19 @@ using System.Collections.Generic;
 
 namespace Server.Multis
 {
+    public enum CampType
+    {
+        Default,
+        EvilMage,
+        GoodMage,
+        Warlord,
+        Gypsy,
+        Brigand,
+        Lizardman,
+        Ratman,
+        Orc   
+    }
+
 	public abstract class BaseCamp : BaseMulti
 	{
 		private List<Item> m_Items;
@@ -14,8 +27,23 @@ namespace Server.Multis
 		private DateTime m_DecayTime;
 		private Timer m_DecayTimer;
 		private TimeSpan m_DecayDelay;
+        private Mobile m_Prisoner;
+        private CampType m_Camp;
 
 		public virtual int EventRange{ get{ return 10; } }
+
+        public virtual Mobile Prisoner {
+            get { return m_Prisoner; }
+            set {
+                m_Prisoner = value;
+
+
+            }
+        }
+
+        public virtual CampType Camp { get { return m_Camp; } set { m_Camp = value; } }
+
+        public BulletinMessage Message {get; set;}
 
 		public virtual TimeSpan DecayDelay
 		{
@@ -36,6 +64,8 @@ namespace Server.Multis
 			m_Mobiles = new List<Mobile>();
 			m_DecayDelay = TimeSpan.FromMinutes( 30.0 );
 			RefreshDecay( true );
+
+            m_Camp = CampType.Default;
 
 			Timer.DelayCall( TimeSpan.Zero, new TimerCallback( CheckAddComponents ) );
 		}
@@ -146,11 +176,14 @@ namespace Server.Multis
 		{
 			base.Serialize( writer );
 
-			writer.Write( (int) 0 ); // version
+			writer.Write( (int) 1 ); // version
 
 			writer.Write( m_Items, true );
 			writer.Write( m_Mobiles, true );
 			writer.WriteDeltaTime( m_DecayTime );
+
+            writer.Write(m_Prisoner);
+            writer.Write((int)m_Camp);
 		}
 
 		public override void Deserialize( GenericReader reader )
@@ -172,6 +205,9 @@ namespace Server.Multis
 					break;
 				}
 			}
+
+            if (version >= 1)
+                m_Prisoner = reader.ReadMobile();
 		}
 	}
 

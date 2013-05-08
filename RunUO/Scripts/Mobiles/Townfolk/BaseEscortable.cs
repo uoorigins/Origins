@@ -6,6 +6,7 @@ using Server.Items;
 using Server.Network;
 using Server.ContextMenus;
 using EDI = Server.Mobiles.EscortDestinationInfo;
+using Server.Multis;
 
 namespace Server.Mobiles
 {
@@ -17,7 +18,11 @@ namespace Server.Mobiles
 		private DateTime m_DeleteTime;
 		private Timer m_DeleteTimer;
 
-        private EscortMessage m_Message;
+        private BulletinMessage m_Message;
+        public BulletinMessage Message { get; set; }
+
+        private BaseCamp m_Camp;
+        public BaseCamp Camp { get; set; }
 
 		public override bool Commandable{ get{ return false; } } // Our master cannot boss us around!
 
@@ -37,13 +42,16 @@ namespace Server.Mobiles
 			};
 
 		[Constructable]
-		public BaseEscortable() : base( AIType.AI_Melee, FightMode.Aggressor, 22, 1, 0.4, 1.0 )
+		public BaseEscortable() : this(null)
 		{
-			InitBody();
-			InitOutfit();
 		}
 
-
+        public BaseEscortable(BaseCamp camp) : base(AIType.AI_Melee, FightMode.Aggressor, 22, 1, 0.4, 1.0)
+        {
+            m_Camp = camp;
+            InitBody();
+            InitOutfit();
+        }
 
 		public virtual void InitBody()
 		{
@@ -400,7 +408,7 @@ namespace Server.Mobiles
 				m_DeleteTimer.Start();
 			}
 
-            m_Message = reader.ReadItem() as EscortMessage;
+            m_Message = reader.ReadItem() as BulletinMessage;
 		}
 
 		public override bool CanBeRenamedBy( Mobile from )
@@ -441,7 +449,12 @@ namespace Server.Mobiles
                 EDI dest = GetDestination();
 
                 if (dest != null && m_Message == null)
-                    m_Message = new EscortMessage(this);
+                {
+                    if (m_Camp != null)
+                        m_Message = new PrisonerMessage(m_Camp, this);
+                    else
+                        m_Message = new EscortMessage(this);
+                }
             }
         }
 

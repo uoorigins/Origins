@@ -2,6 +2,7 @@ using System;
 using Server;
 using Server.Items;
 using EDI = Server.Mobiles.EscortDestinationInfo;
+using Server.Multis;
 
 namespace Server.Mobiles
 {
@@ -108,15 +109,16 @@ namespace Server.Mobiles
     public class EscortableNoble : BaseEscortable
     {
         [Constructable]
-        public EscortableNoble()
+        public EscortableNoble() : this(null)
+        {
+        }
+
+        public EscortableNoble(BaseCamp c) : base(c)
         {
             Title = "the noble";
-
             SetSkill(SkillName.Parry, 80.0, 100.0);
             SetSkill(SkillName.Swords, 80.0, 100.0);
             SetSkill(SkillName.Tactics, 80.0, 100.0);
-            InitBody();
-            InitOutfit();
         }
 
         public override void InitBody()
