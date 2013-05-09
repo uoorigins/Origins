@@ -35,13 +35,6 @@ namespace Server.Items
 			int version = reader.ReadInt();
 		}
 
-		public override void OnHit( Mobile attacker, Mobile defender, double damageBonus )
-		{
-			base.OnHit( attacker, defender, damageBonus );
-
-			defender.Stam -= Utility.Random( 3, 5 ); // 3-5 points of stamina loss
-		}
-
 		public override double GetBaseDamage( Mobile attacker )
 		{
 			double damage = base.GetBaseDamage( attacker );
