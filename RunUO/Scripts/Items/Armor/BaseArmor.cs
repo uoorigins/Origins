@@ -1384,12 +1384,7 @@ namespace Server.Items
 				}
 				else
 				{
-					int wear;
-
-					if ( weapon.Type == WeaponType.Bashing )
-						wear = Absorbed / 2;
-					else
-						wear = Utility.Random( 2 );
+				    int wear = Utility.Random( 2 );
 
 					if ( wear > 0 && m_MaxHitPoints > 0 )
 					{
