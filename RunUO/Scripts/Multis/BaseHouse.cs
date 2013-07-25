@@ -2674,8 +2674,6 @@ namespace Server.Multis
 			int version = reader.ReadInt();
 			int count;
 
-            m_LastRefreshed = DateTime.Now;
-
 			switch ( version )
 			{
 				case 14:
@@ -2710,7 +2708,7 @@ namespace Server.Multis
 				}
 				case 11:
 				{
-					m_LastRefreshed = reader.ReadDateTime();
+                    m_LastRefreshed = DateTime.Now;//reader.ReadDateTime();
 					m_RestrictDecay = reader.ReadBool();
 					goto case 10;
 				}
