@@ -53,6 +53,10 @@ namespace Server.Misc
 			if ( pathSA != null )
 				Core.DataDirectories.Add( pathSA );
 
+            if (Core.Unix) {
+                Core.DataDirectories.Add("/root/Ultima Online");
+            }
+
 			if ( Core.DataDirectories.Count == 0 && !Core.Service )
 			{
 				Console.WriteLine( "Enter the Ultima Online directory:" );
