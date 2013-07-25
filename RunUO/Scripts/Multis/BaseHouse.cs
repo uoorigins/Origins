@@ -2708,7 +2708,8 @@ namespace Server.Multis
 				}
 				case 11:
 				{
-                    m_LastRefreshed = DateTime.Now;//reader.ReadDateTime();
+                    m_LastRefreshed = DateTime.Now;
+                    DateTime temp = reader.ReadDateTime();
 					m_RestrictDecay = reader.ReadBool();
 					goto case 10;
 				}
