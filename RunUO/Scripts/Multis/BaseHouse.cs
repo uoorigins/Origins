@@ -2674,6 +2674,8 @@ namespace Server.Multis
 			int version = reader.ReadInt();
 			int count;
 
+            m_LastRefreshed = DateTime.Now;
+
 			switch ( version )
 			{
 				case 14:
