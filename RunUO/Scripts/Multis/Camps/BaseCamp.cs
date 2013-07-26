@@ -192,22 +192,14 @@ namespace Server.Multis
 
 			int version = reader.ReadInt();
 
-			switch ( version )
-			{
-				case 0:
-				{
-					m_Items = reader.ReadStrongItemList();
-					m_Mobiles = reader.ReadStrongMobileList();
-					m_DecayTime = reader.ReadDeltaTime();
+			m_Items = reader.ReadStrongItemList();
+			m_Mobiles = reader.ReadStrongMobileList();
+			m_DecayTime = reader.ReadDeltaTime();
 
-					RefreshDecay( false );
+			RefreshDecay( false );
 
-					break;
-				}
-			}
-
-            if (version >= 1)
-                m_Prisoner = reader.ReadMobile();
+            m_Prisoner = reader.ReadMobile();
+            m_Camp = (CampType)reader.ReadInt();
 		}
 	}
 
