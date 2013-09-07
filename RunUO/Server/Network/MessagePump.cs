@@ -216,12 +216,22 @@ namespace Server.Network
                     }
 				}
 
-                /*int lgth = buffer.Length;
+                int lgth = buffer.Length;
                 byte[] temp = new byte[lgth];
+                byte[] backup = new byte[lgth];
 
                 buffer.Dequeue(temp, 0, lgth);
+                backup = temp;
+
                 Decrypt(ref temp);
-                buffer.Enqueue(temp, 0, lgth);*/
+
+                buffer.Enqueue(temp, 0, lgth);
+
+                /*if (buffer.GetPacketID() != 0x80 && buffer.GetPacketID() != 0x91 && buffer.GetPacketID() != 0xA0)
+                {
+                    buffer.Dequeue(temp, 0, lgth);
+                    buffer.Enqueue(backup, 0, lgth);
+                }*/
 
 				while ( length > 0 && ns.Running )
 				{
