@@ -860,7 +860,7 @@ namespace Server.Mobiles
 
             //from.Send(new ScrollMessage(0x02, 1, "April 6, 2012 --- Hirelings now respond to the \"report\" command as well as \"work\", \"servant\", and \"mercenary\". NPC's have had their clothing updated to their proper Pre-T2A styles."));
 
-            ChatSystem system = null;
+            /*ChatSystem system = null;
 
             foreach (Item item in World.Items.Values)
             {
@@ -871,7 +871,7 @@ namespace Server.Mobiles
             if (system == null)
                 system = new ChatSystem();
 
-            system.AddPlayer(from);
+            system.AddPlayer(from);*/
             
             if (from.Player)
             {

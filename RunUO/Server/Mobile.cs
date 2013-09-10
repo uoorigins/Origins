@@ -7014,9 +7014,9 @@ namespace Server
 					if( ns != null && m_Map != null )
 					{
 						ns.Sequence = 0;
-						ns.Send( new MapChange( this ) );
-						ns.Send( new MapPatches() );
-						ns.Send( SeasonChange.Instantiate( GetSeason(), true ) );
+						//ns.Send( new MapChange( this ) );
+						//ns.Send( new MapPatches() );
+						//ns.Send( SeasonChange.Instantiate( GetSeason(), true ) );
 
 						if ( ns.StygianAbyss )
 							ns.Send( new MobileUpdate( this ) );
@@ -7062,7 +7062,7 @@ namespace Server
 							Send( new MobileAttributes( this ) );
 						} else {
 							Send( new MobileIncomingOld( this, this ) );
-							Send( SupportedFeatures.Instantiate( ns ) );
+							//Send( SupportedFeatures.Instantiate( ns ) );
 							Send( new MobileUpdateOld( this ) );
 							Send( new MobileAttributes( this ) );
 						}
@@ -9141,9 +9141,9 @@ namespace Server
 				if( ns != null && m_Map != null )
 				{
 					ns.Sequence = 0;
-					ns.Send( new MapChange( this ) );
-					ns.Send( new MapPatches() );
-					ns.Send( SeasonChange.Instantiate( GetSeason(), true ) );
+					//ns.Send( new MapChange( this ) );
+					//ns.Send( new MapPatches() );
+					//ns.Send( SeasonChange.Instantiate( GetSeason(), true ) );
 
 					if ( ns.StygianAbyss )
 						ns.Send( new MobileUpdate( this ) );
@@ -9194,7 +9194,7 @@ namespace Server
 					Send( new MobileAttributes( this ) );
 				} else {
 					Send( new MobileIncomingOld( this, this ) );
-					Send( SupportedFeatures.Instantiate( ns ) );
+					//Send( SupportedFeatures.Instantiate( ns ) );
 					Send( new MobileUpdateOld( this ) );
 					Send( new MobileAttributes( this ) );
 				}
@@ -11061,8 +11061,8 @@ namespace Server
 			if( from.Map == this.Map && Utility.InUpdateRange( this, from ) && from.CanSee( this ) )
 				from.Send( new MobileStatus( from, this, m_NetState ) );
 
-			if( from == this )
-				Send( new StatLockInfo( this ) );
+			//if( from == this )
+			//	Send( new StatLockInfo( this ) );
 
 			IParty ip = m_Party as IParty;
 

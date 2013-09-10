@@ -119,7 +119,7 @@ namespace Server
 		public static ExpansionInfo[] Table { get { return m_Table; } }
 		private static ExpansionInfo[] m_Table = new ExpansionInfo[]
 			{                                         //ClientFlags.None,		FeatureFlags.ExpansionNone,	CharacterListFlags.ExpansionNone,	0x0000
-				new ExpansionInfo( 0, "None",			ClientFlags.None,		FeatureFlags.ExpansionLBR,	CharacterListFlags.ExpansionT2A,		0x0000 ), // 0x20 | 0x80 | 0x200 | 0x10000
+				new ExpansionInfo( 0, "None",			ClientFlags.None,		FeatureFlags.ExpansionNone,	CharacterListFlags.ExpansionNone,	0x0000),//ClientFlags.None,		FeatureFlags.ExpansionLBR,	CharacterListFlags.ExpansionT2A,		0x0000 ), // 0x20 | 0x80 | 0x200 | 0x10000
 				new ExpansionInfo( 1, "The Second Age",		ClientFlags.Felucca,		FeatureFlags.ExpansionT2A,	CharacterListFlags.ExpansionT2A,	0x0000 ),
 				new ExpansionInfo( 2, "Renaissance",		ClientFlags.Trammel,		FeatureFlags.ExpansionUOR,	CharacterListFlags.ExpansionUOR,	0x0000 ),
 				new ExpansionInfo( 3, "Third Dawn",		ClientFlags.Ilshenar,		FeatureFlags.ExpansionUOTD,	CharacterListFlags.ExpansionUOTD,	0x0000 ),

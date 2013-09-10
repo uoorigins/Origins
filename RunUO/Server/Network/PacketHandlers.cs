@@ -84,9 +84,9 @@ namespace Server.Network
 			m_EncodedHandlersLow = new EncodedPacketHandler[0x100];
 			m_EncodedHandlersHigh = new Dictionary<int, EncodedPacketHandler>();
 
-			Register( 0x00, 104, false, new OnPacketReceive( CreateCharacter ) );
+			Register( 0x00, 100, false, new OnPacketReceive( CreateCharacter ) );
 			Register( 0x01,   5, false, new OnPacketReceive( Disconnect ) );
-			Register( 0x02,   7,  true, new OnPacketReceive( MovementReq ) );
+			Register( 0x02,   3,  true, new OnPacketReceive( MovementReq ) );
 			Register( 0x03,   0,  true, new OnPacketReceive( AsciiSpeech ) );
 			Register( 0x04,   2,  true, new OnPacketReceive( GodModeRequest ) );
 			Register( 0x05,   5,  true, new OnPacketReceive( AttackReq ) );
@@ -550,6 +550,8 @@ namespace Server.Network
 		{
 			int lastTip = pvSrc.ReadInt16();
 			int type = pvSrc.ReadByte();
+
+            state.Send( new ScrollMessage(type, lastTip, "Test"));
 		}
 
 		public static void AttackReq( NetState state, PacketReader pvSrc )
@@ -1465,7 +1467,7 @@ namespace Server.Network
 		{
 			Direction dir = (Direction)pvSrc.ReadByte();
 			int seq = pvSrc.ReadByte();
-			int key = pvSrc.ReadInt32();
+			//int key = pvSrc.ReadInt32();
 
 			Mobile m = state.Mobile;
 
@@ -1897,14 +1899,14 @@ namespace Server.Network
 
 			protected override void OnTick()
 			{
-				if ( m_State == null )
+                if ( m_State == null )
 					Stop();
-				if ( m_State.Version != null )
-				{
+				/*if ( m_State.Version != null )
+				{*/
 					m_State.BlockAllPackets = false;
 					DoLogin( m_State, m_Mobile );
 					Stop();
-				}
+				//}
 			}
 		}
 
@@ -1955,7 +1957,7 @@ namespace Server.Network
 
 					NetState.ProcessDisposedQueue();
 
-					state.Send( new ClientVersionReq() );
+					//state.Send( new ClientVersionReq() );
 
 					state.BlockAllPackets = true;
 
@@ -1973,14 +1975,14 @@ namespace Server.Network
 		{
 			state.Send( new LoginConfirm( m ) );
 
-			if ( m.Map != null )
-				state.Send( new MapChange( m ) );
+			//if ( m.Map != null )
+			//	state.Send( new MapChange( m ) );
 
-			state.Send( new MapPatches() );
+			//state.Send( new MapPatches() );
 
-			state.Send( SeasonChange.Instantiate( m.GetSeason(), true ) );
+			//state.Send( SeasonChange.Instantiate( m.GetSeason(), true ) );
 
-			state.Send( SupportedFeatures.Instantiate( state ) );
+			//state.Send( SupportedFeatures.Instantiate( state ) );
 
 			state.Sequence = 0;
 
@@ -2020,7 +2022,7 @@ namespace Server.Network
 
 				m.SendEverything();
 
-				state.Send( SupportedFeatures.Instantiate( state ) );
+				//state.Send( SupportedFeatures.Instantiate( state ) );
 				state.Send( new MobileUpdateOld( m ) );
 				//state.Send( new MobileAttributes( m ) );
 				state.Send( new MobileStatus( m, m ) );
@@ -2030,8 +2032,8 @@ namespace Server.Network
 
 			state.Send( LoginComplete.Instance );
 			state.Send( new CurrentTime() );
-			state.Send( SeasonChange.Instantiate( m.GetSeason(), true ) );
-			state.Send( new MapChange( m ) );
+			//state.Send( SeasonChange.Instantiate( m.GetSeason(), true ) );
+			//state.Send( new MapChange( m ) );
 
 			EventSink.InvokeLogin( new LoginEventArgs( m ) );
 
@@ -2045,11 +2047,13 @@ namespace Server.Network
 			int unk3 = pvSrc.ReadByte();
 			string name = pvSrc.ReadString( 30 );
 
-			pvSrc.Seek( 2, SeekOrigin.Current );
+			/*pvSrc.Seek( 2, SeekOrigin.Current );
 			int flags = pvSrc.ReadInt32();
 			pvSrc.Seek( 8, SeekOrigin.Current );
 			int prof = pvSrc.ReadByte();
-			pvSrc.Seek( 15, SeekOrigin.Current );
+			pvSrc.Seek( 15, SeekOrigin.Current );*/
+
+            string password = pvSrc.ReadString(30);
 
 			//bool female = pvSrc.ReadBoolean();
 
@@ -2069,9 +2073,9 @@ namespace Server.Network
 			int hairHue = pvSrc.ReadInt16();
 			int hairValf= pvSrc.ReadInt16();
 			int hairHuef= pvSrc.ReadInt16();
-			pvSrc.ReadByte();
-			int cityIndex = pvSrc.ReadByte();
-			int charSlot = pvSrc.ReadInt32();
+            int cityIndex = pvSrc.ReadInt16();
+            pvSrc.ReadInt16();
+            int charSlot = pvSrc.ReadInt16();
 			int clientIP = pvSrc.ReadInt32();
 			int shirtHue = pvSrc.ReadInt16();
 			int pantsHue = pvSrc.ReadInt16();
@@ -2124,7 +2128,7 @@ namespace Server.Network
 					}
 				}
 
-				state.Flags = (ClientFlags)flags;
+				state.Flags = (ClientFlags)0;
 
 				CharacterCreatedEventArgs args = new CharacterCreatedEventArgs(
 					state, a,
@@ -2140,11 +2144,11 @@ namespace Server.Network
 					shirtHue, pantsHue,
 					hairVal, hairHue,
 					hairValf, hairHuef,
-					prof,
+					0,
 					race
 					);
 
-				state.Send( new ClientVersionReq() );
+				//state.Send( new ClientVersionReq() );
 
 				state.BlockAllPackets = true;
 
@@ -2448,7 +2452,7 @@ namespace Server.Network
 				state.CityInfo = e.CityInfo;
 				state.CompressionEnabled = true;
 
-				state.Send( SupportedFeatures.Instantiate( state ) );
+				//state.Send( SupportedFeatures.Instantiate( state ) );
 
 				if ( state.NewCharacterList ) {
 					state.Send( new CharacterList( state.Account, state.CityInfo ) );
