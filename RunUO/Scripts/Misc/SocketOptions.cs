@@ -14,7 +14,7 @@ namespace Server
 		private const int CoalesceBufferSize = 512; // MSS that the core will use when buffering packets
 
 		private static IPEndPoint[] m_ListenerEndPoints = new IPEndPoint[] {
-			new IPEndPoint( IPAddress.Any, 2593 ), // Default: Listen on port 2593 on all IP addresses
+			new IPEndPoint( IPAddress.Any, 2594 ), // Default: Listen on port 2593 on all IP addresses
 			
 			// Examples:
 			// new IPEndPoint( IPAddress.Any, 80 ), // Listen on port 80 on all IP addresses
