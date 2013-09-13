@@ -129,14 +129,14 @@ namespace Server.Mobiles
  
 			if ( m_Mobile is BaseVendor && from.InRange( m_Mobile, 4 ) && !e.Handled )
 			{
-				if ( e.HasKeyword( 0x14D ) ) // *vendor sell*
+                if (Insensitive.Speech(e.Speech, "vendor sell")) // *vendor sell*
 				{
 					e.Handled = true;
 
 					((BaseVendor)m_Mobile).VendorSell( from );
 					m_Mobile.FocusMob = from;
 				}
-				else if ( e.HasKeyword( 0x3C ) ) // *vendor buy*, vendor purchase
+                else if (Insensitive.Speech(e.Speech, "vendor buy")) // *vendor buy*, vendor purchase
 				{
 					e.Handled = true;
 
@@ -145,12 +145,12 @@ namespace Server.Mobiles
 				}
 				else if ( WasNamed( e.Speech ) || m_Mobile.FocusMob == e.Mobile )
 				{
-                    if (e.HasKeyword(0x177)) // *sell*
+                    if (Insensitive.Speech(e.Speech, "sell")) // *sell*
                     {
                         e.Handled = true;
                         ((BaseVendor)m_Mobile).VendorSell(from);
                     }
-                    else if (e.HasKeyword(0x171)) // *buy*
+                    else if (Insensitive.Speech(e.Speech, "buy")) // *buy*
                     {
                         e.Handled = true;
                         ((BaseVendor)m_Mobile).VendorBuy(from);

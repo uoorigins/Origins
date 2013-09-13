@@ -658,20 +658,22 @@ namespace Server.Mobiles
 				else
 					from.Send( new VendorBuyContent( list ) );
 
-				from.Send( new VendorBuyList( this, list ) );
+                from.Send(new VendorBuyList(this, list));
 
 				if ( ns.HighSeas )
 					from.Send( new DisplayBuyListHS( this ) );
 				else
 					from.Send( new DisplayBuyList( this ) );
 
+
+
 				from.Send( new MobileStatusExtended( from ) );//make sure their gold amount is sent
 
-				if ( opls != null ) {
+				/*if ( opls != null ) {
 					for ( int i = 0; i < opls.Count; ++i ) {
 						from.Send( opls[i] );
 					}
-				}
+				}*/
 
 				SayTo( from, true, "Greetings.  Have a look around." ); // Greetings.  Have a look around.
 			}
