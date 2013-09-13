@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Server.Items;
+using Server.Commands;
 
 namespace Server.Mobiles
 {
@@ -99,7 +100,7 @@ namespace Server.Mobiles
 			if ( item.Name != null )
 				return item.Name;
 			else
-				return item.LabelNumber.ToString();
+                return ClilocParser.Parse(item.LabelNumber.ToString());
 		}
 
 		public bool IsSellable( Item item )
