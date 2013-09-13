@@ -292,7 +292,7 @@ namespace Server.Network
 				m_Stream.Write( (ushort)bis.Amount );
 				m_Stream.Write( (short)(i+1) );//x
 				m_Stream.Write( (short)1 );//y
-				m_Stream.Write( (int)bis.ContainerSerial );
+				m_Stream.Write( (int)(bis.ContainerSerial) );
 				m_Stream.Write( (ushort)bis.Hue );
 			}
 		}
@@ -332,7 +332,7 @@ namespace Server.Network
 		public DisplayBuyList( Mobile vendor ) : base( 0x24, 7 )
 		{
 			m_Stream.Write( (int)vendor.Serial );
-			m_Stream.Write( (short) 0x30 ); // buy window id?
+			m_Stream.Write( (short) 0x0030 ); // buy window id?
 		}
 	}
 
@@ -2976,9 +2976,7 @@ namespace Server.Network
 			string name = m.Name;
 			if ( name == null ) name = "";
 
-			bool sendMLExtended = (Core.ML && ns != null && ns.SupportsExpansion( Expansion.ML ));
-
-			this.EnsureCapacity( sendMLExtended ? 91 : 88 );
+            this.EnsureCapacity(66);
 
 			m_Stream.Write( (int) m.Serial );
 			m_Stream.WriteAsciiFixed( name, 30 );
@@ -2988,7 +2986,7 @@ namespace Server.Network
 
 			m_Stream.Write( m.CanBeRenamedBy( m ) );
 
-			m_Stream.Write( (byte)(sendMLExtended ? 0x05 : Core.AOS ? 0x04 : 0x03) ); // type
+			m_Stream.Write( (byte)(0x01) ); // type
 
 			m_Stream.Write( m.Female );
 
@@ -3003,40 +3001,8 @@ namespace Server.Network
 			m_Stream.Write( (short) m.ManaMax );
 
 			m_Stream.Write( (int) m.TotalGold );
-			m_Stream.Write( (short) (Core.AOS ? m.PhysicalResistance : (int)(m.ArmorRating + 0.5)) );
+			m_Stream.Write( (short) ((int)(m.ArmorRating + 0.5)) );
 			m_Stream.Write( (short) (Mobile.BodyWeight + m.TotalWeight) );
-
-			if( sendMLExtended )
-			{
-				m_Stream.Write( (short)m.MaxWeight );
-				m_Stream.Write( (byte)(m.Race.RaceID + 1));	// Would be 0x00 if it's a non-ML enabled account but...
-			}
-
-			m_Stream.Write( (short) m.StatCap );
-
-			m_Stream.Write( (byte) m.Followers );
-			m_Stream.Write( (byte) m.FollowersMax );
-
-			if ( Core.AOS )
-			{
-				m_Stream.Write( (short) m.FireResistance ); // Fire
-				m_Stream.Write( (short) m.ColdResistance ); // Cold
-				m_Stream.Write( (short) m.PoisonResistance ); // Poison
-				m_Stream.Write( (short) m.EnergyResistance ); // Energy
-				m_Stream.Write( (short) m.Luck ); // Luck
-
-				IWeapon weapon = m.Weapon;
-
-				int min = 0, max = 0;
-
-				if ( weapon != null )
-					weapon.GetStatusDamage( m, out min, out max );
-
-				m_Stream.Write( (short) min ); // Damage min
-				m_Stream.Write( (short) max ); // Damage max
-
-				m_Stream.Write( (int) m.TithingPoints );
-			}
 		}
 	}
 
