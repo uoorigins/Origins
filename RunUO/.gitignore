@@ -53,6 +53,8 @@ local.properties
 *.user
 *.sln.docstates
 
+*vshost.exe*
+
 # Build results
 [Dd]ebug/
 [Rr]elease/
