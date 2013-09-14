@@ -8,7 +8,7 @@ namespace Server.Spells.Fourth
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Lightning", "Por Ort Grav",
-				239,
+                16,
 				9021,
 				Reagent.MandrakeRoot,
 				Reagent.SulfurousAsh
