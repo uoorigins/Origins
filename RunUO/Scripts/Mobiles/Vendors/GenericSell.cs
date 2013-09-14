@@ -98,7 +98,7 @@ namespace Server.Mobiles
 		public string GetNameFor( Item item )
 		{
 			if ( item.Name != null )
-				return item.Name;
+				return ClilocParser.Parse(item.Name);
 			else
                 return ClilocParser.Parse(item.LabelNumber.ToString());
 		}
