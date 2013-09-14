@@ -258,7 +258,7 @@ namespace Server.Mobiles
 			if ( name == null )
 				m_Name = Server.Commands.ClilocParser.Parse((1020000 + (itemID & 0x3FFF)).ToString());
 			else
-				m_Name = name;
+                m_Name = Server.Commands.ClilocParser.Parse(name);
 		}
 
 		//get a new instance of an object (we just bought it)
