@@ -11,7 +11,7 @@ namespace Server.Spells.Fourth
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Fire Field", "In Flam Grav",
-				215,
+                16,
 				9041,
 				false,
 				Reagent.BlackPearl,

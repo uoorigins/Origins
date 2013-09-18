@@ -10,7 +10,7 @@ namespace Server.Spells.Fifth
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Dispel Field", "An Grav",
-				206,
+                16,
 				9002,
 				Reagent.BlackPearl,
 				Reagent.SpidersSilk,

@@ -10,7 +10,7 @@ namespace Server.Spells.Sixth
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Mark", "Kal Por Ylem",
-				218,
+                16,
 				9002,
 				Reagent.BlackPearl,
 				Reagent.Bloodmoss,

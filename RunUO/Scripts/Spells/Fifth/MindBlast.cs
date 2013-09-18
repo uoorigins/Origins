@@ -8,7 +8,7 @@ namespace Server.Spells.Fifth
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Mind Blast", "Por Corp Wis",
-				218,
+                16,
 				Core.AOS ? 9002 : 9032,
 				Reagent.BlackPearl,
 				Reagent.MandrakeRoot,

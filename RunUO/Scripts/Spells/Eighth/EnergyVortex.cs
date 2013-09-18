@@ -9,7 +9,7 @@ namespace Server.Spells.Eighth
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Energy Vortex", "Vas Corp Por",
-				260,
+				17,
 				9032,
 				false,
 				Reagent.Bloodmoss,

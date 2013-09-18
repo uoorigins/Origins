@@ -13,7 +13,7 @@ namespace Server.Spells.Second
 
         private static SpellInfo m_Info = new SpellInfo(
                 "Protection", "Uus Sanct",
-                236,
+                16,
                 9011,
                 Reagent.Garlic,
                 Reagent.Ginseng,

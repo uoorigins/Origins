@@ -10,7 +10,7 @@ namespace Server.Spells.Seventh
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Meteor Swarm", "Flam Kal Des Ylem",
-				233,
+                16,
 				9042,
 				false,
 				Reagent.Bloodmoss,

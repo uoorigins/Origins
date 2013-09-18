@@ -8,7 +8,7 @@ namespace Server.Spells.Seventh
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Flame Strike", "Kal Vas Flam",
-				245,
+                16,
 				9042,
 				Reagent.SpidersSilk,
 				Reagent.SulfurousAsh

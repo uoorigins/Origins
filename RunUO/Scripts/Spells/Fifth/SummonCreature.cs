@@ -9,7 +9,7 @@ namespace Server.Spells.Fifth
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Summon Creature", "Kal Xen",
-				266,
+				17,
 				9040,
 				Reagent.Bloodmoss,
 				Reagent.MandrakeRoot,

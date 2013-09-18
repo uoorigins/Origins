@@ -11,7 +11,7 @@ namespace Server.Spells.Fourth
 		private static SpellInfo m_Info = new SpellInfo(
 				"Greater Heal", "In Vas Mani",
 				204,
-				9061,
+                16,
 				Reagent.Garlic,
 				Reagent.Ginseng,
 				Reagent.MandrakeRoot,

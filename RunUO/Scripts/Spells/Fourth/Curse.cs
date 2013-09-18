@@ -9,7 +9,7 @@ namespace Server.Spells.Fourth
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Curse", "Des Sanct",
-				227,
+                16,
 				9031,
 				Reagent.Nightshade,
 				Reagent.Garlic,

@@ -10,7 +10,7 @@ namespace Server.Spells.Fourth
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Arch Cure", "Vas An Nox",
-				215,
+                16,
 				9061,
 				Reagent.Garlic,
 				Reagent.Ginseng,

@@ -8,7 +8,7 @@ namespace Server.Spells.Third
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Poison", "In Nox",
-				203,
+                16,
 				9051,
 				Reagent.Nightshade
 			);

@@ -11,7 +11,7 @@ namespace Server.Spells.Fourth
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Arch Protection", "Vas Uus Sanct",
-				Core.AOS ? 239 : 215,
+                16,
 				9011,
 				Reagent.Garlic,
 				Reagent.Ginseng,

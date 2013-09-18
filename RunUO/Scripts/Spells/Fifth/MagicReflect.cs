@@ -10,7 +10,7 @@ namespace Server.Spells.Fifth
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Magic Reflection", "In Jux Sanct",
-				242,
+                16,
 				9012,
 				Reagent.Garlic,
 				Reagent.MandrakeRoot,

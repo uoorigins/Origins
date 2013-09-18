@@ -8,7 +8,7 @@ namespace Server.Spells.Second
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Strength", "Uus Mani",
-				212,
+                16,
 				9061,
 				Reagent.MandrakeRoot,
 				Reagent.Nightshade

@@ -11,7 +11,7 @@ namespace Server.Spells.Fifth
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Poison Field", "In Nox Grav",
-				230,
+                16,
 				9052,
 				false,
 				Reagent.BlackPearl,

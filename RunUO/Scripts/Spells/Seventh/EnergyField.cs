@@ -10,7 +10,7 @@ namespace Server.Spells.Seventh
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Energy Field", "In Sanct Grav",
-				221,
+                16,
 				9022,
 				false,
 				Reagent.BlackPearl,

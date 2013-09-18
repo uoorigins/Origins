@@ -11,7 +11,7 @@ namespace Server.Spells.Sixth
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Mass Curse", "Vas Des Sanct",
-				218,
+                16,
 				9031,
 				false,
 				Reagent.Garlic,

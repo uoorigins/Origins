@@ -9,7 +9,7 @@ namespace Server.Spells.Fourth
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Mana Drain", "Ort Rel",
-				215,
+                16,
 				9031,
 				Reagent.BlackPearl,
 				Reagent.MandrakeRoot,

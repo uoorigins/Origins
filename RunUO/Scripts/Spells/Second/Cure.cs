@@ -8,7 +8,7 @@ namespace Server.Spells.Second
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Cure", "An Nox",
-				212,
+                16,
 				9061,
 				Reagent.Garlic,
 				Reagent.Ginseng

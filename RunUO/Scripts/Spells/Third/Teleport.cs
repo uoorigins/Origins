@@ -10,7 +10,7 @@ namespace Server.Spells.Third
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Teleport", "Rel Por",
-				215,
+                16,
 				9031,
 				Reagent.Bloodmoss,
 				Reagent.MandrakeRoot

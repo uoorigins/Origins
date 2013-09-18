@@ -8,7 +8,7 @@ namespace Server.Spells.Seventh
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Mana Vampire", "Ort Sanct",
-				221,
+                16,
 				9032,
 				Reagent.BlackPearl,
 				Reagent.Bloodmoss,

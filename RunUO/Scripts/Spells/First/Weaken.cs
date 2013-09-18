@@ -8,7 +8,7 @@ namespace Server.Spells.First
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Weaken", "Des Mani",
-				212,
+                16,
 				9031,
 				Reagent.Garlic,
 				Reagent.Nightshade

@@ -12,7 +12,7 @@ namespace Server.Spells.Seventh
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Mass Dispel", "Vas An Ort",
-				263,
+				17,
 				9002,
 				Reagent.Garlic,
 				Reagent.MandrakeRoot,

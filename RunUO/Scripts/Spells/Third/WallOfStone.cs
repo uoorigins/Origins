@@ -10,7 +10,7 @@ namespace Server.Spells.Third
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Wall of Stone", "In Sanct Ylem",
-				227,
+                16,
 				9011,
 				false,
 				Reagent.Bloodmoss,

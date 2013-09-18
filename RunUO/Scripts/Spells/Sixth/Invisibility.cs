@@ -11,7 +11,7 @@ namespace Server.Spells.Sixth
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Invisibility", "An Lor Xen",
-				206,
+                16,
 				9002,
 				Reagent.Bloodmoss,
 				Reagent.Nightshade

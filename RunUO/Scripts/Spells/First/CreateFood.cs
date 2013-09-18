@@ -8,7 +8,7 @@ namespace Server.Spells.First
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Create Food", "In Mani Ylem",
-				224,
+                16,
 				9011,
 				Reagent.Garlic,
 				Reagent.Ginseng,

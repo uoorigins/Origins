@@ -13,7 +13,7 @@ namespace Server.Spells.Seventh
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Polymorph", "Vas Ylem Rel",
-				221,
+                16,
 				9002,
 				Reagent.Bloodmoss,
 				Reagent.SpidersSilk,

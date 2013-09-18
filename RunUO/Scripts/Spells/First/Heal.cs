@@ -10,7 +10,7 @@ namespace Server.Spells.First
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Heal", "In Mani",
-				224,
+                16,
 				9061,
 				Reagent.Garlic,
 				Reagent.Ginseng,

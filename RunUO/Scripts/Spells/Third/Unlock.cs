@@ -9,7 +9,7 @@ namespace Server.Spells.Third
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Unlock Spell", "Ex Por",
-				215,
+                16,
 				9001,
 				Reagent.Bloodmoss,
 				Reagent.SulfurousAsh

@@ -9,7 +9,7 @@ namespace Server.Spells.Fifth
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Blade Spirits", "In Jux Hur Ylem", 
-				266,
+				17,
 				9040,
 				false,
 				Reagent.BlackPearl,

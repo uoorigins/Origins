@@ -14,7 +14,7 @@ namespace Server.Spells.Fifth
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Incognito", "Kal In Ex",
-				206,
+                16,
 				9002,
 				Reagent.Bloodmoss,
 				Reagent.Garlic,

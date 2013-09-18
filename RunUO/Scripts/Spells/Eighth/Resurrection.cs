@@ -11,7 +11,7 @@ namespace Server.Spells.Eighth
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Resurrection", "An Corp",
-				245,
+                16,
 				9062,
 				Reagent.Bloodmoss,
 				Reagent.Garlic,

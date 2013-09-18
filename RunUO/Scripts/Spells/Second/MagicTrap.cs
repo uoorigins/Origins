@@ -9,7 +9,7 @@ namespace Server.Spells.Second
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Magic Trap", "In Jux",
-				212,
+                16,
 				9001,
 				Reagent.Garlic,
 				Reagent.SpidersSilk,

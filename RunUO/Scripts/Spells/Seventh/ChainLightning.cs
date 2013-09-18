@@ -10,7 +10,7 @@ namespace Server.Spells.Seventh
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Chain Lightning", "Vas Ort Grav",
-				209,
+                16,
 				9022,
 				false,
 				Reagent.BlackPearl,

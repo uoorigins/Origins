@@ -8,7 +8,7 @@ namespace Server.Spells.Fifth
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Paralyze", "An Ex Por",
-				218,
+                16,
 				9012,
 				Reagent.Garlic,
 				Reagent.MandrakeRoot,

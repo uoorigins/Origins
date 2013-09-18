@@ -9,7 +9,7 @@ namespace Server.Spells.First
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Reactive Armor", "Flam Sanct",
-				236,
+                16,
 				9011,
 				Reagent.Garlic,
 				Reagent.SpidersSilk,

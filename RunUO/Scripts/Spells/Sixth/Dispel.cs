@@ -11,7 +11,7 @@ namespace Server.Spells.Sixth
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Dispel", "An Ort",
-				218,
+                16,
 				9002,
 				Reagent.Garlic,
 				Reagent.MandrakeRoot,

@@ -8,7 +8,7 @@ namespace Server.Spells.Second
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Harm", "An Mani",
-				212,
+                16,
 				Core.AOS ? 9001 : 9041,
 				Reagent.Nightshade,
 				Reagent.SpidersSilk

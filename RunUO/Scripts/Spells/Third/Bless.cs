@@ -8,7 +8,7 @@ namespace Server.Spells.Third
 	{
  		private static SpellInfo m_Info = new SpellInfo(
 				"Bless", "Rel Sanct",
-				203,
+                16,
 				9061,
 				Reagent.Garlic,
 				Reagent.MandrakeRoot

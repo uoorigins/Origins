@@ -13,7 +13,7 @@ namespace Server.Spells.Fourth
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Recall", "Kal Ort Por",
-				239,
+                16,
 				9031,
 				Reagent.BlackPearl,
 				Reagent.Bloodmoss,

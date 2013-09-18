@@ -8,7 +8,7 @@ namespace Server.Spells.Sixth
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Energy Bolt", "Corp Por",
-				230,
+                16,
 				9022,
 				Reagent.BlackPearl,
 				Reagent.Nightshade

@@ -9,7 +9,7 @@ namespace Server.Spells.First
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Night Sight", "In Lor",
-				236,
+                16,
 				9031,
 				Reagent.SulfurousAsh,
 				Reagent.SpidersSilk

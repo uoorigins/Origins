@@ -8,7 +8,7 @@ namespace Server.Spells.Third
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Fireball", "Vas Flam",
-				203,
+                16,
 				9041,
 				Reagent.BlackPearl
 			);

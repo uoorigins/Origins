@@ -10,7 +10,7 @@ namespace Server.Spells.Sixth
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Paralyze Field", "In Ex Grav",
-				230,
+                16,
 				9012,
 				false,
 				Reagent.BlackPearl,

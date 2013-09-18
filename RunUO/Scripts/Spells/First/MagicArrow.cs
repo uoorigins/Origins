@@ -8,7 +8,7 @@ namespace Server.Spells.First
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Magic Arrow", "In Por Ylem",
-				212,
+                16,
 				9041,
 				Reagent.SulfurousAsh
 			);

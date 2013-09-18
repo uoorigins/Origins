@@ -8,7 +8,7 @@ namespace Server.Spells.Sixth
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Explosion", "Vas Ort Flam",
-				230,
+                16,
 				9041,
 				Reagent.Bloodmoss,
 				Reagent.MandrakeRoot
