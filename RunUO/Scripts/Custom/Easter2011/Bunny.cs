@@ -123,7 +123,7 @@ namespace Server.Mobiles
 
         public override void OnSpeech(SpeechEventArgs e)
         {
-            if (!e.Handled && e.HasKeyword(0x16D))
+            if (!e.Handled)
             {
                 return;
             }

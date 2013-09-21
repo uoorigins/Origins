@@ -87,7 +87,7 @@ namespace Server.Mobiles
                 return;
             }
 
-			if ( !e.Handled && from is PlayerMobile && from.InRange( this.Location, 2 ) && e.HasKeyword( 0x1F ) ) // *disguise*
+			if ( !e.Handled && from is PlayerMobile && from.InRange( this.Location, 2 ) && Insensitive.Speech(e.Speech, "disguise") ) // *disguise*
 			{
 				PlayerMobile pm = (PlayerMobile)from;
 

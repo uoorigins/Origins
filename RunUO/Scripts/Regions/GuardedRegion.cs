@@ -222,7 +222,7 @@ namespace Server.Regions
 			if ( IsDisabled() )
 				return;
 
-			if ( args.Mobile.Alive && args.HasKeyword( 0x0007 ) ) // *guards*
+			if ( args.Mobile.Alive && Insensitive.Speech(args.Speech, "guards") ) // *guards*
 				CallGuards( args.Mobile.Location );
 		}
 

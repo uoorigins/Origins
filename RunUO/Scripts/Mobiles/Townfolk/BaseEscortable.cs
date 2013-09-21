@@ -198,9 +198,9 @@ namespace Server.Mobiles
 
 			if ( dest != null && !e.Handled && e.Mobile.InRange( this.Location, 3 ) )
 			{
-				if ( e.HasKeyword( 0x1D ) ) // *destination*
+                if (Insensitive.Speech(e.Speech, "destination")) // *destination*
 					e.Handled = SayDestinationTo( e.Mobile );
-				else if ( e.HasKeyword( 0x1E ) ) // *i will take thee*
+                else if (Insensitive.Speech(e.Speech, "i will take thee")) // *i will take thee*
 					e.Handled = AcceptEscorter( e.Mobile );
 			}
 		}

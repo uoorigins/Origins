@@ -277,7 +277,7 @@ namespace Server.Mobiles
 
 			if ( !e.Handled && InRange( e.Mobile, 3 ) )
 			{
-				if ( m_NewsTimer == null && e.HasKeyword( 0x30 ) ) // *news*
+				if ( m_NewsTimer == null) // *news*
 				{
 					TownCrierEntry tce = GlobalTownCrierEntryList.Instance.GetRandomEntry();
 

@@ -4372,7 +4372,7 @@ namespace Server.Mobiles
 
 		public override void OnSpeech( SpeechEventArgs e )
 		{
-            if (QuestArrow != null && (QuestArrow is SkillHandlers.TrackArrow) && e.HasKeyword(0x0036))
+            if (QuestArrow != null && (QuestArrow is SkillHandlers.TrackArrow) && Insensitive.Equals(e.Speech, "stop"))
             {
                 QuestArrow.Stop();
             }

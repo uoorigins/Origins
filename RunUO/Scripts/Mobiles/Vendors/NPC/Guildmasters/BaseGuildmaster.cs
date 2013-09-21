@@ -93,7 +93,7 @@ namespace Server.Mobiles
 			{
 				PlayerMobile pm = (PlayerMobile)from;
 
-				if ( e.HasKeyword( 0x0004 ) ) // *join* | *member*
+                if (Insensitive.Speech(e.Speech, "join") || Insensitive.Speech(e.Speech, "member")) // *join* | *member*
 				{
 					if ( pm.NpcGuild == this.NpcGuild )
                         SayTo(from, true, "Thou art already a member of our guild."); // Thou art already a member of our guild.
@@ -106,7 +106,7 @@ namespace Server.Mobiles
 
 					e.Handled = true;
 				}
-				else if ( e.HasKeyword( 0x0005 ) ) // *resign* | *quit*
+                else if (Insensitive.Speech(e.Speech, "resign") || Insensitive.Speech(e.Speech, "quit")) // *resign* | *quit*
 				{
 					if ( pm.NpcGuild != this.NpcGuild )
 					{

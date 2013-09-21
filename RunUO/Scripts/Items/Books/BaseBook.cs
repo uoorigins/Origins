@@ -301,8 +301,7 @@ namespace Server.Items
 				list.Add( 1060658, "Title\t{0}", m_Title ); // ~1_val~: ~2_val~
 
 			if ( m_Author != null && m_Author.Length > 0 )
-				list.Add( 1060659, "Author\t{0}", m_Author ); // ~1_val~: ~2_val~
-
+				list.Add( 1060659, "Author\t{0}", m_Author ); // ~1_val~: ~2_val
 			if ( m_Pages != null && m_Pages.Length > 0 )
 				list.Add( 1060660, "Pages\t{0}", m_Pages.Length ); // ~1_val~: ~2_val~
 		}*/
@@ -344,7 +343,7 @@ namespace Server.Items
 		{
 			PacketHandlers.Register( 0xD4,  0, true, new OnPacketReceive( HeaderChange ) );
 			PacketHandlers.Register( 0x66,  0, true, new OnPacketReceive( ContentChange ) );
-			PacketHandlers.Register( 0x93, 99, true, new OnPacketReceive( OldHeaderChange ) );
+			PacketHandlers.Register( 0x93, 98, true, new OnPacketReceive( OldHeaderChange ) );
 		}
 
 		public static void OldHeaderChange( NetState state, PacketReader pvSrc )
@@ -355,13 +354,13 @@ namespace Server.Items
 			if ( book == null || !book.Writable || !from.InRange( book.GetWorldLocation(), 1 ) || !book.IsAccessibleTo( from ) )
 				return;
 
-			pvSrc.Seek( 4, SeekOrigin.Current ); // Skip flags and page count
+			pvSrc.Seek( 3, SeekOrigin.Current ); // Skip flags and page count
 
 			string title = pvSrc.ReadStringSafe( 60 );
 			string author = pvSrc.ReadStringSafe( 30 );
 
-			book.Title = Utility.FixHtml( title );
-			book.Author = Utility.FixHtml( author );
+			book.Title = title;
+			book.Author = author;
 		}
 
 		public static void HeaderChange( NetState state, PacketReader pvSrc )
@@ -420,7 +419,7 @@ namespace Server.Items
 						string[] lines = new string[lineCount];
 
 						for ( int j = 0; j < lineCount; ++j )
-							if ( (lines[j] = pvSrc.ReadUTF8StringSafe()).Length >= 80 )
+							if ( (lines[j] = pvSrc.ReadStringSafe()).Length >= 80 )
 								return;
 
 						book.Pages[index].Lines = lines;
@@ -457,6 +456,7 @@ namespace Server.Items
 
 	public sealed class BookPageDetails : Packet
 	{
+
 		public BookPageDetails( BaseBook book ) : base( 0x66 )
 		{
 			EnsureCapacity( 256 );
@@ -473,7 +473,7 @@ namespace Server.Items
 
 				for ( int j = 0; j < page.Lines.Length; ++j )
 				{
-					byte[] buffer = Utility.UTF8.GetBytes( page.Lines[j] );
+                    byte[] buffer = Encoding.ASCII.GetBytes(page.Lines[j]);
 
 					m_Stream.Write( buffer, 0, buffer.Length );
 					m_Stream.Write( (byte) 0 );
@@ -484,28 +484,28 @@ namespace Server.Items
 
 	public sealed class BookHeader : Packet
 	{
-		public BookHeader( Mobile from, BaseBook book ) : base ( 0xD4 )
+		public BookHeader( Mobile from, BaseBook book ) : base ( 0x93, 98 )
 		{
 			string title = book.Title == null ? "" : book.Title;
 			string author = book.Author == null ? "" : book.Author;
 
-			byte[] titleBuffer = Utility.UTF8.GetBytes( title );
-			byte[] authorBuffer = Utility.UTF8.GetBytes( author );
+			byte[] titleBuffer = Encoding.ASCII.GetBytes( title );
+			byte[] authorBuffer = Encoding.ASCII.GetBytes( author );
 
-			EnsureCapacity( 15 + titleBuffer.Length + authorBuffer.Length );
+            byte[] sendtitle = Encoding.ASCII.GetBytes(new string('\0',60));
+            //sendtitle = titleBuffer;
+            Array.Copy(titleBuffer, sendtitle, titleBuffer.Length);
+            byte[] sendauthor = Encoding.ASCII.GetBytes(new string('\0', 30));
+            //sendauthor = authorBuffer;
+            Array.Copy(authorBuffer, sendauthor, authorBuffer.Length);
 
 			m_Stream.Write( (int)    book.Serial );
-			m_Stream.Write( (bool)   true );
-			m_Stream.Write( (bool)   book.Writable && from.InRange( book.GetWorldLocation(), 1 ) );
+            m_Stream.Write((bool)true);
 			m_Stream.Write( (ushort) book.PagesCount );
 
-			m_Stream.Write( (ushort) (titleBuffer.Length + 1) );
-			m_Stream.Write( titleBuffer, 0, titleBuffer.Length );
-			m_Stream.Write( (byte) 0 ); // terminate
+			m_Stream.Write( sendtitle, 0, 59 );
 
-			m_Stream.Write( (ushort) (authorBuffer.Length + 1) );
-			m_Stream.Write( authorBuffer, 0, authorBuffer.Length );
-			m_Stream.Write( (byte) 0 ); // terminate
+			m_Stream.Write( sendauthor, 0, 29 );
 		}
 	}
 }

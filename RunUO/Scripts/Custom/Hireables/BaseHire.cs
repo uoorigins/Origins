@@ -274,7 +274,7 @@ namespace Server.Mobiles
                 string speech = e.Speech; 
 
                 // Check for a greeting or 'Hire' 
-                if( ( e.HasKeyword( 0x003B ) == true ) || ( e.HasKeyword( 0x0162 ) == true ) || Insensitive.Speech(e.Speech, "mercenary") || Insensitive.Speech(e.Speech, "servant") || Insensitive.Speech(e.Speech, "work")) 
+                if (Insensitive.Speech(e.Speech, "hi") || Insensitive.Speech(e.Speech, "hire") || Insensitive.Speech(e.Speech, "mercenary") || Insensitive.Speech(e.Speech, "servant") || Insensitive.Speech(e.Speech, "work")) 
                 { 
                     e.Handled = Payday( this ); 
                     this.SayHireCost(); 

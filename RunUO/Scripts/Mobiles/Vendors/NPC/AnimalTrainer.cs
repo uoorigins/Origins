@@ -390,12 +390,12 @@ namespace Server.Mobiles
                 return;
             }
 
-			if ( !e.Handled && e.HasKeyword( 0x0008 ) )
+			if ( !e.Handled && Insensitive.Speech(e.Speech, "stable"))
 			{
 				e.Handled = true;
 				BeginStable( e.Mobile );
 			}
-			else if ( !e.Handled && e.HasKeyword( 0x0009 ) )
+			else if ( !e.Handled && Insensitive.Speech(e.Speech,"claim") )
 			{
 				e.Handled = true;
 

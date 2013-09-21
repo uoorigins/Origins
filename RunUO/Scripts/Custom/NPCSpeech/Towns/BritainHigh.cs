@@ -10,7 +10,7 @@ namespace Server
         {
             string response = null;
 
-            if (e.HasKeyword(0x0122)) // *where am i"
+            if (Insensitive.Speech(e.Speech, "where am i")) // *where am i"
             {
                 switch (Utility.Random(3))
                 {
@@ -19,7 +19,7 @@ namespace Server
                     case 2: response = (String.Format("Thou art in Britain, {0}.", e.Mobile.Female ? "milady" : "milord")); break;
                 }
             }
-            else if (e.HasKeyword(0x0125)) // *dummies*, *dummy*, *training dummies*, *training dummy*
+            else if (Insensitive.Speech(e.Speech, "dummies") || Insensitive.Speech(e.Speech, "dummy") || Insensitive.Speech(e.Speech, "training dummy") || Insensitive.Speech(e.Speech, "training dummies")) // *dummies*, *dummy*, *training dummies*, *training dummy*
             {
                 switch (Utility.Random(3))
                 {

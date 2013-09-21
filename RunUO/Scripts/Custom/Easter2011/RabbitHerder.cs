@@ -154,7 +154,7 @@ namespace Server.Mobiles
 
 		public override void OnSpeech( SpeechEventArgs e )
 		{
-			if ( !e.Handled && e.HasKeyword( 0x0008 ) )
+			if ( !e.Handled )
 			{
 				e.Handled = true;
 				BeginStable( e.Mobile );

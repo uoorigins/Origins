@@ -443,9 +443,7 @@ namespace Server.Items
 
 				bool isMatch = false;
 
-				if ( m_Keyword >= 0 && e.HasKeyword( m_Keyword ) )
-					isMatch = true;
-				else if ( m_Substring != null && e.Speech.ToLower().IndexOf( m_Substring.ToLower() ) >= 0 )
+				if ( m_Substring != null && e.Speech.ToLower().IndexOf( m_Substring.ToLower() ) >= 0 )
 					isMatch = true;
 
 				if ( !isMatch )

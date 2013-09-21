@@ -731,14 +731,14 @@ namespace Server
 		public bool Handled{ get{ return m_Handled; } set{ m_Handled = value; } }
 		public bool Blocked{ get{ return m_Blocked; } set{ m_Blocked = value; } }
 
-		public bool HasKeyword( int keyword )
+		/*public bool HasKeyword( int keyword )
 		{
 			for ( int i = 0; i < m_Keywords.Length; ++i )
 				if ( m_Keywords[i] == keyword )
 					return true;
 
 			return false;
-		}
+		}*/
 
 		public SpeechEventArgs( Mobile mobile, string speech, MessageType type, int hue, int[] keywords )
 		{

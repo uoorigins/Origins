@@ -461,7 +461,7 @@ namespace Server.Mobiles
 
 		public override void OnSpeech( SpeechEventArgs e )
 		{
-			if ( m_NewsTimer == null && e.HasKeyword( 0x30 ) && e.Mobile.Alive && InRange( e.Mobile, 12 ) ) // *news*
+            if (m_NewsTimer == null && Insensitive.Speech(e.Speech, "news") && e.Mobile.Alive && InRange(e.Mobile, 12)) // *news*
 			{
 				Direction = GetDirectionTo( e.Mobile );
 

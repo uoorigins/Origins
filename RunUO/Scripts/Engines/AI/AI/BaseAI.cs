@@ -424,7 +424,7 @@ namespace Server.Mobiles
             protected override void OnTick()
             {
                 //We are greeted, but are with no one
-                if ((e.HasKeyword(0x003B) || Insensitive.Speech(e.Speech, "hi")) && m_Mobile.FocusMob == null && !e.Handled) //*hello*, *hail*, *greetings*, *hey*, *yo*
+                if ((Insensitive.Speech(e.Speech, "hello") || Insensitive.Speech(e.Speech, "hail") || Insensitive.Speech(e.Speech, "greetings") || Insensitive.Speech(e.Speech, "hey") || Insensitive.Speech(e.Speech, "yo") || Insensitive.Speech(e.Speech, "hi")) && m_Mobile.FocusMob == null && !e.Handled) //*hello*, *hail*, *greetings*, *hey*, *yo*
                 {
                     e.Handled = true;
 
@@ -439,7 +439,7 @@ namespace Server.Mobiles
 
                 }
                 //We are greeted, but by the same person
-                else if ((e.HasKeyword(0x003B) || Insensitive.Speech(e.Speech, "hi")) && m_Mobile.FocusMob == e.Mobile && !e.Handled)
+                else if ((Insensitive.Speech(e.Speech,"hail") || Insensitive.Speech(e.Speech,"hello") || Insensitive.Speech(e.Speech,"hey") || Insensitive.Speech(e.Speech,"greetings") || Insensitive.Speech(e.Speech,"yo") || Insensitive.Speech(e.Speech, "hi")) && m_Mobile.FocusMob == e.Mobile && !e.Handled)
                 {
                     e.Handled = true;
 
@@ -545,7 +545,7 @@ namespace Server.Mobiles
                     m_timer.Start();
                 }
 
-                if (e.HasKeyword(0x9D) && WasNamed(e.Speech)) // *move*
+                if (Insensitive.Speech(e.Speech, "move") && WasNamed(e.Speech)) // *move*
                 {
                     if (m_Mobile.Combatant != null)
                     {
@@ -567,7 +567,7 @@ namespace Server.Mobiles
                         WalkRandomInHome(2, 2, 1);
                     }
                 }
-                else if (e.HasKeyword(0x9E) && WasNamed(e.Speech)) // *time*
+                else if (Insensitive.Speech(e.Speech, "time") && WasNamed(e.Speech)) // *time*
                 {
                     if (m_Mobile.Combatant != null)
                     {
@@ -603,7 +603,7 @@ namespace Server.Mobiles
                         //m_Mobile.PublicOverheadMessage( MessageType.Regular, 0x3B2, generalNumber );
                     }
                 }
-                else if (e.HasKeyword(0x6C) && WasNamed(e.Speech)) // *train
+                else if (Insensitive.EndsWith(e.Speech, "train") && WasNamed(e.Speech)) // *train
                 {
                     if (m_Mobile.Combatant != null)
                     {

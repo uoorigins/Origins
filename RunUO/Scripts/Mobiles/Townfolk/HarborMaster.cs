@@ -82,20 +82,20 @@ namespace Server.Mobiles
                 return;
             }
 
-            if (!e.Handled && e.HasKeyword(0x000A) && e.Mobile.InRange(this.Location, 4))
+            if (!e.Handled && Insensitive.Speech(e.Speech,"job") && e.Mobile.InRange(this.Location, 4))
             {
                 e.Handled = true;
                 Say(true, "I am a harbormaster.  I dock ships for a fee.");
             }
 
-            if (!e.Handled && e.HasKeyword(0x0009) && e.Mobile.InRange(this.Location, 4))
+            if (!e.Handled && Insensitive.Speech(e.Speech, "claim") && e.Mobile.InRange(this.Location, 4))
             {
 
                 e.Handled = true;
                 Say(true, "If you already gave me a ship, just use your claim ticket as you would any other deed.");
             }
 
-            if (!e.Handled && e.HasKeyword(0x000B) && e.Mobile.InRange(this.Location, 4))
+            if (!e.Handled && Insensitive.Speech(e.Speech, "dock") && e.Mobile.InRange(this.Location, 4))
             {
                 e.Handled = true;
                 Mobile m = e.Mobile;

@@ -120,7 +120,7 @@ namespace Server.Mobiles
 
 		public override void OnSpeech( SpeechEventArgs e )
 		{
-            if (!e.Handled && e.HasKeyword(0x003B) && e.Mobile.InRange(this.Location, 2)) //hello
+            if (!e.Handled && Insensitive.Speech(e.Speech, "hello") && e.Mobile.InRange(this.Location, 2)) //hello
             {
                 e.Handled = true;
 
@@ -221,7 +221,7 @@ namespace Server.Mobiles
                 }
             }
 
-            if (!e.Handled && (e.HasKeyword(Keyword) || e.HasKeyword(0x0020)) && e.Mobile.InRange(this.Location, 2)) //virtue guard, order shield, chaos shield
+            if (!e.Handled && (Insensitive.Speech(e.Speech, Shield is OrderShield ? "order shield" : "chaos shield") || Insensitive.Speech(e.Speech, "virtue guard")) && e.Mobile.InRange(this.Location, 2)) //virtue guard, order shield, chaos shield
 			{
 				e.Handled = true;
 

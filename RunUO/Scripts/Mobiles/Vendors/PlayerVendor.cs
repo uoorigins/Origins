@@ -1326,7 +1326,7 @@ namespace Server.Mobiles
 			if ( e.Handled || !from.Alive || from.GetDistanceToSqrt( this ) > 3 )
 				return;
 
-			if ( e.HasKeyword( 0x3C ) || (e.HasKeyword( 0x171 ) && WasNamed( e.Speech ))  ) // vendor buy, *buy*
+            if (Insensitive.Speech(e.Speech, "vendor buy") || (Insensitive.Speech(e.Speech, "buy") && WasNamed(e.Speech))) // vendor buy, *buy*
 			{
 				if ( IsOwner( from ) )
 				{
@@ -1339,8 +1339,8 @@ namespace Server.Mobiles
 
 					e.Handled = true;
 				}
-			} 
-			else if ( e.HasKeyword( 0x3D ) || (e.HasKeyword( 0x172 ) && WasNamed( e.Speech )) ) // vendor browse, *browse
+			}
+            else if (Insensitive.Speech(e.Speech, "vendor browse") || (Insensitive.Speech(e.Speech, "browse") && WasNamed(e.Speech))) // vendor browse, *browse
 			{
 				if ( House != null && House.IsBanned( from ) && !IsOwner( from ) )
 				{
@@ -1353,7 +1353,7 @@ namespace Server.Mobiles
 					e.Handled = true;
 				}
 			}
-			else if ( e.HasKeyword( 0x3E ) || (e.HasKeyword( 0x173 ) && WasNamed( e.Speech )) ) // vendor collect, *collect
+            else if (Insensitive.Speech(e.Speech, "vendor collect") || (Insensitive.EndsWith(e.Speech, "collect") && WasNamed(e.Speech))) // vendor collect, *collect
 			{
 				if ( IsOwner( from ) )
 				{
@@ -1362,7 +1362,7 @@ namespace Server.Mobiles
 					e.Handled = true;
 				}
 			}
-			else if ( e.HasKeyword( 0x3F ) || (e.HasKeyword( 0x174 ) && WasNamed( e.Speech )) ) // vendor status, *status
+            else if (Insensitive.Speech(e.Speech, "vendor status") || (Insensitive.EndsWith(e.Speech, "status") && WasNamed(e.Speech))) // vendor status, *status
 			{
 				if ( IsOwner( from ) )
 				{
@@ -1390,7 +1390,7 @@ namespace Server.Mobiles
 					SayTo( from, true, "What do you care? You don't run this shop." ); // What do you care? You don't run this shop.	
 				}
 			}
-			else if ( e.HasKeyword( 0x40 ) || (e.HasKeyword( 0x175 ) && WasNamed( e.Speech )) ) // vendor dismiss, *dismiss
+            else if (Insensitive.Speech(e.Speech, "vendor dismiss") || (Insensitive.EndsWith(e.Speech, "dismiss") && WasNamed(e.Speech))) // vendor dismiss, *dismiss
 			{
 				if ( IsOwner( from ) )
 				{
@@ -1399,7 +1399,7 @@ namespace Server.Mobiles
 					e.Handled = true;
 				}
 			}
-			else if ( e.HasKeyword( 0x41 ) || (e.HasKeyword( 0x176 ) && WasNamed( e.Speech )) ) // vendor cycle, *cycle
+            else if (Insensitive.Speech(e.Speech, "vendor cycle") || (Insensitive.EndsWith(e.Speech, "cycle") && WasNamed(e.Speech))) // vendor cycle, *cycle
 			{
 				if ( IsOwner( from ) )
 				{
