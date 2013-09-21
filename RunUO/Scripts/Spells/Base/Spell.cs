@@ -449,7 +449,7 @@ namespace Server.Spells
 				return;
 
 			if ( m_Info.Mantra != null && m_Info.Mantra.Length > 0 && m_Caster.Player )
-				m_Caster.PublicOverheadMessage( MessageType.Spell, m_Caster.SpeechHue, true, m_Info.Mantra, false );
+				m_Caster.PublicOverheadMessage( MessageType.Regular, m_Caster.SpeechHue, true, m_Info.Mantra, false );
 		}
 
 		public virtual bool BlockedByHorrificBeast{ get{ return true; } }
