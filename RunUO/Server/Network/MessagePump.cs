@@ -138,9 +138,9 @@ namespace Server.Network
 
 		private const int BufferSize = 4096;
 		private BufferPool m_Buffers = new BufferPool( "Processor", 4, BufferSize );
-
-        static uint FirstClientKey = 0x383477BC;
-        static uint SecondClientKey = 0x02345CC6;
+         
+        static uint FirstClientKey = 0x389DE58C;
+        static uint SecondClientKey = 0x026950C6;
 
         uint CurrentKey0 = 0;
         uint CurrentKey1 = 0;
