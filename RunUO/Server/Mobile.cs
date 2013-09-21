@@ -3050,7 +3050,7 @@ namespace Server
 				m_Prompt = newPrompt;
 
 				if( newPrompt != null )
-					Send( new UnicodePrompt( newPrompt ) );
+					Send( new AsciiPrompt( newPrompt ) );
 			}
 		}
 		#endregion

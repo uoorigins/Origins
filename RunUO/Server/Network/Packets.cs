@@ -656,6 +656,19 @@ namespace Server.Network
 		}
 	}
 
+    public sealed class AsciiPrompt : Packet
+    {
+        public AsciiPrompt(Prompt prompt) : base(0x9A)
+        {
+            this.EnsureCapacity(16);
+
+            m_Stream.Write((int)prompt.Serial);
+            m_Stream.Write((int)prompt.Serial);
+            m_Stream.Write((int)0);
+            m_Stream.Write((byte)0);
+        }
+    }
+
 	public sealed class ChangeCharacter : Packet
 	{
 		public ChangeCharacter( IAccount a ) : base( 0x81 )
