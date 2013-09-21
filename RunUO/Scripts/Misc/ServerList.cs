@@ -38,7 +38,7 @@ namespace Server.Misc
 		 */
 
 		public static readonly string Address = null;
-		public static readonly string ServerName = "Origins";
+		public static readonly string ServerName = "Origins Beta";
 
 		public static readonly bool AutoDetect = true;
 
