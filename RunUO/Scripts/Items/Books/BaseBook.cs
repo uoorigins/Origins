@@ -493,19 +493,19 @@ namespace Server.Items
 			byte[] authorBuffer = Encoding.ASCII.GetBytes( author );
 
             byte[] sendtitle = Encoding.ASCII.GetBytes(new string('\0',60));
-            //sendtitle = titleBuffer;
+
             Array.Copy(titleBuffer, sendtitle, titleBuffer.Length);
             byte[] sendauthor = Encoding.ASCII.GetBytes(new string('\0', 30));
-            //sendauthor = authorBuffer;
+
             Array.Copy(authorBuffer, sendauthor, authorBuffer.Length);
 
 			m_Stream.Write( (int)    book.Serial );
             m_Stream.Write((bool)true);
 			m_Stream.Write( (ushort) book.PagesCount );
 
-			m_Stream.Write( sendtitle, 0, 59 );
+			m_Stream.Write( sendtitle, 0, 60 );
 
-			m_Stream.Write( sendauthor, 0, 29 );
+			m_Stream.Write( sendauthor, 0, 30 );
 		}
 	}
 }
