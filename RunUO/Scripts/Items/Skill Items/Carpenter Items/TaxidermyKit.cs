@@ -11,7 +11,7 @@ namespace Server.Items
 	{
 		public override int LabelNumber{ get{ return 1041279; } } // a taxidermy kit
 
-		[Constructable]
+
 		public TaxidermyKit() : base( 0x1EBA )
 		{
 			Weight = 1.0;

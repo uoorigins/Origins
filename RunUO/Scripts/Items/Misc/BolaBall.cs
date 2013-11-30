@@ -4,12 +4,12 @@ namespace Server.Items
 {
 	public class BolaBall : Item
 	{
-		[Constructable]
+
 		public BolaBall() : this( 1 )
 		{
 		}
 
-		[Constructable]
+
 		public BolaBall( int amount ) : base( 0xE73 )
 		{
 			Weight = 4.0;

@@ -27,7 +27,7 @@ namespace Server.Items
 
 		public override bool AllowMaleWearer{ get{ return false; } }
 
-		[Constructable]
+
 		public FemaleLeafChest() : base( 0x2FCB )
 		{
 			Weight = 2.0;

@@ -31,7 +31,7 @@ namespace Server.Items
 
 		public override WeaponAnimation DefAnimation{ get{ return WeaponAnimation.ShootBow; } }
 
-		[Constructable]
+		 
 		public ElvenCompositeLongbow() : base( 0x2D1E )
 		{
 			Weight = 8.0;

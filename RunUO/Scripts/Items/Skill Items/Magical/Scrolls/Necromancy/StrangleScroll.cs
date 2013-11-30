@@ -6,12 +6,12 @@ namespace Server.Items
 {
 	public class StrangleScroll : SpellScroll
 	{
-		[Constructable]
+		 
 		public StrangleScroll() : this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public StrangleScroll( int amount ) : base( 110, 0x226A, amount )
 		{
 		}

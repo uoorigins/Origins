@@ -92,12 +92,12 @@ namespace Server.Items
 		public override int InitMinHits{ get{ return 20; } }
 		public override int InitMaxHits{ get{ return 30; } }
 
-		[Constructable]
+
 		public Kasa() : this( 0 )
 		{
 		}
 
-		[Constructable]
+
 		public Kasa( int hue ) : base( 0x2798, hue )
 		{
 			Weight = 3.0;
@@ -134,12 +134,12 @@ namespace Server.Items
 		public override int InitMinHits{ get{ return 20; } }
 		public override int InitMaxHits{ get{ return 30; } }
 
-		[Constructable]
+
 		public ClothNinjaHood() : this( 0 )
 		{
 		}
 
-		[Constructable]
+
 		public ClothNinjaHood( int hue ) : base( 0x278F, hue )
 		{
 			Weight = 2.0;
@@ -176,12 +176,12 @@ namespace Server.Items
 		public override int InitMinHits{ get{ return 20; } }
 		public override int InitMaxHits{ get{ return 30; } }
 
-		[Constructable]
+
 		public FlowerGarland() : this( 0 )
 		{
 		}
 
-		[Constructable]
+
 		public FlowerGarland( int hue ) : base( 0x2306, hue )
 		{
 			Weight = 1.0;
@@ -958,12 +958,12 @@ namespace Server.Items
 			get { return "a mask of orcish kin"; }
 		}
 
-		[Constructable]
+
 		public OrcishKinMask() : this( 0x8A4 )
 		{
 		}
 
-		[Constructable]
+
 		public OrcishKinMask( int hue ) : base( 0x141B, hue )
 		{
 			Weight = 2.0;
@@ -1138,12 +1138,12 @@ namespace Server.Items
 			return false;
 		}
 
-		[Constructable]
+
 		public SavageMask() : this( GetRandomHue() )
 		{
 		}
 
-		[Constructable]
+
 		public SavageMask( int hue ) : base( 0x154B, hue )
 		{
 			Weight = 2.0;

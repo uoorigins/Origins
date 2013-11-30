@@ -68,7 +68,7 @@ namespace Server.Items
 			}
 		}
 
-		[Constructable]
+
 		public VendorRentalContract() : base( 0x14F0 )
 		{
 			Weight = 1.0;

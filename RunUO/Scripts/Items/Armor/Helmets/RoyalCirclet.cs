@@ -26,7 +26,7 @@ namespace Server.Items
 
 		public override ArmorMeditationAllowance DefMedAllowance{ get{ return ArmorMeditationAllowance.All; } }
 
-		[Constructable]
+
 		public RoyalCirclet() : base( 0x2B6F )
 		{
 			Weight = 2.0;

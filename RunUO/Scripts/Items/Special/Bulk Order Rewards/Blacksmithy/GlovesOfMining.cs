@@ -26,7 +26,7 @@ namespace Server.Items
 
 		public override int LabelNumber{ get{ return 1045122; } } // leather blacksmith gloves of mining
 
-		[Constructable]
+		 
 		public LeatherGlovesOfMining( int bonus ) : base( bonus, 0x13C6 )
 		{
 			Weight = 1;
@@ -71,7 +71,7 @@ namespace Server.Items
 
 		public override int LabelNumber{ get{ return 1045123; } } // studded leather blacksmith gloves of mining
 
-		[Constructable]
+		 
 		public StuddedGlovesOfMining( int bonus ) : base( bonus, 0x13D5 )
 		{
 			Weight = 2;
@@ -117,7 +117,7 @@ namespace Server.Items
 
 		public override int LabelNumber{ get{ return 1045124; } } // ringmail blacksmith gloves of mining
 
-		[Constructable]
+		 
 		public RingmailGlovesOfMining( int bonus ) : base( bonus, 0x13EB )
 		{
 			Weight = 1;

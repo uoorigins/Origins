@@ -7,7 +7,7 @@ namespace Server.Mobiles
 	[CorpseName( "a white wyrm corpse" )]
 	public class WhiteWyrm : BaseCreature
 	{
-		[Constructable]
+
 		public WhiteWyrm () : base( AIType.AI_Mage, FightMode.Closest, 10, 1, 0.2, 0.4 )
 		{
 			Body = Core.AOS ? 180 : 49;

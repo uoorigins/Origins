@@ -174,7 +174,7 @@ namespace Server.Engines.BulkOrders
 			this.Material = material;
 		}
 
-		[Constructable]
+		 
 		public SmallSmithBOD()
 		{
 			SmallBulkEntry[] entries;

@@ -179,12 +179,12 @@ namespace Server.Engines.Plants
 
 		public static ArrayList Plants{ get{ return m_Instances; } }
 
-		[Constructable]
+		 
 		public PlantItem() : this( false )
 		{
 		}
 
-		[Constructable]
+		 
 		public PlantItem( bool fertileDirt ) : base( 0x1602 )
 		{
 			Weight = 1.0;

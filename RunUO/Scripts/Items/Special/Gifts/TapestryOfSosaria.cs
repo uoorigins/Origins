@@ -23,7 +23,7 @@ namespace Server.Items
 			set{ m_Level = value; }
 		}
 
-		[Constructable]
+		 
 		public TapestryOfSosaria() : base( 0x234E )
 		{
 			Weight = 1.0;

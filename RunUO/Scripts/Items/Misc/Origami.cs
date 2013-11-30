@@ -8,7 +8,7 @@ namespace Server.Items
 	{
 		public override int LabelNumber{ get{ return 1030288; } } // origami paper
 
-		[Constructable]
+
 		public OrigamiPaper() : base( 0x2830 )
 		{
 		}

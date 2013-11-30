@@ -5,7 +5,7 @@ namespace Server.Items
 {
 	public class SmokeBomb : Item
 	{
-		[Constructable]
+		 
 		public SmokeBomb() : base( 0x2808 )
 		{
 			Weight = 1.0;

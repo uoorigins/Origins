@@ -18,7 +18,7 @@ namespace Server.Items
 			}
 		}
 
-		[Constructable]
+		 
 		public StatCapScroll( int value ) : base( 0x14F0 )
 		{
 			Hue = 0x481;

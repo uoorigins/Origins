@@ -50,12 +50,12 @@ namespace Server.Items
 	[Flipable( 0x2307, 0x2308 )]
 	public class FurBoots : BaseShoes
 	{
-		[Constructable]
+
 		public FurBoots() : this( 0 )
 		{
 		}
 
-		[Constructable]
+
 		public FurBoots( int hue ) : base( 0x2307, hue )
 		{
 			Weight = 3.0;
@@ -416,12 +416,12 @@ namespace Server.Items
 	[Flipable( 0x2797, 0x27E2 )]
 	public class NinjaTabi : BaseShoes
 	{
-		[Constructable]
+
 		public NinjaTabi() : this( 0 )
 		{
 		}
 
-		[Constructable]
+
 		public NinjaTabi( int hue ) : base( 0x2797, hue )
 		{
 			Weight = 2.0;
@@ -449,12 +449,12 @@ namespace Server.Items
 	[Flipable( 0x2796, 0x27E1 )]
 	public class SamuraiTabi : BaseShoes
 	{
-		[Constructable]
+
 		public SamuraiTabi() : this( 0 )
 		{
 		}
 
-		[Constructable]
+
 		public SamuraiTabi( int hue ) : base( 0x2796, hue )
 		{
 			Weight = 2.0;
@@ -482,12 +482,12 @@ namespace Server.Items
 	[Flipable( 0x2796, 0x27E1 )]
 	public class Waraji : BaseShoes
 	{
-		[Constructable]
+
 		public Waraji() : this( 0 )
 		{
 		}
 
-		[Constructable]
+
 		public Waraji( int hue ) : base( 0x2796, hue )
 		{
 			Weight = 2.0;
@@ -519,12 +519,12 @@ namespace Server.Items
 
 		public override Race RequiredRace { get { return Race.Elf; } }
 
-		[Constructable]
+
 		public ElvenBoots() : this( 0 )
 		{
 		}
 
-		[Constructable]
+
 		public ElvenBoots( int hue ) : base( 0x2FC4, hue )
 		{
 			Weight = 2.0;

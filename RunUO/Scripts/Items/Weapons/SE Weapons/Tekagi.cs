@@ -30,7 +30,7 @@ namespace Server.Items
 		public override WeaponType DefType{ get{ return WeaponType.Piercing; } }
 		public override WeaponAnimation DefAnimation{ get{ return WeaponAnimation.Pierce1H; } }
 
-		[Constructable]
+		 
 		public Tekagi() : base( 0x27AB )
 		{
 			Weight = 5.0;

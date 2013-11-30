@@ -14,12 +14,12 @@ namespace Server.Mobiles
 
 		public override bool IsBondable{ get{ return false; } }
 
-		[Constructable]
+
 		public Golem() : this( false, 1.0 )
 		{
 		}
 
-		[Constructable]
+
 		public Golem( bool summoned, double scalar ) : base( AIType.AI_Melee, FightMode.Closest, 10, 1, 0.4, 0.8 )
 		{
 			Name = "a golem";

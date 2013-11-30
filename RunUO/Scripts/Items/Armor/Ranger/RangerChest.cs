@@ -25,7 +25,7 @@ namespace Server.Items
 
 		public override int LabelNumber{ get{ return 1041497; } } // studded tunic, ranger armor
 
-		[Constructable]
+
 		public RangerChest() : base( 0x13DB )
 		{
 			Weight = 8.0;

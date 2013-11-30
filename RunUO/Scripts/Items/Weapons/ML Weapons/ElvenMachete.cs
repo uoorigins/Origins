@@ -26,7 +26,7 @@ namespace Server.Items
 		public override int InitMinHits{ get{ return 30; } }
 		public override int InitMaxHits{ get{ return 60; } }
 
-		[Constructable]
+		 
 		public ElvenMachete() : base( 0x2D35 )
 		{
 			Weight = 6.0;

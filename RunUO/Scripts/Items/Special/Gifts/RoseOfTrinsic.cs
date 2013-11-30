@@ -55,7 +55,7 @@ namespace Server.Items
 			}
 		}
 
-		[Constructable]
+		 
 		public RoseOfTrinsic() : base( 0x234D )
 		{
 			Weight = 1.0;
@@ -166,12 +166,12 @@ namespace Server.Items
 	{
 		public override int LabelNumber{ get{ return 1062926; } } // Petal of the Rose of Trinsic
 
-		[Constructable]
+		 
 		public RoseOfTrinsicPetal() : this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public RoseOfTrinsicPetal( int amount ) : base( 0x1021 )
 		{
 			Stackable = true;

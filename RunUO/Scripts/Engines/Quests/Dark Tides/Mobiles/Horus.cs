@@ -13,7 +13,7 @@ namespace Server.Engines.Quests.Necro
 {
 	public class Horus : BaseQuester
 	{
-		[Constructable]
+		 
 		public Horus() : base( "the Guardian" )
 		{
 		}

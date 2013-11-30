@@ -6,7 +6,7 @@ namespace Server.Mobiles
 	[CorpseName( "an enslaved gargoyle corpse" )]
 	public class EnslavedGargoyle : BaseCreature
 	{
-		[Constructable]
+
 		public EnslavedGargoyle() : base( AIType.AI_Melee, FightMode.Closest, 10, 1, 0.2, 0.4 )
 		{
 			Name = "an enslaved gargoyle";

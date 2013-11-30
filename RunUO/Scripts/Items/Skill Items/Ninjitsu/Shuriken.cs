@@ -35,12 +35,12 @@ namespace Server.Items
 
 		public bool ShowUsesRemaining{ get{ return true; } set{} }
 
-		[Constructable]
+		 
 		public Shuriken() : this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public Shuriken( int amount ) : base( 0x27AC )
 		{
 			Weight = 1.0;

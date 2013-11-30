@@ -181,12 +181,12 @@ namespace Server.Items
 	[FlipableAttribute( 0x1079, 0x1078 )]
 	public class SpinedHides : BaseHides, IScissorable
 	{
-		[Constructable]
+
 		public SpinedHides() : this( 1 )
 		{
 		}
 
-		[Constructable]
+
 		public SpinedHides( int amount ) : base( CraftResource.SpinedLeather, amount )
 		{
 		}
@@ -224,12 +224,12 @@ namespace Server.Items
 	[FlipableAttribute( 0x1079, 0x1078 )]
 	public class HornedHides : BaseHides, IScissorable
 	{
-		[Constructable]
+
 		public HornedHides() : this( 1 )
 		{
 		}
 
-		[Constructable]
+
 		public HornedHides( int amount ) : base( CraftResource.HornedLeather, amount )
 		{
 		}
@@ -267,12 +267,12 @@ namespace Server.Items
 	[FlipableAttribute( 0x1079, 0x1078 )]
 	public class BarbedHides : BaseHides, IScissorable
 	{
-		[Constructable]
+
 		public BarbedHides() : this( 1 )
 		{
 		}
 
-		[Constructable]
+
 		public BarbedHides( int amount ) : base( CraftResource.BarbedLeather, amount )
 		{
 		}

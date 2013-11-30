@@ -8,7 +8,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 5; } }
 
-		[Constructable]
+		 
 		public BackpackArtifact() : base( 0x9B2 )
 		{
 		}
@@ -38,7 +38,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 5; } }
 
-		[Constructable]
+		 
 		public BloodyWaterArtifact() : base( 0xE23 )
 		{
 		}
@@ -68,7 +68,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 3; } }
 
-		[Constructable]
+		 
 		public BooksWestArtifact() : base( 0x1E25 )
 		{
 		}
@@ -98,7 +98,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 3; } }
 
-		[Constructable]
+		 
 		public BooksNorthArtifact() : base( 0x1E24 )
 		{
 		}
@@ -128,7 +128,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 3; } }
 
-		[Constructable]
+		 
 		public BooksFaceDownArtifact() : base( 0x1E21 )
 		{
 		}
@@ -158,7 +158,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 1; } }
 
-		[Constructable]
+		 
 		public BottleArtifact() : base( 0xE28 )
 		{
 		}
@@ -188,7 +188,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 2; } }
 
-		[Constructable]
+		 
 		public BrazierArtifact() : base( 0xE31 )
 		{
 			Light = LightType.Circle150;
@@ -219,7 +219,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 7; } }
 
-		[Constructable]
+		 
 		public CocoonArtifact() : base( 0x10DA )
 		{
 		}
@@ -249,7 +249,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 1; } }
 
-		[Constructable]
+		 
 		public DamagedBooksArtifact() : base( 0xC16 )
 		{
 		}
@@ -279,7 +279,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 5; } }
 
-		[Constructable]
+		 
 		public EggCaseArtifact() : base( 0x10D9 )
 		{
 		}
@@ -309,7 +309,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 5; } }
 
-		[Constructable]
+		 
 		public GruesomeStandardArtifact() : base( 0x428 )
 		{
 		}
@@ -339,7 +339,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 3; } }
 
-		[Constructable]
+		 
 		public LampPostArtifact() : base( 0xB24 )
 		{
 			Light = LightType.Circle300;
@@ -370,7 +370,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 9; } }
 
-		[Constructable]
+		 
 		public LeatherTunicArtifact() : base( 0x13CA )
 		{
 		}
@@ -400,7 +400,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 1; } }
 
-		[Constructable]
+		 
 		public RockArtifact() : base( 0x1363 )
 		{
 		}
@@ -430,7 +430,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 12; } }
 
-		[Constructable]
+		 
 		public RuinedPaintingArtifact() : base( 0xC2C )
 		{
 		}
@@ -460,7 +460,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 9; } }
 
-		[Constructable]
+		 
 		public SaddleArtifact() : base( 0xF38 )
 		{
 		}
@@ -490,7 +490,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 8; } }
 
-		[Constructable]
+		 
 		public SkinnedDeerArtifact() : base( 0x1E91 )
 		{
 		}
@@ -520,7 +520,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 5; } }
 
-		[Constructable]
+		 
 		public SkinnedGoatArtifact() : base( 0x1E88 )
 		{
 		}
@@ -550,7 +550,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 1; } }
 
-		[Constructable]
+		 
 		public SkullCandleArtifact() : base( 0x1858 )
 		{
 			Light = LightType.Circle150;
@@ -581,7 +581,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 2; } }
 
-		[Constructable]
+		 
 		public StretchedHideArtifact() : base( 0x106B )
 		{
 		}
@@ -611,7 +611,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 5; } }
 
-		[Constructable]
+		 
 		public StuddedLeggingsArtifact() : base( 0x13D8 )
 		{
 		}
@@ -641,7 +641,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 7; } }
 
-		[Constructable]
+		 
 		public StuddedTunicArtifact() : base( 0x13D9 )
 		{
 		}
@@ -671,7 +671,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 5; } }
 
-		[Constructable]
+		 
 		public TarotCardsArtifact() : base( 0x12A5 )
 		{
 		}

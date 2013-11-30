@@ -169,12 +169,12 @@ namespace Server.Items
 			get { return 1.0; }
 		}
 
-		[Constructable]
+		 
 		public MonsterStatuette() : this( MonsterStatuetteType.Crocodile )
 		{
 		}
 
-		[Constructable]
+		 
 		public MonsterStatuette( MonsterStatuetteType type ) : base( MonsterStatuetteInfo.GetInfo( type ).ItemID )
 		{
 			LootType = LootType.Blessed;

@@ -10,7 +10,7 @@ namespace Server.Items
 		public override int BasePhysicalResistance{ get{ return 20; } }
 		public override int BaseColdResistance{ get{ return 20; } }
 
-		[Constructable]
+		 
 		public StitchersMittens()
 		{
 			Hue = 0x481;

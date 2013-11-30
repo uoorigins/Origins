@@ -26,7 +26,7 @@ namespace Server.Items
 		public override int InitMinHits{ get{ return 30; } } // TODO
 		public override int InitMaxHits{ get{ return 60; } } // TODO
 
-		[Constructable]
+		 
 		public AssassinSpike() : base( 0x2D21 )
 		{
 			Weight = 4.0;

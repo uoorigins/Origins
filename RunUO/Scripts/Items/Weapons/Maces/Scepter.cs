@@ -23,7 +23,7 @@ namespace Server.Items
 		public override int InitMinHits{ get{ return 31; } }
 		public override int InitMaxHits{ get{ return 110; } }
 
-		[Constructable]
+
 		public Scepter() : base( 0x26BC )
 		{
 			Weight = 8.0;

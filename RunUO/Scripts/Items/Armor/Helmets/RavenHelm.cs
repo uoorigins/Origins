@@ -24,7 +24,7 @@ namespace Server.Items
 
 		public override ArmorMaterialType MaterialType{ get{ return ArmorMaterialType.Plate; } }
 
-		[Constructable]
+
 		public RavenHelm() : base( 0x2B71 )
 		{
 			Weight = 5.0;

@@ -10,12 +10,12 @@ namespace Server.Items
 {
 	public class WreathAddon : Item, IDyable, IAddon
 	{
-		[Constructable]
+		 
 		public WreathAddon() : this( Utility.RandomDyedHue() )
 		{
 		}
 
-		[Constructable]
+		 
 		public WreathAddon( int hue ) : base( 0x232C )
 		{
 			Hue = hue;
@@ -172,12 +172,12 @@ namespace Server.Items
 	{
 		public override int LabelNumber{ get{ return 1062837; } } // holiday wreath deed
 
-		[Constructable]
+		 
 		public WreathDeed() : this( Utility.RandomDyedHue() )
 		{
 		}
 
-		[Constructable]
+		 
 		public WreathDeed( int hue ) : base( 0x14F0 )
 		{
 			Weight = 1.0;

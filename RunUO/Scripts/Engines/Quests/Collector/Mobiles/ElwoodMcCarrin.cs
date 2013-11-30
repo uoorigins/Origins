@@ -8,7 +8,7 @@ namespace Server.Engines.Quests.Collector
 {
 	public class ElwoodMcCarrin : BaseQuester
 	{
-		[Constructable]
+		 
 		public ElwoodMcCarrin() : base( "the well-known collector" )
 		{
 		}

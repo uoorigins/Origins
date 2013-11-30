@@ -5,7 +5,7 @@ namespace Server.Items
 {
 	public class EggBomb : Item
 	{
-		[Constructable]
+		 
 		public EggBomb() : base( 0x2809 )
 		{
 			Weight = 1.0;

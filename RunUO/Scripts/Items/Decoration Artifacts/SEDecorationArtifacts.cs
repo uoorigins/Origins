@@ -8,7 +8,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 1; } }
 
-		[Constructable]
+		 
 		public Basket1Artifact() : base( 0x24DD )
 		{
 		}
@@ -38,7 +38,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 1; } }
 
-		[Constructable]
+		 
 		public Basket2Artifact() : base( 0x24D7 )
 		{
 		}
@@ -68,7 +68,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 1; } }
 
-		[Constructable]
+		 
 		public Basket3WestArtifact() : base( 0x24D9 )
 		{
 		}
@@ -98,7 +98,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 1; } }
 
-		[Constructable]
+		 
 		public Basket3NorthArtifact() : base( 0x24DA )
 		{
 		}
@@ -128,7 +128,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 2; } }
 
-		[Constructable]
+		 
 		public Basket4Artifact() : base( 0x24D8 )
 		{
 		}
@@ -158,7 +158,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 2; } }
 
-		[Constructable]
+		 
 		public Basket5WestArtifact() : base( 0x24DC )
 		{
 		}
@@ -188,7 +188,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 2; } }
 
-		[Constructable]
+		 
 		public Basket5NorthArtifact() : base( 0x24DB )
 		{
 		}
@@ -218,7 +218,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 2; } }
 
-		[Constructable]
+		 
 		public Basket6Artifact() : base( 0x24D5 )
 		{
 		}
@@ -248,7 +248,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 4; } }
 
-		[Constructable]
+		 
 		public BowlArtifact() : base( 0x24DE )
 		{
 		}
@@ -278,7 +278,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 3; } }
 
-		[Constructable]
+		 
 		public BowlsVerticalArtifact() : base( 0x24DF )
 		{
 		}
@@ -308,7 +308,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 4; } }
 
-		[Constructable]
+		 
 		public BowlsHorizontalArtifact() : base( 0x24E0 )
 		{
 		}
@@ -338,7 +338,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 4; } }
 
-		[Constructable]
+		 
 		public CupsArtifact() : base( 0x24E1 )
 		{
 		}
@@ -368,7 +368,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 3; } }
 
-		[Constructable]
+		 
 		public FanWestArtifact() : base( 0x240A )
 		{
 		}
@@ -398,7 +398,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 3; } }
 
-		[Constructable]
+		 
 		public FanNorthArtifact() : base( 0x2409 )
 		{
 		}
@@ -428,7 +428,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 4; } }
 
-		[Constructable]
+		 
 		public TripleFanWestArtifact() : base( 0x240C )
 		{
 		}
@@ -458,7 +458,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 4; } }
 
-		[Constructable]
+		 
 		public TripleFanNorthArtifact() : base( 0x240B )
 		{
 		}
@@ -488,7 +488,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 7; } }
 
-		[Constructable]
+		 
 		public FlowersArtifact() : base( 0x284A )
 		{
 		}
@@ -518,7 +518,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 4; } }
 
-		[Constructable]
+		 
 		public Painting1WestArtifact() : base( 0x240E )
 		{
 		}
@@ -548,7 +548,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 4; } }
 
-		[Constructable]
+		 
 		public Painting1NorthArtifact() : base( 0x240D )
 		{
 		}
@@ -578,7 +578,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 4; } }
 
-		[Constructable]
+		 
 		public Painting2WestArtifact() : base( 0x2410 )
 		{
 		}
@@ -608,7 +608,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 4; } }
 
-		[Constructable]
+		 
 		public Painting2NorthArtifact() : base( 0x240F )
 		{
 		}
@@ -638,7 +638,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 5; } }
 
-		[Constructable]
+		 
 		public Painting3Artifact() : base( 0x2411 )
 		{
 		}
@@ -668,7 +668,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 6; } }
 
-		[Constructable]
+		 
 		public Painting4WestArtifact() : base( 0x2412 )
 		{
 		}
@@ -698,7 +698,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 6; } }
 
-		[Constructable]
+		 
 		public Painting4NorthArtifact() : base( 0x2411 )
 		{
 		}
@@ -728,7 +728,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 8; } }
 
-		[Constructable]
+		 
 		public Painting5WestArtifact() : base( 0x2416 )
 		{
 		}
@@ -758,7 +758,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 8; } }
 
-		[Constructable]
+		 
 		public Painting5NorthArtifact() : base( 0x2415 )
 		{
 		}
@@ -788,7 +788,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 9; } }
 
-		[Constructable]
+		 
 		public Painting6WestArtifact() : base( 0x2418 )
 		{
 		}
@@ -818,7 +818,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 9; } }
 
-		[Constructable]
+		 
 		public Painting6NorthArtifact() : base( 0x2417 )
 		{
 		}
@@ -848,7 +848,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 4; } }
 
-		[Constructable]
+		 
 		public SakeArtifact() : base( 0x24E2 )
 		{
 		}
@@ -878,7 +878,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 3; } }
 
-		[Constructable]
+		 
 		public Sculpture1Artifact() : base( 0x2419 )
 		{
 		}
@@ -908,7 +908,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 3; } }
 
-		[Constructable]
+		 
 		public Sculpture2Artifact() : base( 0x241B )
 		{
 		}
@@ -938,7 +938,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 8; } }
 
-		[Constructable]
+		 
 		public DolphinLeftArtifact() : base( 0x2846 )
 		{
 		}
@@ -968,7 +968,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 8; } }
 
-		[Constructable]
+		 
 		public DolphinRightArtifact() : base( 0x2847 )
 		{
 		}
@@ -998,7 +998,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 9; } }
 
-		[Constructable]
+		 
 		public ManStatuetteSouthArtifact() : base( 0x2848 )
 		{
 		}
@@ -1028,7 +1028,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 9; } }
 
-		[Constructable]
+		 
 		public ManStatuetteEastArtifact() : base( 0x2849 )
 		{
 		}
@@ -1058,7 +1058,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 5; } }
 
-		[Constructable]
+		 
 		public SwordDisplay1WestArtifact() : base( 0x2842 )
 		{
 		}
@@ -1088,7 +1088,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 5; } }
 
-		[Constructable]
+		 
 		public SwordDisplay1NorthArtifact() : base( 0x2843 )
 		{
 		}
@@ -1118,7 +1118,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 6; } }
 
-		[Constructable]
+		 
 		public SwordDisplay2WestArtifact() : base( 0x2844 )
 		{
 		}
@@ -1148,7 +1148,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 6; } }
 
-		[Constructable]
+		 
 		public SwordDisplay2NorthArtifact() : base( 0x2845 )
 		{
 		}
@@ -1178,7 +1178,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 8; } }
 
-		[Constructable]
+		 
 		public SwordDisplay3SouthArtifact() : base( 0x2855 )
 		{
 		}
@@ -1208,7 +1208,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 8; } }
 
-		[Constructable]
+		 
 		public SwordDisplay3EastArtifact() : base( 0x2856 )
 		{
 		}
@@ -1238,7 +1238,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 8; } }
 
-		[Constructable]
+		 
 		public SwordDisplay4WestArtifact() : base( 0x2853 )
 		{
 		}
@@ -1268,7 +1268,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 9; } }
 
-		[Constructable]
+		 
 		public SwordDisplay4NorthArtifact() : base( 0x2854 )
 		{
 		}
@@ -1298,7 +1298,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 9; } }
 
-		[Constructable]
+		 
 		public SwordDisplay5WestArtifact() : base( 0x2851 )
 		{
 		}
@@ -1328,7 +1328,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 9; } }
 
-		[Constructable]
+		 
 		public SwordDisplay5NorthArtifact() : base( 0x2852 )
 		{
 		}
@@ -1358,7 +1358,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 3; } }
 
-		[Constructable]
+		 
 		public TeapotWestArtifact() : base( 0x24E7 )
 		{
 		}
@@ -1388,7 +1388,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 3; } }
 
-		[Constructable]
+		 
 		public TeapotNorthArtifact() : base( 0x24E6 )
 		{
 		}
@@ -1425,7 +1425,7 @@ namespace Server.Items
 			set{ this.ItemID = value ? 0x24BF : 0x24C0; }
 		}
 
-		[Constructable]
+		 
 		public TowerLanternArtifact() : base( 0x24C0 )
 		{
 			this.Light = LightType.Circle225;
@@ -1480,7 +1480,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 3; } }
 
-		[Constructable]
+		 
 		public Urn1Artifact() : base( 0x241D )
 		{
 		}
@@ -1510,7 +1510,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 3; } }
 
-		[Constructable]
+		 
 		public Urn2Artifact() : base( 0x241E )
 		{
 		}
@@ -1540,7 +1540,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 2; } }
 
-		[Constructable]
+		 
 		public ZenRock1Artifact() : base( 0x24E4 )
 		{
 		}
@@ -1570,7 +1570,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 3; } }
 
-		[Constructable]
+		 
 		public ZenRock2Artifact() : base( 0x24E3 )
 		{
 		}
@@ -1600,7 +1600,7 @@ namespace Server.Items
 	{
 		public override int ArtifactRarity{ get{ return 3; } }
 
-		[Constructable]
+		 
 		public ZenRock3Artifact() : base( 0x24E5 )
 		{
 		}

@@ -19,7 +19,7 @@ namespace Server.Items
 			get{ return ( Hue == 0x453 ); }
 		}
 
-		[Constructable]
+
 		public JukaBow()
 		{
 		}

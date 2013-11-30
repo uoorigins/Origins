@@ -8,7 +8,7 @@ namespace Server.Items
 	{
 		public override int LabelNumber{ get{ return 1072115; } } // Melisande's Corroded Hatchet
 
-		[Constructable]
+		 
 		public MelisandesCorrodedHatchet()
 		{
 			Hue = 0x494;

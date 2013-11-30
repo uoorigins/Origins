@@ -79,7 +79,7 @@ namespace Server.Engines.Mahjong
 			}
 		}
 
-		[Constructable]
+
 		public MahjongGame() : base( 0xFAA )
 		{
 			Weight = 5.0;

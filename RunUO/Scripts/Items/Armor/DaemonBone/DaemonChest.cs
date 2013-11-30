@@ -27,7 +27,7 @@ namespace Server.Items
 
 		public override int LabelNumber{ get{ return 1041372; } } // daemon bone armor
 
-		[Constructable]
+		 
 		public DaemonChest() : base( 0x144F )
 		{
 			Weight = 6.0;

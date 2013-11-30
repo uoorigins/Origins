@@ -8,7 +8,7 @@ namespace Server.Engines.Quests.Ninja
 {
 	public class EnshroudedFigure : BaseQuester
 	{
-		[Constructable]
+		 
 		public EnshroudedFigure()
 		{
 		}

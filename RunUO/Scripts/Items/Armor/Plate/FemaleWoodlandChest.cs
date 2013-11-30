@@ -25,7 +25,7 @@ namespace Server.Items
 
 		public override ArmorMaterialType MaterialType{ get{ return ArmorMaterialType.Plate; } }
 
-		[Constructable]
+
 		public FemaleElvenPlateChest() : base( 0x2B6D )
 		{
 			Weight = 8.0;

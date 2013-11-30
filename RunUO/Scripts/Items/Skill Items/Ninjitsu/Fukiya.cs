@@ -39,7 +39,7 @@ namespace Server.Items
 
 		public bool ShowUsesRemaining{ get{ return true; } set{} }
 
-		[Constructable]
+		 
 		public Fukiya() : base( 0x27AA )
 		{
 			Weight = 4.0;

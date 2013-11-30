@@ -26,7 +26,7 @@ namespace Server.Items
 		public override int InitMinHits{ get{ return 25; } }
 		public override int InitMaxHits{ get{ return 50; } }
 
-		[Constructable]
+		 
 		public Bokuto() : base( 0x27A8 )
 		{
 			Weight = 7.0;

@@ -10,7 +10,7 @@ namespace Server.Engines.Quests.Haven
 {
 	public class Schmendrick : BaseQuester
 	{
-		[Constructable]
+		 
 		public Schmendrick() : base( "the High Mage" )
 		{
 		}

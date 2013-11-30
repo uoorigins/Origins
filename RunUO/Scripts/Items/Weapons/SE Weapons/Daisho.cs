@@ -26,7 +26,7 @@ namespace Server.Items
 		public override int InitMinHits{ get{ return 45; } }
 		public override int InitMaxHits{ get{ return 65; } }
 
-		[Constructable]
+		 
 		public Daisho() : base( 0x27A9 )
 		{
 			Weight = 8.0;

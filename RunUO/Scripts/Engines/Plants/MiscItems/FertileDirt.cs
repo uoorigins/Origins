@@ -5,12 +5,12 @@ namespace Server.Items
 {
 	public class FertileDirt : Item
 	{
-		[Constructable]
+		 
 		public FertileDirt() : this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public FertileDirt( int amount ) : base( 0xF81 )
 		{
 			Stackable = true;

@@ -94,12 +94,12 @@ namespace Server.Items
 	[Flipable( 0x27A0, 0x27EB )]
 	public class Obi : BaseWaist
 	{
-		[Constructable]
+
 		public Obi() : this( 0 )
 		{
 		}
 
-		[Constructable]
+
 		public Obi( int hue ) : base( 0x27A0, hue )
 		{
 			Weight = 1.0;
@@ -129,12 +129,12 @@ namespace Server.Items
 	{
 		public override Race RequiredRace { get { return Race.Elf; } }
 
-		[Constructable]
+
 		public WoodlandBelt() : this( 0 )
 		{
 		}
 
-		[Constructable]
+
 		public WoodlandBelt( int hue ) : base( 0x2B68, hue )
 		{
 			Weight = 4.0;

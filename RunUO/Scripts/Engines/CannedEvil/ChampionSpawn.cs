@@ -53,7 +53,7 @@ namespace Server.Engines.CannedEvil
 			set { m_HasBeenAdvanced = value; }
 		}
 
-		[Constructable]
+		 
 		public ChampionSpawn() : base( 0xBD2 )
 		{
 			Movable = false;

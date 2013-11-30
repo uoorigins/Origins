@@ -16,12 +16,12 @@ namespace Server.Items
 
 		public override BaseAddonDeed Deed{ get{ return new MiniHouseDeed( m_Type ); } }
 
-		[Constructable]
+		 
 		public MiniHouseAddon() : this( MiniHouseType.StoneAndPlaster )
 		{
 		}
 
-		[Constructable]
+		 
 		public MiniHouseAddon( MiniHouseType type )
 		{
 			m_Type = type;
@@ -101,12 +101,12 @@ namespace Server.Items
 			list.Add( MiniHouseInfo.GetInfo( m_Type ).LabelNumber );
 		}
 
-		[Constructable]
+		 
 		public MiniHouseDeed() : this( MiniHouseType.StoneAndPlaster )
 		{
 		}
 
-		[Constructable]
+		 
 		public MiniHouseDeed( MiniHouseType type )
 		{
 			m_Type = type;

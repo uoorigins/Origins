@@ -26,7 +26,7 @@ namespace Server.Items
 		public override int InitMinHits{ get{ return 30; } }
 		public override int InitMaxHits{ get{ return 60; } }
 
-		[Constructable]
+		 
 		public RuneBlade() : base( 0x2D32 )
 		{
 			Weight = 7.0;

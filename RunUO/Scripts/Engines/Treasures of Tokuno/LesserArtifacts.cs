@@ -11,7 +11,7 @@ namespace Server.Items
 		public override int InitMinHits{ get{ return 255; } }
 		public override int InitMaxHits{ get { return 255; } }
 
-		[Constructable]
+		 
 		public AncientFarmersKasa() : base()
 		{
 			Attributes.BonusStr = 5;
@@ -59,7 +59,7 @@ namespace Server.Items
 		public override int BasePoisonResistance { get { return 11; } }
 		public override int BaseEnergyResistance { get { return 8; } }
 
-		[Constructable]
+		 
 		public AncientSamuraiDo() : base()
 		{
 			ArmorAttributes.LowerStatReq = 100;
@@ -97,7 +97,7 @@ namespace Server.Items
 		public override int BaseColdResistance { get { return 13; } }
 		public override int BasePoisonResistance { get { return 8; } }
 
-		[Constructable]
+		 
 		public ArmsOfTacticalExcellence() : base()
 		{
 			Attributes.BonusDex = 5;
@@ -139,7 +139,7 @@ namespace Server.Items
 		public override int InitMinHits { get { return 255; } }
 		public override int InitMaxHits { get { return 255; } }
 
-		[Constructable]
+		 
 		public BlackLotusHood() : base()
 		{
 			Attributes.LowerManaCost = 6;
@@ -178,7 +178,7 @@ namespace Server.Items
 
 		public override int BaseColdResistance { get { return 10; } }
 
-		[Constructable]
+		 
 		public DaimyosHelm() : base()
 		{
 			ArmorAttributes.LowerStatReq = 100;
@@ -213,7 +213,7 @@ namespace Server.Items
 	{
 		public override int LabelNumber{ get{ return 1070917; } } // Demon Forks
 
-		[Constructable]
+		 
 		public DemonForks() : base()
 		{
 			WeaponAttributes.ResistFireBonus = 10;
@@ -250,7 +250,7 @@ namespace Server.Items
 	{
 		public override int LabelNumber{ get{ return 1070914; } } // Dragon Nunchaku
 
-		[Constructable]
+		 
 		public DragonNunchaku() : base()
 		{
 			WeaponAttributes.ResistFireBonus = 5;
@@ -287,7 +287,7 @@ namespace Server.Items
 	{
 		public override int LabelNumber{ get{ return 1070913; } } // Exiler
 
-		[Constructable]
+		 
 		public Exiler() : base()
 		{
 			WeaponAttributes.HitDispel = 33;
@@ -333,7 +333,7 @@ namespace Server.Items
 
 		public override int BaseFireResistance { get { return 24; } }
 
-		[Constructable]
+		 
 		public GlovesOfTheSun() : base()
 		{
 			Attributes.RegenHits = 2;
@@ -368,7 +368,7 @@ namespace Server.Items
 	{
 		public override int LabelNumber { get { return 1070918; } } // Hanzo's Bow
 
-		[Constructable]
+		 
 		public HanzosBow() : base()
 		{
 			WeaponAttributes.HitLeechHits = 40;
@@ -408,7 +408,7 @@ namespace Server.Items
 		public override int BasePhysicalResistance { get { return 20; } }
 		public override int BasePoisonResistance { get { return 18; } }
 
-		[Constructable]
+		 
 		public LegsOfStability() : base()
 		{
 			Attributes.BonusStam = 5;
@@ -444,7 +444,7 @@ namespace Server.Items
 	{
 		public override int LabelNumber { get { return 1070912; } } // Peasant's Bokuto
 
-		[Constructable]
+		 
 		public PeasantsBokuto() : base()
 		{
 			WeaponAttributes.SelfRepair = 3;
@@ -481,7 +481,7 @@ namespace Server.Items
 	{
 		public override int LabelNumber { get { return 1070916; } } // Pilfered Dancer Fans
 
-		[Constructable]
+		 
 		public PilferedDancerFans() : base()
 		{
 			Attributes.WeaponDamage = 20;
@@ -517,7 +517,7 @@ namespace Server.Items
 	{
 		public override int LabelNumber { get { return 1070915; } } // The Destroyer
 
-		[Constructable]
+		 
 		public TheDestroyer() : base()
 		{
 			WeaponAttributes.HitLeechStam = 40;
@@ -553,7 +553,7 @@ namespace Server.Items
 	{
 		public override int LabelNumber { get { return 1070934; } } // Tome of Enlightenment
 
-		[Constructable]
+		 
 		public TomeOfEnlightenment() : base()
 		{
 			LootType = LootType.Regular;
@@ -639,14 +639,14 @@ namespace Server.Items
 
 		public override int LabelNumber { get { return 1071014; } } // Ancient Urn
 
-		[Constructable]
+		 
 		public AncientUrn( string urnName ) : base( 0x241D )
 		{
 			m_UrnName = urnName;
 			Weight = 1.0;
 		}
 
-		[Constructable]
+		 
 		public AncientUrn() : this( m_Names[Utility.Random( m_Names.Length )] )
 		{
 		}
@@ -698,7 +698,7 @@ namespace Server.Items
 
 		public override int LabelNumber { get { return 1071015; } } // Honorable Swords
 
-		[Constructable]
+		 
 		public HonorableSwords( string swordsName ) : base( 0x2853 )
 		{
 			m_SwordsName = swordsName;
@@ -706,7 +706,7 @@ namespace Server.Items
 			Weight = 5.0;
 		}
 
-		[Constructable]
+		 
 		public HonorableSwords() : this( AncientUrn.Names[Utility.Random( AncientUrn.Names.Length )] )
 		{
 		}
@@ -750,7 +750,7 @@ namespace Server.Items
 	{
 		public override int LabelNumber { get { return 1070927; } } // Flute of Renewal
 
-		[Constructable]
+		 
 		public FluteOfRenewal() : base()
 		{
 			Slayer = SlayerGroup.Groups[Utility.Random( SlayerGroup.Groups.Length - 1 )].Super.Name; //-1 to exclude Fey slayer.  Try to confrim no fey slayer on this on OSI

@@ -25,7 +25,7 @@ namespace Server.Items
 
 		public override SkillName DefSkill{ get{ return SkillName.Swords; } }
 
-		[Constructable]
+
 		public BladedStaff() : base( 0x26BD )
 		{
 			Weight = 4.0;

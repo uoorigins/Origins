@@ -12,7 +12,7 @@ namespace Server.Items
 
 		public override int LabelNumber { get { return 1070966; } } // Darkened Sky
 
-		[Constructable]
+		 
 		public DarkenedSky() : base()
 		{
 			WeaponAttributes.HitLightning = 60;
@@ -61,7 +61,7 @@ namespace Server.Items
 		public override int InitMinHits { get { return 255; } }
 		public override int InitMaxHits { get { return 255; } }
 
-		[Constructable]
+		 
 		public KasaOfTheRajin() : base()
 		{
 			Attributes.SpellDamage = 12;
@@ -106,7 +106,7 @@ namespace Server.Items
 		public override int BaseColdResistance { get { return 14; } }
 		public override int BaseEnergyResistance { get { return 14; } }
 
-		[Constructable]
+		 
 		public RuneBeetleCarapace() : base()
 		{
 			Attributes.BonusMana = 10;
@@ -147,7 +147,7 @@ namespace Server.Items
 		public override int BaseColdResistance { get { return 18; } }
 		public override int BaseEnergyResistance { get { return 18; } }
 
-		[Constructable]
+		 
 		public Stormgrip() : base()
 		{
 			Attributes.BonusInt = 8;
@@ -182,7 +182,7 @@ namespace Server.Items
 
 		public override int LabelNumber { get { return 1070964; } } // Sword of the Stampede
 
-		[Constructable]
+		 
 		public SwordOfTheStampede() : base()
 		{
 			WeaponAttributes.HitHarm = 100;
@@ -223,7 +223,7 @@ namespace Server.Items
 
 		public override int LabelNumber { get { return 1070963; } } // Swords of Prosperity
 
-		[Constructable]
+		 
 		public SwordsOfProsperity() : base()
 		{
 			WeaponAttributes.MageWeapon = 30;
@@ -265,7 +265,7 @@ namespace Server.Items
 
 		public override int LabelNumber { get { return 1070967; } } // The Horselord
 
-		[Constructable]
+		 
 		public TheHorselord() : base()
 		{
 			Attributes.BonusDex = 5;
@@ -300,7 +300,7 @@ namespace Server.Items
 	{
 		public override int LabelNumber { get { return 1070971; } } // Tome of Lost Knowledge
 
-		[Constructable]
+		 
 		public TomeOfLostKnowledge() : base()
 		{
 			LootType = LootType.Regular;
@@ -335,7 +335,7 @@ namespace Server.Items
 	{
 		public override int LabelNumber { get { return 1070965; } } // Wind's Edge
 
-		[Constructable]
+		 
 		public WindsEdge() : base()
 		{
 			WeaponAttributes.HitLeechMana = 40;
@@ -452,17 +452,17 @@ namespace Server.Items
 
 		public override int LabelNumber { get { return 1070933; } } // Pigments of Tokuno
 
-		[Constructable]
+		 
 		public PigmentsOfTokuno() : this( PigmentType.None, 10 )
 		{
 		}
 
-		[Constructable]
+		 
 		public PigmentsOfTokuno( PigmentType type ) : this( type, (type == PigmentType.None)? 10 : 50 )
 		{
 		}
 
-		[Constructable]
+		 
 		public PigmentsOfTokuno( PigmentType type, int uses ) : base( 0xEFF )
 		{
 			Weight = 1.0;

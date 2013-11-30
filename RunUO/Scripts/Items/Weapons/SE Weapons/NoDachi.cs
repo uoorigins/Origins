@@ -26,7 +26,7 @@ namespace Server.Items
 		public override int InitMinHits{ get{ return 31; } }
 		public override int InitMaxHits{ get{ return 90; } }
 
-		[Constructable]
+		 
 		public NoDachi() : base( 0x27A2 )
 		{
 			Weight = 10.0;

@@ -25,7 +25,7 @@ namespace Server.Items
 
 		public override int LabelNumber{ get{ return 1041496; } } // studded leggings, ranger armor
 
-		[Constructable]
+
 		public RangerLegs() : base( 0x13DA )
 		{
 			Weight = 3.0;

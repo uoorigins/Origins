@@ -17,7 +17,7 @@ namespace Server.Items
 		public override ArmorMaterialType MaterialType{ get{ return ArmorMaterialType.Dragon; } }
 		public override CraftResource DefaultResource{ get{ return CraftResource.Iron; } }
 
-		[Constructable]
+		 
 		public AegisOfGrace()
 		{
 			SkillBonuses.SetValues( 0, SkillName.MagicResist, 10.0 );

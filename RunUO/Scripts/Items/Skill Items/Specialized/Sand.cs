@@ -16,12 +16,12 @@ namespace Server.Items
 
 		public override int LabelNumber{ get{ return 1044626; } } // sand
 
-		[Constructable]
+		 
 		public Sand() : this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public Sand( int amount ) : base( 0x11EA )
 		{
 			Stackable = false;

@@ -9,7 +9,7 @@ namespace Server.Mobiles
 	{
 		public override ChampionSkullType SkullType{ get{ return ChampionSkullType.Venom; } }
 
-		[Constructable]
+
 		public Mephitis() : base( AIType.AI_Melee )
 		{
 			Body = 173;
