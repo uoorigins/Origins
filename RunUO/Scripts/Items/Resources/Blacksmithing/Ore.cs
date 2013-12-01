@@ -343,6 +343,11 @@ namespace Server.Items
 				}
                 else if ( IsOrePile(targeted) ) //combining stuff
                 {
+                    if (m_Ore == targeted)
+                    {
+                        return;
+                    }
+                    
                     BaseOre targetedOre = (BaseOre)targeted;
                     int transferAmount = 0;
                     int transferItemID = 0;
