@@ -172,6 +172,16 @@ namespace Server.Items
                 if (obj is Item)
                     itemID = ((Item)obj).ItemID;
 
+                return itemID == 0x19B9 || itemID == 0x19B8 || itemID == 0x19BA || itemID == 0x19B7;
+            }
+
+            private bool IsLargeOrePile(object obj)
+            {
+                int itemID = 0;
+
+                if (obj is Item)
+                    itemID = ((Item)obj).ItemID;
+
                 return itemID == 0x19B9; 
             }
 
@@ -333,11 +343,69 @@ namespace Server.Items
 				}
                 else if ( IsOrePile(targeted) ) //combining stuff
                 {
-                 /*   Ir
-                    if (IsOrePile(this))
+                    BaseOre targetedOre = (BaseOre)targeted;
+                    int transferAmount = 0;
+                    int transferItemID = 0;
+
+                    if (IsLargeOrePile(m_Ore))
                     {
-                        targeted
-                    }*/
+                        if (IsLargeOrePile(targetedOre))
+                        {
+                            transferAmount = m_Ore.Amount;
+                            transferItemID = targetedOre.ItemID;
+                        }
+                        else if (IsMediumOrePile(targetedOre))
+                        {
+                            transferAmount = m_Ore.Amount * 2;
+                            transferItemID = targetedOre.ItemID;
+                        }
+                        else if (IsSmallOrePile(targetedOre))
+                        {
+                            transferAmount = m_Ore.Amount * 4;
+                            transferItemID = targetedOre.ItemID;
+                        }
+                    }
+                    else if (IsMediumOrePile(m_Ore))
+                    {
+                        if (IsLargeOrePile(targetedOre))
+                        {
+                            transferAmount = targetedOre.Amount * 2;
+                            transferItemID = m_Ore.ItemID;
+                        }
+                        else if (IsMediumOrePile(targetedOre))
+                        {
+                            transferAmount = m_Ore.Amount;
+                            transferItemID = m_Ore.ItemID;
+                        }
+                        else if (IsSmallOrePile(targetedOre))
+                        {
+                            transferAmount = m_Ore.Amount * 2;
+                            transferItemID = targetedOre.ItemID;
+                        }
+                    }
+                    else if (IsSmallOrePile(m_Ore))
+                    {
+                        if (IsLargeOrePile(targetedOre))
+                        {
+                            transferAmount = targetedOre.Amount * 4;
+                            transferItemID = m_Ore.ItemID;
+                        }
+                        else if (IsMediumOrePile(targetedOre))
+                        {
+                            transferAmount = targetedOre.Amount * 2;
+                            transferItemID = m_Ore.ItemID;
+                        }
+                        else if (IsSmallOrePile(targetedOre))
+                        {
+                            transferAmount = m_Ore.Amount;
+                            transferItemID = m_Ore.ItemID;
+                        }
+                    }
+
+                    targetedOre.Amount += transferAmount;
+                    targetedOre.ItemID = transferItemID;
+
+                    m_Ore.Delete();
                 }
 			}
 		}
