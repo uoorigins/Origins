@@ -33,8 +33,11 @@ namespace Server.Items
             if (m_Chest.ScorePages != null)
                 Pages = m_Chest.ScorePages;
 
-            Title = m_Chest.Title;
-            Author = m_Chest.Author;
+            if (m_Chest != null)
+            {
+                Title = m_Chest.Title;
+                Author = m_Chest.Author;
+            }
 
             base.OnDoubleClick(from);
         }
