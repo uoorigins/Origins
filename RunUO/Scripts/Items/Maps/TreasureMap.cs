@@ -196,7 +196,6 @@ namespace Server.Items
 			return null;
 		}
 
-		[Constructable]
 		public TreasureMap( int level, Map map )
 		{
 			m_Level = level;
