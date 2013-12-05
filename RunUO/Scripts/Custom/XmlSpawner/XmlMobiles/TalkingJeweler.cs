@@ -10,7 +10,7 @@ namespace Server.Mobiles
         private List<SBInfo> m_SBInfos = new List<SBInfo>();
         protected override List<SBInfo> SBInfos { get { return m_SBInfos; } }
 
-		[Constructable]
+
 		public TalkingJeweler() : base( "the jeweler" )
 		{
 			SetSkill( SkillName.ItemID, 64.0, 100.0 );

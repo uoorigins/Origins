@@ -7,7 +7,7 @@ namespace Server.Mobiles
 	[CorpseName( "a drake corpse" )]
 	public class TalkingDrake : TalkingBaseCreature
 	{
-		[Constructable]
+
 		public TalkingDrake () : base( AIType.AI_Melee, FightMode.Closest, 10, 1, 0.2, 0.4 )
 		{
 			Name = "a drake";
