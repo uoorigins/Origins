@@ -769,6 +769,7 @@ namespace Server.Mobiles
 			// add the XmlDialog attachment
 			m_DialogAttachment = new XmlDialog((string)null);
 			XmlAttach.AttachTo(this, m_DialogAttachment);
+            SpeechHue = Utility.RandomAllColors();
 
 		}
 
