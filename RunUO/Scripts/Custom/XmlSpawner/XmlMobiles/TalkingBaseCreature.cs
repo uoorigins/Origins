@@ -811,6 +811,11 @@ namespace Server.Mobiles
 
 		}
 
+        public override void OnSpeech(SpeechEventArgs e)
+        {
+            e.Handled = true;
+        }
+
 		public override void Deserialize( GenericReader reader )
 		{
 			base.Deserialize( reader );
