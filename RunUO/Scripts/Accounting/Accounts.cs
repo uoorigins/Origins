@@ -145,10 +145,6 @@ namespace Server.Accounting
                         a.Save(xml);
 
                     xml.WriteEndElement();
-
-                    xml.Flush();
-
-                    xml.Close();
                 }
 			}
 		}
