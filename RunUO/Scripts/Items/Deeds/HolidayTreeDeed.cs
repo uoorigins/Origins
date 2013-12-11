@@ -5,6 +5,8 @@ using Server.Gumps;
 using Server.Multis;
 using Server.Network;
 using Server.Targeting;
+using Server.Menus.Questions;
+using Server.Guilds;
 
 namespace Server.Items
 {
@@ -15,7 +17,6 @@ namespace Server.Items
 		[Constructable]
 		public HolidayTreeDeed() : base( 0x14F0 )
 		{
-			Hue = 0x488;
 			Weight = 1.0;
 			LootType = LootType.Blessed;
 		}
@@ -59,13 +60,13 @@ namespace Server.Items
 
 			if ( !from.InRange( this.GetWorldLocation(), 1 ) )
 			{
-				from.SendLocalizedMessage( 500446 ); // That is too far away.
+				from.SendAsciiMessage( "That is too far away." ); // That is too far away.
 				return false;
 			}
 
 			if ( DateTime.Now.Month != 12 )
 			{
-				from.SendLocalizedMessage( 1005700 ); // You will have to wait till next December to put your tree back up for display.
+				from.SendAsciiMessage( "You will have to wait till next December to put your tree back up for display." ); // You will have to wait till next December to put your tree back up for display.
 				return false;
 			}
 
@@ -76,15 +77,15 @@ namespace Server.Items
 
 			BaseHouse house = BaseHouse.FindHouseAt( loc, map, 20 );
 
-			if ( house == null || !house.IsFriend( from ) )
+            if (house == null || !Key.ContainsKey(from.Backpack, house.keyValue))
 			{
-				from.SendLocalizedMessage( 1005701 ); // The holiday tree can only be placed in your house.
+				from.SendAsciiMessage( "The holiday tree can only be placed in your house." ); // The holiday tree can only be placed in your house.
 				return false;
 			}
 
 			if ( !map.CanFit( loc, 20 ) )
 			{
-				from.SendLocalizedMessage( 500269 ); // You cannot build that there.
+				from.SendAsciiMessage( "You cannot build that there." ); // You cannot build that there.
 				return false;
 			}
 
@@ -123,51 +124,38 @@ namespace Server.Items
 
 		public override void OnDoubleClick( Mobile from )
 		{
-			from.CloseGump( typeof( HolidayTreeChoiceGump ) );
-			from.SendGump( new HolidayTreeChoiceGump( from, this ) );
+            from.SendMenu(new HolidayTreeChoiceMenu(from, this));
 		}
 	}
 
-	public class HolidayTreeChoiceGump : Gump
-	{
-		private Mobile m_From;
-		private HolidayTreeDeed m_Deed;
+    public class HolidayTreeChoiceMenu : QuestionMenu
+    {
+        private Mobile m_From;
+        private HolidayTreeDeed m_Deed;
 
-		public HolidayTreeChoiceGump( Mobile from, HolidayTreeDeed deed ) : base( 200, 200 )
-		{
-			m_From = from;
-			m_Deed = deed;
+        public HolidayTreeChoiceMenu(Mobile from, HolidayTreeDeed deed)
+            : base("What kind of holiday tree do you want to place?",
+                new string[] { "Classic",
+                "Modern"})
+        {
+            m_From = from;
+            m_Deed = deed;
+        }
 
-			AddPage( 0 );
+        public override void OnCancel(NetState state)
+        {
+        }
 
-			AddBackground( 0, 0, 220, 120, 5054 );
-			AddBackground( 10, 10, 200, 100, 3000 );
-
-			AddButton( 20, 35, 4005, 4007, 1, GumpButtonType.Reply, 0 );
-			AddHtmlLocalized( 55, 35, 145, 25, 1018322, false, false ); // Classic
-
-			AddButton( 20, 65, 4005, 4007, 2, GumpButtonType.Reply, 0 );
-			AddHtmlLocalized( 55, 65, 145, 25, 1018321, false, false ); // Modern
-		}
-
-		public override void OnResponse( NetState sender, RelayInfo info )
-		{
-			if ( m_Deed.Deleted )
-				return;
-
-			switch ( info.ButtonID )
-			{
-				case 1:
-				{
-					m_Deed.BeginPlace( m_From, HolidayTreeType.Classic );
-					break;
-				}
-				case 2:
-				{
-					m_Deed.BeginPlace( m_From, HolidayTreeType.Modern );
-					break;
-				}
-			}
-		}
-	}
+        public override void OnResponse(NetState state, int index)
+        {
+            if (index == 0) // classic
+            {
+                m_Deed.BeginPlace(m_From, HolidayTreeType.Classic);
+            }
+            else if (index == 1) // modern
+            {
+                m_Deed.BeginPlace(m_From, HolidayTreeType.Modern);
+            }
+        }
+    }
 }
