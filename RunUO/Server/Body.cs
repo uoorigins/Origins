@@ -33,12 +33,13 @@ namespace Server
 		Equipment
 	}
 
+    [Parsable]
 	public struct Body
 	{
 		private int m_BodyID;
 
 		private static BodyType[] m_Types;
-
+        
 		static Body()
 		{
 			if ( File.Exists( "Data/bodyTable.cfg" ) )
@@ -79,6 +80,12 @@ namespace Server
 				m_Types = new BodyType[0];
 			}
 		}
+
+        public static Body Parse(string value)
+        {
+            //no need to try and catch - Int32.Parse already throws meaningful exception
+            return new Body(Int32.Parse(value));
+        }
 
 		public Body( int bodyID )
 		{
