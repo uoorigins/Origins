@@ -13,7 +13,7 @@ namespace Server.Items
 			get { return "a barkeep contract"; }
 		}
 
-		[Constructable]
+
 		public BarkeepContract() : base( 0x14F0 )
 		{
 			Weight = 1.0;

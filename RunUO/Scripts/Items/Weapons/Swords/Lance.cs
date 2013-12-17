@@ -30,7 +30,7 @@ namespace Server.Items
 		public override WeaponType DefType{ get{ return WeaponType.Piercing; } }
 		public override WeaponAnimation DefAnimation{ get{ return WeaponAnimation.Pierce1H; } }
 
-		[Constructable]
+
 		public Lance() : base( 0x26C0 )
 		{
 			Weight = 12.0;

@@ -85,7 +85,7 @@ namespace Server.Items
 			set{ m_Bound = value; }
 		}
 
-		[Constructable]
+		 
 		public BraceletOfBinding() : base( 0x1086 )
 		{
 			Hue = 0x489;

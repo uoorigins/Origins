@@ -68,12 +68,12 @@ namespace Server.Items
 		public override CraftSystem CraftSystem{ get{ return DefBlacksmithy.CraftSystem; } }
 		public override int LabelNumber{ get{ return 1045127; } } // ancient smithy hammer
 
-		[Constructable]
+		 
 		public AncientSmithyHammer( int bonus ) : this( bonus, 600 )
 		{
 		}
 
-		[Constructable]
+		 
 		public AncientSmithyHammer( int bonus, int uses ) : base( uses, 0x13E4 )
 		{
 			m_Bonus = bonus;

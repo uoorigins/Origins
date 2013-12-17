@@ -36,12 +36,12 @@ namespace Server.Items
 	[Flipable( 0x230E, 0x230D )]
 	public class GildedDress : BaseOuterTorso
 	{
-		[Constructable]
+
 		public GildedDress() : this( 0 )
 		{
 		}
 
-		[Constructable]
+
 		public GildedDress( int hue ) : base( 0x230E, hue )
 		{
 			Weight = 3.0;
@@ -254,17 +254,17 @@ namespace Server.Items
 			return !m_IsRewardItem || Engines.VeteranRewards.RewardSystem.CheckIsUsableBy( m, this, new object[]{ Hue, m_LabelNumber } );
 		}
 
-		[Constructable]
+
 		public RewardRobe() : this( 0 )
 		{
 		}
 
-		[Constructable]
+
 		public RewardRobe( int hue ) : this( hue, 0 )
 		{
 		}
 
-		[Constructable]
+
 		public RewardRobe( int hue, int labelNumber ) : base( 0x1F03, hue )
 		{
 			Weight = 3.0;
@@ -379,17 +379,17 @@ namespace Server.Items
 			return !m_IsRewardItem || RewardSystem.CheckIsUsableBy( m, this, new object[]{ Hue, m_LabelNumber } );
 		}
 
-		[Constructable]
+
 		public RewardDress() : this( 0 )
 		{
 		}
 
-		[Constructable]
+
 		public RewardDress( int hue ) : this( hue, 0 )
 		{
 		}
 
-		[Constructable]
+
 		public RewardDress( int hue, int labelNumber ) : base( 0x1F01, hue )
 		{
 			Weight = 2.0;
@@ -581,12 +581,12 @@ namespace Server.Items
 	[Flipable( 0x2684, 0x2683 )]
 	public class HoodedShroudOfShadows : BaseOuterTorso
 	{
-		[Constructable]
+
 		public HoodedShroudOfShadows() : this( 0x455 )
 		{
 		}
 
-		[Constructable]
+
 		public HoodedShroudOfShadows( int hue ) : base( 0x2684, hue )
 		{
 			LootType = LootType.Blessed;
@@ -682,12 +682,12 @@ namespace Server.Items
 	[Flipable( 0x2799, 0x27E4 )]
 	public class Kamishimo : BaseOuterTorso
 	{
-		[Constructable]
+
 		public Kamishimo() : this( 0 )
 		{
 		}
 
-		[Constructable]
+
 		public Kamishimo( int hue ) : base( 0x2799, hue )
 		{
 			Weight = 3.0;
@@ -715,12 +715,12 @@ namespace Server.Items
 	[Flipable( 0x279C, 0x27E7 )]
 	public class HakamaShita : BaseOuterTorso
 	{
-		[Constructable]
+
 		public HakamaShita() : this( 0 )
 		{
 		}
 
-		[Constructable]
+
 		public HakamaShita( int hue ) : base( 0x279C, hue )
 		{
 			Weight = 3.0;
@@ -748,12 +748,12 @@ namespace Server.Items
 	[Flipable( 0x2782, 0x27CD )]
 	public class MaleKimono : BaseOuterTorso
 	{
-		[Constructable]
+
 		public MaleKimono() : this( 0 )
 		{
 		}
 
-		[Constructable]
+
 		public MaleKimono( int hue ) : base( 0x2782, hue )
 		{
 			Weight = 3.0;
@@ -783,12 +783,12 @@ namespace Server.Items
 	[Flipable( 0x2783, 0x27CE )]
 	public class FemaleKimono : BaseOuterTorso
 	{
-		[Constructable]
+
 		public FemaleKimono() : this( 0 )
 		{
 		}
 
-		[Constructable]
+
 		public FemaleKimono( int hue ) : base( 0x2783, hue )
 		{
 			Weight = 3.0;
@@ -821,12 +821,12 @@ namespace Server.Items
 		// TODO: Supports arcane?
 		public override Race RequiredRace { get { return Race.Elf; } }
 
-		[Constructable]
+
 		public MaleElvenRobe() : this( 0 )
 		{
 		}
 
-		[Constructable]
+
 		public MaleElvenRobe( int hue ) : base( 0x2FB9, hue )
 		{
 			Weight = 2.0;
@@ -858,12 +858,12 @@ namespace Server.Items
 	{
 		// TODO: Supports arcane?
 		public override Race RequiredRace { get { return Race.Elf; } }
-		[Constructable]
+
 		public FemaleElvenRobe() : this( 0 )
 		{
 		}
 
-		[Constructable]
+
 		public FemaleElvenRobe( int hue ) : base( 0x2FBA, hue )
 		{
 			Weight = 2.0;

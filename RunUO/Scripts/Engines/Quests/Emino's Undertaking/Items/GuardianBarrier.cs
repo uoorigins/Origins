@@ -7,7 +7,7 @@ namespace Server.Engines.Quests.Ninja
 {
 	public class GuardianBarrier : Item
 	{
-		[Constructable]
+		 
 		public GuardianBarrier() : base( 0x3967 )
 		{
 			Movable = false;

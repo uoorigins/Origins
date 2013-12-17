@@ -23,7 +23,7 @@ namespace Server.Items
 		public override ArmorMaterialType MaterialType{ get{ return ArmorMaterialType.Plate; } }
 		public override Race RequiredRace { get { return Race.Elf; } }
 
-		[Constructable]
+
 		public WoodlandGloves() : base( 0x2B6A )
 		{
 			Weight = 2.0;

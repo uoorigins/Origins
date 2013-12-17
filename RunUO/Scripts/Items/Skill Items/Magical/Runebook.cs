@@ -86,7 +86,7 @@ namespace Server.Items
 
 		public override int LabelNumber{ get{ return 1041267; } } // runebook
 
-		[Constructable]
+		 
 		public Runebook( int maxCharges ) : base( Core.AOS ? 0x22C5 : 0xEFA )
 		{
 			Weight = (Core.SE ? 1.0 : 3.0);
@@ -104,7 +104,7 @@ namespace Server.Items
 			m_Level = SecureLevel.CoOwners;
 		}
 
-		[Constructable]
+		 
 		public Runebook() : this( Core.SE ? 12 : 6 )
 		{
 		}

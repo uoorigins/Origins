@@ -12,6 +12,7 @@ using Server.Commands;
 using System.Collections;
 using Server.Targeting;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Server.Gumps
 {
@@ -33,7 +34,7 @@ namespace Server.Gumps
             Mobile caller = e.Mobile;
             ChatSystem system = null;
 
-            foreach (Item item in World.Items.Values)
+            foreach (Item item in World.Items.Values.ToList())
             {
                 if (item is ChatSystem)
                     system = item as ChatSystem;
@@ -67,7 +68,7 @@ namespace Server.Gumps
             ChatSystem system = null;
             string message = "";
 
-            foreach (Item item in World.Items.Values)
+            foreach (Item item in World.Items.Values.ToList())
             {
                 if (item is ChatSystem)
                     system = item as ChatSystem;
@@ -90,7 +91,7 @@ namespace Server.Gumps
                 }
                 else
                 {
-                    foreach (Mobile m in system.m_Players.Keys)
+                    foreach (Mobile m in system.m_Players.Keys.ToList())
                     {
                         m.SendAsciiMessage(0x49, String.Format("[{0}{1}]: {2}", (caller.AccessLevel > AccessLevel.Player ? "@" : ""), caller.Name, message));
                     }
@@ -131,7 +132,7 @@ namespace Server.Gumps
 
             List<Mobile> toRemove = new List<Mobile>();
 
-            foreach (Mobile m in m_System.m_Players.Keys)
+            foreach (Mobile m in m_System.m_Players.Keys.ToList())
             {
                 if (m.Deleted || m == null)
                 {

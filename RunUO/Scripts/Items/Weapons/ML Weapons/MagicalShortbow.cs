@@ -29,7 +29,7 @@ namespace Server.Items
 		public override int InitMinHits{ get{ return 41; } }
 		public override int InitMaxHits{ get{ return 90; } }
 
-		[Constructable]
+		 
 		public MagicalShortbow() : base( 0x2D2B )
 		{
 			Weight = 6.0;

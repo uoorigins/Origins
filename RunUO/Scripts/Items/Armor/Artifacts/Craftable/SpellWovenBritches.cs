@@ -10,7 +10,7 @@ namespace Server.Items
 		public override int BaseFireResistance{ get{ return 15; } }
 		public override int BasePoisonResistance{ get{ return 16; } }
 
-		[Constructable]
+		 
 		public SpellWovenBritches()
 		{
 			Hue = 0x487;

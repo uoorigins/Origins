@@ -75,12 +75,12 @@ namespace Server.Items
 
 	public class RedScales : BaseScales
 	{
-		[Constructable]
+		 
 		public RedScales() : this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public RedScales( int amount ) : base( CraftResource.RedScales, amount )
 		{
 		}
@@ -108,12 +108,12 @@ namespace Server.Items
 
 	public class YellowScales : BaseScales
 	{
-		[Constructable]
+		 
 		public YellowScales() : this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public YellowScales( int amount ) : base( CraftResource.YellowScales, amount )
 		{
 		}
@@ -141,12 +141,12 @@ namespace Server.Items
 
 	public class BlackScales : BaseScales
 	{
-		[Constructable]
+		 
 		public BlackScales() : this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public BlackScales( int amount ) : base( CraftResource.BlackScales, amount )
 		{
 		}
@@ -174,12 +174,12 @@ namespace Server.Items
 
 	public class GreenScales : BaseScales
 	{
-		[Constructable]
+		 
 		public GreenScales() : this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public GreenScales( int amount ) : base( CraftResource.GreenScales, amount )
 		{
 		}
@@ -207,12 +207,12 @@ namespace Server.Items
 
 	public class WhiteScales : BaseScales
 	{
-		[Constructable]
+		 
 		public WhiteScales() : this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public WhiteScales( int amount ) : base( CraftResource.WhiteScales, amount )
 		{
 		}
@@ -242,12 +242,12 @@ namespace Server.Items
 	{
 		public override int LabelNumber{ get{ return 1053140; } } // sea serpent scales
 
-		[Constructable]
+		 
 		public BlueScales() : this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public BlueScales( int amount ) : base( CraftResource.BlueScales, amount )
 		{
 		}

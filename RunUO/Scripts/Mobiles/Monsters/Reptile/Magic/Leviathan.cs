@@ -16,12 +16,12 @@ namespace Server.Mobiles
 			set{ m_Fisher = value; }
 		}
 
-		[Constructable]
+
 		public Leviathan() : this( null )
 		{
 		}
 
-		[Constructable]
+
 		public Leviathan( Mobile fisher ) : base( AIType.AI_Mage, FightMode.Closest, 10, 1, 0.2, 0.4 )
 		{
 			m_Fisher = fisher;

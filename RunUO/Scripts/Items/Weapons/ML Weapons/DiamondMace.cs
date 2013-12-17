@@ -23,7 +23,7 @@ namespace Server.Items
 		public override int InitMinHits{ get{ return 30; } } // TODO
 		public override int InitMaxHits{ get{ return 60; } } // TODO
 
-		[Constructable]
+		 
 		public DiamondMace() : base( 0x2D24 )
 		{
 			Weight = 10.0;

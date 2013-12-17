@@ -13,7 +13,7 @@ namespace Server.Ethics
 			get { return "Ethics Persistance - Internal"; }
 		}
 
-		[Constructable]
+		 
 		public EthicsPersistance()
 			: base( 1 )
 		{

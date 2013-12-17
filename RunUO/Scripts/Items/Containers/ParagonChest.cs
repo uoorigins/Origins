@@ -26,7 +26,7 @@ namespace Server.Items
 
 		private string m_Name;
 
-		[Constructable]
+
 		public ParagonChest( string name, int level ) : base( Utility.RandomList( m_ItemIDs ) )
 		{
 			m_Name = name;

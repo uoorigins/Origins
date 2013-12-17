@@ -80,7 +80,7 @@ namespace Server.Engines.Quests.Haven
 
 		private Lantern m_Lantern;
 
-		[Constructable]
+		 
 		public SchmendrickApprenticeCorpse() : base( GetOwner(), GetHair(), GetFacialHair(), GetEquipment() )
 		{
 			Direction = Direction.West;

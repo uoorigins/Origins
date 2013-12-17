@@ -9,7 +9,7 @@ namespace Server.Items
 		public override int LitItemID{ get { return 0x24BD; } }
 		public override int UnlitItemID{ get { return 0x24BE; } }
 		
-		[Constructable]
+
 		public PaperLantern() : base( 0x24BE )
 		{
 			Movable = true;

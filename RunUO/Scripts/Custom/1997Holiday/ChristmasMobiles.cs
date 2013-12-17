@@ -1,6 +1,7 @@
 ﻿using System;
 using Server;
 using Server.Items;
+using Server.Misc;
 
 namespace Server.Mobiles
 {
@@ -86,6 +87,30 @@ namespace Server.Mobiles
             }
 
             Animate(33, 5, 1, true, false, 0);
+        }
+
+        public override bool CheckGold(Mobile from, Item dropped)
+        {
+            base.CheckGold(from, dropped);
+
+            HolidayTicket ticket = dropped as HolidayTicket;
+
+            if (ticket != null)
+            {
+                if (ticket.Player == from)
+                {
+                    dropped.Delete();
+
+                    return true;
+                }
+                else
+                {
+                    Say(true, "Ho ho ho! That is not your ticket.");
+                    return false;
+                }
+            }
+
+            return false;
         }
 
         private static int GetRandomHue()

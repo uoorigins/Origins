@@ -25,7 +25,7 @@ namespace Server.Items
 		public override int InitMinHits{ get{ return 30; } } // TODO
 		public override int InitMaxHits{ get{ return 60; } } // TODO
 
-		[Constructable]
+		 
 		public ElvenSpellblade() : base( 0x2D20 )
 		{
 			Weight = 5.0;

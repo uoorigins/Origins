@@ -19,12 +19,12 @@ namespace Server.Items
 			set { m_IsRewardItem = value; InvalidateProperties(); }
 		}
 
-		[Constructable]
+		 
 		public RewardPottedCactus() : this( Utility.RandomMinMax( 0x1E0F, 0x1E14 ) )
 		{	
 		}
 
-		[Constructable]
+		 
 		public RewardPottedCactus( int itemID ) : base( itemID )
 		{	
 			Weight = 5.0;
@@ -72,7 +72,7 @@ namespace Server.Items
 			set{ m_IsRewardItem = value; InvalidateProperties(); }
 		}
 
-		[Constructable]
+		 
 		public PottedCactusDeed() : base( 0x14F0 )
 		{
 			LootType = LootType.Blessed;

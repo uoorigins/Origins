@@ -10,7 +10,7 @@ namespace Server.Mobiles
 	{
 		public override ChampionSkullType SkullType{ get{ return ChampionSkullType.Death; } }
 
-		[Constructable]
+
 		public Neira() : base( AIType.AI_Mage )
 		{
 			Name = "Neira";

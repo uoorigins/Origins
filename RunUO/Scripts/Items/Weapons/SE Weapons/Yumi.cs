@@ -31,7 +31,7 @@ namespace Server.Items
 
 		public override WeaponAnimation DefAnimation{ get{ return WeaponAnimation.ShootBow; } }
 
-		[Constructable]
+		 
 		public Yumi() : base( 0x27A5 )
 		{
 			Weight = 9.0;

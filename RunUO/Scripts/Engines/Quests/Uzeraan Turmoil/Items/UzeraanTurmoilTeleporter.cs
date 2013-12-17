@@ -8,7 +8,7 @@ namespace Server.Engines.Quests.Haven
 {
 	public class UzeraanTurmoilTeleporter : DynamicTeleporter
 	{
-		[Constructable]
+		 
 		public UzeraanTurmoilTeleporter()
 		{
 		}

@@ -178,7 +178,7 @@ namespace Server.Items
 			set{ m_IsRewardItem = value; InvalidateProperties(); }
 		}		
 		
-		[Constructable]
+		 
 		public AnkhOfSacrificeAddon( bool east ) : base()
 		{			
 			if ( east )
@@ -255,12 +255,12 @@ namespace Server.Items
 			set{ m_IsRewardItem = value; InvalidateProperties(); }
 		}
 		
-		[Constructable]
+		 
 		public AnkhOfSacrificeDeed() : this( false )
 		{
 		}
 
-		[Constructable]
+		 
 		public AnkhOfSacrificeDeed( bool isRewardItem ) : base()
 		{
 			LootType = LootType.Blessed;

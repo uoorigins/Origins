@@ -6,12 +6,12 @@ namespace Server.Mobiles
 	[CorpseName( "an ostard corpse" )]
 	public class ForestOstard : BaseMount
 	{
-		[Constructable]
+
 		public ForestOstard() : this( "a forest ostard" )
 		{
 		}
 
-		[Constructable]
+
 		public ForestOstard( string name ) : base( name, 0xDB, 0x3EA5, AIType.AI_Animal, FightMode.Aggressor, 10, 1, 0.2, 0.4 )
 		{
 			Hue = Utility.RandomSlimeHue() | 0x8000;

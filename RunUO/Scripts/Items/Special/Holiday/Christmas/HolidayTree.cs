@@ -265,16 +265,16 @@ namespace Server.Items
 
 					this.Delete();
 
-					from.SendLocalizedMessage( 503393 ); // A deed for the tree has been placed in your backpack.
+                    from.SendAsciiMessage("A deed for the tree has been placed in your backpack."); // A deed for the tree has been placed in your backpack.
 				}
 				else
 				{
-					from.SendLocalizedMessage( 503396 ); // You cannot take this tree down.
+					from.SendAsciiMessage( "You cannot take this tree down." ); // You cannot take this tree down.
 				}
 			}
 			else
 			{
-				from.SendLocalizedMessage( 500446 ); // That is too far away.
+				from.SendAsciiMessage( "That is too far away." ); // That is too far away.
 			}
 		}
 	}

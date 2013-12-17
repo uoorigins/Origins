@@ -6,12 +6,12 @@ namespace Server.Items
 {
 	public class AnimateDeadScroll : SpellScroll
 	{
-		[Constructable]
+		 
 		public AnimateDeadScroll() : this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public AnimateDeadScroll( int amount ) : base( 100, 0x2260, amount )
 		{
 		}

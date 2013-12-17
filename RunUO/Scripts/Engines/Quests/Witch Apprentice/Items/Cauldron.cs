@@ -10,7 +10,7 @@ namespace Server.Items
 			get { return "a cauldron"; }
 		}
 
-		[Constructable]
+		 
 		public Cauldron() : base( 0x9ED )
 		{
 			Weight = 1.0;

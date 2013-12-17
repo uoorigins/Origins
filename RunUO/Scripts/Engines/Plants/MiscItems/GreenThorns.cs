@@ -10,12 +10,12 @@ namespace Server.Items
 	{
 		public override int LabelNumber { get { return 1060837; } } // green thorns
 
-		[Constructable]
+		 
 		public GreenThorns() : this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public GreenThorns( int amount ) : base( 0xF42 )
 		{
 			Stackable = true;

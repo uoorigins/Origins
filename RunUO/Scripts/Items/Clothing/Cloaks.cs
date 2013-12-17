@@ -243,17 +243,17 @@ namespace Server.Items
 			return !m_IsRewardItem || Engines.VeteranRewards.RewardSystem.CheckIsUsableBy( m, this, new object[]{ Hue, m_LabelNumber } );
 		}
 
-		[Constructable]
+
 		public RewardCloak() : this( 0 )
 		{
 		}
 
-		[Constructable]
+
 		public RewardCloak( int hue ) : this( hue, 0 )
 		{
 		}
 
-		[Constructable]
+
 		public RewardCloak( int hue, int labelNumber ) : base( 0x1515, hue )
 		{
 			Weight = 5.0;
@@ -300,12 +300,12 @@ namespace Server.Items
 	[Flipable( 0x230A, 0x2309 )]
 	public class FurCape : BaseCloak
 	{
-		[Constructable]
+
 		public FurCape() : this( 0 )
 		{
 		}
 
-		[Constructable]
+
 		public FurCape( int hue ) : base( 0x230A, hue )
 		{
 			Weight = 4.0;

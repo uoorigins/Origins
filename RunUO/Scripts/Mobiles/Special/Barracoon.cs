@@ -12,7 +12,7 @@ namespace Server.Mobiles
 	{
 		public override ChampionSkullType SkullType{ get{ return ChampionSkullType.Greed; } }
 
-		[Constructable]
+
 		public Barracoon() : base( AIType.AI_Melee )
 		{
 			Name = "Barracoon";

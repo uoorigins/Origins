@@ -25,7 +25,7 @@ namespace Server.Items
 		public override ArmorMaterialType MaterialType{ get{ return ArmorMaterialType.Dragon; } }
 		public override CraftResource DefaultResource{ get{ return CraftResource.RedScales; } }
 
-		[Constructable]
+		 
 		public DragonChest() : base( 0x2641 )
 		{
 			Weight = 10.0;

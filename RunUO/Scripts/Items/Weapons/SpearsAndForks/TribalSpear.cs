@@ -30,7 +30,7 @@ namespace Server.Items
 			get { return "a tribal spear"; }
 		}
 
-		[Constructable]
+
 		public TribalSpear() : base( 0xF62 )
 		{
 			Weight = 7.0;

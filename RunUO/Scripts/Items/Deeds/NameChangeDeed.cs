@@ -12,7 +12,7 @@ namespace Server.Items
 			get { return "a name change deed"; }
 		}
 
-		[Constructable]
+
 		public NameChangeDeed() : base( 0x14F0 )
 		{
 			base.Weight = 1.0;

@@ -151,12 +151,12 @@ namespace Server.Items
 	[Flipable( 0x279B, 0x27E6 )]
 	public class TattsukeHakama : BasePants
 	{
-		[Constructable]
+
 		public TattsukeHakama() : this( 0 )
 		{
 		}
 
-		[Constructable]
+
 		public TattsukeHakama( int hue ) : base( 0x279B, hue )
 		{
 			Weight = 2.0;
@@ -186,12 +186,12 @@ namespace Server.Items
 	{
 		public override Race RequiredRace { get { return Race.Elf; } }
 
-		[Constructable]
+
 		public ElvenPants() : this( 0 )
 		{
 		}
 
-		[Constructable]
+
 		public ElvenPants( int hue ) : base( 0x2FC3, hue )
 		{
 			Weight = 2.0;

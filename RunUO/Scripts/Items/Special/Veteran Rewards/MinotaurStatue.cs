@@ -36,7 +36,7 @@ namespace Server.Items
 			set{ m_IsRewardItem = value; InvalidateProperties(); }
 		}
 
-		[Constructable]
+		 
 		public MinotaurStatue( MinotaurStatueType type ) : base()
 		{
 			switch ( type )
@@ -111,7 +111,7 @@ namespace Server.Items
 			set{ m_IsRewardItem = value; InvalidateProperties(); }
 		}
 
-		[Constructable]
+		 
 		public MinotaurStatueDeed() : base()
 		{
 			LootType = LootType.Blessed;

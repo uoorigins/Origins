@@ -8,12 +8,12 @@ namespace Server.Items
 {
 	public class PowerGenerator : BaseAddon
 	{
-		[Constructable]
+
 		public PowerGenerator() : this( Utility.RandomMinMax( 3, 6 ) )
 		{
 		}
 
-		[Constructable]
+
 		public PowerGenerator( int sideLength )
 		{
 			AddGeneratorComponent( 0x4FA1, 0, 0, 0 );

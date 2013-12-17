@@ -39,12 +39,12 @@ namespace Server.Mobiles
 			return false;
 		}
 
-		[Constructable]
+
 		public Kirin() : this( "a ki-rin" )
 		{
 		}
 
-		[Constructable]
+
 		public Kirin( string name ) : base( name, 132, 0x3EAD, AIType.AI_Mage, FightMode.Evil, 10, 1, 0.2, 0.4 )
 		{
 			BaseSoundID = 0x3C5;

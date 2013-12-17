@@ -29,7 +29,7 @@ namespace Server.Items
 
 		public override bool AllowMaleWearer{ get{ return false; } }
 
-		[Constructable]
+
 		public HideFemaleChest() : base( 0x2B79 )
 		{
 			Weight = 6.0;

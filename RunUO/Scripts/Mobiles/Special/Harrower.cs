@@ -73,7 +73,7 @@ namespace Server.Mobiles
 			}
 		}
 
-		[Constructable]
+
 		public Harrower() : base( AIType.AI_Mage, FightMode.Closest, 18, 1, 0.2, 0.4 )
 		{
 			m_Instances.Add( this );

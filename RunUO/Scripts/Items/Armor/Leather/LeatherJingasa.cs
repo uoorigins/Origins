@@ -24,7 +24,7 @@ namespace Server.Items
 
 		public override ArmorMeditationAllowance DefMedAllowance{ get{ return ArmorMeditationAllowance.All; } }
 
-		[Constructable]
+
 		public LeatherJingasa() : base( 0x2776 )
 		{
 			Weight = 3.0;

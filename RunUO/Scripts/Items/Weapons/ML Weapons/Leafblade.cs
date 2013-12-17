@@ -25,7 +25,7 @@ namespace Server.Items
 		public override int InitMinHits{ get{ return 30; } } // TODO
 		public override int InitMaxHits{ get{ return 60; } } // TODO
 
-		[Constructable]
+		 
 		public Leafblade() : base( 0x2D22 )
 		{
 			Weight = 8.0;

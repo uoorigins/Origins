@@ -41,7 +41,7 @@ namespace Server.Engines.BulkOrders
 			get{ return m_Filter; }
 		}
 
-		[Constructable]
+		 
 		public BulkOrderBook() : base( 0x2259 )
 		{
 			Weight = 1.0;

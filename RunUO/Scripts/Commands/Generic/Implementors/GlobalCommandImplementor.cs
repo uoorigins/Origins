@@ -11,7 +11,7 @@ namespace Server.Commands.Generic
 			Accessors = new string[]{ "Global" };
 			SupportRequirement = CommandSupport.Global;
 			SupportsConditionals = true;
-			AccessLevel = AccessLevel.Administrator;
+			AccessLevel = AccessLevel.GameMaster;
 			Usage = "Global <command> [condition]";
 			Description = "Invokes the command on all appropriate objects in the world. Optional condition arguments can further restrict the set of objects.";
 		}

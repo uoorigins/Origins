@@ -11,14 +11,14 @@ namespace Server.Mobiles
 	[CorpseName( "a giant beetle corpse" )]
 	public class Beetle : BaseMount
 	{
-		[Constructable]
+
 		public Beetle() : this( "a giant beetle" )
 		{
 		}
 
 		public override bool SubdueBeforeTame{ get{ return true; } } // Must be beaten into submission
 
-		[Constructable]
+
 		public Beetle( string name ) : base( name, 0x317, 0x3EBC, AIType.AI_Melee, FightMode.Closest, 10, 1, 0.2, 0.4 )
 		{
 			SetStr( 300 );

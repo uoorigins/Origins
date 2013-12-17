@@ -28,7 +28,7 @@ namespace Server.Items
 			}
 		}
 		
-		[Constructable]
+
 		public WhiteHangingLantern() : base( 0x24C6 )
 		{
 			Movable = true;
