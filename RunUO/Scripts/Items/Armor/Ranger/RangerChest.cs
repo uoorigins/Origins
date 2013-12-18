@@ -4,7 +4,7 @@ using Server.Items;
 namespace Server.Items
 {
 	[FlipableAttribute( 0x13db, 0x13e2 )]
-	public class RangerChest : BaseArmor
+	public class RangerChest : StuddedChest
 	{
 		public override int BasePhysicalResistance{ get{ return 2; } }
 		public override int BaseFireResistance{ get{ return 4; } }
@@ -26,7 +26,7 @@ namespace Server.Items
 		public override int LabelNumber{ get{ return 1041497; } } // studded tunic, ranger armor
 
 
-		public RangerChest() : base( 0x13DB )
+		public RangerChest() : base()
 		{
 			Weight = 8.0;
 			Hue = 0x59C;

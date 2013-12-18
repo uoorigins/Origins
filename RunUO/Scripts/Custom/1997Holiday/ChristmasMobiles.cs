@@ -89,6 +89,12 @@ namespace Server.Mobiles
             Animate(33, 5, 1, true, false, 0);
         }
 
+        private static Item MakeNewbie(Item item)
+        {
+            item.LootType = LootType.Newbied;
+            return item;
+        }
+
         public override bool CheckGold(Mobile from, Item dropped)
         {
             base.CheckGold(from, dropped);
@@ -96,9 +102,46 @@ namespace Server.Mobiles
             HolidayTicket ticket = dropped as HolidayTicket;
 
             if (ticket != null)
-            {
+            { 
                 if (ticket.Player == from)
                 {
+                    from.SendAsciiMessage("You recieve a gift from Santa.");
+
+                    switch (Utility.RandomMinMax(0,9))
+                    {
+                        case 9:
+                            from.AddToBackpack(MakeNewbie(new Cake() { ItemID = 4164, Name = "spam" }));
+                            break;
+                        case 8:
+                            from.AddToBackpack(new Coal());
+                            break;
+                        case 7:
+                            from.AddToBackpack(MakeNewbie(new Spyglass()));
+                            break;
+                        case 6:
+                            from.AddToBackpack(new RangerLegs());
+                            break;
+                        case 5:
+                            from.AddToBackpack(new RangerGorget());
+                            break;
+                        case 4:
+                            from.AddToBackpack(new RangerGloves());
+                            break;
+                        case 3:
+                            from.AddToBackpack(new RangerChest());
+                            break;
+                        case 2:
+                            from.AddToBackpack(new RangerArms());
+                            break;
+                        case 1:
+                            from.AddToBackpack(MakeNewbie(new ClothingBlessDeed()));
+                            break;
+                        default:
+                        case 0:
+                            from.AddToBackpack(MakeNewbie(new HolidayTreeDeed()));
+                            break;
+                    }
+
                     dropped.Delete();
 
                     return true;

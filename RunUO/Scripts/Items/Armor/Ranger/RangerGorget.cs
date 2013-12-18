@@ -3,7 +3,7 @@ using Server.Items;
 
 namespace Server.Items
 {
-	public class RangerGorget : BaseArmor
+	public class RangerGorget : StuddedGorget
 	{
 		public override int BasePhysicalResistance{ get{ return 2; } }
 		public override int BaseFireResistance{ get{ return 4; } }
@@ -25,7 +25,7 @@ namespace Server.Items
 		public override int LabelNumber{ get{ return 1041495; } } // studded gorget, ranger armor
 
 
-		public RangerGorget() : base( 0x13D6 )
+		public RangerGorget() : base()
 		{
 			Weight = 1.0;
 			Hue = 0x59C;

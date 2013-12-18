@@ -21,6 +21,10 @@ namespace Server.Misc
                 m_Player = value;
             }
         }
+        /*[Constructable]
+        public HolidayTicket() : this(null)
+        {
+        }*/
 
         [Constructable]
         public HolidayTicket(PlayerMobile mobile) : base(0x14F0)
@@ -28,7 +32,7 @@ namespace Server.Misc
             m_Player = mobile;
             Name = "This is a prize ticket! Bring this ticket to the nearest Santa at a city bank. This ticket will only work for YOU, so don’t give it away!";
             Weight = 1.0;
-            LootType = LootType.Blessed;
+            LootType = LootType.Newbied;
         }
 
         public HolidayTicket(Serial serial)
