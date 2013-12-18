@@ -30,7 +30,7 @@ namespace Server.Misc
         public HolidayTicket(PlayerMobile mobile) : base(0x14F0)
         {
             m_Player = mobile;
-            Name = "This is a prize ticket! Bring this ticket to the nearest Santa at a city bank. This ticket will only work for YOU, so don’t give it away!";
+            Name = "This is a prize ticket! Bring this ticket to the nearest Santa at a city bank. This ticket will only work for YOU, so don't give it away!";
             Weight = 1.0;
             LootType = LootType.Newbied;
         }
