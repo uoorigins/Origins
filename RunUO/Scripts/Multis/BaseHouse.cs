@@ -24,7 +24,7 @@ namespace Server.Multis
 		public const int MaxFriends = 50;
 		public const int MaxBans = 50;
 
-		public const bool DecayEnabled = true;
+		public const bool DecayEnabled = false;
 
 		public static void Decay_OnTick()
 		{
@@ -2710,6 +2710,8 @@ namespace Server.Multis
 				{
                     m_LastRefreshed = reader.ReadDateTime();
 					m_RestrictDecay = reader.ReadBool();
+
+                    m_LastRefreshed = DateTime.Now;
 					goto case 10;
 				}
 				case 10: // just a signal for updates
