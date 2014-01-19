@@ -295,6 +295,7 @@ namespace Server.Multis
 				case 1:
 				{
 					m_DecayTime = reader.ReadDeltaTime();
+                    m_DecayTime = DateTime.Now + BoatDecayDelay;
 
 					goto case 0;
 				}
@@ -542,6 +543,7 @@ namespace Server.Multis
 
 		public bool CheckDecay()
 		{
+
             Refresh();
 
 			if ( m_Decaying )
