@@ -2711,7 +2711,7 @@ namespace Server.Multis
                     m_LastRefreshed = reader.ReadDateTime();
 					m_RestrictDecay = reader.ReadBool();
 
-                    m_LastRefreshed = DateTime.Now();
+                    m_LastRefreshed = DateTime.Now;
 					goto case 10;
 				}
 				case 10: // just a signal for updates
