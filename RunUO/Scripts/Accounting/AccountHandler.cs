@@ -215,6 +215,9 @@ namespace Server.Misc
 			if ( !IPTable.ContainsKey( ip ) )
 				return true;
 
+            if ( IPLimiter.IsExempt(ip) )
+                return true;
+
 			return ( IPTable[ip] <= MaxAccountsPerIP );
 		}
 
