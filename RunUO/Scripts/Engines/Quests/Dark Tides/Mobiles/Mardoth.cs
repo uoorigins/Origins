@@ -11,7 +11,7 @@ namespace Server.Engines.Quests.Necro
 {
 	public class Mardoth : BaseQuester
 	{
-		[Constructable]
+		 
 		public Mardoth() : base( "the Ancient Necromancer" )
 		{
 		}

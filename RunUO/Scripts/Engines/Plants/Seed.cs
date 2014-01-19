@@ -56,12 +56,12 @@ namespace Server.Engines.Plants
 			return new Seed( PlantTypeInfo.RandomBonsai( increaseRatio ), PlantHue.Plain, false );
 		}
 
-		[Constructable]
+		 
 		public Seed() : this( PlantTypeInfo.RandomFirstGeneration(), PlantHueInfo.RandomFirstGeneration(), false )
 		{
 		}
 
-		[Constructable]
+		 
 		public Seed( PlantType plantType, PlantHue plantHue, bool showType ) : base( 0xDCF )
 		{
 			Weight = 1.0;

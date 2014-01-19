@@ -28,7 +28,7 @@ namespace Server.Items
 
 		public override WeaponAnimation DefAnimation{ get{ return WeaponAnimation.Bash2H; } }
 
-		[Constructable]
+		 
 		public Tessen() : base( 0x27A3 )
 		{
 			Weight = 6.0;

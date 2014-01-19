@@ -26,7 +26,7 @@ namespace Server.Items
 		public override int InitMinHits{ get{ return 45; } }
 		public override int InitMaxHits{ get{ return 50; } }
 
-		[Constructable]
+		 
 		public Wakizashi() : base( 0x27A4 )
 		{
 			Weight = 5.0;

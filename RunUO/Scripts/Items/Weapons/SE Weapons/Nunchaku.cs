@@ -26,7 +26,7 @@ namespace Server.Items
 		public override int InitMinHits{ get{ return 40; } }
 		public override int InitMaxHits{ get{ return 55; } }
 
-		[Constructable]
+		 
 		public Nunchaku() : base( 0x27AE )
 		{
 			Weight = 5.0;

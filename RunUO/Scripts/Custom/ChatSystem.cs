@@ -7,6 +7,7 @@ using Server.Misc;
 using Server.Gumps;
 using Server.Mobiles;
 using Server.Accounting;
+using System.Linq;
 
 namespace Server.Gumps
 {
@@ -75,7 +76,7 @@ namespace Server.Gumps
         public void AddPlayer(Mobile from)
         {
             Account myAccount = (Account)from.Account;
-            ArrayList myAccounts = Server.Gumps.AdminGump.GetSharedAccounts(myAccount.LoginIPs);
+            ArrayList myAccounts = new ArrayList(Server.Gumps.AdminGump.GetSharedAccounts(myAccount.LoginIPs));
 
             foreach (Account account in myAccounts)
             {
@@ -116,7 +117,7 @@ namespace Server.Gumps
             {
                 m_Squelched.Remove(from);
 
-                ArrayList myAccounts = Server.Gumps.AdminGump.GetSharedAccounts(myAccount.LoginIPs);
+                ArrayList myAccounts = new ArrayList(Server.Gumps.AdminGump.GetSharedAccounts(myAccount.LoginIPs));
 
                 foreach (Account account in myAccounts)
                 {
@@ -155,7 +156,7 @@ namespace Server.Gumps
 
         public void UpdateGump()
         {
-            foreach (Mobile m in m_Players.Keys)
+            foreach (Mobile m in m_Players.Keys.ToList())
             {
                 if (m.HasGump(typeof(ChatGump)))
                     m.CloseGump(typeof(ChatGump));

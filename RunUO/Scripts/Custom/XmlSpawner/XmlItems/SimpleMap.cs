@@ -115,7 +115,6 @@ namespace Server.Items
 		}
 
 
-		[Constructable]
 		public SimpleMap()
 		{
 			SetDisplay( 0, 0, 5119, 4095, 400, 400 );

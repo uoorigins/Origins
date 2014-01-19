@@ -174,13 +174,8 @@ namespace Server.Spells
 			{
 				object o = ProtectionSpell.Registry[m_Caster];
 				bool disturb = true;
-                double chance = (((m_Caster.Skills[SkillName.Magery].Value) * 4000 / (((((int)((MagerySpell)this).Circle) - 1) * 1000 / 7) + (damage * 20))) - Utility.RandomMinMax(0, 999));
+                double chance = (((m_Caster.Skills[SkillName.Magery].Value) * 4000 / ((((int)((MagerySpell)this).Circle) * 1000 / 7) + (damage * 20))) - Utility.RandomMinMax(0, 999));
                 int circlee = ((int)((MagerySpell)this).Circle);
-
-                //debuging
-               /*m_Caster.SendAsciiMessage(chance.ToString());
-                m_Caster.SendAsciiMessage(circlee.ToString());
-                m_Caster.SendAsciiMessage(damage.ToString());*/
 
                 if (o != null && o is double)
                 {

@@ -25,7 +25,7 @@ namespace Server.Factions
 		public const int SilverPrice = 500;
 		public const int GoldPrice = 3000;
 
-		[Constructable]
+		 
 		public FactionWarHorse() : this( null )
 		{
 		}

@@ -8,7 +8,7 @@ namespace Server.Items
 	{
 		public override int LabelNumber{ get{ return 1075042; } } // Robe of the Equinox
 
-		[Constructable]
+		 
 		public RobeOfTheEquinox() : base( 0x1F04, 0xD6 )
 		{
 			Weight = 3.0;

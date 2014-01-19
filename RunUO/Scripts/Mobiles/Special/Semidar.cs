@@ -9,7 +9,7 @@ namespace Server.Mobiles
 	{
 		public override ChampionSkullType SkullType{ get{ return ChampionSkullType.Pain; } }
 
-		[Constructable]
+
 		public Semidar() : base( AIType.AI_Mage )
 		{
 			Name = "Semidar";

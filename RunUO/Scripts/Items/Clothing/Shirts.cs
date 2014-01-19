@@ -154,12 +154,12 @@ namespace Server.Items
 	[Flipable( 0x2794, 0x27DF )]
 	public class ClothNinjaJacket : BaseShirt
 	{
-		[Constructable]
+
 		public ClothNinjaJacket() : this( 0 )
 		{
 		}
 
-		[Constructable]
+
 		public ClothNinjaJacket( int hue ) : base( 0x2794, hue )
 		{
 			Weight = 5.0;
@@ -189,12 +189,12 @@ namespace Server.Items
 	{
 		public override Race RequiredRace { get { return Race.Elf; } }
 
-		[Constructable]
+
 		public ElvenShirt() : this( 0 )
 		{
 		}
 
-		[Constructable]
+
 		public ElvenShirt( int hue ) : base( 0x3175, hue )
 		{
 			Weight = 2.0;
@@ -223,12 +223,12 @@ namespace Server.Items
 	public class ElvenDarkShirt : BaseShirt
 	{
 		public override Race RequiredRace { get { return Race.Elf; } }
-		[Constructable]
+
 		public ElvenDarkShirt() : this( 0 )
 		{
 		}
 
-		[Constructable]
+
 		public ElvenDarkShirt( int hue ) : base( 0x3176, hue )
 		{
 			Weight = 2.0;

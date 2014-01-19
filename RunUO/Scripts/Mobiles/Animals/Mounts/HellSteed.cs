@@ -6,12 +6,12 @@ namespace Server.Mobiles
 	[CorpseName( "a hellsteed corpse" )]
 	public class HellSteed : BaseMount
 	{
-		[Constructable] 
+ 
 		public HellSteed() : this( "a hellsteed" )
 		{
 		}
 
-		[Constructable]
+
 		public HellSteed( string name ) : base( name, 793, 0x3EBB, AIType.AI_Animal, FightMode.Aggressor, 10, 1, 0.2, 0.4 )
 		{
 			SetStr( 201, 210 );

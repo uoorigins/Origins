@@ -191,12 +191,12 @@ namespace Server.Items
 	[FlipableAttribute( 0x1081, 0x1082 )]
 	public class SpinedLeather : BaseLeather
 	{
-		[Constructable]
+
 		public SpinedLeather() : this( 1 )
 		{
 		}
 
-		[Constructable]
+
 		public SpinedLeather( int amount ) : base( CraftResource.SpinedLeather, amount )
 		{
 		}
@@ -225,12 +225,12 @@ namespace Server.Items
 	[FlipableAttribute( 0x1081, 0x1082 )]
 	public class HornedLeather : BaseLeather
 	{
-		[Constructable]
+
 		public HornedLeather() : this( 1 )
 		{
 		}
 
-		[Constructable]
+
 		public HornedLeather( int amount ) : base( CraftResource.HornedLeather, amount )
 		{
 		}
@@ -259,12 +259,12 @@ namespace Server.Items
 	[FlipableAttribute( 0x1081, 0x1082 )]
 	public class BarbedLeather : BaseLeather
 	{
-		[Constructable]
+
 		public BarbedLeather() : this( 1 )
 		{
 		}
 
-		[Constructable]
+
 		public BarbedLeather( int amount ) : base( CraftResource.BarbedLeather, amount )
 		{
 		}

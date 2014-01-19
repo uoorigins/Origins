@@ -10,12 +10,12 @@ namespace Server.Items
 		public override int BookOffset{ get{ return 600; } }
 		public override int BookCount{ get{ return 16; } }
 
-		[Constructable]
+		 
 		public SpellweavingBook() : this( (ulong)0 )
 		{
 		}
 
-		[Constructable]
+		 
 		public SpellweavingBook( ulong content ) : base( content, 0x2D50 )
 		{
 			Hue = 0x8A2;

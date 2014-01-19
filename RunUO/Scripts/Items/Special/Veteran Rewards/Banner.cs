@@ -37,7 +37,7 @@ namespace Server.Items
 			get{ return ( ItemID & 0x1 ) == 0; }
 		}
 		
-		[Constructable]
+		 
 		public Banner( int itemID ) : base( itemID )
 		{		
 			LootType = LootType.Blessed;
@@ -126,7 +126,7 @@ namespace Server.Items
 			get{ return m_IsRewardItem; }
 			set{ m_IsRewardItem = value; InvalidateProperties(); }
 		}
-		[Constructable]
+		 
 		public BannerDeed() : base( 0x14F0 )
 		{			
 			LootType = LootType.Blessed;

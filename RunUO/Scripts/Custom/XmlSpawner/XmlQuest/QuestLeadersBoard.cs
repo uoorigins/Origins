@@ -13,7 +13,7 @@ namespace Server.Items
         {
         }
 
-        [Constructable]
+         
         public QuestLeadersBoard() : base( 0x1e5e )
         {
             Movable = false;

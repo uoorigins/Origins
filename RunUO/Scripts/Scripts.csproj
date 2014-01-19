@@ -111,6 +111,8 @@
     <Compile Include="Context Menus\TeachEntry.cs" />
     <Compile Include="Custom\1997Holiday\ChristmasItems.cs" />
     <Compile Include="Custom\1997Holiday\ChristmasMobiles.cs" />
+    <Compile Include="Custom\2013Holiday\AbominableSnowman.cs" />
+    <Compile Include="Custom\2013Holiday\HolidayTicket.cs" />
     <Compile Include="Custom\300 Anniversary\CommemorativeCoin.cs" />
     <Compile Include="Custom\300 Anniversary\CommemorativePlate.cs" />
     <Compile Include="Custom\300 Anniversary\JaanasHangoverRemedy.cs" />

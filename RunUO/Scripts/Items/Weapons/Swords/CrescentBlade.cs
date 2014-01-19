@@ -26,7 +26,7 @@ namespace Server.Items
 		public override int InitMinHits{ get{ return 51; } }
 		public override int InitMaxHits{ get{ return 80; } }
 
-		[Constructable]
+
 		public CrescentBlade() : base( 0x26C1 )
 		{
 			Weight = 1.0;

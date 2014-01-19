@@ -41,7 +41,8 @@ namespace Server
 				}
 				else
 				{
-					return new DualSaveStrategy();
+                    return new StandardSaveStrategy();
+					//return new DualSaveStrategy();
 				}
 			}
 			else

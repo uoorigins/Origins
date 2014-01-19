@@ -12,7 +12,7 @@ namespace Server.Mobiles
 
 		public override ChampionSkullType SkullType{ get{ return ChampionSkullType.Enlightenment; } }
 
-		[Constructable]
+
 		public LordOaks() : base( AIType.AI_Mage, FightMode.Evil )
 		{
 			Body = 175;

@@ -27,7 +27,7 @@ namespace Server.Items
 
 		public override ArmorMeditationAllowance DefMedAllowance{ get{ return ArmorMeditationAllowance.Half; } }
 
-		[Constructable]
+
 		public HideChest() : base( 0x2B74 )
 		{
 			Weight = 6.0;

@@ -19,7 +19,7 @@ namespace Server.Items
 			set{ m_IsRewardItem = value; InvalidateProperties(); }
 		}
 
-		[Constructable]
+		 
 		public CommodityDeedBox() : base( 0x9AA )
 		{
 			Hue = 0x47;

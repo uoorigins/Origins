@@ -8,7 +8,7 @@ namespace Server.Items
 	{
 		public override int LabelNumber{ get{ return 1075082; } } // Robe of the Eclipse
 
-		[Constructable]
+		 
 		public RobeOfTheEclipse() : base( 0x1F03, 0x486 )
 		{
 			Weight = 3.0;

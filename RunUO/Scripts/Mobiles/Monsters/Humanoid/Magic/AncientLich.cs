@@ -7,7 +7,7 @@ namespace Server.Mobiles
 	[CorpseName( "an ancient liche's corpse" )]
 	public class AncientLich : BaseCreature
 	{
-		[Constructable]
+
 		public AncientLich() : base( AIType.AI_Mage, FightMode.Closest, 10, 1, 0.2, 0.4 )
 		{
 			Name = NameList.RandomName( "ancient lich" );

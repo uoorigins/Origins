@@ -26,7 +26,7 @@ namespace Server.Items
 
 		public override HarvestSystem HarvestSystem{ get{ return null; } }
 
-		[Constructable]
+
 		public Scythe() : base( 0x26BA )
 		{
 			Weight = 5.0;

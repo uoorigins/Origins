@@ -25,7 +25,7 @@ namespace Server.Items
 
 		public override int LabelNumber{ get{ return 1041374; } } // daemon bone helmet
 
-		[Constructable]
+
 		public DaemonHelm() : base( 0x1451 )
 		{
 			Hue = 0x648;

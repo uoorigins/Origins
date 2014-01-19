@@ -5196,6 +5196,8 @@ namespace Server.Mobiles
 						Titles.AwardFame( ds.m_Mobile, totalFame, true );
 						Titles.AwardKarma( ds.m_Mobile, totalKarma, true );
 
+                        // modification to support XmlQuest Killtasks
+                        XmlQuest.RegisterKill(this, ds.m_Mobile);
 
 						OnKilledBy( ds.m_Mobile );
 

@@ -8,12 +8,12 @@ namespace Server.Mobiles
 	[CorpseName( "a nightmare corpse" )]
 	public class Nightmare : BaseMount
 	{
-		[Constructable]
+
 		public Nightmare() : this( "a nightmare" )
 		{
 		}
 
-		[Constructable]
+
 		public Nightmare( string name ) : base( name, 0x74, 0x3EA7, AIType.AI_Mage, FightMode.Closest, 10, 1, 0.2, 0.4 )
 		{
 			BaseSoundID = 0xA8;

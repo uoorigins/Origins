@@ -769,6 +769,7 @@ namespace Server.Mobiles
 			// add the XmlDialog attachment
 			m_DialogAttachment = new XmlDialog((string)null);
 			XmlAttach.AttachTo(this, m_DialogAttachment);
+            SpeechHue = Utility.RandomAllColors();
 
 		}
 
@@ -810,6 +811,11 @@ namespace Server.Mobiles
 			// all serialized data now handled by the XmlDialog attachment
 
 		}
+
+        public override void OnSpeech(SpeechEventArgs e)
+        {
+            e.Handled = true;
+        }
 
 		public override void Deserialize( GenericReader reader )
 		{

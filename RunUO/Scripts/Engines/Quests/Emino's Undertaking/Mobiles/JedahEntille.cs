@@ -8,7 +8,7 @@ namespace Server.Engines.Quests.Ninja
 {
 	public class JedahEntille : BaseQuester
 	{
-		[Constructable]
+		 
 		public JedahEntille() : base( "the Silent" )
 		{
 		}

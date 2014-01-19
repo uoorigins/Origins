@@ -165,7 +165,7 @@ namespace Server.Items
 			return new PowerScroll( skillName, 100 + (Utility.RandomMinMax( min, max ) * 5));
 		}
 
-		[Constructable]
+		 
 		public PowerScroll( SkillName skill, double value ) : base( 0x14F0 )
 		{
 			base.Hue = 0x481;

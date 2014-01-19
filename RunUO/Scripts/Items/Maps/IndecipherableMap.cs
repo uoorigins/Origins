@@ -8,7 +8,6 @@ namespace Server.Items
 	{
 		public override int LabelNumber{ get{ return 1070799; } } // indecipherable map
 
-		[Constructable]
 		public IndecipherableMap()
 		{
 			if ( Utility.RandomDouble() < 0.2 )

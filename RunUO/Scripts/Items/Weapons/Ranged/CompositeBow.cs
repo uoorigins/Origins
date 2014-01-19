@@ -31,7 +31,7 @@ namespace Server.Items
 
 		public override WeaponAnimation DefAnimation{ get{ return WeaponAnimation.ShootBow; } }
 
-		[Constructable]
+
 		public CompositeBow() : base( 0x26C2 )
 		{
 			Weight = 5.0;

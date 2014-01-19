@@ -26,7 +26,7 @@ namespace Server.Items
 
 		public override ArmorMeditationAllowance DefMedAllowance{ get{ return ArmorMeditationAllowance.All; } }
 
-		[Constructable]
+
 		public LeafGloves() : base( 0x2FC6 )
 		{
 			Weight = 2.0;

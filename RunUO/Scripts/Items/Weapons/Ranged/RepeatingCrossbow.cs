@@ -29,7 +29,7 @@ namespace Server.Items
 		public override int InitMinHits{ get{ return 31; } }
 		public override int InitMaxHits{ get{ return 80; } }
 
-		[Constructable]
+
 		public RepeatingCrossbow() : base( 0x26C3 )
 		{
 			Weight = 6.0;

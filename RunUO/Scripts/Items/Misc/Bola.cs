@@ -14,7 +14,7 @@ namespace Server.Items
 		{
 		}
 
-		[Constructable]
+
 		public Bola( int amount ) : base( 0x26AC )
 		{
 			Weight = 4.0;

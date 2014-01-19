@@ -14,6 +14,7 @@ namespace Server.Items
 		private Point3D m_Target;
 		private Map m_TargetMap;
 		private BaseHouse m_House;
+        private Boolean m_Markable;
 
 		public override void Serialize( GenericWriter writer )
 		{
@@ -27,8 +28,10 @@ namespace Server.Items
 			}
 			else
 			{
-				writer.Write( (int) 0 ); // version
+				writer.Write( (int) 2 ); // version
 			}
+
+            writer.Write((bool)m_Markable);
 
 			writer.Write( (string) m_Description );
 			writer.Write( (bool) m_Marked );
@@ -47,10 +50,20 @@ namespace Server.Items
 				case 1:
 				{
 					m_House = reader.ReadItem() as BaseHouse;
-					goto case 0;
+					goto case 2;
 				}
+                case 2:
+                {
+                    m_Markable = reader.ReadBool();
+                    goto case 0;
+                }
 				case 0:
 				{
+                    if (m_Markable == null)
+                    {
+                        m_Markable = true;
+                    }
+
 					m_Description = reader.ReadString();
 					m_Marked = reader.ReadBool();
 					m_Target = reader.ReadPoint3D();
@@ -138,6 +151,20 @@ namespace Server.Items
 				}
 			}
 		}
+
+        [CommandProperty(AccessLevel.Counselor, AccessLevel.GameMaster)]
+        public Boolean Markable
+        {
+            get
+            {
+                return m_Markable;
+            }
+            set
+            {
+                m_Markable = value;
+                InvalidateProperties();
+            }
+        }
 
 		private void CalculateHue()
 		{
@@ -323,6 +350,7 @@ namespace Server.Items
 		public RecallRune() : base( 0x1F14 )
 		{
 			Weight = 1.0;
+            m_Markable = true;
 			CalculateHue();
 		}
 

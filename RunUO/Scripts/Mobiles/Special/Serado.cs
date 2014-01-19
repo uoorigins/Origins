@@ -15,7 +15,7 @@ namespace Server.Mobiles
 			return WeaponAbility.DoubleStrike;
 		}
 
-		[Constructable]
+
 		public Serado() : base( AIType.AI_Melee )
 		{
 			Name = "Serado";

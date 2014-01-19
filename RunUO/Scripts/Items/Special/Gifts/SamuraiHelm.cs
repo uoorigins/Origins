@@ -19,7 +19,7 @@ namespace Server.Items
 
 		public override ArmorMaterialType MaterialType{ get{ return ArmorMaterialType.Plate; } }
 
-		[Constructable]
+		 
 		public SamuraiHelm() : base( 0x236C )
 		{
 			Weight = 5.0;

@@ -82,22 +82,22 @@ namespace Server.Items
 			set{ m_Title = value; InvalidateProperties(); }
 		}
 
-		[Constructable]
+		 
 		public Snowman() : this( Utility.RandomDyedHue(), GetRandomTitle() )
 		{
 		}
 
-		[Constructable]
+		 
 		public Snowman( int hue ) : this( hue, GetRandomTitle() )
 		{
 		}
 
-		[Constructable]
+		 
 		public Snowman( string title ) : this( Utility.RandomDyedHue(), title )
 		{
 		}
 
-		[Constructable]
+		 
 		public Snowman( int hue, string title ) : base( Utility.Random( 0x2328, 2 ) )
 		{
 			Weight = 10.0;

@@ -1005,6 +1005,40 @@ namespace Server.Mobiles
                 }
             }*/
 
+            //2013 Christmas
+            /*if (from is PlayerMobile)
+            {
+                bool GiveAniv = true;
+                Account myAccount = (Account)from.Account;
+
+                ArrayList myAccounts = new ArrayList(Server.Gumps.AdminGump.GetSharedAccounts(myAccount.LoginIPs));
+
+                if (myAccount.GetTag("Christmas2013") != null && myAccount.GetTag("Christmas2013") == "true")
+                {
+                    GiveAniv = false;
+                }
+                else
+                {
+                    foreach (Account accnt in myAccounts)
+                    {
+                        if (accnt.GetTag("Christmas2013") != null && accnt.GetTag("Christmas2013") == "true")
+                        {
+                            GiveAniv = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (GiveAniv)
+                {
+                    if (from.Backpack != null && from.Alive)
+                    {
+                        from.Backpack.DropItem(new HolidayTicket(from as PlayerMobile) { LootType = LootType.Newbied });
+                        myAccount.SetTag("Christmas2013", "true");
+                    }
+                }
+            }*/
+
             //Beta reward
             if (from is PlayerMobile)
             {

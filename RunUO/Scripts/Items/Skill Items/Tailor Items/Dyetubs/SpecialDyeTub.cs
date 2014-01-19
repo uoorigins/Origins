@@ -16,7 +16,7 @@ namespace Server.Items
 			set{ m_IsRewardItem = value; }
 		}
 
-		[Constructable]
+		 
 		public SpecialDyeTub()
 		{
 			LootType = LootType.Blessed;

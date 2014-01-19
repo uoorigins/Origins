@@ -5288,7 +5288,7 @@ namespace Server
 				int newHits = oldHits - amount;
 
 				if( m_Spell != null )
-					m_Spell.OnCasterHurt();
+					m_Spell.OnCasterHurt(amount);
 
 				//if ( m_Spell != null && m_Spell.State == SpellState.Casting )
 				//	m_Spell.Disturb( DisturbType.Hurt, false, true );

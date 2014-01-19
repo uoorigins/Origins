@@ -8,7 +8,7 @@ namespace Server.Engines.Quests.Collector
 {
 	public class AlbertaGiacco : BaseQuester
 	{
-		[Constructable]
+		 
 		public AlbertaGiacco() : base( "the respected painter" )
 		{
 		}

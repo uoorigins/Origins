@@ -75,12 +75,14 @@ namespace Server.Spells.Sixth
 
 			protected override void OnTarget( Mobile from, object o )
 			{
-				if ( o is RecallRune )
+                RecallRune rune = o as RecallRune;
+
+				if ( rune != null && rune.Markable )
 				{
 					m_Owner.Target( (RecallRune) o );
 				}
 				else
-				{
+				{                    
 					from.Send( new AsciiMessage( from.Serial, from.Body, MessageType.Regular, 0x3B2, 3, "", "I cannot mark that object.") ); // I cannot mark that object.
 				}
 			}

@@ -80,7 +80,7 @@ namespace Server.Items
 		public BaseOre( CraftResource resource, int amount ) : base( 0x19B9 )
 		{
 			Stackable = true;
-			Weight = 20.0;
+			Weight = 12.0;
 			Amount = amount;
 			Hue = CraftResources.GetHue( resource );
 
@@ -164,6 +164,46 @@ namespace Server.Items
 
 				return ( itemID == 4017 || (itemID >= 6522 && itemID <= 6569) );
 			}
+
+            private bool IsOrePile(object obj)
+            {
+                int itemID = 0;
+
+                if (obj is Item)
+                    itemID = ((Item)obj).ItemID;
+
+                return itemID == 0x19B9 || itemID == 0x19B8 || itemID == 0x19BA || itemID == 0x19B7;
+            }
+
+            private bool IsLargeOrePile(object obj)
+            {
+                int itemID = 0;
+
+                if (obj is Item)
+                    itemID = ((Item)obj).ItemID;
+
+                return itemID == 0x19B9; 
+            }
+
+            private bool IsMediumOrePile(object obj)
+            {
+                int itemID = 0;
+
+                if (obj is Item)
+                    itemID = ((Item)obj).ItemID;
+
+                return itemID == 0x19B8 || itemID == 0x19BA;
+            }
+
+            private bool IsSmallOrePile(object obj)
+            {
+                int itemID = 0;
+
+                if (obj is Item)
+                    itemID = ((Item)obj).ItemID;
+
+                return itemID == 0x19B7;
+            }
 
 			protected override void OnTarget( Mobile from, object targeted )
 			{
@@ -301,6 +341,77 @@ namespace Server.Items
 						m_Ore.Amount /= 2;
 					}
 				}
+                else if ( IsOrePile(targeted) ) //combining stuff
+                {
+                    if (m_Ore == targeted)
+                    {
+                        return;
+                    }
+                    
+                    BaseOre targetedOre = (BaseOre)targeted;
+                    int transferAmount = 0;
+                    int transferItemID = 0;
+
+                    if (IsLargeOrePile(m_Ore))
+                    {
+                        if (IsLargeOrePile(targetedOre))
+                        {
+                            transferAmount = m_Ore.Amount;
+                            transferItemID = targetedOre.ItemID;
+                        }
+                        else if (IsMediumOrePile(targetedOre))
+                        {
+                            transferAmount = m_Ore.Amount * 2;
+                            transferItemID = targetedOre.ItemID;
+                        }
+                        else if (IsSmallOrePile(targetedOre))
+                        {
+                            transferAmount = m_Ore.Amount * 4;
+                            transferItemID = targetedOre.ItemID;
+                        }
+                    }
+                    else if (IsMediumOrePile(m_Ore))
+                    {
+                        if (IsLargeOrePile(targetedOre))
+                        {
+                            transferAmount = targetedOre.Amount * 2;
+                            transferItemID = m_Ore.ItemID;
+                        }
+                        else if (IsMediumOrePile(targetedOre))
+                        {
+                            transferAmount = m_Ore.Amount;
+                            transferItemID = m_Ore.ItemID;
+                        }
+                        else if (IsSmallOrePile(targetedOre))
+                        {
+                            transferAmount = m_Ore.Amount * 2;
+                            transferItemID = targetedOre.ItemID;
+                        }
+                    }
+                    else if (IsSmallOrePile(m_Ore))
+                    {
+                        if (IsLargeOrePile(targetedOre))
+                        {
+                            transferAmount = targetedOre.Amount * 4;
+                            transferItemID = m_Ore.ItemID;
+                        }
+                        else if (IsMediumOrePile(targetedOre))
+                        {
+                            transferAmount = targetedOre.Amount * 2;
+                            transferItemID = m_Ore.ItemID;
+                        }
+                        else if (IsSmallOrePile(targetedOre))
+                        {
+                            transferAmount = m_Ore.Amount;
+                            transferItemID = m_Ore.ItemID;
+                        }
+                    }
+
+                    targetedOre.Amount += transferAmount;
+                    targetedOre.ItemID = transferItemID;
+
+                    m_Ore.Delete();
+                }
 			}
 		}
 	}
@@ -380,7 +491,7 @@ namespace Server.Items
         [Constructable]
         public SmallIronOre(int amount) : base(CraftResource.Iron, amount)
         {
-            Weight = 10.0;
+            Weight = 7.0;
 
             switch (Utility.Random(2))
             {
@@ -450,7 +561,7 @@ namespace Server.Items
         [Constructable]
         public SmallestIronOre(int amount) : base(CraftResource.Iron, amount)
         {
-            Weight = 5.0;
+            Weight = 2.0;
             ItemID = 0x19B7;
         }
 
@@ -508,12 +619,12 @@ namespace Server.Items
 
 	public class DullCopperOre : BaseOre
 	{
-		[Constructable]
+
 		public DullCopperOre() : this( 1 )
 		{
 		}
 
-		[Constructable]
+
 		public DullCopperOre( int amount ) : base( CraftResource.DullCopper, amount )
 		{
 		}
@@ -546,12 +657,12 @@ namespace Server.Items
 
 	public class ShadowIronOre : BaseOre
 	{
-		[Constructable]
+
 		public ShadowIronOre() : this( 1 )
 		{
 		}
 
-		[Constructable]
+
 		public ShadowIronOre( int amount ) : base( CraftResource.ShadowIron, amount )
 		{
 		}
@@ -584,12 +695,12 @@ namespace Server.Items
 
 	public class CopperOre : BaseOre
 	{
-		[Constructable]
+
 		public CopperOre() : this( 1 )
 		{
 		}
 
-		[Constructable]
+
 		public CopperOre( int amount ) : base( CraftResource.Copper, amount )
 		{
 		}
@@ -622,12 +733,12 @@ namespace Server.Items
 
 	public class BronzeOre : BaseOre
 	{
-		[Constructable]
+
 		public BronzeOre() : this( 1 )
 		{
 		}
 
-		[Constructable]
+
 		public BronzeOre( int amount ) : base( CraftResource.Bronze, amount )
 		{
 		}
@@ -660,12 +771,12 @@ namespace Server.Items
 
 	public class GoldOre : BaseOre
 	{
-		[Constructable]
+
 		public GoldOre() : this( 1 )
 		{
 		}
 
-		[Constructable]
+
 		public GoldOre( int amount ) : base( CraftResource.Gold, amount )
 		{
 		}
@@ -698,12 +809,12 @@ namespace Server.Items
 
 	public class AgapiteOre : BaseOre
 	{
-		[Constructable]
+
 		public AgapiteOre() : this( 1 )
 		{
 		}
 
-		[Constructable]
+
 		public AgapiteOre( int amount ) : base( CraftResource.Agapite, amount )
 		{
 		}
@@ -736,12 +847,12 @@ namespace Server.Items
 
 	public class VeriteOre : BaseOre
 	{
-		[Constructable]
+
 		public VeriteOre() : this( 1 )
 		{
 		}
 
-		[Constructable]
+
 		public VeriteOre( int amount ) : base( CraftResource.Verite, amount )
 		{
 		}
@@ -774,12 +885,12 @@ namespace Server.Items
 
 	public class ValoriteOre : BaseOre
 	{
-		[Constructable]
+
 		public ValoriteOre() : this( 1 )
 		{
 		}
 
-		[Constructable]
+
 		public ValoriteOre( int amount ) : base( CraftResource.Valorite, amount )
 		{
 		}

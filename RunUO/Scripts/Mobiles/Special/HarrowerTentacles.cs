@@ -24,7 +24,7 @@ namespace Server.Mobiles
 			}
 		}
 
-		[Constructable]
+
 		public HarrowerTentacles() : this( null )
 		{
 		}

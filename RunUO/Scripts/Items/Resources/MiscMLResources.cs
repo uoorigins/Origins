@@ -4,13 +4,13 @@ namespace Server.Items
 {
 	public class Blight : Item
 	{
-		[Constructable]
+		 
 		public Blight()
 			: this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public Blight( int amount )
 			: base( 0x3183 )
 		{
@@ -40,13 +40,13 @@ namespace Server.Items
 
 	public class LuminescentFungi : Item
 	{
-		[Constructable]
+		 
 		public LuminescentFungi()
 			: this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public LuminescentFungi( int amount )
 			: base( 0x3191 )
 		{
@@ -77,13 +77,13 @@ namespace Server.Items
 
 	public class CapturedEssence : Item
 	{
-		[Constructable]
+		 
 		public CapturedEssence()
 			: this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public CapturedEssence( int amount )
 			: base( 0x318E )
 		{
@@ -114,19 +114,19 @@ namespace Server.Items
 
 	public class EyeOfTheTravesty : Item
 	{
-		[Constructable]
+		 
 		public EyeOfTheTravesty()
 			: this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public EyeOfTheTravesty( int amountFrom, int amountTo )
 			: this( Utility.RandomMinMax( amountFrom, amountTo ) )
 		{
 		}
 
-		[Constructable]
+		 
 		public EyeOfTheTravesty( int amount )
 			: base( 0x318D )
 		{
@@ -157,19 +157,19 @@ namespace Server.Items
 
 	public class Corruption : Item
 	{
-		[Constructable]
+		 
 		public Corruption()
 			: this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public Corruption( int amountFrom, int amountTo )
 			: this( Utility.RandomMinMax( amountFrom, amountTo ) )
 		{
 		}
 
-		[Constructable]
+		 
 		public Corruption( int amount )
 			: base( 0x3184 )
 		{
@@ -200,19 +200,19 @@ namespace Server.Items
 
 	public class DreadHornMane : Item
 	{
-		[Constructable]
+		 
 		public DreadHornMane()
 			: this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public DreadHornMane( int amountFrom, int amountTo )
 			: this( Utility.RandomMinMax( amountFrom, amountTo ) )
 		{
 		}
 
-		[Constructable]
+		 
 		public DreadHornMane( int amount )
 			: base( 0x318A )
 		{
@@ -243,19 +243,19 @@ namespace Server.Items
 
 	public class ParasiticPlant : Item
 	{
-		[Constructable]
+		 
 		public ParasiticPlant()
 			: this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public ParasiticPlant( int amountFrom, int amountTo )
 			: this( Utility.RandomMinMax( amountFrom, amountTo ) )
 		{
 		}
 
-		[Constructable]
+		 
 		public ParasiticPlant( int amount )
 			: base( 0x3190 )
 		{
@@ -286,19 +286,19 @@ namespace Server.Items
 
 	public class Muculent : Item
 	{
-		[Constructable]
+		 
 		public Muculent()
 			: this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public Muculent( int amountFrom, int amountTo )
 			: this( Utility.RandomMinMax( amountFrom, amountTo ) )
 		{
 		}
 
-		[Constructable]
+		 
 		public Muculent( int amount )
 			: base( 0x3188 )
 		{
@@ -329,19 +329,19 @@ namespace Server.Items
 
 	public class DiseasedBark : Item
 	{
-		[Constructable]
+		 
 		public DiseasedBark()
 			: this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public DiseasedBark( int amountFrom, int amountTo )
 			: this( Utility.RandomMinMax( amountFrom, amountTo ) )
 		{
 		}
 
-		[Constructable]
+		 
 		public DiseasedBark( int amount )
 			: base( 0x318B )
 		{
@@ -372,19 +372,19 @@ namespace Server.Items
 
 	public class BarkFragment : Item
 	{
-		[Constructable]
+		 
 		public BarkFragment()
 			: this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public BarkFragment( int amountFrom, int amountTo )
 			: this( Utility.RandomMinMax( amountFrom, amountTo ) )
 		{
 		}
 
-		[Constructable]
+		 
 		public BarkFragment( int amount )
 			: base( 0x318F )
 		{
@@ -415,19 +415,19 @@ namespace Server.Items
 
 	public class GrizzledBones : Item
 	{
-		[Constructable]
+		 
 		public GrizzledBones()
 			: this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public GrizzledBones( int amountFrom, int amountTo )
 			: this( Utility.RandomMinMax( amountFrom, amountTo ) )
 		{
 		}
 
-		[Constructable]
+		 
 		public GrizzledBones( int amount )
 			: base( 0x318C )
 		{
@@ -461,19 +461,19 @@ namespace Server.Items
 
 	public class LardOfParoxysmus : Item
 	{
-		[Constructable]
+		 
 		public LardOfParoxysmus()
 			: this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public LardOfParoxysmus( int amountFrom, int amountTo )
 			: this( Utility.RandomMinMax( amountFrom, amountTo ) )
 		{
 		}
 
-		[Constructable]
+		 
 		public LardOfParoxysmus( int amount )
 			: base( 0x3189 )
 		{
@@ -503,19 +503,19 @@ namespace Server.Items
 
 	public class PerfectEmerald : Item
 	{
-		[Constructable]
+		 
 		public PerfectEmerald()
 			: this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public PerfectEmerald( int amountFrom, int amountTo )
 			: this( Utility.RandomMinMax( amountFrom, amountTo ) )
 		{
 		}
 
-		[Constructable]
+		 
 		public PerfectEmerald( int amount )
 			: base( 0x3194 )
 		{
@@ -545,19 +545,19 @@ namespace Server.Items
 
 	public class DarkSapphire : Item
 	{
-		[Constructable]
+		 
 		public DarkSapphire()
 			: this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public DarkSapphire( int amountFrom, int amountTo )
 			: this( Utility.RandomMinMax( amountFrom, amountTo ) )
 		{
 		}
 
-		[Constructable]
+		 
 		public DarkSapphire( int amount )
 			: base( 0x3192 )
 		{
@@ -588,19 +588,19 @@ namespace Server.Items
 
 	public class Turquoise : Item
 	{
-		[Constructable]
+		 
 		public Turquoise()
 			: this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public Turquoise( int amountFrom, int amountTo )
 			: this( Utility.RandomMinMax( amountFrom, amountTo ) )
 		{
 		}
 
-		[Constructable]
+		 
 		public Turquoise( int amount )
 			: base( 0x3193 )
 		{
@@ -631,19 +631,19 @@ namespace Server.Items
 
 	public class EcruCitrine : Item
 	{
-		[Constructable]
+		 
 		public EcruCitrine()
 			: this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public EcruCitrine( int amountFrom, int amountTo )
 			: this( Utility.RandomMinMax( amountFrom, amountTo ) )
 		{
 		}
 
-		[Constructable]
+		 
 		public EcruCitrine( int amount )
 			: base( 0x3195 )
 		{
@@ -674,19 +674,19 @@ namespace Server.Items
 
 	public class WhitePearl : Item
 	{
-		[Constructable]
+		 
 		public WhitePearl()
 			: this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public WhitePearl( int amountFrom, int amountTo )
 			: this( Utility.RandomMinMax( amountFrom, amountTo ) )
 		{
 		}
 
-		[Constructable]
+		 
 		public WhitePearl( int amount )
 			: base( 0x3196 )
 		{
@@ -717,19 +717,19 @@ namespace Server.Items
 
 	public class FireRuby : Item
 	{
-		[Constructable]
+		 
 		public FireRuby()
 			: this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public FireRuby( int amountFrom, int amountTo )
 			: this( Utility.RandomMinMax( amountFrom, amountTo ) )
 		{
 		}
 
-		[Constructable]
+		 
 		public FireRuby( int amount )
 			: base( 0x3197 )
 		{
@@ -760,19 +760,19 @@ namespace Server.Items
 
 	public class BlueDiamond : Item
 	{
-		[Constructable]
+		 
 		public BlueDiamond()
 			: this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public BlueDiamond( int amountFrom, int amountTo )
 			: this( Utility.RandomMinMax( amountFrom, amountTo ) )
 		{
 		}
 
-		[Constructable]
+		 
 		public BlueDiamond( int amount )
 			: base( 0x3198 )
 		{
@@ -803,19 +803,19 @@ namespace Server.Items
 
 	public class BrilliantAmber : Item
 	{
-		[Constructable]
+		 
 		public BrilliantAmber()
 			: this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public BrilliantAmber( int amountFrom, int amountTo )
 			: this( Utility.RandomMinMax( amountFrom, amountTo ) )
 		{
 		}
 
-		[Constructable]
+		 
 		public BrilliantAmber( int amount )
 			: base( 0x3199 )
 		{
@@ -845,19 +845,19 @@ namespace Server.Items
 
 	public class Scourge : Item
 	{
-		[Constructable]
+		 
 		public Scourge()
 			: this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public Scourge( int amountFrom, int amountTo )
 			: this( Utility.RandomMinMax( amountFrom, amountTo ) )
 		{
 		}
 
-		[Constructable]
+		 
 		public Scourge( int amount )
 			: base( 0x3185 )
 		{
@@ -889,19 +889,19 @@ namespace Server.Items
 
 	public class Putrefication : Item
 	{
-		[Constructable]
+		 
 		public Putrefication()
 			: this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public Putrefication( int amountFrom, int amountTo )
 			: this( Utility.RandomMinMax( amountFrom, amountTo ) )
 		{
 		}
 
-		[Constructable]
+		 
 		public Putrefication( int amount )
 			: base( 0x3186 )
 		{
@@ -933,19 +933,19 @@ namespace Server.Items
 
 	public class Taint : Item
 	{
-		[Constructable]
+		 
 		public Taint()
 			: this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public Taint( int amountFrom, int amountTo )
 			: this( Utility.RandomMinMax( amountFrom, amountTo ) )
 		{
 		}
 
-		[Constructable]
+		 
 		public Taint( int amount )
 			: base( 0x3187 )
 		{
@@ -977,7 +977,7 @@ namespace Server.Items
 	[Flipable( 0x315A, 0x315B )]
 	public class PristineDreadHorn : Item
 	{
-		[Constructable]
+		 
 		public PristineDreadHorn()
 			: base( 0x315A )
 		{
@@ -1006,19 +1006,19 @@ namespace Server.Items
 
 	public class SwitchItem : Item
 	{
-		[Constructable]
+		 
 		public SwitchItem()
 			: this( 1 )
 		{
 		}
 
-		[Constructable]
+		 
 		public SwitchItem( int amountFrom, int amountTo )
 			: this( Utility.RandomMinMax( amountFrom, amountTo ) )
 		{
 		}
 
-		[Constructable]
+		 
 		public SwitchItem( int amount )
 			: base( 0x2F5F )
 		{

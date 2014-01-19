@@ -6,12 +6,12 @@ namespace Server.Mobiles
 	[CorpseName( "an ostard corpse" )]
 	public class DesertOstard : BaseMount
 	{
-		[Constructable]
+
 		public DesertOstard() : this( "a desert ostard" )
 		{
 		}
 
-		[Constructable]
+
 		public DesertOstard( string name ) : base( name, 0xD2, 0x3EA3, AIType.AI_Animal, FightMode.Aggressor, 10, 1, 0.2, 0.4 )
 		{
 			BaseSoundID = 0x270;

@@ -19,7 +19,6 @@ namespace Server.Items
 		private int m_TextColor = 0x3e8;
 		private int m_TitleColor = 0xef0000;  // cyan 0xf70000, black 0x3e8, brown 0xef0000 darkblue 0x7fff
 
-		[Constructable]
 		public SimpleNote() : base( 0x14EE )
 		{ 
 			Name = "A note";

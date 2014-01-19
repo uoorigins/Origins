@@ -41,7 +41,7 @@ namespace Server.Items
 
 		public bool ShowUsesRemaining{ get{ return true; } set{} }
 
-		[Constructable]
+		 
 		public LeatherNinjaBelt() : base( 0x2790 )
 		{
 			Weight = 1.0;

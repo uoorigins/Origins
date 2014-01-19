@@ -23,7 +23,7 @@ namespace Server.Items
 		public override int InitMinHits{ get{ return 31; } }
 		public override int InitMaxHits{ get{ return 80; } }
 
-		[Constructable]
+
 		public DoubleBladedStaff() : base( 0x26BF )
 		{
 			Weight = 2.0;

@@ -11,7 +11,7 @@ namespace Server.Mobiles
 	{
 		public override ChampionSkullType SkullType{ get{ return ChampionSkullType.Power; } }
 
-		[Constructable]
+
 		public Rikktor() : base( AIType.AI_Melee )
 		{
 			Body = 172;
