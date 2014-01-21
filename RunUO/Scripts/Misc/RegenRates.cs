@@ -15,7 +15,7 @@ namespace Server.Misc
 		{
 			Mobile.DefaultHitsRate = TimeSpan.FromSeconds( 11.0 );
 			Mobile.DefaultStamRate = TimeSpan.FromSeconds(  7.0 );
-			Mobile.DefaultManaRate = TimeSpan.FromSeconds(  3.0 );
+			Mobile.DefaultManaRate = TimeSpan.FromSeconds(  2.0 );
 
 			Mobile.ManaRegenRateHandler = new RegenRateHandler( Mobile_ManaRegenRate );
             Mobile.HitsRegenRateHandler = new RegenRateHandler( Mobile_HitsRegenRate );
@@ -57,9 +57,6 @@ namespace Server.Misc
 
             double rate = ((double)20 - ((double)((double)12 / (double)20) * (double)from.Hunger));
 
-            /*debug
-            from.SendAsciiMessage((from.Hunger).ToString());
-            from.SendAsciiMessage(rate.ToString());*/
             return TimeSpan.FromSeconds(rate);
 		}
 
@@ -77,15 +74,6 @@ namespace Server.Misc
 
 			int cappedPoints = AosAttributes.GetValue( from, AosAttribute.RegenStam );
 
-			if ( CheckTransform( from, typeof( VampiricEmbraceSpell ) ) )
-				cappedPoints += 15;
-
-			if ( CheckAnimal( from, typeof( Kirin ) ) )
-				cappedPoints += 20;
-
-			if( Core.ML && from is PlayerMobile )
-				cappedPoints = Math.Min( cappedPoints, 24 );
-
 			points += cappedPoints;
 
 			if ( points < -1 )
@@ -100,76 +88,6 @@ namespace Server.Misc
                 return TimeSpan.FromSeconds(0.5);
             else
                 return Mobile.DefaultManaRate;
-
-			if ( from.Skills == null )
-				return Mobile.DefaultManaRate;
-
-			if ( !from.Meditating )
-				CheckBonusSkill( from, from.Mana, from.ManaMax, SkillName.Meditation );
-
-			double rate;
-			double armorPenalty = GetArmorOffset( from );
-
-			if ( Core.AOS )
-			{
-				double medPoints = from.Int + (from.Skills[SkillName.Meditation].Value * 3);
-
-				medPoints *= ( from.Skills[SkillName.Meditation].Value < 100.0 ) ? 0.025 : 0.0275;
-
-				CheckBonusSkill( from, from.Mana, from.ManaMax, SkillName.Focus );
-
-				double focusPoints = (int)(from.Skills[SkillName.Focus].Value * 0.05);
-
-				if ( armorPenalty > 0 )
-					medPoints = 0; // In AOS, wearing any meditation-blocking armor completely removes meditation bonus
-
-				double totalPoints = focusPoints + medPoints + (from.Meditating ? (medPoints > 13.0 ? 13.0 : medPoints) : 0.0);
-
-				if( (from is BaseCreature && ((BaseCreature)from).IsParagon) || from is Leviathan )
-					totalPoints += 40;
-
-				int cappedPoints = AosAttributes.GetValue( from, AosAttribute.RegenMana );
-
-				if ( CheckTransform( from, typeof( VampiricEmbraceSpell ) ) )
-					cappedPoints += 3;
-				else if ( CheckTransform( from, typeof( LichFormSpell ) ) )
-					cappedPoints += 13;
-
-				if( Core.ML && from is PlayerMobile )
-					cappedPoints = Math.Min( cappedPoints, 18 );
-
-				totalPoints += cappedPoints;
-
-				if ( totalPoints < -1 )
-					totalPoints = -1;
-
-				rate = 1.0 / (0.1 * (2 + (int)totalPoints));
-			}
-			else
-			{
-				double medPoints = (from.Int + from.Skills[SkillName.Meditation].Value) * 0.5;
-
-				if ( medPoints <= 0 )
-					rate = 7.0;
-				else if ( medPoints <= 100 )
-					rate = 7.0 - (239*medPoints/2400) + (19*medPoints*medPoints/48000);
-				else if ( medPoints < 120 )
-					rate = 1.0;
-				else
-					rate = 0.75;
-
-				rate += armorPenalty;
-
-				if ( from.Meditating )
-					rate *= 0.5;
-
-				if ( rate < 0.5 )
-					rate = 0.5;
-				else if ( rate > 7.0 )
-					rate = 7.0;
-			}
-
-			return TimeSpan.FromSeconds( rate );
 		}
 
 		public static double GetArmorOffset( Mobile from )
