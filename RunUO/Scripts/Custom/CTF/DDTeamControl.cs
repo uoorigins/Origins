@@ -74,7 +74,7 @@ namespace Server.Items
 				if ( m_Team != null )
 					from.SendGump( new PropertiesGump( from, m_Team ) );
 				else
-					from.SendMessage( "Set game and team on props first!" );
+                    from.SendAsciiMessage("Set game and team on props first!");
 			}
 		}
 

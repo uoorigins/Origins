@@ -14,7 +14,7 @@ namespace Server.Regions
 {
 	public class GameRegion : Region
 	{
-		public GameRegion() : base("Game Arena", Map.Felucca, Region.DefaultPriority, Region.ConvertTo3D(new Rectangle2D( 5896, 393, 111, 111 )))//( "", "Game Arena", Map.Felucca )
+		public GameRegion() : base("Game Arena", Map.Felucca, Region.DefaultPriority, new Rectangle2D( 5896, 393, 111, 111 ))
 		{
 		}
 

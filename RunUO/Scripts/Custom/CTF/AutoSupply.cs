@@ -44,7 +44,7 @@ namespace Server.Items
 				return;
 			}
 
-			from.SendMessage( "You have been given some supplies based on your skills." );
+			from.SendAsciiMessage( "You have been given some supplies based on your skills." );
 
 			//4 pouches
 			for (int i=0;i<4;++i)

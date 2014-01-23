@@ -63,24 +63,24 @@ namespace Server.Items
 				{
 					if ( m_Game.IsInGame( from ) )
 					{
-						from.SendGump( new GameTeamSelector( m_Game ) );
+						from.SendMenu( new GameTeamSelector( m_Game ) );
 					}
 					else
 					{
 						if ( from.AccessLevel == AccessLevel.Player )
-							from.SendGump( new GameJoinGump( m_Game, m_GameName ) );
+							from.SendMenu( new GameJoinGump( m_Game, m_GameName ) );
 						else
-							from.SendMessage( "It might not be wise for staff to be playing..." );
+                            from.SendAsciiMessage("It might not be wise for staff to be playing...");
 					}
 				}
 				else
 				{
-					from.SendMessage( "{0} join is closed.", m_GameName );
+                    from.SendAsciiMessage("{0} join is closed.", m_GameName);
 				}
 			}
 			else
 			{
-				from.SendMessage( "This stone must be linked to a game stone.  Please contact a game master." );
+                from.SendAsciiMessage("This stone must be linked to a game stone.  Please contact a game master.");
 			}
 		}
 

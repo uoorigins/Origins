@@ -197,7 +197,7 @@ namespace Server.Items
 			{
 				if ( !m_Game.Running )
 				{
-					from.SendMessage( "The game is currently closed." );
+					from.SendAsciiMessage( "The game is currently closed." );
 					return;
 				}
 
@@ -220,7 +220,7 @@ namespace Server.Items
 						if ( RootParent == from )
 						{
 							from.Target = new CaptureTarget( this );
-							from.SendMessage( "Target your flag to capture, or target a team-mate to pass the flag." );//"What do you wish to do with the flag?" );
+							from.SendAsciiMessage( "Target your flag to capture, or target a team-mate to pass the flag." );//"What do you wish to do with the flag?" );
 						}
 					}
 					else
@@ -231,13 +231,13 @@ namespace Server.Items
 							{
 								from.RevealingAction();
 								from.Backpack.DropItem( this );
-								from.SendMessage( "You got the enemy flag!" );
+                                from.SendAsciiMessage("You got the enemy flag!");
 								BeginCapture();
 								m_Game.PlayerMessage( "{0} ({1}) got the {2} flag!", from.Name, team.Name, m_Team.Name );
 							}
 							else
 							{
-								from.SendMessage( "You have no backpack to carry that flag!" );
+                                from.SendAsciiMessage("You have no backpack to carry that flag!");
 							}
 						}
 						else
@@ -252,7 +252,7 @@ namespace Server.Items
 				}
 				else
 				{
-					from.SendMessage( "You are not part of the game." );
+                    from.SendAsciiMessage("You are not part of the game.");
 				}
 			}
 		}
@@ -278,13 +278,13 @@ namespace Server.Items
 						if ( targ.Backpack != null )
 						{
 							targ.Backpack.DropItem( m_Flag );
-							targ.SendMessage( "{0} gave you the {1} flag!", from.Name, m_Flag.Team.Name );
+                            targ.SendAsciiMessage("{0} gave you the {1} flag!", from.Name, m_Flag.Team.Name);
 							m_Flag.Game.PlayerMessage( "{0} passed the {1} flag to {2}!", from.Name, m_Flag.Team.Name, targ.Name );
 						}
 					}
 					else
 					{
-						from.SendMessage( "You cannot give the flag to them!" );
+                        from.SendAsciiMessage("You cannot give the flag to them!");
 					}
 				}
 				else if ( target is CTFFlag )
@@ -294,19 +294,19 @@ namespace Server.Items
 					{
 						if ( flag.Home )
 						{
-							from.SendMessage( "You captured the {0} flag!", m_Flag.Team.Name );
+                            from.SendAsciiMessage("You captured the {0} flag!", m_Flag.Team.Name);
 							flag.Game.PlayerMessage( "{0} ({1}) captured the {2} flag!", from.Name, fteam.Name, m_Flag.Team.Name );
 							m_Flag.ReturnToHome();
 							fteam.Points += 15;
 						}
 						else
 						{
-							from.SendMessage( "Your flag must be at home to capture!" );
+                            from.SendAsciiMessage("Your flag must be at home to capture!");
 						}
 					}
 					else
 					{
-						from.SendMessage( "You can only capture for your own team!" );
+                        from.SendAsciiMessage("You can only capture for your own team!");
 					}
 				}
 			}
@@ -345,7 +345,7 @@ namespace Server.Items
 						Interval = TimeSpan.FromSeconds( 1.0 );
 
 					if ( owner != null )
-						owner.SendMessage( "You must take the {0} flag to your flag in {1} seconds or be killed!", m_Flag.Team.Name, (int)left.TotalSeconds );
+                        owner.SendAsciiMessage("You must take the {0} flag to your flag in {1} seconds or be killed!", m_Flag.Team.Name, (int)left.TotalSeconds);
 				}
 				else
 				{

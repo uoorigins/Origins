@@ -182,7 +182,7 @@ namespace Server.Items
 
 			if ( !m_Game.Running )
 			{
-				from.SendMessage( "The game is currently closed." );
+                from.SendAsciiMessage("The game is currently closed.");
 				return false;
 			}
 

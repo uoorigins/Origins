@@ -272,6 +272,15 @@ namespace Server.Misc
 			if( target.AccessLevel > AccessLevel.Player )
 				return Notoriety.CanBeAttacked;
 
+            // MODIFICATIONS FOR Capture the Flag / Double Dom games
+            Server.Items.CTFTeam ft = Server.Items.CTFGame.FindTeamFor(source);
+            if (ft != null)
+            {
+                Server.Items.CTFTeam tt = Server.Items.CTFGame.FindTeamFor(target);
+                if (tt != null && ft.Game == tt.Game)
+                    return ft == tt ? Notoriety.Ally : Notoriety.Enemy;
+            }
+
 			if( source != null && source.Player && !target.Player && source is PlayerMobile && target is BaseCreature )
 			{
 				BaseCreature bc = (BaseCreature)target;

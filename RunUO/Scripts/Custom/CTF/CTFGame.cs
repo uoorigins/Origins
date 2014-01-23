@@ -4,6 +4,7 @@ using System.Collections;
 using Server.Gumps;
 using Server.Targeting;
 using Server.Commands;
+using Server.Regions;
 
 namespace Server.Items
 {
@@ -22,7 +23,25 @@ namespace Server.Items
             CommandSystem.Register("startgame", AccessLevel.GameMaster, new CommandEventHandler(StartGame_Command));
             CommandSystem.Register("Team", AccessLevel.Player, new CommandEventHandler(TeamMessage_Command));
             CommandSystem.Register("t", AccessLevel.Player, new CommandEventHandler(TeamMessage_Command));
+            CommandSystem.Register("gameregion", AccessLevel.GameMaster, new CommandEventHandler(GameRegion_Command));
+            CommandSystem.Register("removegameregion", AccessLevel.GameMaster, new CommandEventHandler(RemoveGameRegion_Command));
 		}
+
+        private static void GameRegion_Command(CommandEventArgs e)
+        {
+            GameRegion m_Region = new GameRegion();
+            m_Region.Register();
+        }
+
+        private static void RemoveGameRegion_Command(CommandEventArgs e)
+        {
+            GameRegion region = Region.Find(e.Mobile.Location, e.Mobile.Map) as GameRegion;
+
+            if (region != null)
+            {
+                region.Unregister();
+            }
+        }
 
 		private static void TeamMessage_Command( CommandEventArgs e )
 		{
@@ -500,7 +519,7 @@ namespace Server.Items
 					{
 						Mobile m = (Mobile)t.Members[i];
 						m.Frozen = true;
-						m.SendGump( new GameTeamSelector( this, teamSize ) );
+						m.SendMenu( new GameTeamSelector( this, teamSize ) );
 						players.Add( m );
 					}
 
