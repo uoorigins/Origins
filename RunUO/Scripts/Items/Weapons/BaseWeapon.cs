@@ -1066,11 +1066,11 @@ namespace Server.Items
             if (NewSwingState < 2)
                 return TimeSpan.Zero;
 
-            if (NewSwingState == 2)
+            if (NewSwingState == 2) {
                 PlaySwingAnimation(attacker);
 
-            if (NewSwingState == 3 && attacker.HarmfulCheck(defender))
-            {
+            /*if (NewSwingState == 3 && attacker.HarmfulCheck(defender))
+            {*/
                 attacker.DisruptiveAction();
 
                 if (attacker.NetState != null)
@@ -1095,6 +1095,7 @@ namespace Server.Items
                 else
                     OnMiss(attacker, defender);
             }
+
 
 			return GetDelay( attacker );
 		}
