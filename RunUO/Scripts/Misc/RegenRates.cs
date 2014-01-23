@@ -15,7 +15,7 @@ namespace Server.Misc
 		{
 			Mobile.DefaultHitsRate = TimeSpan.FromSeconds( 11.0 );
 			Mobile.DefaultStamRate = TimeSpan.FromSeconds(  7.0 );
-			Mobile.DefaultManaRate = TimeSpan.FromSeconds(  2.0 );
+			Mobile.DefaultManaRate = TimeSpan.FromSeconds(  1.5 );
 
 			Mobile.ManaRegenRateHandler = new RegenRateHandler( Mobile_ManaRegenRate );
             Mobile.HitsRegenRateHandler = new RegenRateHandler( Mobile_HitsRegenRate );
