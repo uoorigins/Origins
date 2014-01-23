@@ -250,7 +250,7 @@ namespace Server.Commands
 			{
 				CommandLogging.WriteLine( e.Mobile, "{0} {1} starting facet clear of {2} ({3} object{4})", e.Mobile.AccessLevel, CommandLogging.Format( e.Mobile ), map, list.Count, list.Count == 1 ? "" : "s" );
 
-				e.Mobile.SendGump(
+				e.Mobile.SendMenu(
 					new WarningGump( 1060635, 30720,
 					String.Format( "You are about to delete {0} object{1} from this facet.  Do you really wish to continue?",
 					list.Count, list.Count == 1 ? "" : "s" ),

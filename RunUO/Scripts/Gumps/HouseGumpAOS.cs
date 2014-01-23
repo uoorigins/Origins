@@ -946,7 +946,7 @@ namespace Server.Gumps
 						case 3: // Clear Co-Owner List
 						{
 							if ( isOwner )
-								from.SendGump( new WarningGump( 1060635, 30720, 1060736, 32512, 420, 280, new WarningGumpCallback( ClearCoOwners_Callback ), m_House ) );
+                                from.SendMenu(new WarningGump(1060635, 30720, 1060736, 32512, 420, 280, new WarningGumpCallback(ClearCoOwners_Callback), m_House));
 
 							break;
 						}
@@ -976,7 +976,7 @@ namespace Server.Gumps
 						case 7: // Clear Friend List
 						{
 							if ( isCoOwner )
-								from.SendGump( new WarningGump( 1060635, 30720, 1018039, 32512, 420, 280, new WarningGumpCallback( ClearFriends_Callback ), m_House ) );
+                                from.SendMenu(new WarningGump(1060635, 30720, 1018039, 32512, 420, 280, new WarningGumpCallback(ClearFriends_Callback), m_House));
 
 							break;
 						}
@@ -988,7 +988,7 @@ namespace Server.Gumps
 						}
 						case 9: // Clear Ban List
 						{
-							from.SendGump( new WarningGump( 1060635, 30720, 1060753, 32512, 420, 280, new WarningGumpCallback( ClearBans_Callback ), m_House ) );
+                            from.SendMenu(new WarningGump(1060635, 30720, 1060753, 32512, 420, 280, new WarningGumpCallback(ClearBans_Callback), m_House));
 
 							break;
 						}
@@ -1000,7 +1000,7 @@ namespace Server.Gumps
 						}
 						case 11: // Clear Access List
 						{
-							from.SendGump( new WarningGump( 1060635, 30720, 1061842, 32512, 420, 280, new WarningGumpCallback( ClearAccess_Callback ), m_House ) );
+							from.SendMenu( new WarningGump( 1060635, 30720, 1061842, 32512, 420, 280, new WarningGumpCallback( ClearAccess_Callback ), m_House ) );
 
 							break;
 						}
@@ -1107,7 +1107,7 @@ namespace Server.Gumps
 										 * Your house will be leveled to its foundation, and you will be able to build new walls, windows, doors, and stairs.
 										 * Are you sure you wish to continue?
 										 */
-										from.SendGump( new WarningGump( 1060635, 30720, 1060013, 32512, 420, 280, new WarningGumpCallback( ConvertHouse_Callback ), m_House ) );
+                                        from.SendMenu(new WarningGump(1060635, 30720, 1060013, 32512, 420, 280, new WarningGumpCallback(ConvertHouse_Callback), m_House));
 									}
 								}
 							}

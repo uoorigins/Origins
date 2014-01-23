@@ -2157,7 +2157,7 @@ namespace Server.Gumps
 								for ( int i = 0; i < list.Count; ++i )
 									sb.AppendFormat( "<br>- {0}", ((Account)list[i]).Username );
 
-								from.SendGump( new WarningGump( 1060635, 30720, sb.ToString(), 0xFFC000, 420, 400, new WarningGumpCallback( BanShared_Callback ), a ) );
+								from.SendMenu( new WarningGump( 1060635, 30720, sb.ToString(), 0xFFC000, 420, 400, new WarningGumpCallback( BanShared_Callback ), a ) );
 							}
 							else if ( a.LoginIPs.Length > 0 )
 							{
@@ -2179,7 +2179,7 @@ namespace Server.Gumps
 
 							if ( a.LoginIPs.Length > 0 )
 							{
-								from.SendGump( new WarningGump( 1060635, 30720, String.Format( "You are about to firewall {0} address{1}. Do you wish to continue?", a.LoginIPs.Length, a.LoginIPs.Length != 1 ? "s" : "" ), 0xFFC000, 420, 400, new WarningGumpCallback( FirewallShared_Callback ), a ) );
+								from.SendMenu( new WarningGump( 1060635, 30720, String.Format( "You are about to firewall {0} address{1}. Do you wish to continue?", a.LoginIPs.Length, a.LoginIPs.Length != 1 ? "s" : "" ), 0xFFC000, 420, 400, new WarningGumpCallback( FirewallShared_Callback ), a ) );
 							}
 							else
 							{
@@ -2277,7 +2277,7 @@ namespace Server.Gumps
 							if ( a == null )
 								break;
 
-							from.SendGump( new WarningGump( 1060635, 30720, String.Format( "<center>Account of {0}</center><br>You are about to <em><basefont color=red>permanently delete</basefont></em> the account. Likewise, all characters on the account will be deleted, including equiped, inventory, and banked items. Any houses tied to the account will be demolished.<br><br>Do you wish to continue?", a.Username ), 0xFFC000, 420, 280, new WarningGumpCallback( AccountDelete_Callback ), m_State ) );
+							from.SendMenu( new WarningGump( 1060635, 30720, String.Format( "<center>Account of {0}</center><br>You are about to <em><basefont color=red>permanently delete</basefont></em> the account. Likewise, all characters on the account will be deleted, including equiped, inventory, and banked items. Any houses tied to the account will be demolished.<br><br>Do you wish to continue?", a.Username ), 0xFFC000, 420, 280, new WarningGumpCallback( AccountDelete_Callback ), m_State ) );
 							break;
 						}
 						case 26: // View all shared accounts
@@ -2294,7 +2294,7 @@ namespace Server.Gumps
 								break;
 
 							if ( rads.Count > 0 )
-								from.SendGump( new WarningGump( 1060635, 30720, String.Format( "You are about to ban {0} marked account{1}. Be cautioned, the only way to reverse this is by hand--manually unbanning each account.<br><br>Do you wish to continue?", rads.Count, rads.Count == 1 ? "" : "s" ), 0xFFC000, 420, 280, new WarningGumpCallback( Marked_Callback ), new object[]{ true, list, rads, m_ListPage } ) );
+								from.SendMenu( new WarningGump( 1060635, 30720, String.Format( "You are about to ban {0} marked account{1}. Be cautioned, the only way to reverse this is by hand--manually unbanning each account.<br><br>Do you wish to continue?", rads.Count, rads.Count == 1 ? "" : "s" ), 0xFFC000, 420, 280, new WarningGumpCallback( Marked_Callback ), new object[]{ true, list, rads, m_ListPage } ) );
 							else
 								from.SendGump( new NoticeGump( 1060637, 30720, "You have not yet marked any accounts. Place a check mark next to the accounts you wish to ban and then try again.", 0xFFC000, 420, 280, new NoticeGumpCallback( ResendGump_Callback ), new object[]{ list, rads, m_ListPage } ) );
 
@@ -2309,7 +2309,7 @@ namespace Server.Gumps
 								break;
 
 							if ( rads.Count > 0 )
-								from.SendGump( new WarningGump( 1060635, 30720, String.Format( "You are about to <em><basefont color=red>permanently delete</basefont></em> {0} marked account{1}. Likewise, all characters on the account{1} will be deleted, including equiped, inventory, and banked items. Any houses tied to the account{1} will be demolished.<br><br>Do you wish to continue?", rads.Count, rads.Count == 1 ? "" : "s" ), 0xFFC000, 420, 280, new WarningGumpCallback( Marked_Callback ), new object[]{ false, list, rads, m_ListPage } ) );
+								from.SendMenu( new WarningGump( 1060635, 30720, String.Format( "You are about to <em><basefont color=red>permanently delete</basefont></em> {0} marked account{1}. Likewise, all characters on the account{1} will be deleted, including equiped, inventory, and banked items. Any houses tied to the account{1} will be demolished.<br><br>Do you wish to continue?", rads.Count, rads.Count == 1 ? "" : "s" ), 0xFFC000, 420, 280, new WarningGumpCallback( Marked_Callback ), new object[]{ false, list, rads, m_ListPage } ) );
 							else
 								from.SendGump( new NoticeGump( 1060637, 30720, "You have not yet marked any accounts. Place a check mark next to the accounts you wish to ban and then try again.", 0xFFC000, 420, 280, new NoticeGumpCallback( ResendGump_Callback ), new object[]{ list, rads, m_ListPage } ) );
 
@@ -2679,7 +2679,7 @@ namespace Server.Gumps
 
 						if ( m_PageType == AdminGumpPage.AccountDetails_Access_ClientIPs )
 						{
-							from.SendGump( new WarningGump( 1060635, 30720, String.Format( "You are about to firewall {0}. All connection attempts from a matching IP will be refused. Are you sure?", m_List[index] ), 0xFFC000, 420, 280, new WarningGumpCallback( Firewall_Callback ), new object[]{ a, m_List[index] } ) );
+							from.SendMenu( new WarningGump( 1060635, 30720, String.Format( "You are about to firewall {0}. All connection attempts from a matching IP will be refused. Are you sure?", m_List[index] ), 0xFFC000, 420, 280, new WarningGumpCallback( Firewall_Callback ), new object[]{ a, m_List[index] } ) );
 						}
 						else if ( m_PageType == AdminGumpPage.AccountDetails_Access_Restrictions )
 						{

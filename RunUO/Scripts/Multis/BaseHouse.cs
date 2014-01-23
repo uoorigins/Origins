@@ -1986,7 +1986,7 @@ namespace Server.Multis
 						 * When you accept this house, you also accept landlordship for every
 						 * contract vendor in the house.
 						 */
-						to.SendGump( new WarningGump( 1060635, 30720, 1062487, 32512, 420, 280, new WarningGumpCallback( ConfirmTransfer_Callback ), from ) );
+                        to.SendMenu(new WarningGump(1060635, 30720, 1062487, 32512, 420, 280, new WarningGumpCallback(ConfirmTransfer_Callback), from));
 					}
 					else
 					{

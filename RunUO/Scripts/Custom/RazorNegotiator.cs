@@ -154,7 +154,7 @@ namespace Server.Misc
             }
             else if (m.NetState != null && m.NetState.Running)
             {
-                m.SendGump(new Gumps.WarningGump(1060635, 30720, RazorFeatureControl.WarningMessage, 0xFFC000, 420, 250, null, null));
+                m.SendMenu(new Gumps.WarningGump(1060635, 30720, RazorFeatureControl.WarningMessage, 0xFFC000, 420, 250, null, null));
 
                 if (m.AccessLevel <= AccessLevel.Player)
                 {
