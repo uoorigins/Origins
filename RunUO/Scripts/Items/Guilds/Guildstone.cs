@@ -208,6 +208,14 @@ namespace Server.Items
 			if( Guild.NewGuildSystem )
 				return;
 
+            BaseHouse house = BaseHouse.FindHouseAt( this );
+            BaseBoat boat = BaseBoat.FindBoatAt( this.Location, this.Map );
+
+            if (house == null && boat == null)
+            {
+                Delete();
+            }
+
 			if( m_Guild == null || m_Guild.Disbanded )
 			{
 				Delete();
