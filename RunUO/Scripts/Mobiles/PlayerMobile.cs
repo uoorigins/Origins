@@ -2511,8 +2511,23 @@ namespace Server.Mobiles
 		private int m_InsuranceCost;
 		private int m_InsuranceBonus;
 
+        private bool RejoinChat;
+
 		public override bool OnBeforeDeath()
 		{
+            ChatSystem system = null;
+
+            foreach (Item item in World.Items.Values)
+            {
+                if (item is ChatSystem)
+                    system = item as ChatSystem;
+            }
+
+            if (system == null)
+                system = new ChatSystem();
+
+            RejoinChat = system.m_Players.ContainsKey(this);
+
 			m_InsuranceCost = 0;
 			m_InsuranceAward = base.FindMostRecentDamager( false );
 
@@ -2624,6 +2639,22 @@ namespace Server.Mobiles
 
 			return res;
 		}
+
+        private class RejoinChatTimer : Timer
+        {
+            private Mobile m;
+            private Boolean hadChat;
+            public RejoinChatTimer(Mobile mobile, Boolean chat) : base(TimeSpan.FromSeconds(3.0))
+            {
+                m = mobile;
+                hadChat = chat;
+            }
+
+            protected override void OnTick()
+            {
+
+            }
+        }
 
 		public override void OnDeath( Container c )
 		{
@@ -2770,6 +2801,23 @@ namespace Server.Mobiles
 					RemoveBuff( list[i] );
 				}
 			}
+
+
+            ChatSystem system = null;
+
+            if (RejoinChat)
+            {
+                foreach (Item item in World.Items.Values)
+                {
+                    if (item is ChatSystem)
+                        system = item as ChatSystem;
+                }
+
+                if (system == null)
+                    system = new ChatSystem();
+
+                system.AddPlayer(this);
+            }
 		}
 
 		private List<Mobile> m_PermaFlags;
@@ -3769,7 +3817,7 @@ namespace Server.Mobiles
             Mobile from = (Mobile)this;
             Item item = FindItemOnLayer(Layer.TwoHanded);
 
-            if (item is BaseRanged && Location != oldLocation)
+            if (item != null && item is BaseRanged && Location != oldLocation)
                 ((BaseWeapon)item).ResetSwingState(1);
 
         }
