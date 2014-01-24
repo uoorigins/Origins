@@ -2512,6 +2512,7 @@ namespace Server.Mobiles
 		private int m_InsuranceBonus;
 
         private bool RejoinChat;
+        private bool JoinHidden;
 
 		public override bool OnBeforeDeath()
 		{
@@ -2527,6 +2528,12 @@ namespace Server.Mobiles
                 system = new ChatSystem();
 
             RejoinChat = system.m_Players.ContainsKey(this);
+            JoinHidden = false;
+
+            if (RejoinChat)
+            {
+                system.m_Players.TryGetValue(this, out JoinHidden);
+            }
 
 			m_InsuranceCost = 0;
 			m_InsuranceAward = base.FindMostRecentDamager( false );
@@ -2817,6 +2824,11 @@ namespace Server.Mobiles
                     system = new ChatSystem();
 
                 system.AddPlayer(this);
+
+                if (JoinHidden)
+                {
+                    system.SetHidden(this);
+                }
             }
 		}
 

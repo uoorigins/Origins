@@ -109,6 +109,18 @@ namespace Server.Gumps
                 m_Players.Add(from, true);
         }
 
+        public void SetHidden(Mobile from)
+        {
+            bool visible = true;
+            m_Players.TryGetValue(from, out visible);
+
+            if (visible)
+            {
+                m_Players.Remove(from);
+                m_Players.Add(from, false);
+            }
+        }
+
         public void SquelchPlayer(Mobile from)
         {
             Account myAccount = (Account)from.Account;
