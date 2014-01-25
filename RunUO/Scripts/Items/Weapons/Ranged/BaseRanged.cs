@@ -57,20 +57,22 @@ namespace Server.Items
                     return TimeSpan.Zero;
                 }
                 PlaySwingAnimation(attacker);
-                attacker.PlaySound(GetMissAttackSound(attacker, defender));
-            }
-
-            if (NewSwingState == 3 && attacker.HarmfulCheck(defender))
-            {
+                //attacker.PlaySound(GetMissAttackSound(attacker, defender));
                 attacker.DisruptiveAction();
                 attacker.Send(new Swing(0, attacker, defender));
 
-                /*if (OnFired(attacker, defender))
-                {*/
                 if (CheckHit(attacker, defender))
                     OnHit(attacker, defender);
                 else
                     OnMiss(attacker, defender);
+            }
+
+            if (NewSwingState == 3 && attacker.HarmfulCheck(defender))
+            {
+
+                /*if (OnFired(attacker, defender))
+                {*/
+
                 //}
             }
 
