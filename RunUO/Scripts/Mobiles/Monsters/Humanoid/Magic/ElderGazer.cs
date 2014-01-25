@@ -48,6 +48,8 @@ namespace Server.Mobiles
 
 		public override void GenerateLoot()
 		{
+            AddLoot(LootPack.HighScrolls, Utility.Random(2));
+
             AddLoot(LootPack.FilthyRichPile);
 			AddLootBackpack( LootPack.FilthyRich );
 		}

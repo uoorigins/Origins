@@ -60,6 +60,8 @@ namespace Server.Mobiles
 
 		public override void GenerateLoot()
 		{
+            AddLoot(LootPack.HighScrolls);
+
             AddLootBackpack(LootPack.UltraRich);
 		}
 

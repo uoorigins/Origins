@@ -55,6 +55,8 @@ namespace Server.Mobiles
 
 		public override void GenerateLoot()
 		{
+            AddLoot(LootPack.MedScrolls, Utility.Random(2));
+
             switch (Utility.Random(2))
             {
                 case 0: AddLootBackpack(LootPack.Average); break;

@@ -46,6 +46,8 @@ namespace Server.Mobiles
 
 		public override void GenerateLoot()
 		{
+            AddLoot(LootPack.LowScrolls, Utility.Random(2));
+
             AddLootBackpack(LootPack.Meager);
 		}
 		
