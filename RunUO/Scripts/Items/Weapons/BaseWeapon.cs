@@ -1916,11 +1916,11 @@ namespace Server.Items
 
 		public virtual void OnMiss( Mobile attacker, Mobile defender )
 		{
-            if (!(this is BaseRanged))
-            {
+            //if (!(this is BaseRanged))
+            //{
                 attacker.PlaySound(GetMissAttackSound(attacker, defender));
                 defender.PlaySound(GetMissDefendSound(attacker, defender));
-            }
+            //}
 
 			WeaponAbility ability = WeaponAbility.GetCurrentAbility( attacker );
 
