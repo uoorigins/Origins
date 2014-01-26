@@ -36,6 +36,7 @@ namespace Server.SkillHandlers
 
 			public InternalFirstTarget( Mobile from, BaseInstrument instrument ) : base( BaseInstrument.GetBardRange( from, SkillName.Provocation ), false, TargetFlags.None )
 			{
+                CheckLOS = false;
 				m_Instrument = instrument;
 			}
 
@@ -87,6 +88,7 @@ namespace Server.SkillHandlers
 
 			public InternalSecondTarget( Mobile from, BaseInstrument instrument, BaseCreature creature ) : base( BaseInstrument.GetBardRange( from, SkillName.Provocation ), false, TargetFlags.None )
 			{
+                CheckLOS = false;
 				m_Instrument = instrument;
 				m_Creature = creature;
 			}
@@ -113,7 +115,7 @@ namespace Server.SkillHandlers
 					}
 					else if ( m_Creature != creature )
 					{
-						from.NextSkillTime = DateTime.Now + TimeSpan.FromSeconds( 10.0 );
+						from.NextSkillTime = DateTime.Now + TimeSpan.FromSeconds( 6.0 );
 
 						double diff = ((m_Instrument.GetDifficultyFor( m_Creature ) + m_Instrument.GetDifficultyFor( creature )) * 0.5) - 5.0;
 						double music = from.Skills[SkillName.Musicianship].Value;
@@ -125,7 +127,7 @@ namespace Server.SkillHandlers
 						{
 							if ( !BaseInstrument.CheckMusicianship( from ) )
 							{
-								from.NextSkillTime = DateTime.Now + TimeSpan.FromSeconds( 10.0 );
+								from.NextSkillTime = DateTime.Now + TimeSpan.FromSeconds( 6.0 );
                                 //from.SayTo(from, true, "You play poorly, and there is no effect.");
                                 from.SendAsciiMessage("You play poorly, and there is no effect."); // You play poorly, and there is no effect.
 								m_Instrument.PlayInstrumentBadly( from );
@@ -138,7 +140,7 @@ namespace Server.SkillHandlers
 
                                 if ( /*!from.CheckTargetSkill( SkillName.Provocation, creature, diff-25.0, diff+25.0 )*/!from.CheckTargetSkill(SkillName.Provocation, creature, 0, 100))
 								{
-									from.NextSkillTime = DateTime.Now + TimeSpan.FromSeconds( 10.0 );
+									from.NextSkillTime = DateTime.Now + TimeSpan.FromSeconds( 6.0 );
                                     //creature.SayTo(from, true, "Your music fails to incite enough anger.");
                                     from.SendAsciiMessage("Your music fails to incite enough anger."); // Your music fails to incite enough anger.
 									m_Instrument.PlayInstrumentBadly( from );

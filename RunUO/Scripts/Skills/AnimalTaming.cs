@@ -96,6 +96,7 @@ namespace Server.SkillHandlers
 
 			public InternalTarget() :  base ( 10, false, TargetFlags.None )
 			{
+                CheckLOS = false;
 			}
 
 			protected override void OnTargetFinish( Mobile from )
