@@ -56,8 +56,8 @@ namespace Server.Mobiles
 
 		public override void GenerateLoot()
 		{
-            AddLootBackpack(LootPack.Rich);
-            AddLoot(LootPack.Rich );
+            AddLootBackpack(LootPack.Average);
+            AddLoot(LootPack.RichPile );
 
             AddLoot(LootPack.LowScrolls, Utility.Random(2));
 		}

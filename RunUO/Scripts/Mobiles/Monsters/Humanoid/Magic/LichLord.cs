@@ -46,9 +46,6 @@ namespace Server.Mobiles
             if (Utility.Random(2) > 0)
                 PackReg(5, 15);
 
-            if (Utility.Random(400) == 1)
-                PackItem(Loot.RandomStatue());
-
             if (Utility.Random(50) == 1)
                 AddItem(Loot.RandomWand());
 		}
