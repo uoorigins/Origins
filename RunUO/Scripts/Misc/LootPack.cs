@@ -567,7 +567,7 @@ namespace Server
         
         public static readonly LootPack OldAverage = new LootPack(new LootPackEntry[]
 			{
-                new LootPackEntry( true, OldMagicItems,  25.00, 10, 1, (int)Intensity.Normal, (int)Intensity.Level5 ),
+                new LootPackEntry( true, OldMagicItems,  25.00, 10, 1, (int)Intensity.Normal, (int)Intensity.Level3 ),
                 new LootPackEntry( true, PotionReagent,	 50.00, Utility.RandomMinMax( 3, 6 ) ),
 				new LootPackEntry( true, Missle,         50.00, Utility.RandomMinMax( 5, 15 ) ),
                 new LootPackEntry( true,  Beverage,     100.00, 1),
@@ -587,7 +587,7 @@ namespace Server
 
         public static readonly LootPack OldFilthyRich = new LootPack(new LootPackEntry[]
 			{
-                new LootPackEntry( true, OldMagicItems,  35.00, 10, 1, (int)Intensity.Level1, (int)Intensity.Level5 ),
+                new LootPackEntry( true, OldMagicItems,  25.00, 10, 1, (int)Intensity.Level1, (int)Intensity.Level5 ),
                 new LootPackEntry( true, PotionReagent,	 50.00, Utility.RandomMinMax( 3, 6 ) ),
 				new LootPackEntry( true, Missle,         50.00, Utility.RandomMinMax( 5, 15 ) ),
                 new LootPackEntry( true,  Beverage,     100.00, 1),
@@ -610,7 +610,7 @@ namespace Server
         //Dragon 
         public static readonly LootPack OldSuperBoss = new LootPack(new LootPackEntry[]
 			{
-                new LootPackEntry( true, OldMagicItems,  50.00, 10, 1, (int)Intensity.Level3, (int)Intensity.Level5 ),
+                new LootPackEntry( true, OldMagicItems,  35.00, 10, 1, (int)Intensity.Level3, (int)Intensity.Level5 ),
                 new LootPackEntry( true, PotionReagent,	 50.00, Utility.RandomMinMax( 3, 6 ) ),
 				new LootPackEntry( true, Missle,         50.00, Utility.RandomMinMax( 5, 15 ) ),
                 new LootPackEntry( true, OldMagicJewel, 0.50, 1 ),
@@ -622,7 +622,7 @@ namespace Server
         //AW
         public static readonly LootPack OldSpecial = new LootPack(new LootPackEntry[]
 			{
-                new LootPackEntry( true, OldMagicItems, 10.00, 10, 1, (int)Intensity.Level4, (int)Intensity.Level5 ),
+                new LootPackEntry( true, OldMagicItems,  50.00, 10, 1, (int)Intensity.Level4, (int)Intensity.Level5 ),
                 new LootPackEntry( true, PotionReagent,	 50.00, Utility.RandomMinMax( 3, 6 ) ),
 				new LootPackEntry( true, Missle,         50.00, Utility.RandomMinMax( 5, 15 ) ),
                 new LootPackEntry( true, OldMagicJewel, 2.00, 1 ),
@@ -905,60 +905,60 @@ namespace Server
                             #region Random Magic Effect
                             if (10 > rand)
                             {
-                                staff.Charges = Utility.RandomMinMax(5, 15);
+                                staff.Charges = Utility.RandomMinMax(5, 50);
                                 staff.StaffEffect = WandEffect.Clumsiness;
                             }
                             else if (20 > rand)
                             {
-                                staff.Charges = Utility.RandomMinMax(5, 15);
+                                staff.Charges = Utility.RandomMinMax(5, 50);
                                 staff.StaffEffect = WandEffect.Feeblemindedness;
                             }
                             else if (30 > rand)
                             {
-                                staff.Charges = Utility.RandomMinMax(5, 15);
+                                staff.Charges = Utility.RandomMinMax(5, 50);
                                 staff.StaffEffect = WandEffect.MagicArrow;
                             }
                             else if (40 > rand)
                             {
-                                staff.Charges = Utility.RandomMinMax(5, 15);
+                                staff.Charges = Utility.RandomMinMax(5, 50);
                                 staff.StaffEffect = WandEffect.Weakness;
                             }
                             else if (50 > rand)
                             {
-                                staff.Charges = Utility.RandomMinMax(5, 15);
+                                staff.Charges = Utility.RandomMinMax(5, 50);
                                 staff.StaffEffect = WandEffect.Harming;
                             }
                             else if (60 > rand)
                             {
                                 if (Utility.RandomBool())
                                 {
-                                    staff.Charges = Utility.RandomMinMax(5, 15);
+                                    staff.Charges = Utility.RandomMinMax(5, 50);
                                     staff.StaffEffect = WandEffect.Paralyze;
                                 }
                                 else
                                 {
-                                    staff.Charges = Utility.RandomMinMax(5, 15);
+                                    staff.Charges = Utility.RandomMinMax(5, 50);
                                     staff.StaffEffect = WandEffect.Identification;
                                 }
                             }
                             else if (65 > rand)
                             {
-                                staff.Charges = Utility.RandomMinMax(5, 15);
+                                staff.Charges = Utility.RandomMinMax(5, 50);
                                 staff.StaffEffect = WandEffect.Fireball;
                             }
                             else if (70 > rand)
                             {
-                                staff.Charges = Utility.RandomMinMax(5, 15);
+                                staff.Charges = Utility.RandomMinMax(5, 50);
                                 staff.StaffEffect = WandEffect.Curse;
                             }
                             else if (75 > rand)
                             {
-                                staff.Charges = Utility.RandomMinMax(5, 15);
+                                staff.Charges = Utility.RandomMinMax(5, 50);
                                 staff.StaffEffect = WandEffect.ManaDraining;
                             }
                             else if (78 > rand)
                             {
-                                staff.Charges = Utility.RandomMinMax(5, 15);
+                                staff.Charges = Utility.RandomMinMax(5, 50);
                                 staff.StaffEffect = WandEffect.Lightning;
                             }
                             #endregion
@@ -1000,9 +1000,15 @@ namespace Server
                         BaseJewel jewel = (BaseJewel)item;
 
                         if (50 > Utility.Random(100))
+                        {
                             jewel.Effect = (JewelEffect)1;
+                            jewel.Charges = Utility.RandomMinMax(10, 31);
+                        }
                         else
+                        {
                             jewel.Effect = (JewelEffect)2;
+                            jewel.Charges = Utility.RandomMinMax(10, 31);
+                        }
                     }
                     else if (item is BaseClothing)
                     {
@@ -1039,7 +1045,7 @@ namespace Server
                             else if (78 >= random)
                             {
                                 clothing.Effect = ClothEffect.Invisibility;
-                                clothing.Charges = Utility.RandomMinMax(1, 5);
+                                clothing.Charges = Utility.RandomMinMax(10, 31);
                             }
                             else if (83 >= random)
                             {

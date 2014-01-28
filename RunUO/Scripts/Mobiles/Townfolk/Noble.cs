@@ -83,8 +83,7 @@ namespace Server.Mobiles
         public override void GenerateLoot()
         {
             AddLoot(LootPack.Poor);
-            AddLootPouch(LootPack.PoorPouch);
-            AddLoot(LootPack.AveragePile);
+            AddLootBackpack(LootPack.FilthyRich);
         }
 
 		public Noble( Serial serial ) : base( serial )
@@ -183,8 +182,7 @@ namespace Server.Mobiles
         public override void GenerateLoot()
         {
             AddLoot(LootPack.Poor);
-            AddLootPouch(LootPack.PoorPouch);
-            AddLoot(LootPack.AveragePile);
+            AddLootBackpack(LootPack.FilthyRich);
         }
 
         public EscortableNoble(Serial serial)

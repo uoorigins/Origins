@@ -538,12 +538,6 @@ namespace Server
             }
             #endregion
 
-            if ((item is BearMask || item is DeerMask || item is TribalMask || item is HornedTribalMask || item is OrcMask) && Utility.Random(100) >= 15)
-            {
-                item.Delete();
-                RandomMagicClothing();
-            }
-
             if (item is BearMask || item is ThighBoots || item is DeerMask || item is TribalMask || item is HornedTribalMask || item is OrcMask)
                 item.Hue = 0;
             else
@@ -556,12 +550,6 @@ namespace Server
         public static BaseClothing RandomClothing()
         {
             BaseClothing item = Construct(m_ClothingTypes) as BaseClothing;
-
-            if ((item is BearMask || item is DeerMask || item is TribalMask || item is HornedTribalMask || item is OrcMask) && Utility.Random(100) >= 15)
-            {
-                item.Delete();
-                RandomClothing();
-            }
 
             if (item is BearMask || item is ThighBoots || item is DeerMask || item is TribalMask || item is HornedTribalMask || item is OrcMask)
                 item.Hue = 0;
