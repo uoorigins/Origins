@@ -19,13 +19,13 @@ namespace Server.Mobiles
 		public class InternalBuyInfo : List<GenericBuyInfo> 
 		{ 
 			public InternalBuyInfo() 
-			{ 
-				Add( new GenericBuyInfo( typeof( Ginseng ), 3, 9, 0xF85, 0 ) ); 
-				Add( new GenericBuyInfo( typeof( Garlic ), 3, 9, 0xF84, 0 ) ); 
-				Add( new GenericBuyInfo( typeof( MandrakeRoot ), 3, 9, 0xF86, 0 ) ); 
-				Add( new GenericBuyInfo( typeof( Nightshade ), 3, 9, 0xF88, 0 ) ); 
-				Add( new GenericBuyInfo( typeof( Bloodmoss ), 5, 9, 0xF7B, 0 ) ); 
-				Add( new GenericBuyInfo( typeof( MortarPestle ), 8, 9, 0xE9B, 0 ) );
+			{
+                Add( new GenericBuyInfo( typeof( Ginseng ), 3, 144, 0xF85, 0 ) );
+                Add( new GenericBuyInfo( typeof( Garlic ), 3, 144, 0xF84, 0 ) );
+                Add( new GenericBuyInfo( typeof( MandrakeRoot ), 3, 144, 0xF86, 0 ) );
+                Add( new GenericBuyInfo( typeof( Nightshade ), 3, 144, 0xF88, 0 ) );
+                Add( new GenericBuyInfo( typeof( Bloodmoss ), 5, 144, 0xF7B, 0 ) );
+                Add( new GenericBuyInfo( typeof( MortarPestle ), 8, 9, 0xE9B, 0 ) );
 				Add( new GenericBuyInfo( typeof( Bottle ), 5, 9, 0xF0E, 0 ) ); 
  
 			} 

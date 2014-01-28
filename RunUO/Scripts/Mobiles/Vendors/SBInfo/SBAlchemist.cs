@@ -30,14 +30,14 @@ namespace Server.Mobiles
 				Add( new GenericBuyInfo( typeof( LesserExplosionPotion ), 21, 9, 0xF0D, 0 ) );
 				Add( new GenericBuyInfo( typeof( MortarPestle ), 8, 9, 0xE9B, 0 ) );
 
-				Add( new GenericBuyInfo( typeof( BlackPearl ), 5, 20, 0xF7A, 0 ) );
-				Add( new GenericBuyInfo( typeof( Bloodmoss ), 5, 20, 0xF7B, 0 ) );
-				Add( new GenericBuyInfo( typeof( Garlic ), 3, 20, 0xF84, 0 ) );
-				Add( new GenericBuyInfo( typeof( Ginseng ), 3, 20, 0xF85, 0 ) );
-				Add( new GenericBuyInfo( typeof( MandrakeRoot ), 3, 20, 0xF86, 0 ) );
-				Add( new GenericBuyInfo( typeof( Nightshade ), 3, 20, 0xF88, 0 ) );
-				Add( new GenericBuyInfo( typeof( SpidersSilk ), 3, 20, 0xF8D, 0 ) );
-				Add( new GenericBuyInfo( typeof( SulfurousAsh ), 3, 20, 0xF8C, 0 ) );
+                Add( new GenericBuyInfo( typeof( BlackPearl ), 5, 144, 0xF7A, 0 ) );
+                Add( new GenericBuyInfo( typeof( Bloodmoss ), 5, 144, 0xF7B, 0 ) );
+                Add( new GenericBuyInfo( typeof( Garlic ), 3, 144, 0xF84, 0 ) );
+                Add( new GenericBuyInfo( typeof( Ginseng ), 3, 144, 0xF85, 0 ) );
+                Add( new GenericBuyInfo( typeof( MandrakeRoot ), 3, 144, 0xF86, 0 ) );
+                Add( new GenericBuyInfo( typeof( Nightshade ), 3, 144, 0xF88, 0 ) );
+                Add( new GenericBuyInfo( typeof( SpidersSilk ), 3, 144, 0xF8D, 0 ) );
+                Add( new GenericBuyInfo( typeof( SulfurousAsh ), 3, 144, 0xF8C, 0 ) );
 
 				Add( new GenericBuyInfo( typeof( Bottle ), 5, 9, 0xF0E, 0 ) );
 
