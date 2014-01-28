@@ -7,9 +7,14 @@ namespace Server.Items
 		[Constructable]
 		public LightSource() : base( 0x1647 )
 		{
-			Layer = Layer.TwoHanded;
+			Layer = Layer.OuterLegs;
 			Movable = false;
 		}
+
+        public override bool AllowEquipedCast( Mobile from )
+        {
+            return true;
+        }
 
 		public LightSource( Serial serial ) : base( serial )
 		{

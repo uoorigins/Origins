@@ -11,13 +11,9 @@ namespace Server.Mobiles
 	{
 		public override InhumanSpeech SpeechType{ get{ return InhumanSpeech.Wisp; } }
 
-		//public override Faction FactionAllegiance{ get{ return CouncilOfMages.Instance; } }
-		public override Ethics.Ethic EthicAllegiance { get { return Ethics.Ethic.Hero; } }
-
-		public override TimeSpan ReacquireDelay { get { return TimeSpan.FromSeconds( 1.0 ); } }
-
 		[Constructable]
-		public Wisp() : base( AIType.AI_Mage, FightMode.Aggressor, 10, 1, 0.2, 0.4 )
+        public Wisp()
+            : base( AIType.AI_Mage, FightMode.Aggressor, 10, 1, 0.2, 0.4 )
 		{
 			Name = "a wisp";
 			Body = 58;
@@ -56,11 +52,6 @@ namespace Server.Mobiles
 
 		public override void GenerateLoot()
 		{
-		}
-
-		public override OppositionGroup OppositionGroup
-		{
-			get{ return OppositionGroup.FeyAndUndead; }
 		}
 
 		public Wisp( Serial serial ) : base( serial )
