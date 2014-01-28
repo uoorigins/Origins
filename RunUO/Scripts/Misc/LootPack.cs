@@ -567,7 +567,7 @@ namespace Server
         
         public static readonly LootPack OldAverage = new LootPack(new LootPackEntry[]
 			{
-                new LootPackEntry( true, OldMagicItems,  25.00, 10, 1, (int)Intensity.Normal, (int)Intensity.Level3 ),
+                new LootPackEntry( true, OldMagicItems,  25.00, 10, 1, (int)Intensity.Level1, (int)Intensity.Level4 ),
                 new LootPackEntry( true, PotionReagent,	 50.00, Utility.RandomMinMax( 3, 6 ) ),
 				new LootPackEntry( true, Missle,         50.00, Utility.RandomMinMax( 5, 15 ) ),
                 new LootPackEntry( true,  Beverage,     100.00, 1),
