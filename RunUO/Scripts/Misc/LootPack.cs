@@ -819,80 +819,86 @@ namespace Server
         {
             if ( item != null )
             {
+                bool isMagic = GetRandomOldBonus() > 0;
                 if ( item is BaseWeapon || item is BaseArmor || item is BaseJewel || item is BaseHat || item is BaseShield )
                 {
                     if ( item is BaseWeapon && !( item is BaseWand ) && !( item is GnarledStaff ) )
                     {
                         BaseWeapon weapon = (BaseWeapon)item;
+                        int rand = 0;
 
-                        if ( 60 > Utility.Random( 100 ) )
-                            weapon.AccuracyLevel = (WeaponAccuracyLevel)GetRandomOldBonus();
-
-                        if ( 40 > Utility.Random( 100 ) )
-                            weapon.DamageLevel = (WeaponDamageLevel)GetRandomOldBonus();
-
-                        if ( 20 > Utility.Random( 100 ) )
-                            weapon.DurabilityLevel = (WeaponDurabilityLevel)GetRandomOldBonus();
-
-                        int rand = Utility.Random( 1000 );
-                        if ( weapon.DamageLevel == 0 && 100 > rand && GetRandomOldBonus() > 0 )
+                        while ( isMagic && weapon.AccuracyLevel == 0 && weapon.DamageLevel == 0 && weapon.DurabilityLevel == 0 && weapon.Effect == WeaponEffect.None )
                         {
-                            #region Random Magic Effect
-                            if ( 10 > rand )
-                            {
-                                weapon.Charges = Utility.RandomMinMax( 5, 15 );
-                                weapon.Effect = WeaponEffect.Clumsy;
-                            }
-                            else if ( 20 > rand )
-                            {
-                                weapon.Charges = Utility.RandomMinMax( 5, 15 );
-                                weapon.Effect = WeaponEffect.Feeblemind;
-                            }
-                            else if ( 30 > rand )
-                            {
-                                weapon.Charges = Utility.RandomMinMax( 5, 15 );
-                                weapon.Effect = WeaponEffect.MagicArrow;
-                            }
-                            else if ( 40 > rand )
-                            {
-                                weapon.Charges = Utility.RandomMinMax( 5, 15 );
-                                weapon.Effect = WeaponEffect.Weakness;
-                            }
-                            else if ( 50 > rand )
-                            {
-                                weapon.Charges = Utility.RandomMinMax( 5, 15 );
-                                weapon.Effect = WeaponEffect.Harm;
-                            }
-                            else if ( 60 > rand )
-                            {
-                                weapon.Charges = Utility.RandomMinMax( 5, 15 );
-                                weapon.Effect = WeaponEffect.Paralyze;
-                            }
-                            else if ( 65 > rand )
-                            {
-                                weapon.Charges = Utility.RandomMinMax( 5, 15 );
-                                weapon.Effect = WeaponEffect.Fireball;
-                            }
-                            else if ( 70 > rand )
-                            {
-                                weapon.Charges = Utility.RandomMinMax( 5, 15 );
-                                weapon.Effect = WeaponEffect.Curse;
-                            }
-                            else if ( 75 > rand )
-                            {
-                                weapon.Charges = Utility.RandomMinMax( 5, 15 );
-                                weapon.Effect = WeaponEffect.ManaDrain;
-                            }
-                            else if ( 78 > rand )
-                            {
-                                weapon.Charges = Utility.RandomMinMax( 5, 15 );
-                                weapon.Effect = WeaponEffect.Lightning;
-                            }
-                            #endregion
-                        }
+                            rand = Utility.Random( 100 );
 
-                        if ( 5 > Utility.Random( 100 ) )
-                            weapon.Slayer = SlayerName.Silver;
+                            if ( 35 > Utility.Random( 100 ) )
+                                weapon.AccuracyLevel = (WeaponAccuracyLevel)GetRandomOldBonus();
+
+                            if ( 30 > Utility.Random( 100 ) )
+                                weapon.DamageLevel = (WeaponDamageLevel)GetRandomOldBonus();
+
+                            if ( 25 > Utility.Random( 100 ) )
+                                weapon.DurabilityLevel = (WeaponDurabilityLevel)GetRandomOldBonus();
+
+                            if ( 10 > Utility.Random( 100 ) )
+                            {
+                                #region Random Magic Effect
+                                if ( 10 > rand )
+                                {
+                                    weapon.Charges = Utility.RandomMinMax( 5, 50 );
+                                    weapon.Effect = WeaponEffect.Clumsy;
+                                }
+                                else if ( 20 > rand )
+                                {
+                                    weapon.Charges = Utility.RandomMinMax( 5, 50 );
+                                    weapon.Effect = WeaponEffect.Feeblemind;
+                                }
+                                else if ( 30 > rand )
+                                {
+                                    weapon.Charges = Utility.RandomMinMax( 5, 50 );
+                                    weapon.Effect = WeaponEffect.MagicArrow;
+                                }
+                                else if ( 40 > rand )
+                                {
+                                    weapon.Charges = Utility.RandomMinMax( 5, 50 );
+                                    weapon.Effect = WeaponEffect.Weakness;
+                                }
+                                else if ( 50 > rand )
+                                {
+                                    weapon.Charges = Utility.RandomMinMax( 5, 50 );
+                                    weapon.Effect = WeaponEffect.Harm;
+                                }
+                                else if ( 60 > rand )
+                                {
+                                    weapon.Charges = Utility.RandomMinMax( 5, 50 );
+                                    weapon.Effect = WeaponEffect.Paralyze;
+                                }
+                                else if ( 65 > rand )
+                                {
+                                    weapon.Charges = Utility.RandomMinMax( 5, 50 );
+                                    weapon.Effect = WeaponEffect.Fireball;
+                                }
+                                else if ( 70 > rand )
+                                {
+                                    weapon.Charges = Utility.RandomMinMax( 5, 50 );
+                                    weapon.Effect = WeaponEffect.Curse;
+                                }
+                                else if ( 75 > rand )
+                                {
+                                    weapon.Charges = Utility.RandomMinMax( 5, 50 );
+                                    weapon.Effect = WeaponEffect.ManaDrain;
+                                }
+                                else if ( 78 > rand )
+                                {
+                                    weapon.Charges = Utility.RandomMinMax( 5, 50 );
+                                    weapon.Effect = WeaponEffect.Lightning;
+                                }
+                                #endregion
+                            }
+
+                            if ( 5 > Utility.Random( 100 ) )
+                                weapon.Slayer = SlayerName.Silver;
+                        }
 
                         //pre-t2a
                         /*if ( from != null && weapon.AccuracyLevel == 0 && weapon.DamageLevel == 0 && weapon.DurabilityLevel == 0 && weapon.Slayer == SlayerName.None && 5 > Utility.Random( 100 ) )
@@ -982,21 +988,27 @@ namespace Server
                     {
                         BaseArmor armor = (BaseArmor)item;
 
-                        if ( 60 > Utility.Random( 100 ) )
-                            armor.ProtectionLevel = (ArmorProtectionLevel)GetRandomOldBonus();
+                        while ( isMagic && armor.ProtectionLevel == 0 && armor.Durability == 0 )
+                        {
+                            if ( 75 > Utility.Random( 100 ) )
+                                armor.ProtectionLevel = (ArmorProtectionLevel)GetRandomOldBonus();
 
-                        if ( 20 > Utility.Random( 100 ) )
-                            armor.Durability = (ArmorDurabilityLevel)GetRandomOldBonus();
+                            if ( 25 > Utility.Random( 100 ) )
+                                armor.Durability = (ArmorDurabilityLevel)GetRandomOldBonus();
+                        }
                     }
                     else if ( item is BaseShield )
                     {
                         BaseShield shield = (BaseShield)item;
 
-                        if ( 60 > Utility.Random( 100 ) )
-                            shield.ProtectionLevel = (ArmorProtectionLevel)GetRandomOldBonus();
+                        while ( isMagic && shield.ProtectionLevel == 0 && shield.Durability == 0 )
+                        {
+                            if ( 75 > Utility.Random( 100 ) )
+                                shield.ProtectionLevel = (ArmorProtectionLevel)GetRandomOldBonus();
 
-                        if ( 20 > Utility.Random( 100 ) )
-                            shield.Durability = (ArmorDurabilityLevel)GetRandomOldBonus();
+                            if ( 25 > Utility.Random( 100 ) )
+                                shield.Durability = (ArmorDurabilityLevel)GetRandomOldBonus();
+                        }
                     }
                     else if ( item is BaseJewel )
                     {
