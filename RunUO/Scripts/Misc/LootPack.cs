@@ -12,11 +12,16 @@ namespace Server
         public enum Intensity
         {
             Normal = 0,
-            Level1 = 50,
-            Level2 = 75,
-            Level3 = 89,
-            Level4 = 97,
-            Level5 = 100
+            Level1Min = 1,
+            Level1Max = 50,
+            Level2Min = 51,
+            Level2Max = 75,
+            Level3Min = 76,
+            Level3Max = 88,
+            Level4Min = 89,
+            Level4Max = 96,
+            Level5Min = 97,
+            Level5Max = 100
         }
 
 		public static int GetLuckChance( Mobile killer, Mobile victim )
@@ -567,7 +572,7 @@ namespace Server
         
         public static readonly LootPack OldAverage = new LootPack(new LootPackEntry[]
 			{
-                new LootPackEntry( true, OldMagicItems,  25.00, 10, 1, (int)Intensity.Level1, (int)Intensity.Level4 ),
+                new LootPackEntry( true, OldMagicItems,  25.00, 10, 1, (int)Intensity.Level1Min, (int)Intensity.Level3Max ),
                 new LootPackEntry( true, PotionReagent,	 50.00, Utility.RandomMinMax( 3, 6 ) ),
 				new LootPackEntry( true, Missle,         50.00, Utility.RandomMinMax( 5, 15 ) ),
                 new LootPackEntry( true,  Beverage,     100.00, 1),
@@ -577,7 +582,7 @@ namespace Server
 
         public static readonly LootPack OldRich = new LootPack(new LootPackEntry[]
 			{
-				new LootPackEntry( true, OldMagicItems,  35.00, 10, 1, (int)Intensity.Level1, (int)Intensity.Level5 ),
+				new LootPackEntry( true, OldMagicItems,  35.00, 10, 1, (int)Intensity.Level1Min, (int)Intensity.Level5Max ),
                 new LootPackEntry( true, PotionReagent,	 50.00, Utility.RandomMinMax( 3, 6 ) ),
 				new LootPackEntry( true, Missle,         50.00, Utility.RandomMinMax( 5, 15 ) ),
                 new LootPackEntry( true,  Beverage,     100.00, 1),
@@ -587,7 +592,7 @@ namespace Server
 
         public static readonly LootPack OldFilthyRich = new LootPack(new LootPackEntry[]
 			{
-                new LootPackEntry( true, OldMagicItems,  50.00, 10, 1, (int)Intensity.Level1, (int)Intensity.Level5 ),
+                new LootPackEntry( true, OldMagicItems,  50.00, 10, 1, (int)Intensity.Level1Min, (int)Intensity.Level5Max ),
                 new LootPackEntry( true, PotionReagent,	 50.00, Utility.RandomMinMax( 3, 6 ) ),
 				new LootPackEntry( true, Missle,         50.00, Utility.RandomMinMax( 5, 15 ) ),
                 new LootPackEntry( true,  Beverage,     100.00, 1),
@@ -598,7 +603,7 @@ namespace Server
         //Blood
         public static readonly LootPack OldUltraRich = new LootPack(new LootPackEntry[]
 			{
-                new LootPackEntry( true, OldMagicItems,  25.00, 10, 1, (int)Intensity.Level2, (int)Intensity.Level5 ),
+                new LootPackEntry( true, OldMagicItems,  25.00, 10, 1, (int)Intensity.Level2Min, (int)Intensity.Level5Max ),
                 new LootPackEntry( true, PotionReagent,	 50.00, Utility.RandomMinMax( 3, 6 ) ),
 				new LootPackEntry( true, Missle,         50.00, Utility.RandomMinMax( 5, 15 ) ),
                 new LootPackEntry( true, OldMagicJewel, 0.50, 1 ),
@@ -610,7 +615,7 @@ namespace Server
         //Dragon 
         public static readonly LootPack OldSuperBoss = new LootPack(new LootPackEntry[]
 			{
-                new LootPackEntry( true, OldMagicItems,  40.00, 10, 1, (int)Intensity.Level3, (int)Intensity.Level5 ),
+                new LootPackEntry( true, OldMagicItems,  40.00, 10, 1, (int)Intensity.Level3Min, (int)Intensity.Level5Max ),
                 new LootPackEntry( true, PotionReagent,	 50.00, Utility.RandomMinMax( 3, 6 ) ),
 				new LootPackEntry( true, Missle,         50.00, Utility.RandomMinMax( 5, 15 ) ),
                 new LootPackEntry( true, OldMagicJewel, 0.50, 1 ),
@@ -622,7 +627,7 @@ namespace Server
         //AW
         public static readonly LootPack OldSpecial = new LootPack(new LootPackEntry[]
 			{
-                new LootPackEntry( true, OldMagicItems,  55.00, 10, 1, (int)Intensity.Level3, (int)Intensity.Level5 ),
+                new LootPackEntry( true, OldMagicItems,  55.00, 10, 1, (int)Intensity.Level3Min, (int)Intensity.Level5Max ),
                 new LootPackEntry( true, PotionReagent,	 50.00, Utility.RandomMinMax( 3, 6 ) ),
 				new LootPackEntry( true, Missle,         50.00, Utility.RandomMinMax( 5, 15 ) ),
                 new LootPackEntry( true, OldMagicJewel, 2.00, 1 ),
