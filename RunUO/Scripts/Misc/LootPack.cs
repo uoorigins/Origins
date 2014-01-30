@@ -832,7 +832,77 @@ namespace Server
             {
                 bool isMagic = GetRandomOldBonus() > 0;
 
-                if ( item is BaseWeapon )
+                if ( item is GnarledStaff )
+                {
+                    GnarledStaff staff = (GnarledStaff)item;
+                    int rand = Utility.Random( 100 );
+
+                    #region Random Magic Effect
+                    if ( 10 > rand )
+                    {
+                        staff.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
+                        staff.StaffEffect = WandEffect.Clumsiness;
+                    }
+                    else if ( 20 > rand )
+                    {
+                        staff.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
+                        staff.StaffEffect = WandEffect.Feeblemindedness;
+                    }
+                    else if ( 30 > rand )
+                    {
+                        staff.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
+                        staff.StaffEffect = WandEffect.MagicArrow;
+                    }
+                    else if ( 40 > rand )
+                    {
+                        staff.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
+                        staff.StaffEffect = WandEffect.Weakness;
+                    }
+                    else if ( 50 > rand )
+                    {
+                        staff.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
+                        staff.StaffEffect = WandEffect.Harming;
+                    }
+                    else if ( 60 > rand )
+                    {
+                        if ( Utility.RandomBool() )
+                        {
+                            staff.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
+                            staff.StaffEffect = WandEffect.Paralyze;
+                        }
+                        else
+                        {
+                            staff.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
+                            staff.StaffEffect = WandEffect.Identification;
+                        }
+                    }
+                    else if ( 65 > rand )
+                    {
+                        staff.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
+                        staff.StaffEffect = WandEffect.Fireball;
+                    }
+                    else if ( 70 > rand )
+                    {
+                        staff.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
+                        staff.StaffEffect = WandEffect.Curse;
+                    }
+                    else if ( 75 > rand )
+                    {
+                        staff.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
+                        staff.StaffEffect = WandEffect.ManaDraining;
+                    }
+                    else if ( 78 > rand )
+                    {
+                        staff.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
+                        staff.StaffEffect = WandEffect.Lightning;
+                    }
+                    #endregion Random Magic Effect
+                }
+                else if ( item is BaseWand )
+                {
+                    ( (BaseWand)item ).Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
+                }
+                else if ( item is BaseWeapon )
                 {
                     if ( item is BaseWand || item is GnarledStaff )
                         return item;

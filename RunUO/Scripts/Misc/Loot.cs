@@ -413,72 +413,7 @@ namespace Server
 
         public static BaseStaff RandomGnarledStaff()
         {
-            BaseStaff staff = new GnarledStaff();
-
-            int rand = Utility.Random( 100 );
-
-            #region Random Magic Effect
-            if ( 10 > rand )
-            {
-                staff.Charges = Utility.RandomMinMax( 5, 50 );
-                staff.StaffEffect = WandEffect.Clumsiness;
-            }
-            else if ( 20 > rand )
-            {
-                staff.Charges = Utility.RandomMinMax( 5, 50 );
-                staff.StaffEffect = WandEffect.Feeblemindedness;
-            }
-            else if ( 30 > rand )
-            {
-                staff.Charges = Utility.RandomMinMax( 5, 50 );
-                staff.StaffEffect = WandEffect.MagicArrow;
-            }
-            else if ( 40 > rand )
-            {
-                staff.Charges = Utility.RandomMinMax( 5, 50 );
-                staff.StaffEffect = WandEffect.Weakness;
-            }
-            else if ( 50 > rand )
-            {
-                staff.Charges = Utility.RandomMinMax( 5, 50 );
-                staff.StaffEffect = WandEffect.Harming;
-            }
-            else if ( 60 > rand )
-            {
-                if ( Utility.RandomBool() )
-                {
-                    staff.Charges = Utility.RandomMinMax( 5, 50 );
-                    staff.StaffEffect = WandEffect.Paralyze;
-                }
-                else
-                {
-                    staff.Charges = Utility.RandomMinMax( 5, 50 );
-                    staff.StaffEffect = WandEffect.Identification;
-                }
-            }
-            else if ( 65 > rand )
-            {
-                staff.Charges = Utility.RandomMinMax( 5, 50 );
-                staff.StaffEffect = WandEffect.Fireball;
-            }
-            else if ( 70 > rand )
-            {
-                staff.Charges = Utility.RandomMinMax( 5, 50 );
-                staff.StaffEffect = WandEffect.Curse;
-            }
-            else if ( 75 > rand )
-            {
-                staff.Charges = Utility.RandomMinMax( 5, 50 );
-                staff.StaffEffect = WandEffect.ManaDraining;
-            }
-            else if ( 78 > rand )
-            {
-                staff.Charges = Utility.RandomMinMax( 5, 50 );
-                staff.StaffEffect = WandEffect.Lightning;
-            }
-            #endregion Random Magic Effect
-
-            return staff;
+            return new GnarledStaff();
         }
 
         public static int GetRandomHue()
@@ -493,7 +428,6 @@ namespace Server
                 case 4: return Utility.RandomYellowHue();
                 case 5: return Utility.RandomNeutralHue();
             }
-
         }
 
         public static BaseBeverage RandomBeverage()
