@@ -27,7 +27,6 @@ namespace Server.Items
 	public abstract class BaseWand : BaseBashing
 	{
 		private WandEffect m_WandEffect;
-		private int m_Charges;
 
         public override string AsciiName { get { return "wand"; } }
 
