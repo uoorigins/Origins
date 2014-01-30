@@ -3212,7 +3212,8 @@ namespace Server.Items
 
             string displayText;
 
-            if ( !IsInIDList( from ) && IsMagic() && from.AccessLevel == AccessLevel.Player ) {
+            if ( !IsInIDList( from ) && ( IsMagic() || isMagicWand || isMagicStaff) && from.AccessLevel == AccessLevel.Player )
+            {
                 displayText = String.Format( "{0} magic {1}", exceptionalText, ( Name != null ? Name : AsciiName ) );
             }
             else {
