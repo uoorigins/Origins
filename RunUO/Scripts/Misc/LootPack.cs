@@ -708,7 +708,7 @@ namespace Server
 
         public static readonly LootPack Targetables = new LootPack( new LootPackEntry[]
 			{
-				new LootPackEntry( true, OldMagicWand,		100.00, 1, 1, 100, 100 )
+				new LootPackEntry( true, OldMagicWand,		100.00, 1, 1, 100, 200 )
 			} );
     }
 
@@ -858,52 +858,52 @@ namespace Server
                             #region Random Magic Effect
                             if ( 10 > rand )
                             {
-                                weapon.Charges = Utility.RandomMinMax( 5, 50 );
+                                weapon.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                                 weapon.Effect = WeaponEffect.Clumsy;
                             }
                             else if ( 20 > rand )
                             {
-                                weapon.Charges = Utility.RandomMinMax( 5, 50 );
+                                weapon.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                                 weapon.Effect = WeaponEffect.Feeblemind;
                             }
                             else if ( 30 > rand )
                             {
-                                weapon.Charges = Utility.RandomMinMax( 5, 50 );
+                                weapon.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                                 weapon.Effect = WeaponEffect.MagicArrow;
                             }
                             else if ( 40 > rand )
                             {
-                                weapon.Charges = Utility.RandomMinMax( 5, 50 );
+                                weapon.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                                 weapon.Effect = WeaponEffect.Weakness;
                             }
                             else if ( 50 > rand )
                             {
-                                weapon.Charges = Utility.RandomMinMax( 5, 50 );
+                                weapon.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                                 weapon.Effect = WeaponEffect.Harm;
                             }
                             else if ( 60 > rand )
                             {
-                                weapon.Charges = Utility.RandomMinMax( 5, 50 );
+                                weapon.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                                 weapon.Effect = WeaponEffect.Paralyze;
                             }
                             else if ( 65 > rand )
                             {
-                                weapon.Charges = Utility.RandomMinMax( 5, 50 );
+                                weapon.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                                 weapon.Effect = WeaponEffect.Fireball;
                             }
                             else if ( 70 > rand )
                             {
-                                weapon.Charges = Utility.RandomMinMax( 5, 50 );
+                                weapon.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                                 weapon.Effect = WeaponEffect.Curse;
                             }
                             else if ( 75 > rand )
                             {
-                                weapon.Charges = Utility.RandomMinMax( 5, 50 );
+                                weapon.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                                 weapon.Effect = WeaponEffect.ManaDrain;
                             }
                             else if ( 78 > rand )
                             {
-                                weapon.Charges = Utility.RandomMinMax( 5, 50 );
+                                weapon.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                                 weapon.Effect = WeaponEffect.Lightning;
                             }
                             #endregion
@@ -948,62 +948,62 @@ namespace Server
                     if ( 33 >= random ) //nightsight
                     {
                         clothing.Effect = ClothEffect.NightSight;
-                        clothing.Charges = Utility.RandomMinMax( 20, 81 );
+                        clothing.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                     }
                     else if ( 46 >= random )
                     {
                         clothing.Effect = ClothEffect.Protection;
-                        clothing.Charges = Utility.RandomMinMax( 20, 81 );
+                        clothing.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                     }
                     else if ( 54 >= random )
                     {
                         clothing.Effect = ClothEffect.Agility;
-                        clothing.Charges = Utility.RandomMinMax( 20, 81 );
+                        clothing.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                     }
                     else if ( 62 >= random )
                     {
                         clothing.Effect = ClothEffect.Cunning;
-                        clothing.Charges = Utility.RandomMinMax( 20, 81 );
+                        clothing.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                     }
                     else if ( 70 >= random )
                     {
                         clothing.Effect = ClothEffect.Strength;
-                        clothing.Charges = Utility.RandomMinMax( 20, 81 );
+                        clothing.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                     }
                     else if ( 78 >= random )
                     {
                         clothing.Effect = ClothEffect.Invisibility;
-                        clothing.Charges = Utility.RandomMinMax( 20, 81 );
+                        clothing.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                     }
                     else if ( 83 >= random )
                     {
                         clothing.Effect = ClothEffect.MagicReflection;
-                        clothing.Charges = Utility.RandomMinMax( 20, 81 );
+                        clothing.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                     }
                     else if ( 87 >= random )
                     {
                         clothing.Effect = ClothEffect.Feeblemind;
-                        clothing.Charges = Utility.RandomMinMax( 20, 81 );
+                        clothing.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                     }
                     else if ( 91 >= random )
                     {
                         clothing.Effect = ClothEffect.Clumsy;
-                        clothing.Charges = Utility.RandomMinMax( 20, 81 );
+                        clothing.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                     }
                     else if ( 95 >= random )
                     {
                         clothing.Effect = ClothEffect.Weaken;
-                        clothing.Charges = Utility.RandomMinMax( 20, 81 );
+                        clothing.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                     }
                     else if ( 98 >= random )
                     {
                         clothing.Effect = ClothEffect.Bless;
-                        clothing.Charges = Utility.RandomMinMax( 20, 81 );
+                        clothing.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                     }
                     else
                     {
                         clothing.Effect = ClothEffect.Curse;
-                        clothing.Charges = Utility.RandomMinMax( 20, 81 );
+                        clothing.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                     }
                     #endregion
                 }
@@ -1016,70 +1016,70 @@ namespace Server
                     if ( 33 >= random ) //nightsight
                     {
                         jewel.Effect = JewelEffect.NightSight;
-                        jewel.Charges = Utility.RandomMinMax( 20, 81 );
+                        jewel.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                     }
                     else if ( 46 >= random )
                     {
                         jewel.Effect = JewelEffect.Protection;
-                        jewel.Charges = Utility.RandomMinMax( 20, 81 );
+                        jewel.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                     }
                     else if ( 54 >= random )
                     {
                         jewel.Effect = JewelEffect.Agility;
-                        jewel.Charges = Utility.RandomMinMax( 20, 81 );
+                        jewel.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                     }
                     else if ( 62 >= random )
                     {
                         jewel.Effect = JewelEffect.Cunning;
-                        jewel.Charges = Utility.RandomMinMax( 20, 81 );
+                        jewel.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                     }
                     else if ( 70 >= random )
                     {
                         jewel.Effect = JewelEffect.Strength;
-                        jewel.Charges = Utility.RandomMinMax( 20, 81 );
+                        jewel.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                     }
                     else if ( 78 >= random )
                     {
                         if ( Utility.RandomBool() && jewel is BaseRing )
                         {
                             jewel.Effect = JewelEffect.Teleportation;
-                            jewel.Charges = Utility.RandomMinMax( 20, 81 );
+                            jewel.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                         }
                         else
                         {
                             jewel.Effect = JewelEffect.Invisibility;
-                            jewel.Charges = Utility.RandomMinMax( 20, 81 );
+                            jewel.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                         }
                     }
                     else if ( 83 >= random )
                     {
                         jewel.Effect = JewelEffect.MagicReflection;
-                        jewel.Charges = Utility.RandomMinMax( 20, 81 );
+                        jewel.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                     }
                     else if ( 87 >= random )
                     {
                         jewel.Effect = JewelEffect.Feeblemind;
-                        jewel.Charges = Utility.RandomMinMax( 20, 81 );
+                        jewel.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                     }
                     else if ( 91 >= random )
                     {
                         jewel.Effect = JewelEffect.Clumsy;
-                        jewel.Charges = Utility.RandomMinMax( 20, 81 );
+                        jewel.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                     }
                     else if ( 95 >= random )
                     {
                         jewel.Effect = JewelEffect.Weaken;
-                        jewel.Charges = Utility.RandomMinMax( 20, 81 );
+                        jewel.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                     }
                     else if ( 98 >= random )
                     {
                         jewel.Effect = JewelEffect.Bless;
-                        jewel.Charges = Utility.RandomMinMax( 20, 81 );
+                        jewel.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                     }
                     else
                     {
                         jewel.Effect = JewelEffect.Curse;
-                        jewel.Charges = Utility.RandomMinMax( 20, 81 );
+                        jewel.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
                     }
                     #endregion
                 }
