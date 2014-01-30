@@ -17,26 +17,6 @@ namespace Server.Items
 		{
 		}
 
-        public override void OnSingleClick(Mobile from)
-        {
-            if (this.Name != null)
-            {
-                from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", this.Name));
-            }
-            else
-            {
-                if (IsInIDList(from) || from.AccessLevel >= AccessLevel.GameMaster)
-                {
-                    from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a wand of evil ({0} charges)", Charges)));
-                    
-                }
-                else
-                {
-                    from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a magic wand"));
-                }
-            }
-        }
-
 		public override void Serialize( GenericWriter writer )
 		{
 			base.Serialize( writer );
