@@ -6,10 +6,10 @@ using Server.Items;
 
 namespace Server
 {
-	public class Loot
-	{
-		#region List definitions
-		private static Type[] m_SEWeaponTypes = new Type[]
+    public class Loot
+    {
+        #region List definitions
+        private static Type[] m_SEWeaponTypes = new Type[]
 			{
 				typeof( Bokuto ),				typeof( Daisho ),				typeof( Kama ),
 				typeof( Lajatang ),				typeof( NoDachi ),				typeof( Nunchaku ),
@@ -17,18 +17,18 @@ namespace Server
 				typeof( Tetsubo ),				typeof( Wakizashi )
 			};
 
-		public static Type[] SEWeaponTypes{ get{ return m_SEWeaponTypes; } }
+        public static Type[] SEWeaponTypes { get { return m_SEWeaponTypes; } }
 
-		private static Type[] m_AosWeaponTypes = new Type[]
+        private static Type[] m_AosWeaponTypes = new Type[]
 			{
 				typeof( Scythe ),				typeof( BoneHarvester ),		typeof( Scepter ),
 				typeof( BladedStaff ),			typeof( Pike ),					typeof( DoubleBladedStaff ),
 				typeof( Lance ),				typeof( CrescentBlade )
 			};
 
-		public static Type[] AosWeaponTypes{ get{ return m_AosWeaponTypes; } }
+        public static Type[] AosWeaponTypes { get { return m_AosWeaponTypes; } }
 
-		private static Type[] m_WeaponTypes = new Type[]
+        private static Type[] m_WeaponTypes = new Type[]
 			{
 				typeof( Axe ),					typeof( BattleAxe ),			typeof( DoubleAxe ),
 				typeof( ExecutionersAxe ),		typeof( Hatchet ),				typeof( LargeBattleAxe ),
@@ -44,30 +44,30 @@ namespace Server
 				typeof( Dagger ),				typeof( SkinningKnife )
 			};
 
-		public static Type[] WeaponTypes{ get{ return m_WeaponTypes; } }
+        public static Type[] WeaponTypes { get { return m_WeaponTypes; } }
 
-		private static Type[] m_SERangedWeaponTypes = new Type[]
+        private static Type[] m_SERangedWeaponTypes = new Type[]
 			{
 				typeof( Yumi )
 			};
 
-		public static Type[] SERangedWeaponTypes{ get{ return m_SERangedWeaponTypes; } }
+        public static Type[] SERangedWeaponTypes { get { return m_SERangedWeaponTypes; } }
 
-		private static Type[] m_AosRangedWeaponTypes = new Type[]
+        private static Type[] m_AosRangedWeaponTypes = new Type[]
 			{
 				typeof( CompositeBow ),			typeof( RepeatingCrossbow )
 			};
 
-		public static Type[] AosRangedWeaponTypes{ get{ return m_AosRangedWeaponTypes; } }
+        public static Type[] AosRangedWeaponTypes { get { return m_AosRangedWeaponTypes; } }
 
-		private static Type[] m_RangedWeaponTypes = new Type[]
+        private static Type[] m_RangedWeaponTypes = new Type[]
 			{
 				typeof( Bow ),					typeof( Crossbow ),				typeof( HeavyCrossbow )
 			};
 
-		public static Type[] RangedWeaponTypes{ get{ return m_RangedWeaponTypes; } }
+        public static Type[] RangedWeaponTypes { get { return m_RangedWeaponTypes; } }
 
-		private static Type[] m_SEArmorTypes = new Type[]
+        private static Type[] m_SEArmorTypes = new Type[]
 			{
 				typeof( ChainHatsuburi ),		typeof( LeatherDo ),			typeof( LeatherHaidate ),
 				typeof( LeatherHiroSode ),		typeof( LeatherJingasa ),		typeof( LeatherMempo ),
@@ -81,9 +81,9 @@ namespace Server
 				typeof( StuddedSuneate )
 			};
 
-		public static Type[] SEArmorTypes{ get{ return m_SEArmorTypes; } }
+        public static Type[] SEArmorTypes { get { return m_SEArmorTypes; } }
 
-		private static Type[] m_ArmorTypes = new Type[]
+        private static Type[] m_ArmorTypes = new Type[]
 			{
 				typeof( BoneArms ),				typeof( BoneChest ),			typeof( BoneGloves ),
 				typeof( BoneLegs ),				typeof( BoneHelm ),				typeof( ChainChest ),
@@ -101,7 +101,7 @@ namespace Server
 				typeof( StuddedGorget ),		typeof( StuddedLegs )
 			};
 
-		public static Type[] ArmorTypes{ get{ return m_ArmorTypes; } }
+        public static Type[] ArmorTypes { get { return m_ArmorTypes; } }
 
         //Specific Armor
         private static Type[] m_BoneArmorTypes = new Type[]
@@ -153,79 +153,80 @@ namespace Server
         public static Type[] StuddedArmorTypes { get { return m_StuddedArmorTypes; } }
         //End Armor types
 
-		private static Type[] m_AosShieldTypes = new Type[]
+        private static Type[] m_AosShieldTypes = new Type[]
 			{
 				typeof( ChaosShield ),			typeof( OrderShield )
 			};
 
-		public static Type[] AosShieldTypes{ get{ return m_AosShieldTypes; } }
+        public static Type[] AosShieldTypes { get { return m_AosShieldTypes; } }
 
-		private static Type[] m_ShieldTypes = new Type[]
+        private static Type[] m_ShieldTypes = new Type[]
 			{
 				typeof( BronzeShield ),			typeof( Buckler ),				typeof( HeaterShield ),
 				typeof( MetalShield ),			typeof( MetalKiteShield ),		typeof( WoodenKiteShield ),
 				typeof( WoodenShield )
 			};
 
-		public static Type[] ShieldTypes{ get{ return m_ShieldTypes; } }
+        public static Type[] ShieldTypes { get { return m_ShieldTypes; } }
 
-		private static Type[] m_GemTypes = new Type[]
+        private static Type[] m_GemTypes = new Type[]
 			{
 				typeof( Amber ),				typeof( Amethyst ),				typeof( Citrine ),
 				typeof( Diamond ),				typeof( Emerald ),				typeof( Ruby ),
 				typeof( Sapphire ),				typeof( StarSapphire ),			typeof( Tourmaline )
 			};
 
-		public static Type[] GemTypes{ get{ return m_GemTypes; } }
+        public static Type[] GemTypes { get { return m_GemTypes; } }
 
-		private static Type[] m_JewelryTypes = new Type[]
+        private static Type[] m_JewelryTypes = new Type[]
 			{
-				/*typeof( GoldRing ),				typeof( GoldBracelet ),
-				typeof( SilverRing ),			typeof( SilverBracelet )*/
-                typeof ( GoldRing ),              typeof( SilverRing )
+				typeof( GoldRing ),				typeof( GoldBracelet ),
+                typeof( GoldRing ),            typeof(Necklace),
+                typeof( GoldNecklace ),           typeof( GoldEarrings ),
+                typeof( GoldBeadNecklace )
 			};
 
-		public static Type[] JewelryTypes{ get{ return m_JewelryTypes; } }
+        public static Type[] JewelryTypes { get { return m_JewelryTypes; } }
 
-		private static Type[] m_RegTypes = new Type[]
+        private static Type[] m_RegTypes = new Type[]
 			{
 				typeof( BlackPearl ),			typeof( Bloodmoss ),			typeof( Garlic ),
 				typeof( Ginseng ),				typeof( MandrakeRoot ),			typeof( Nightshade ),
 				typeof( SulfurousAsh ),			typeof( SpidersSilk )
 			};
 
-		public static Type[] RegTypes{ get{ return m_RegTypes; } }
+        public static Type[] RegTypes { get { return m_RegTypes; } }
 
-		private static Type[] m_NecroRegTypes = new Type[]
+        private static Type[] m_NecroRegTypes = new Type[]
 			{
 				typeof( BatWing ),				typeof( GraveDust ),			typeof( DaemonBlood ),
 				typeof( NoxCrystal ),			typeof( PigIron )
 			};
 
-		public static Type[] NecroRegTypes{ get{ return m_NecroRegTypes; } }
+        public static Type[] NecroRegTypes { get { return m_NecroRegTypes; } }
 
-		private static Type[] m_PotionTypes = new Type[]
+        private static Type[] m_PotionTypes = new Type[]
 			{
 				typeof( AgilityPotion ),		typeof( StrengthPotion ),		typeof( RefreshPotion ),
 				typeof( LesserCurePotion ),		typeof( LesserHealPotion ),		typeof( LesserPoisonPotion )
 			};
 
-		public static Type[] PotionTypes{ get{ return m_PotionTypes; } }
+        public static Type[] PotionTypes { get { return m_PotionTypes; } }
 
-		private static Type[] m_SEInstrumentTypes = new Type[]
+        private static Type[] m_SEInstrumentTypes = new Type[]
 			{
 				typeof( BambooFlute )
 			};
 
-		public static Type[] SEInstrumentTypes{ get{ return m_SEInstrumentTypes; } }
+        public static Type[] SEInstrumentTypes { get { return m_SEInstrumentTypes; } }
 
-		private static Type[] m_InstrumentTypes = new Type[]
+        private static Type[] m_InstrumentTypes = new Type[]
 			{
 				typeof( Drums ),				typeof( Harp ),					typeof( LapHarp ),
 				typeof( Lute ),					typeof( Tambourine ),			typeof( TambourineTassel )
 			};
 
-		public static Type[] InstrumentTypes{ get{ return m_InstrumentTypes; } }
+        public static Type[] InstrumentTypes { get { return m_InstrumentTypes; } }
 
         private static Type[] m_StationaryTypes = new Type[]
 		{
@@ -236,7 +237,7 @@ namespace Server
 
         public static Type[] StationaryTypes { get { return m_StationaryTypes; } }
 
-		private static Type[] m_RegularScrollTypes = new Type[]
+        private static Type[] m_RegularScrollTypes = new Type[]
 			{
 				typeof( ClumsyScroll ),			typeof( CreateFoodScroll ),		typeof( FeeblemindScroll ),		typeof( HealScroll ),
 				typeof( MagicArrowScroll ),		typeof( NightSightScroll ),		typeof( ReactiveArmorScroll ),	typeof( WeakenScroll ),
@@ -256,15 +257,15 @@ namespace Server
 				typeof( SummonDaemonScroll ),	typeof( SummonEarthElementalScroll ),	typeof( SummonFireElementalScroll ),	typeof( SummonWaterElementalScroll )
 			};
 
-		private static Type[] m_NecromancyScrollTypes = new Type[]
+        private static Type[] m_NecromancyScrollTypes = new Type[]
 			{
 				typeof( AnimateDeadScroll ),		typeof( BloodOathScroll ),		typeof( CorpseSkinScroll ),	typeof( CurseWeaponScroll ),
 				typeof( EvilOmenScroll ),			typeof( HorrificBeastScroll ),	typeof( LichFormScroll ),	typeof( MindRotScroll ),
 				typeof( PainSpikeScroll ),			typeof( PoisonStrikeScroll ),	typeof( StrangleScroll ),	typeof( SummonFamiliarScroll ),
 				typeof( VampiricEmbraceScroll ),	typeof( VengefulSpiritScroll ),	typeof( WitherScroll ),		typeof( WraithFormScroll )
 			};
-			
-		private static Type[] m_SENecromancyScrollTypes = new Type[]
+
+        private static Type[] m_SENecromancyScrollTypes = new Type[]
 		{
 			typeof( AnimateDeadScroll ),		typeof( BloodOathScroll ),		typeof( CorpseSkinScroll ),	typeof( CurseWeaponScroll ),
 			typeof( EvilOmenScroll ),			typeof( HorrificBeastScroll ),	typeof( LichFormScroll ),	typeof( MindRotScroll ),
@@ -273,31 +274,31 @@ namespace Server
 			typeof( ExorcismScroll )
 		};
 
-		private static Type[] m_PaladinScrollTypes = new Type[0];
+        private static Type[] m_PaladinScrollTypes = new Type[0];
 
-		public static Type[] RegularScrollTypes{ get{ return m_RegularScrollTypes; } }
-		public static Type[] NecromancyScrollTypes{ get{ return m_NecromancyScrollTypes; } }
-		public static Type[] SENecromancyScrollTypes{ get{ return m_SENecromancyScrollTypes; } }
-		public static Type[] PaladinScrollTypes{ get{ return m_PaladinScrollTypes; } }
+        public static Type[] RegularScrollTypes { get { return m_RegularScrollTypes; } }
+        public static Type[] NecromancyScrollTypes { get { return m_NecromancyScrollTypes; } }
+        public static Type[] SENecromancyScrollTypes { get { return m_SENecromancyScrollTypes; } }
+        public static Type[] PaladinScrollTypes { get { return m_PaladinScrollTypes; } }
 
-		private static Type[] m_GrimmochJournalTypes = new Type[]
+        private static Type[] m_GrimmochJournalTypes = new Type[]
 		{
 			typeof( GrimmochJournal1 ),		typeof( GrimmochJournal2 ),		typeof( GrimmochJournal3 ),
 			typeof( GrimmochJournal6 ),		typeof( GrimmochJournal7 ),		typeof( GrimmochJournal11 ),
 			typeof( GrimmochJournal14 ),	typeof( GrimmochJournal17 ),	typeof( GrimmochJournal23 )
 		};
 
-		public static Type[] GrimmochJournalTypes{ get{ return m_GrimmochJournalTypes; } }
+        public static Type[] GrimmochJournalTypes { get { return m_GrimmochJournalTypes; } }
 
-		private static Type[] m_LysanderNotebookTypes = new Type[]
+        private static Type[] m_LysanderNotebookTypes = new Type[]
 		{
 			typeof( LysanderNotebook1 ),		typeof( LysanderNotebook2 ),		typeof( LysanderNotebook3 ),
 			typeof( LysanderNotebook7 ),		typeof( LysanderNotebook8 ),		typeof( LysanderNotebook11 )
 		};
 
-		public static Type[] LysanderNotebookTypes{ get{ return m_LysanderNotebookTypes; } }
+        public static Type[] LysanderNotebookTypes { get { return m_LysanderNotebookTypes; } }
 
-		private static Type[] m_TavarasJournalTypes = new Type[]
+        private static Type[] m_TavarasJournalTypes = new Type[]
 		{
 			typeof( TavarasJournal1 ),		typeof( TavarasJournal2 ),		typeof( TavarasJournal3 ),
 			typeof( TavarasJournal6 ),		typeof( TavarasJournal7 ),		typeof( TavarasJournal8 ),
@@ -306,10 +307,10 @@ namespace Server
 			typeof( TavarasJournal19 )
 		};
 
-		public static Type[] TavarasJournalTypes{ get{ return m_TavarasJournalTypes; } }
+        public static Type[] TavarasJournalTypes { get { return m_TavarasJournalTypes; } }
 
 
-		private static Type[] m_WandTypes = new Type[]
+        private static Type[] m_WandTypes = new Type[]
 			{
 				typeof( ClumsyWand ),               typeof( FeebleWand ),           typeof( FireballWand ),
 				typeof( CurseWand ),                typeof( HarmWand ),             typeof( ParalyzeWand ),
@@ -317,9 +318,9 @@ namespace Server
 				typeof( ManaDrainWand ),            typeof( WeaknessWand )          
                 
 			};
-		public static Type[] WandTypes{ get{ return m_WandTypes; } }
+        public static Type[] WandTypes { get { return m_WandTypes; } }
 
-		private static Type[] m_SEClothingTypes = new Type[]
+        private static Type[] m_SEClothingTypes = new Type[]
 			{
 				typeof( ClothNinjaJacket ),		typeof( FemaleKimono ),			typeof( Hakama ),
 				typeof( HakamaShita ),			typeof( JinBaori ),				typeof( Kamishimo ),
@@ -327,17 +328,17 @@ namespace Server
 				typeof( SamuraiTabi ),			typeof( TattsukeHakama ),		typeof( Waraji )
 			};
 
-		public static Type[] SEClothingTypes{ get{ return m_SEClothingTypes; } }
+        public static Type[] SEClothingTypes { get { return m_SEClothingTypes; } }
 
-		private static Type[] m_AosClothingTypes = new Type[]
+        private static Type[] m_AosClothingTypes = new Type[]
 			{
 				typeof( FurSarong ),			typeof( FurCape ),				typeof( FlowerGarland ),
 				typeof( GildedDress ),			typeof( FurBoots ),				typeof( FormalShirt ),
 		};
 
-		public static Type[] AosClothingTypes{ get{ return m_AosClothingTypes; } }
+        public static Type[] AosClothingTypes { get { return m_AosClothingTypes; } }
 
-		private static Type[] m_ClothingTypes = new Type[]
+        private static Type[] m_ClothingTypes = new Type[]
 			{
 				/*typeof( Cloak ),*/				
 				/*typeof( Bonnet ), */          typeof( Cap ),		            typeof( FeatheredHat ),
@@ -353,23 +354,23 @@ namespace Server
 				typeof( HalfApron ),            typeof( BearMask ),		        typeof( DeerMask ),
                 typeof( TribalMask ),           typeof( OrcMask ),              typeof( HornedTribalMask )
 			};
-		public static Type[] ClothingTypes{ get{ return m_ClothingTypes; } }
+        public static Type[] ClothingTypes { get { return m_ClothingTypes; } }
 
-		private static Type[] m_SEHatTypes = new Type[]
+        private static Type[] m_SEHatTypes = new Type[]
 			{
 				typeof( ClothNinjaHood ),		typeof( Kasa )
 			};
 
-		public static Type[] SEHatTypes{ get{ return m_SEHatTypes; } }
+        public static Type[] SEHatTypes { get { return m_SEHatTypes; } }
 
-		private static Type[] m_AosHatTypes = new Type[]
+        private static Type[] m_AosHatTypes = new Type[]
 			{
 				typeof( FlowerGarland ),	typeof( BearMask ),		typeof( DeerMask )	//Are Bear& Deer mask inside the Pre-AoS loottables too?
 			};
 
-		public static Type[] AosHatTypes{ get{ return m_AosHatTypes; } }
+        public static Type[] AosHatTypes { get { return m_AosHatTypes; } }
 
-		private static Type[] m_HatTypes = new Type[]
+        private static Type[] m_HatTypes = new Type[]
 			{
 				typeof( SkullCap ),			typeof( Bandana ),		typeof( FloppyHat ),
 				typeof( Cap ),				typeof( WideBrimHat ),	typeof( StrawHat ),
@@ -379,9 +380,9 @@ namespace Server
                 typeof( HornedTribalMask ), typeof( TribalMask ),   typeof( OrcMask )
 			};
 
-		public static Type[] HatTypes{ get{ return m_HatTypes; } }
+        public static Type[] HatTypes { get { return m_HatTypes; } }
 
-		private static Type[] m_LibraryBookTypes = new Type[]
+        private static Type[] m_LibraryBookTypes = new Type[]
 			{
 				typeof( GrammarOfOrcish ),		typeof( CallToAnarchy ),				typeof( ArmsAndWeaponsPrimer ),
 				typeof( SongOfSamlethe ),		typeof( TaleOfThreeTribes ),			typeof( GuideToGuilds ),
@@ -395,20 +396,20 @@ namespace Server
 				typeof( VirtueBook )
 			};
 
-		public static Type[] LibraryBookTypes{ get{ return m_LibraryBookTypes; } }
+        public static Type[] LibraryBookTypes { get { return m_LibraryBookTypes; } }
 
-		#endregion
+        #endregion
 
-		#region Accessors
+        #region Accessors
 
-		public static Item RandomWand()
-		{
+        public static Item RandomWand()
+        {
             int rand = Utility.Random( 3 );
             if ( 2 > rand )
                 return Construct( m_WandTypes ) as BaseWand;
             else
                 return RandomGnarledStaff() as BaseStaff;
-		}
+        }
 
         public static BaseStaff RandomGnarledStaff()
         {
@@ -482,7 +483,7 @@ namespace Server
 
         public static int GetRandomHue()
         {
-            switch (Utility.Random(6))
+            switch ( Utility.Random( 6 ) )
             {
                 default:
                 case 0: return 0;
@@ -497,20 +498,20 @@ namespace Server
 
         public static BaseBeverage RandomBeverage()
         {
-            switch (Utility.Random(4))
+            switch ( Utility.Random( 4 ) )
             {
                 default:
-                case 0: return new BeverageBottle(BeverageType.Wine);
-                case 1: return new BeverageBottle(BeverageType.Ale);
-                case 2: return new BeverageBottle(BeverageType.Cider);
-                case 3: return new BeverageBottle(BeverageType.Liquor);
+                case 0: return new BeverageBottle( BeverageType.Wine );
+                case 1: return new BeverageBottle( BeverageType.Ale );
+                case 2: return new BeverageBottle( BeverageType.Cider );
+                case 3: return new BeverageBottle( BeverageType.Liquor );
             }
 
         }
 
         public static Item RandomFood()
         {
-            switch (Utility.Random(2))
+            switch ( Utility.Random( 2 ) )
             {
                 default:
                 case 0: return new BreadLoaf();
@@ -520,7 +521,7 @@ namespace Server
 
         public static Item RandomLightSource()
         {
-            switch (Utility.Random(2))
+            switch ( Utility.Random( 2 ) )
             {
                 default:
                 case 0: return new Torch();
@@ -528,88 +529,11 @@ namespace Server
             }
         }
 
-        public static BaseClothing RandomMagicClothing()
-        {
-            BaseClothing item = Construct(m_ClothingTypes) as BaseClothing;
-
-            int random = Utility.Random(100);
-            #region Random
-            if (33 >= random) //nightsight
-            {
-                item.Effect = ClothEffect.NightSight;
-                item.Charges = Utility.RandomMinMax(10, 31);
-            }
-            else if (46 >= random)
-            {
-                item.Effect = ClothEffect.Protection;
-                item.Charges = Utility.RandomMinMax(10, 31);
-            }
-            else if (54 >= random)
-            {
-                item.Effect = ClothEffect.Agility;
-                item.Charges = Utility.RandomMinMax(10, 31);
-            }
-            else if (62 >= random)
-            {
-                item.Effect = ClothEffect.Cunning;
-                item.Charges = Utility.RandomMinMax(10, 31);
-            }
-            else if (70 >= random)
-            {
-                item.Effect = ClothEffect.Strength;
-                item.Charges = Utility.RandomMinMax(10, 31);
-            }
-            else if (78 >= random)
-            {
-                item.Effect = ClothEffect.Invisibility;
-                item.Charges = Utility.RandomMinMax(1, 5);
-            }
-            else if (83 >= random)
-            {
-                item.Effect = ClothEffect.MagicReflection;
-                item.Charges = Utility.RandomMinMax(10, 31);
-            }
-            else if (87 >= random)
-            {
-                item.Effect = ClothEffect.Feeblemind;
-                item.Charges = Utility.RandomMinMax(10, 31);
-            }
-            else if (91 >= random)
-            {
-                item.Effect = ClothEffect.Clumsy;
-                item.Charges = Utility.RandomMinMax(10, 31);
-            }
-            else if (95 >= random)
-            {
-                item.Effect = ClothEffect.Weaken;
-                item.Charges = Utility.RandomMinMax(10, 31);
-            }
-            else if (98 >= random)
-            {
-                item.Effect = ClothEffect.Bless;
-                item.Charges = Utility.RandomMinMax(10, 31);
-            }
-            else
-            {
-                item.Effect = ClothEffect.Curse;
-                item.Charges = Utility.RandomMinMax(10, 31);
-            }
-            #endregion
-
-            if (item is BearMask || item is ThighBoots || item is DeerMask || item is TribalMask || item is HornedTribalMask || item is OrcMask)
-                item.Hue = 0;
-            else
-                item.Hue = GetRandomHue();
-
-            return item;
-        }
-
-      
         public static BaseClothing RandomClothing()
         {
-            BaseClothing item = Construct(m_ClothingTypes) as BaseClothing;
+            BaseClothing item = Construct( m_ClothingTypes ) as BaseClothing;
 
-            if (item is BearMask || item is ThighBoots || item is DeerMask || item is TribalMask || item is HornedTribalMask || item is OrcMask)
+            if ( item is BearMask || item is ThighBoots || item is DeerMask || item is TribalMask || item is HornedTribalMask || item is OrcMask )
                 item.Hue = 0;
             else
                 item.Hue = GetRandomHue();
@@ -617,330 +541,330 @@ namespace Server
             return item;
         }
 
-		public static BaseWeapon RandomRangedWeapon()
-		{
-			return RandomRangedWeapon( false );
-		}
+        public static BaseWeapon RandomRangedWeapon()
+        {
+            return RandomRangedWeapon( false );
+        }
 
-		public static BaseWeapon RandomRangedWeapon( bool inTokuno )
-		{
-			if ( Core.SE && inTokuno )
-				return Construct( m_SERangedWeaponTypes, m_AosRangedWeaponTypes, m_RangedWeaponTypes ) as BaseWeapon;
+        public static BaseWeapon RandomRangedWeapon( bool inTokuno )
+        {
+            if ( Core.SE && inTokuno )
+                return Construct( m_SERangedWeaponTypes, m_AosRangedWeaponTypes, m_RangedWeaponTypes ) as BaseWeapon;
 
-			if ( Core.AOS )
-				return Construct( m_AosRangedWeaponTypes, m_RangedWeaponTypes ) as BaseWeapon;
+            if ( Core.AOS )
+                return Construct( m_AosRangedWeaponTypes, m_RangedWeaponTypes ) as BaseWeapon;
 
-			return Construct( m_RangedWeaponTypes ) as BaseWeapon;
-		}
+            return Construct( m_RangedWeaponTypes ) as BaseWeapon;
+        }
 
-		public static BaseWeapon RandomWeapon()
-		{
-			return RandomWeapon( false );
-		}
+        public static BaseWeapon RandomWeapon()
+        {
+            return RandomWeapon( false );
+        }
 
-		public static BaseWeapon RandomWeapon( bool inTokuno )
-		{
-			if ( Core.SE && inTokuno )
-				return Construct( m_SEWeaponTypes, m_AosWeaponTypes, m_WeaponTypes ) as BaseWeapon;
+        public static BaseWeapon RandomWeapon( bool inTokuno )
+        {
+            if ( Core.SE && inTokuno )
+                return Construct( m_SEWeaponTypes, m_AosWeaponTypes, m_WeaponTypes ) as BaseWeapon;
 
-			if ( Core.AOS )
-				return Construct( m_AosWeaponTypes, m_WeaponTypes ) as BaseWeapon;
+            if ( Core.AOS )
+                return Construct( m_AosWeaponTypes, m_WeaponTypes ) as BaseWeapon;
 
-			return Construct( m_WeaponTypes ) as BaseWeapon;
-		}
+            return Construct( m_WeaponTypes ) as BaseWeapon;
+        }
 
-		public static Item RandomWeaponOrJewelry()
-		{
-			return RandomWeaponOrJewelry( false );
-		}
+        public static Item RandomWeaponOrJewelry()
+        {
+            return RandomWeaponOrJewelry( false );
+        }
 
-		public static Item RandomWeaponOrJewelry( bool inTokuno )
-		{
-			if ( Core.SE && inTokuno )
-				return Construct( m_SEWeaponTypes, m_AosWeaponTypes, m_WeaponTypes, m_JewelryTypes );
+        public static Item RandomWeaponOrJewelry( bool inTokuno )
+        {
+            if ( Core.SE && inTokuno )
+                return Construct( m_SEWeaponTypes, m_AosWeaponTypes, m_WeaponTypes, m_JewelryTypes );
 
-			if ( Core.AOS )
-				return Construct( m_AosWeaponTypes, m_WeaponTypes, m_JewelryTypes );
+            if ( Core.AOS )
+                return Construct( m_AosWeaponTypes, m_WeaponTypes, m_JewelryTypes );
 
-			return Construct( m_WeaponTypes, m_JewelryTypes );
-		}
+            return Construct( m_WeaponTypes, m_JewelryTypes );
+        }
 
-		public static BaseJewel RandomJewelry()
-		{
-			return Construct( m_JewelryTypes ) as BaseJewel;
-		}
+        public static BaseJewel RandomJewelry()
+        {
+            return Construct( m_JewelryTypes ) as BaseJewel;
+        }
 
-		public static BaseArmor RandomArmor()
-		{
-			return RandomArmor( false );
-		}
+        public static BaseArmor RandomArmor()
+        {
+            return RandomArmor( false );
+        }
 
-		public static BaseArmor RandomArmor( bool inTokuno )
-		{
-			if ( Core.SE && inTokuno )
-				return Construct( m_SEArmorTypes, m_ArmorTypes ) as BaseArmor;
+        public static BaseArmor RandomArmor( bool inTokuno )
+        {
+            if ( Core.SE && inTokuno )
+                return Construct( m_SEArmorTypes, m_ArmorTypes ) as BaseArmor;
 
-            int random = Utility.RandomMinMax(1, 100);
+            int random = Utility.RandomMinMax( 1, 100 );
 
-            if (random <= 20)
+            if ( random <= 20 )
             {
-                return Construct(m_ChainArmorTypes) as BaseArmor;
+                return Construct( m_ChainArmorTypes ) as BaseArmor;
             }
-            else if (random <= 50)
+            else if ( random <= 50 )
             {
-                return Construct(m_LeatherArmorTypes) as BaseArmor;
+                return Construct( m_LeatherArmorTypes ) as BaseArmor;
             }
-            else if (random <= 70)
+            else if ( random <= 70 )
             {
-                return Construct(m_StuddedArmorTypes) as BaseArmor;
+                return Construct( m_StuddedArmorTypes ) as BaseArmor;
             }
-            else if (random <= 90)
+            else if ( random <= 90 )
             {
-                return Construct(m_RingmailArmorTypes) as BaseArmor;
+                return Construct( m_RingmailArmorTypes ) as BaseArmor;
             }
-            else if (random <= 99)
+            else if ( random <= 99 )
             {
-                return Construct(m_PlateArmorTypes) as BaseArmor;
+                return Construct( m_PlateArmorTypes ) as BaseArmor;
             }
             else
             {
-                return Construct(m_BoneArmorTypes) as BaseArmor;
+                return Construct( m_BoneArmorTypes ) as BaseArmor;
             }
 
-			//return Construct( m_ArmorTypes ) as BaseArmor;
-		}
+            //return Construct( m_ArmorTypes ) as BaseArmor;
+        }
 
-		public static BaseHat RandomHat()
-		{
-			return RandomHat( false );
-		}
+        public static BaseHat RandomHat()
+        {
+            return RandomHat( false );
+        }
 
-		public static BaseHat RandomHat( bool inTokuno )
-		{
-			if ( Core.SE && inTokuno )
-				return Construct( m_SEHatTypes, m_AosHatTypes, m_HatTypes ) as BaseHat;
+        public static BaseHat RandomHat( bool inTokuno )
+        {
+            if ( Core.SE && inTokuno )
+                return Construct( m_SEHatTypes, m_AosHatTypes, m_HatTypes ) as BaseHat;
 
-			if ( Core.AOS )
-				return Construct( m_AosHatTypes, m_HatTypes ) as BaseHat;
+            if ( Core.AOS )
+                return Construct( m_AosHatTypes, m_HatTypes ) as BaseHat;
 
-			return Construct( m_HatTypes ) as BaseHat;
-		}
+            return Construct( m_HatTypes ) as BaseHat;
+        }
 
-		public static Item RandomArmorOrHat()
-		{
-			return RandomArmorOrHat( false );
-		}
+        public static Item RandomArmorOrHat()
+        {
+            return RandomArmorOrHat( false );
+        }
 
-		public static Item RandomArmorOrHat( bool inTokuno )
-		{
-			if ( Core.SE && inTokuno )
-				return Construct( m_SEArmorTypes, m_ArmorTypes, m_SEHatTypes, m_AosHatTypes, m_HatTypes );
+        public static Item RandomArmorOrHat( bool inTokuno )
+        {
+            if ( Core.SE && inTokuno )
+                return Construct( m_SEArmorTypes, m_ArmorTypes, m_SEHatTypes, m_AosHatTypes, m_HatTypes );
 
-			if ( Core.AOS )
-				return Construct( m_ArmorTypes, m_AosHatTypes, m_HatTypes );
+            if ( Core.AOS )
+                return Construct( m_ArmorTypes, m_AosHatTypes, m_HatTypes );
 
-			return Construct( m_ArmorTypes, m_HatTypes );
-		}
+            return Construct( m_ArmorTypes, m_HatTypes );
+        }
 
-		public static BaseShield RandomShield()
-		{
-			if ( Core.AOS )
-				return Construct( m_AosShieldTypes, m_ShieldTypes ) as BaseShield;
+        public static BaseShield RandomShield()
+        {
+            if ( Core.AOS )
+                return Construct( m_AosShieldTypes, m_ShieldTypes ) as BaseShield;
 
-			return Construct( m_ShieldTypes ) as BaseShield;
-		}
+            return Construct( m_ShieldTypes ) as BaseShield;
+        }
 
-		public static BaseArmor RandomArmorOrShield()
-		{
-			return RandomArmorOrShield( false );
-		}
+        public static BaseArmor RandomArmorOrShield()
+        {
+            return RandomArmorOrShield( false );
+        }
 
-		public static BaseArmor RandomArmorOrShield( bool inTokuno )
-		{
-			if ( Core.SE && inTokuno )
-				return Construct( m_SEArmorTypes, m_ArmorTypes, m_AosShieldTypes, m_ShieldTypes ) as BaseArmor;
+        public static BaseArmor RandomArmorOrShield( bool inTokuno )
+        {
+            if ( Core.SE && inTokuno )
+                return Construct( m_SEArmorTypes, m_ArmorTypes, m_AosShieldTypes, m_ShieldTypes ) as BaseArmor;
 
-			if ( Core.AOS )
-				return Construct( m_ArmorTypes, m_AosShieldTypes, m_ShieldTypes ) as BaseArmor;
+            if ( Core.AOS )
+                return Construct( m_ArmorTypes, m_AosShieldTypes, m_ShieldTypes ) as BaseArmor;
 
-			return Construct( m_ArmorTypes, m_ShieldTypes ) as BaseArmor;
-		}
+            return Construct( m_ArmorTypes, m_ShieldTypes ) as BaseArmor;
+        }
 
-		public static Item RandomArmorOrShieldOrJewelry()
-		{
-			return RandomArmorOrShieldOrJewelry( false );
-		}
+        public static Item RandomArmorOrShieldOrJewelry()
+        {
+            return RandomArmorOrShieldOrJewelry( false );
+        }
 
-		public static Item RandomArmorOrShieldOrJewelry( bool inTokuno )
-		{
-			if ( Core.SE && inTokuno )
-				return Construct( m_SEArmorTypes, m_ArmorTypes, m_SEHatTypes, m_AosHatTypes, m_HatTypes, m_AosShieldTypes, m_ShieldTypes, m_JewelryTypes );
+        public static Item RandomArmorOrShieldOrJewelry( bool inTokuno )
+        {
+            if ( Core.SE && inTokuno )
+                return Construct( m_SEArmorTypes, m_ArmorTypes, m_SEHatTypes, m_AosHatTypes, m_HatTypes, m_AosShieldTypes, m_ShieldTypes, m_JewelryTypes );
 
-			if ( Core.AOS )
-				return Construct( m_ArmorTypes, m_AosHatTypes, m_HatTypes, m_AosShieldTypes, m_ShieldTypes, m_JewelryTypes );
+            if ( Core.AOS )
+                return Construct( m_ArmorTypes, m_AosHatTypes, m_HatTypes, m_AosShieldTypes, m_ShieldTypes, m_JewelryTypes );
 
-			return Construct( m_ArmorTypes, m_HatTypes, m_ShieldTypes, m_JewelryTypes );
-		}
+            return Construct( m_ArmorTypes, m_HatTypes, m_ShieldTypes, m_JewelryTypes );
+        }
 
-		public static Item RandomArmorOrShieldOrWeapon()
-		{
-			return RandomArmorOrShieldOrWeapon( false );
-		}
+        public static Item RandomArmorOrShieldOrWeapon()
+        {
+            return RandomArmorOrShieldOrWeapon( false );
+        }
 
-		public static Item RandomArmorOrShieldOrWeapon( bool inTokuno )
-		{
-			if ( Core.SE && inTokuno )
-				return Construct( m_SEWeaponTypes, m_AosWeaponTypes, m_WeaponTypes, m_SERangedWeaponTypes, m_AosRangedWeaponTypes, m_RangedWeaponTypes, m_SEArmorTypes, m_ArmorTypes, m_SEHatTypes, m_AosHatTypes, m_HatTypes, m_AosShieldTypes, m_ShieldTypes );
+        public static Item RandomArmorOrShieldOrWeapon( bool inTokuno )
+        {
+            if ( Core.SE && inTokuno )
+                return Construct( m_SEWeaponTypes, m_AosWeaponTypes, m_WeaponTypes, m_SERangedWeaponTypes, m_AosRangedWeaponTypes, m_RangedWeaponTypes, m_SEArmorTypes, m_ArmorTypes, m_SEHatTypes, m_AosHatTypes, m_HatTypes, m_AosShieldTypes, m_ShieldTypes );
 
-			if ( Core.AOS )
-				return Construct( m_AosWeaponTypes, m_WeaponTypes, m_AosRangedWeaponTypes, m_RangedWeaponTypes, m_ArmorTypes, m_AosHatTypes, m_HatTypes, m_AosShieldTypes, m_ShieldTypes );
+            if ( Core.AOS )
+                return Construct( m_AosWeaponTypes, m_WeaponTypes, m_AosRangedWeaponTypes, m_RangedWeaponTypes, m_ArmorTypes, m_AosHatTypes, m_HatTypes, m_AosShieldTypes, m_ShieldTypes );
 
-			return Construct( m_WeaponTypes, m_RangedWeaponTypes, m_ArmorTypes, m_HatTypes, m_ShieldTypes );
-		}
+            return Construct( m_WeaponTypes, m_RangedWeaponTypes, m_ArmorTypes, m_HatTypes, m_ShieldTypes );
+        }
 
-		public static Item RandomArmorOrShieldOrWeaponOrJewelry()
-		{
-			return RandomArmorOrShieldOrWeaponOrJewelry( false );
-		}
+        public static Item RandomArmorOrShieldOrWeaponOrJewelry()
+        {
+            return RandomArmorOrShieldOrWeaponOrJewelry( false );
+        }
 
-		public static Item RandomArmorOrShieldOrWeaponOrJewelry( bool inTokuno )
-		{
-			if ( Core.SE && inTokuno )
-				return Construct( m_SEWeaponTypes, m_AosWeaponTypes, m_WeaponTypes, m_SERangedWeaponTypes, m_AosRangedWeaponTypes, m_RangedWeaponTypes, m_SEArmorTypes, m_ArmorTypes, m_SEHatTypes, m_AosHatTypes, m_HatTypes, m_AosShieldTypes, m_ShieldTypes, m_JewelryTypes );
+        public static Item RandomArmorOrShieldOrWeaponOrJewelry( bool inTokuno )
+        {
+            if ( Core.SE && inTokuno )
+                return Construct( m_SEWeaponTypes, m_AosWeaponTypes, m_WeaponTypes, m_SERangedWeaponTypes, m_AosRangedWeaponTypes, m_RangedWeaponTypes, m_SEArmorTypes, m_ArmorTypes, m_SEHatTypes, m_AosHatTypes, m_HatTypes, m_AosShieldTypes, m_ShieldTypes, m_JewelryTypes );
 
-			if ( Core.AOS )
-				return Construct( m_AosWeaponTypes, m_WeaponTypes, m_AosRangedWeaponTypes, m_RangedWeaponTypes, m_ArmorTypes, m_AosHatTypes, m_HatTypes, m_AosShieldTypes, m_ShieldTypes, m_JewelryTypes );
+            if ( Core.AOS )
+                return Construct( m_AosWeaponTypes, m_WeaponTypes, m_AosRangedWeaponTypes, m_RangedWeaponTypes, m_ArmorTypes, m_AosHatTypes, m_HatTypes, m_AosShieldTypes, m_ShieldTypes, m_JewelryTypes );
 
-			return Construct( m_WeaponTypes, m_RangedWeaponTypes, m_ArmorTypes, m_HatTypes, m_ShieldTypes, m_JewelryTypes );
-		}
+            return Construct( m_WeaponTypes, m_RangedWeaponTypes, m_ArmorTypes, m_HatTypes, m_ShieldTypes, m_JewelryTypes );
+        }
 
-		public static Item RandomGem()
-		{
-			return Construct( m_GemTypes );
-		}
+        public static Item RandomGem()
+        {
+            return Construct( m_GemTypes );
+        }
 
-		public static Item RandomReagent()
-		{
-			return Construct( m_RegTypes );
-		}
+        public static Item RandomReagent()
+        {
+            return Construct( m_RegTypes );
+        }
 
-		public static Item RandomNecromancyReagent()
-		{
-			return Construct( m_NecroRegTypes );
-		}
+        public static Item RandomNecromancyReagent()
+        {
+            return Construct( m_NecroRegTypes );
+        }
 
-		public static Item RandomPossibleReagent()
-		{
-			if ( Core.AOS )
-				return Construct( m_RegTypes, m_NecroRegTypes );
+        public static Item RandomPossibleReagent()
+        {
+            if ( Core.AOS )
+                return Construct( m_RegTypes, m_NecroRegTypes );
 
-			return Construct( m_RegTypes );
-		}
+            return Construct( m_RegTypes );
+        }
 
-		public static Item RandomPotion()
-		{
-			return Construct( m_PotionTypes );
-		}
+        public static Item RandomPotion()
+        {
+            return Construct( m_PotionTypes );
+        }
 
-		public static BaseInstrument RandomInstrument()
-		{
-			if ( Core.SE )
-				return Construct( m_InstrumentTypes, m_SEInstrumentTypes ) as BaseInstrument;
+        public static BaseInstrument RandomInstrument()
+        {
+            if ( Core.SE )
+                return Construct( m_InstrumentTypes, m_SEInstrumentTypes ) as BaseInstrument;
 
-			return Construct( m_InstrumentTypes ) as BaseInstrument;
-		}
+            return Construct( m_InstrumentTypes ) as BaseInstrument;
+        }
 
-		public static Item RandomStatue()
-		{
-			return Construct( m_StationaryTypes );
-		}
+        public static Item RandomStatue()
+        {
+            return Construct( m_StationaryTypes );
+        }
 
-		public static SpellScroll RandomScroll( int minIndex, int maxIndex, SpellbookType type )
-		{
-			Type[] types;
+        public static SpellScroll RandomScroll( int minIndex, int maxIndex, SpellbookType type )
+        {
+            Type[] types;
 
-			switch ( type )
-			{
-				default:
-				case SpellbookType.Regular: types = m_RegularScrollTypes; break;
-				case SpellbookType.Necromancer: types = (Core.SE ? m_SENecromancyScrollTypes : m_NecromancyScrollTypes ); break;
-				case SpellbookType.Paladin: types = m_PaladinScrollTypes; break;
-			}
+            switch ( type )
+            {
+                default:
+                case SpellbookType.Regular: types = m_RegularScrollTypes; break;
+                case SpellbookType.Necromancer: types = ( Core.SE ? m_SENecromancyScrollTypes : m_NecromancyScrollTypes ); break;
+                case SpellbookType.Paladin: types = m_PaladinScrollTypes; break;
+            }
 
-			return Construct( types, Utility.RandomMinMax( minIndex, maxIndex ) ) as SpellScroll;
-		}
+            return Construct( types, Utility.RandomMinMax( minIndex, maxIndex ) ) as SpellScroll;
+        }
 
-		public static BaseBook RandomGrimmochJournal()
-		{
-			return Construct( m_GrimmochJournalTypes ) as BaseBook;
-		}
+        public static BaseBook RandomGrimmochJournal()
+        {
+            return Construct( m_GrimmochJournalTypes ) as BaseBook;
+        }
 
-		public static BaseBook RandomLysanderNotebook()
-		{
-			return Construct( m_LysanderNotebookTypes ) as BaseBook;
-		}
+        public static BaseBook RandomLysanderNotebook()
+        {
+            return Construct( m_LysanderNotebookTypes ) as BaseBook;
+        }
 
-		public static BaseBook RandomTavarasJournal()
-		{
-			return Construct( m_TavarasJournalTypes ) as BaseBook;
-		}
+        public static BaseBook RandomTavarasJournal()
+        {
+            return Construct( m_TavarasJournalTypes ) as BaseBook;
+        }
 
-		public static BaseBook RandomLibraryBook()
-		{
-			return Construct( m_LibraryBookTypes ) as BaseBook;
-		}
-		#endregion
+        public static BaseBook RandomLibraryBook()
+        {
+            return Construct( m_LibraryBookTypes ) as BaseBook;
+        }
+        #endregion
 
-		#region Construction methods
-		public static Item Construct( Type type )
-		{
-			try
-			{
-				return Activator.CreateInstance( type ) as Item;
-			}
-			catch
-			{
-				return null;
-			}
-		}
+        #region Construction methods
+        public static Item Construct( Type type )
+        {
+            try
+            {
+                return Activator.CreateInstance( type ) as Item;
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
-		public static Item Construct( Type[] types )
-		{
-			if ( types.Length > 0 )
-				return Construct( types, Utility.Random( types.Length ) );
+        public static Item Construct( Type[] types )
+        {
+            if ( types.Length > 0 )
+                return Construct( types, Utility.Random( types.Length ) );
 
-			return null;
-		}
+            return null;
+        }
 
-		public static Item Construct( Type[] types, int index )
-		{
-			if ( index >= 0 && index < types.Length )
-				return Construct( types[index] );
+        public static Item Construct( Type[] types, int index )
+        {
+            if ( index >= 0 && index < types.Length )
+                return Construct( types[index] );
 
-			return null;
-		}
+            return null;
+        }
 
-		public static Item Construct( params Type[][] types )
-		{
-			int totalLength = 0;
+        public static Item Construct( params Type[][] types )
+        {
+            int totalLength = 0;
 
-			for ( int i = 0; i < types.Length; ++i )
-				totalLength += types[i].Length;
+            for ( int i = 0; i < types.Length; ++i )
+                totalLength += types[i].Length;
 
-			if ( totalLength > 0 )
-			{
-				int index = Utility.Random( totalLength );
+            if ( totalLength > 0 )
+            {
+                int index = Utility.Random( totalLength );
 
-				for ( int i = 0; i < types.Length; ++i )
-				{
-					if ( index >= 0 && index < types[i].Length )
-						return Construct( types[i][index] );
+                for ( int i = 0; i < types.Length; ++i )
+                {
+                    if ( index >= 0 && index < types[i].Length )
+                        return Construct( types[i][index] );
 
-					index -= types[i].Length;
-				}
-			}
+                    index -= types[i].Length;
+                }
+            }
 
-			return null;
+            return null;
         }
         #endregion
     }
