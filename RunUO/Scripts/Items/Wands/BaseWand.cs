@@ -127,10 +127,9 @@ namespace Server.Items
 		{
 			base.Serialize( writer );
 
-			writer.Write( (int) 0 ); // version
+			writer.Write( (int) 1 ); // version
 
 			writer.Write( (int) m_WandEffect );
-			writer.Write( (int) m_Charges );
 		}
 
 		public override void Deserialize( GenericReader reader )
@@ -144,10 +143,16 @@ namespace Server.Items
 				case 0:
 				{
 					m_WandEffect = (WandEffect)reader.ReadInt();
-					m_Charges = (int)reader.ReadInt();
+					base.Charges = (int)reader.ReadInt();
 
 					break;
 				}
+                case 1:
+                {
+                    m_WandEffect = (WandEffect)reader.ReadInt();
+
+                    break;
+                }
 			}
 		}
 
