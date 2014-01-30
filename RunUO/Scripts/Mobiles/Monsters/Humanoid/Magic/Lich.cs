@@ -44,20 +44,15 @@ namespace Server.Mobiles
 			VirtualArmor = 50;
 
             if (Utility.Random(2) > 1)
-			    PackReg( 5, 15 );
-
-            if (Utility.Random(500) == 1)
-                PackItem(Loot.RandomStatue());
-
-            if (Utility.Random(50) == 1)
-                AddItem(Loot.RandomWand());
-           
+			    PackReg( 5, 15 );           
 		}
 
 		public override void GenerateLoot()
 		{
             AddLootBackpack(LootPack.Average);
             AddLoot(LootPack.RichPile );
+
+            AddLoot( LootPack.Targetables );
 
             AddLoot(LootPack.LowScrolls, Utility.Random(2));
 		}

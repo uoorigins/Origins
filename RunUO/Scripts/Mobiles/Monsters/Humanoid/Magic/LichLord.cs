@@ -45,9 +45,6 @@ namespace Server.Mobiles
 
             if (Utility.Random(2) > 0)
                 PackReg(5, 15);
-
-            if (Utility.Random(50) == 1)
-                AddItem(Loot.RandomWand());
 		}
 
 		public override OppositionGroup OppositionGroup
@@ -59,7 +56,9 @@ namespace Server.Mobiles
 		{
             AddLoot(LootPack.RichPile);
             AddLootBackpack(LootPack.Rich);
-            //AddLootBackpack( LootPack.Undead );
+
+            AddLoot( LootPack.Targetables );
+
 			AddLoot( LootPack.MedScrolls, Utility.Random(4) );
 		}
 
