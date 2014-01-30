@@ -536,6 +536,7 @@ namespace Server.Items
 		}
 	}
 
+    [Flipable( 0x1545, 0x1546 )]
 	public class BearMask : BaseHat
 	{
 		public override int BasePhysicalResistance{ get{ return 5; } }
@@ -553,7 +554,7 @@ namespace Server.Items
 		}
 
 		[Constructable]
-		public BearMask( int hue ) : base( 0x1545, hue )
+		public BearMask( int hue ) : base( Utility.RandomList(0x1545, 0x1546), hue )
 		{
 			Weight = 5.0;
 		}
@@ -603,6 +604,7 @@ namespace Server.Items
 		}
 	}
 
+    [Flipable( 0x1547, 0x1548 )]
 	public class DeerMask : BaseHat
 	{
 		public override int BasePhysicalResistance{ get{ return 2; } }
@@ -620,7 +622,7 @@ namespace Server.Items
 		}
 
 		[Constructable]
-		public DeerMask( int hue ) : base( 0x1547, hue )
+		public DeerMask( int hue ) : base( Utility.RandomList(0x1547, 0x1548), hue )
 		{
 			Weight = 4.0;
 		}
@@ -670,6 +672,7 @@ namespace Server.Items
 		}
 	}
 
+    [Flipable( 0x1549, 5450 )]
 	public class HornedTribalMask : BaseHat
 	{
 		public override int BasePhysicalResistance{ get{ return 6; } }
@@ -687,7 +690,7 @@ namespace Server.Items
 		}
 
 		[Constructable]
-		public HornedTribalMask( int hue ) : base( 0x1549, hue )
+		public HornedTribalMask( int hue ) : base( Utility.RandomList(0x1549, 5450), hue )
 		{
 			Weight = 2.0;
 		}
@@ -737,6 +740,7 @@ namespace Server.Items
 		}
 	}
 
+    [Flipable( 0x154B, 5452 )]
 	public class TribalMask : BaseHat
 	{
 		public override int BasePhysicalResistance{ get{ return 3; } }
@@ -754,7 +758,7 @@ namespace Server.Items
 		}
 
 		[Constructable]
-		public TribalMask( int hue ) : base( 0x154B, hue )
+		public TribalMask( int hue ) : base( Utility.RandomList(0x154B,5452), hue )
 		{
 			Weight = 2.0;
 		}
