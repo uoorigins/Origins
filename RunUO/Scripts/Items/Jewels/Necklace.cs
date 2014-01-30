@@ -5,6 +5,8 @@ namespace Server.Items
 {
 	public abstract class BaseNecklace : BaseJewel
 	{
+        public override string AsciiName { get { return "necklace"; } }
+
 		public override int BaseGemTypeNumber{ get{ return 1044241; } } // star sapphire necklace
 
 		public BaseNecklace( int itemID ) : base( itemID, Layer.Neck )
@@ -14,18 +16,6 @@ namespace Server.Items
 		public BaseNecklace( Serial serial ) : base( serial )
 		{
 		}
-
-        public override void OnSingleClick(Mobile from)
-        {
-            if (this.Name != null)
-            {
-                from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", this.Name));
-            }
-            else
-            {
-                from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a necklace"));
-            }
-        }
 
 		public override void Serialize( GenericWriter writer )
 		{
@@ -54,18 +44,6 @@ namespace Server.Items
 		{
 		}
 
-        public override void OnSingleClick(Mobile from)
-        {
-            if (this.Name != null)
-            {
-                from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", this.Name));
-            }
-            else
-            {
-                from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a necklace"));
-            }
-        }
-
 		public override void Serialize( GenericWriter writer )
 		{
 			base.Serialize( writer );
@@ -93,18 +71,6 @@ namespace Server.Items
 		{
 		}
 
-        public override void OnSingleClick(Mobile from)
-        {
-            if (this.Name != null)
-            {
-                from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", this.Name));
-            }
-            else
-            {
-                from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a necklace"));
-            }
-        }
-
 		public override void Serialize( GenericWriter writer )
 		{
 			base.Serialize( writer );
@@ -131,18 +97,6 @@ namespace Server.Items
 		public GoldBeadNecklace( Serial serial ) : base( serial )
 		{
 		}
-
-        public override void OnSingleClick(Mobile from)
-        {
-            if (this.Name != null)
-            {
-                from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", this.Name));
-            }
-            else
-            {
-                from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a necklace"));
-            }
-        }
 
 		public override void Serialize( GenericWriter writer )
 		{
@@ -172,18 +126,6 @@ namespace Server.Items
 		{
 		}
 
-        public override void OnSingleClick(Mobile from)
-        {
-            if (this.Name != null)
-            {
-                from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", this.Name));
-            }
-            else
-            {
-                from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a necklace"));
-            }
-        }
-
 		public override void Serialize( GenericWriter writer )
 		{
 			base.Serialize( writer );
@@ -211,19 +153,7 @@ namespace Server.Items
 		{
 		}
 
-        public override void OnSingleClick(Mobile from)
-        {
-            if (this.Name != null)
-            {
-                from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", this.Name));
-            }
-            else
-            {
-                from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a necklace"));
-            }
-        }
-
-		public override void Serialize( GenericWriter writer )
+        public override void Serialize( GenericWriter writer )
 		{
 			base.Serialize( writer );
 

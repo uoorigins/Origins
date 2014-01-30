@@ -5,6 +5,9 @@ namespace Server.Items
 {
 	public abstract class BaseEarrings : BaseJewel
 	{
+        public override string AsciiName { get { return "earrings"; } }
+        public override bool AsciiPlural { get { return true; } }
+
 		public override int BaseGemTypeNumber{ get{ return 1044203; } } // star sapphire earrings
 
 		public BaseEarrings( int itemID ) : base( itemID, Layer.Earrings )
@@ -14,18 +17,6 @@ namespace Server.Items
 		public BaseEarrings( Serial serial ) : base( serial )
 		{
 		}
-
-        public override void OnSingleClick(Mobile from)
-        {
-            if (this.Name != null)
-            {
-                from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", this.Name));
-            }
-            else
-            {
-                from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "earrings"));
-            }
-        }
 
 		public override void Serialize( GenericWriter writer )
 		{
@@ -54,18 +45,6 @@ namespace Server.Items
 		{
 		}
 
-        public override void OnSingleClick(Mobile from)
-        {
-            if (this.Name != null)
-            {
-                from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", this.Name));
-            }
-            else
-            {
-                from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "earrings"));
-            }
-        }
-
 		public override void Serialize( GenericWriter writer )
 		{
 			base.Serialize( writer );
@@ -92,18 +71,6 @@ namespace Server.Items
 		public SilverEarrings( Serial serial ) : base( serial )
 		{
 		}
-
-        public override void OnSingleClick(Mobile from)
-        {
-            if (this.Name != null)
-            {
-                from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", this.Name));
-            }
-            else
-            {
-                from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "earrings"));
-            }
-        }
 
 		public override void Serialize( GenericWriter writer )
 		{

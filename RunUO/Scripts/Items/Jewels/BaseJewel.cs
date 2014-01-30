@@ -14,8 +14,19 @@ namespace Server.Items
     public enum JewelEffect
     {
         None,
+        NightSight,
+        Protection,
+        Agility,
+        Cunning,
+        Strength,
         Invisibility,
-        Teleportation
+        Teleportation,
+        MagicReflection,
+        Feeblemind,
+        Clumsy,
+        Weaken,
+        Bless,
+        Curse
     }
 
 	public enum GemType
@@ -34,6 +45,9 @@ namespace Server.Items
 
 	public abstract class BaseJewel : Item, ICraftable
 	{
+        public abstract string AsciiName { get; }
+        public virtual bool AsciiPlural { get { return false; } }
+
         public virtual TimeSpan GetUseDelay { get { return TimeSpan.FromSeconds(4.0); } }
 
 		private AosAttributes m_AosAttributes;
@@ -45,6 +59,7 @@ namespace Server.Items
         private int m_Charges;
         private bool m_Identified;
         private List<Mobile> m_IDList = new List<Mobile>();
+        private static EffectTimer m_st;
 
         [CommandProperty(AccessLevel.GameMaster)]
         public JewelEffect Effect
@@ -115,6 +130,38 @@ namespace Server.Items
 		public override int EnergyResistance{ get{ return m_AosResistances.Energy; } }
 		public virtual int BaseGemTypeNumber{ get{ return 0; } }
 
+        public string GetEffectString()
+        {
+            if ( Effect == JewelEffect.NightSight )
+                return "night eyes";
+            else if ( Effect == JewelEffect.Protection )
+                return "protection";
+            else if ( Effect == JewelEffect.Agility )
+                return "agility";
+            else if ( Effect == JewelEffect.Cunning )
+                return "cunning";
+            else if ( Effect == JewelEffect.Strength )
+                return "strength";
+            else if ( Effect == JewelEffect.Invisibility )
+                return "invisibility";
+            else if ( Effect == JewelEffect.MagicReflection )
+                return "spell reflection";
+            else if ( Effect == JewelEffect.Feeblemind )
+                return "feeblemindedness";
+            else if ( Effect == JewelEffect.Clumsy )
+                return "clumsiness";
+            else if ( Effect == JewelEffect.Weaken )
+                return "weakness";
+            else if ( Effect == JewelEffect.Bless )
+                return "blessings";
+            else if ( Effect == JewelEffect.Curse )
+                return "evil";
+            else if ( Effect == JewelEffect.Teleportation )
+                return "teleportation";
+            else
+                return "";
+        }
+
 		public override int LabelNumber
 		{
 			get
@@ -180,6 +227,253 @@ namespace Server.Items
             m_Identified = false;
 		}
 
+        private void Activate( object parent )
+        {
+            if ( Effect == JewelEffect.None || Charges <= 0 )
+                return;
+
+            if ( parent is Mobile )
+            {
+                Mobile from = (Mobile)parent;
+
+                string modName = this.Serial.ToString();
+
+                switch ( Effect )
+                {
+                    case JewelEffect.Strength:
+                        from.AddStatMod( new StatMod( StatType.Str, modName + "Str", 10, TimeSpan.Zero ) );
+                        from.CheckStatTimers();
+                        from.FixedParticles( 0x375a, 10, 15, 5017, EffectLayer.Waist );
+                        from.PlaySound( 0x1ee );
+                        break;
+                    case JewelEffect.Agility:
+                        from.AddStatMod( new StatMod( StatType.Dex, modName + "Dex", 10, TimeSpan.Zero ) );
+                        from.CheckStatTimers();
+                        from.FixedParticles( 0x375a, 10, 15, 5010, EffectLayer.Waist );
+                        from.PlaySound( 0x28e );
+                        break;
+                    case JewelEffect.Cunning:
+                        from.AddStatMod( new StatMod( StatType.Int, modName + "Int", 10, TimeSpan.Zero ) );
+                        from.CheckStatTimers();
+                        from.FixedParticles( 0x375a, 10, 15, 5011, EffectLayer.Head );
+                        from.PlaySound( 0x1eb );
+                        break;
+                    case JewelEffect.Bless:
+                        from.AddStatMod( new StatMod( StatType.Str, modName + "BlessStr", 10, TimeSpan.Zero ) );
+                        from.AddStatMod( new StatMod( StatType.Dex, modName + "BlessDex", 10, TimeSpan.Zero ) );
+                        from.AddStatMod( new StatMod( StatType.Int, modName + "BlessInt", 10, TimeSpan.Zero ) );
+                        from.CheckStatTimers();
+                        from.FixedParticles( 0x373a, 10, 15, 5018, EffectLayer.Waist );
+                        from.PlaySound( 0x1ea );
+                        break;
+                    case JewelEffect.Weaken:
+                        from.AddStatMod( new StatMod( StatType.Str, modName + "LowerStr", -10, TimeSpan.Zero ) );
+                        from.CheckStatTimers();
+                        from.FixedParticles( 0x3779, 10, 15, 5009, EffectLayer.Waist );
+                        from.PlaySound( 0x1e6 );
+                        break;
+                    case JewelEffect.Clumsy:
+                        from.AddStatMod( new StatMod( StatType.Dex, modName + "LowerDex", -10, TimeSpan.Zero ) );
+                        from.CheckStatTimers();
+                        from.FixedParticles( 0x3779, 10, 15, 5002, EffectLayer.Head );
+                        from.PlaySound( 0x1df );
+                        break;
+                    case JewelEffect.Feeblemind:
+                        from.AddStatMod( new StatMod( StatType.Int, modName + "LowerInt", -10, TimeSpan.Zero ) );
+                        from.CheckStatTimers();
+                        from.FixedParticles( 0x3779, 10, 15, 5004, EffectLayer.Head );
+                        from.PlaySound( 0x1e4 );
+                        break;
+                    case JewelEffect.Curse:
+                        from.AddStatMod( new StatMod( StatType.Str, modName + "CurseStr", -10, TimeSpan.Zero ) );
+                        from.AddStatMod( new StatMod( StatType.Dex, modName + "CurseDex", -10, TimeSpan.Zero ) );
+                        from.AddStatMod( new StatMod( StatType.Int, modName + "CurseInt", -10, TimeSpan.Zero ) );
+                        from.CheckStatTimers();
+                        from.FixedParticles( 0x374a, 10, 15, 5028, EffectLayer.Waist );
+                        from.PlaySound( 0x1ea );
+                        break;
+                    case JewelEffect.NightSight:
+                        from.EndAction( typeof( LightCycle ) );
+                        from.BeginAction( typeof( LightCycle ) );
+                        from.LightLevel = (int)LightCycle.DungeonLevel;
+                        from.FixedParticles( 0x376a, 9, 32, 5007, EffectLayer.Waist );
+                        from.PlaySound( 0x1e3 );
+                        break;
+                    case JewelEffect.Invisibility:
+                        Effects.SendLocationParticles( EffectItem.Create( new Point3D( from.X, from.Y, from.Z + 16 ), from.Map, EffectItem.DefaultDuration ), 0x376A, 10, 15, 5045 );
+                        from.PlaySound( 0x203 );
+                        from.Hidden = true;
+                        break;
+                    case JewelEffect.MagicReflection:
+                        from.MagicDamageAbsorb = 15;
+                        from.FixedParticles( 0x375a, 10, 15, 5037, EffectLayer.Waist );
+                        from.PlaySound( 0x1e9 );
+                        break;
+                    case JewelEffect.Protection:
+                        from.VirtualArmorMod += 10;
+                        from.FixedParticles( 0x375a, 9, 20, 5016, EffectLayer.Waist );
+                        from.PlaySound( 0x1ed );
+                        break;
+                }
+
+                ConsumeCharge( from, this );
+
+                if ( m_st != null )
+                    m_st.Stop();
+
+                m_st = new EffectTimer( from, this );
+                m_st.Start();
+            }
+        }
+
+        public void ConsumeCharge( object parent, BaseJewel item )
+        {
+            item.Charges--;
+        }
+
+        private class EffectTimer : Timer
+        {
+            private Mobile parent;
+            private BaseJewel m_Item;
+
+            public EffectTimer( Mobile m, BaseJewel item )
+                : base( TimeSpan.FromSeconds( 60 ) )
+            {
+                parent = m;
+                m_Item = item;
+                Priority = TimerPriority.OneMinute;
+            }
+
+            protected override void OnTick()
+            {
+                Mobile from = (Mobile)parent;
+
+                #region Magic Clothing
+                if ( m_Item.Charges <= 0 )
+                {
+                    from.SendAsciiMessage( "This item is out of charges." ); // This item is out of charges.
+
+                    switch ( m_Item.Effect )
+                    {
+                        case JewelEffect.Strength:
+                            from.RemoveStatMod( m_Item.Serial.ToString() + "Str" );
+                            from.CheckStatTimers();
+                            break;
+                        case JewelEffect.Agility:
+                            from.RemoveStatMod( m_Item.Serial.ToString() + "Dex" );
+                            from.CheckStatTimers();
+                            break;
+                        case JewelEffect.Cunning:
+                            from.RemoveStatMod( m_Item.Serial.ToString() + "Int" );
+                            from.CheckStatTimers();
+                            break;
+                        case JewelEffect.Bless:
+                            from.RemoveStatMod( m_Item.Serial.ToString() + "BlessStr" );
+                            from.RemoveStatMod( m_Item.Serial.ToString() + "BlessDex" );
+                            from.RemoveStatMod( m_Item.Serial.ToString() + "BlessInt" );
+                            from.CheckStatTimers();
+                            break;
+                        case JewelEffect.Weaken:
+                            from.RemoveStatMod( m_Item.Serial.ToString() + "LowerStr" );
+                            from.CheckStatTimers();
+                            break;
+                        case JewelEffect.Clumsy:
+                            from.RemoveStatMod( m_Item.Serial.ToString() + "LowerDex" );
+                            from.CheckStatTimers();
+                            break;
+                        case JewelEffect.Feeblemind:
+                            from.RemoveStatMod( m_Item.Serial.ToString() + "LowerInt" );
+                            from.CheckStatTimers();
+                            break;
+                        case JewelEffect.Curse:
+                            from.RemoveStatMod( m_Item.Serial.ToString() + "CurseStr" );
+                            from.RemoveStatMod( m_Item.Serial.ToString() + "CurseDex" );
+                            from.RemoveStatMod( m_Item.Serial.ToString() + "CurseInt" );
+                            from.CheckStatTimers();
+                            break;
+                        case JewelEffect.NightSight:
+                            from.EndAction( typeof( LightCycle ) );
+                            from.LightLevel = 0;
+                            break;
+                        case JewelEffect.Invisibility:
+                            from.Hidden = false;
+                            break;
+                        case JewelEffect.MagicReflection:
+                            break;
+                        case JewelEffect.Protection:
+                            if ( from.VirtualArmorMod >= 10 )
+                                from.VirtualArmorMod -= 10;
+                            else
+                                from.VirtualArmorMod = 0;
+                            break;
+                    }
+                    Stop();
+
+                }
+                else
+                {
+                    if ( m_Item.Effect == JewelEffect.Invisibility && parent.Hidden == false )
+                        Stop();
+                    else
+                    {
+                        m_Item.ConsumeCharge( from, m_Item );
+                        m_st = new EffectTimer( from, m_Item );
+                        m_st.Start();
+                    }
+                }
+                #endregion
+            }
+        }
+
+        public string GetBeginning( string text )
+        {
+            if ( text.Length < 1 )
+                return "";
+
+            char start = text[0];
+
+            // a, e, i, o, u
+            return ( start == 'a' || start == 'e' || start == 'i' || start == 'o' || start == 'u' ? "an" : "a" );
+        }
+
+        public override void OnSingleClick( Mobile from )
+        {
+            //Effect text
+            string effectText = "";
+
+            if ( Effect != JewelEffect.None )
+            {
+                effectText = String.Format( "of {0} ({1} charges)", GetEffectString(), Charges );
+            }
+
+            string displayText;
+
+            if ( !IsInIDList( from ) && Effect != JewelEffect.None && from.AccessLevel == AccessLevel.Player )
+            {
+                displayText = String.Format( "magic {0}",  ( Name != null ? Name : AsciiName ) );
+            }
+            else
+            {
+                displayText = String.Format( "{0} {1}", ( Name != null ? Name : AsciiName ), effectText );
+            }
+
+            //Trim the ends
+            displayText = displayText.Trim();
+
+            //Remove double whitespaces
+            while ( displayText.Contains( "  " ) )
+            {
+                displayText = displayText.Replace( "  ", " " );
+            }
+
+            if ( !AsciiPlural )
+            {
+                displayText = String.Format( "{0} {1}", GetBeginning( displayText ), displayText );
+            }
+
+            from.Send( new AsciiMessage( Serial, ItemID, MessageType.Label, 0, 3, "", displayText ) );
+        }
+
         public override void OnDoubleClick(Mobile from)
         {
             if (Effect != JewelEffect.None)
@@ -191,9 +485,7 @@ namespace Server.Items
                 {
                     if (Charges > 0)
                     {
-                        if (Effect == JewelEffect.Invisibility)
-                            Cast(new InvisibilitySpell(from, this));
-                        else if (Effect == JewelEffect.Teleportation)
+                        if (Effect == JewelEffect.Teleportation)
                             Cast(new TeleportSpell(from, this));
                     }
                     else
@@ -267,6 +559,9 @@ namespace Server.Items
 
 				from.CheckStatTimers();
 			}
+
+            //Magic Clothing
+            Activate( parent );
 		}
 
 		public override void OnRemoved( object parent )
@@ -285,6 +580,76 @@ namespace Server.Items
 
 				from.CheckStatTimers();
 			}
+
+            #region Magic Clothing
+            if (m_JewelEffect == JewelEffect.None)
+                return;
+
+            if ( parent is Mobile )
+            {
+                Mobile from = (Mobile)parent;
+
+                string modName = this.Serial.ToString();
+
+                switch ( m_JewelEffect )
+                {
+                    case JewelEffect.Strength:
+                        from.RemoveStatMod( modName + "Str" );
+                        from.CheckStatTimers();
+                        break;
+                    case JewelEffect.Agility:
+                        from.RemoveStatMod( modName + "Dex" );
+                        from.CheckStatTimers();
+                        break;
+                    case JewelEffect.Cunning:
+                        from.RemoveStatMod( modName + "Int" );
+                        from.CheckStatTimers();
+                        break;
+                    case JewelEffect.Bless:
+                        from.RemoveStatMod( modName + "BlessStr" );
+                        from.RemoveStatMod( modName + "BlessDex" );
+                        from.RemoveStatMod( modName + "BlessInt" );
+                        from.CheckStatTimers();
+                        break;
+                    case JewelEffect.Weaken:
+                        from.RemoveStatMod( modName + "LowerStr" );
+                        from.CheckStatTimers();
+                        break;
+                    case JewelEffect.Clumsy:
+                        from.RemoveStatMod( modName + "LowerDex" );
+                        from.CheckStatTimers();
+                        break;
+                    case JewelEffect.Feeblemind:
+                        from.RemoveStatMod( modName + "LowerInt" );
+                        from.CheckStatTimers();
+                        break;
+                    case JewelEffect.Curse:
+                        from.RemoveStatMod( modName + "CurseStr" );
+                        from.RemoveStatMod( modName + "CurseDex" );
+                        from.RemoveStatMod( modName + "CurseInt" );
+                        from.CheckStatTimers();
+                        break;
+                    case JewelEffect.NightSight:
+                        from.EndAction( typeof( LightCycle ) );
+                        from.LightLevel = 0;
+                        break;
+                    case JewelEffect.Invisibility:
+                        from.Hidden = false;
+                        break;
+                    case JewelEffect.MagicReflection:
+                        break;
+                    case JewelEffect.Protection:
+                        if ( from.VirtualArmorMod >= 10 )
+                            from.VirtualArmorMod -= 10;
+                        else
+                            from.VirtualArmorMod = 0;
+                        break;
+                }
+
+                if ( m_st != null )
+                    m_st.Stop();
+            }
+            #endregion
 		}
 
 		public BaseJewel( Serial serial ) : base( serial )
