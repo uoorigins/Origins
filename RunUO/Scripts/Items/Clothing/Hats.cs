@@ -243,7 +243,7 @@ namespace Server.Items
                 if (Effect != ClothEffect.None)
                 {
                     if (IsInIDList(from) || from.AccessLevel >= AccessLevel.GameMaster)
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a floppy hat {0} ({1} charges)", GetName(), Charges)));
+                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a floppy hat {0} ({1} charges)", GetEffectString(), Charges)));
                     else
                         from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a magic floppy hat"));
                 }
@@ -309,7 +309,7 @@ namespace Server.Items
                 if (Effect != ClothEffect.None)
                 {
                     if (IsInIDList(from) || from.AccessLevel >= AccessLevel.GameMaster)
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a wide-brim hat {0} ({1} charges)", GetName(), Charges)));
+                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a wide-brim hat {0} ({1} charges)", GetEffectString(), Charges)));
                     else
                         from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a magic wide-brim hat"));
                 }
@@ -375,7 +375,7 @@ namespace Server.Items
                 if (Effect != ClothEffect.None)
                 {
                     if (IsInIDList(from) || from.AccessLevel >= AccessLevel.GameMaster)
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a cap {0} ({1} charges)", GetName(), Charges)));
+                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a cap {0} ({1} charges)", GetEffectString(), Charges)));
                     else
                         from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a magic cap"));
                 }
@@ -441,7 +441,7 @@ namespace Server.Items
                 if (Effect != ClothEffect.None)
                 {
                     if (IsInIDList(from) || from.AccessLevel >= AccessLevel.GameMaster)
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a skull cap {0} ({1} charges)", GetName(), Charges)));
+                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a skull cap {0} ({1} charges)", GetEffectString(), Charges)));
                     else
                         from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a magic skull cap"));
                 }
@@ -507,7 +507,7 @@ namespace Server.Items
                 if (Effect != ClothEffect.None)
                 {
                     if (IsInIDList(from) || from.AccessLevel >= AccessLevel.GameMaster)
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a bandana {0} ({1} charges)", GetName(), Charges)));
+                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a bandana {0} ({1} charges)", GetEffectString(), Charges)));
                     else
                         from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a magic bandana"));
                 }
@@ -579,7 +579,7 @@ namespace Server.Items
                 if (Effect != ClothEffect.None)
                 {
                     if (IsInIDList(from) || from.AccessLevel >= AccessLevel.GameMaster)
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a bear mask {0} ({1} charges)", GetName(), Charges)));
+                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a bear mask {0} ({1} charges)", GetEffectString(), Charges)));
                     else
                         from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a magic bear mask"));
                 }
@@ -646,7 +646,7 @@ namespace Server.Items
                 if (Effect != ClothEffect.None)
                 {
                     if (IsInIDList(from) || from.AccessLevel >= AccessLevel.GameMaster)
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a deer mask {0} ({1} charges)", GetName(), Charges)));
+                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a deer mask {0} ({1} charges)", GetEffectString(), Charges)));
                     else
                         from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a magic deer mask"));
                 }
@@ -709,7 +709,7 @@ namespace Server.Items
                 if (Effect != ClothEffect.None)
                 {
                     if (IsInIDList(from) || from.AccessLevel >= AccessLevel.GameMaster)
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a tribal mask {0} ({1} charges)", GetName(), Charges)));
+                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a tribal mask {0} ({1} charges)", GetEffectString(), Charges)));
                     else
                         from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a magic tribal mask"));
                 }
@@ -780,7 +780,7 @@ namespace Server.Items
                 if (Effect != ClothEffect.None)
                 {
                     if (IsInIDList(from) || from.AccessLevel >= AccessLevel.GameMaster)
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a tribal mask {0} ({1} charges)", GetName(), Charges)));
+                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a tribal mask {0} ({1} charges)", GetEffectString(), Charges)));
                     else
                         from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a magic tribal mask"));
                 }
@@ -841,7 +841,7 @@ namespace Server.Items
                 if (Effect != ClothEffect.None)
                 {
                     if (IsInIDList(from) || from.AccessLevel >= AccessLevel.GameMaster)
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a tall straw hat {0} ({1} charges)", GetName(), Charges)));
+                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a tall straw hat {0} ({1} charges)", GetEffectString(), Charges)));
                     else
                         from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a magic tall straw hat"));
                 }
@@ -907,7 +907,7 @@ namespace Server.Items
                 if (Effect != ClothEffect.None)
                 {
                     if (IsInIDList(from) || from.AccessLevel >= AccessLevel.GameMaster)
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a straw hat {0} ({1} charges)", GetName(), Charges)));
+                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a straw hat {0} ({1} charges)", GetEffectString(), Charges)));
                     else
                         from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a magic straw hat"));
                 }
@@ -1208,7 +1208,7 @@ namespace Server.Items
                 if (Effect != ClothEffect.None)
                 {
                     if (IsInIDList(from) || from.AccessLevel >= AccessLevel.GameMaster)
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a wizards hat {0} ({1} charges)", GetName(), Charges)));
+                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a wizards hat {0} ({1} charges)", GetEffectString(), Charges)));
                     else
                         from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a magic wizards hat"));
                 }
@@ -1333,7 +1333,7 @@ namespace Server.Items
                 if (Effect != ClothEffect.None)
                 {
                     if (IsInIDList(from) || from.AccessLevel >= AccessLevel.GameMaster)
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a bonnet {0} ({1} charges)", GetName(), Charges)));
+                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a bonnet {0} ({1} charges)", GetEffectString(), Charges)));
                     else
                         from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a magic bonnet"));
                 }
@@ -1399,7 +1399,7 @@ namespace Server.Items
                 if (Effect != ClothEffect.None)
                 {
                     if (IsInIDList(from) || from.AccessLevel >= AccessLevel.GameMaster)
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a feathered hat {0} ({1} charges)", GetName(), Charges)));
+                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a feathered hat {0} ({1} charges)", GetEffectString(), Charges)));
                     else
                         from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a magic feathered hat"));
                 }
@@ -1465,7 +1465,7 @@ namespace Server.Items
                 if (Effect != ClothEffect.None)
                 {
                     if (IsInIDList(from) || from.AccessLevel >= AccessLevel.GameMaster)
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a tricorne hat {0} ({1} charges)", GetName(), Charges)));
+                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a tricorne hat {0} ({1} charges)", GetEffectString(), Charges)));
                     else
                         from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a magic tricorne hat"));
                 }
@@ -1531,7 +1531,7 @@ namespace Server.Items
                 if (Effect != ClothEffect.None)
                 {
                     if (IsInIDList(from) || from.AccessLevel >= AccessLevel.GameMaster)
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a jester hat {0} ({1} charges)", GetName(), Charges)));
+                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a jester hat {0} ({1} charges)", GetEffectString(), Charges)));
                     else
                         from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a magic jester hat"));
                 }

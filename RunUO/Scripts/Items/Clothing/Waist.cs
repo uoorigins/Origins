@@ -62,7 +62,7 @@ namespace Server.Items
                 if (Effect != ClothEffect.None)
                 {
                     if (IsInIDList(from) || from.AccessLevel >= AccessLevel.GameMaster)
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a half apron {0} ({1} charges)", GetName(), Charges)));
+                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a half apron {0} ({1} charges)", GetEffectString(), Charges)));
                     else
                         from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a magic half apron"));
                 }

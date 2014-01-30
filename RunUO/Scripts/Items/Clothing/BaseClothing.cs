@@ -90,7 +90,7 @@ namespace Server.Items
 			set{ m_MaxHitPoints = value; InvalidateProperties(); }
 		}
 
-        public string GetName()
+        public string GetEffectString()
         {
             if (Effect == ClothEffect.NightSight)
                 return "of night eyes";
@@ -531,7 +531,7 @@ namespace Server.Items
                         break;
                     case ClothEffect.Invisibility:
                         Effects.SendLocationParticles(EffectItem.Create(new Point3D(from.X, from.Y, from.Z + 16), from.Map, EffectItem.DefaultDuration), 0x376A, 10, 15, 5045);
-                        from.PlaySound(0x3C4);
+                        from.PlaySound( 0x203 );
                         from.Hidden = true;
                         break;
                     case ClothEffect.MagicReflection:
