@@ -7,6 +7,8 @@ namespace Server.Items
 	[FlipableAttribute( 0x1401, 0x1400 )]
 	public class Kryss : BaseSword
 	{
+        public override string AsciiName { get { return "kryss"; } }
+
         public override WeaponAbility PrimaryAbility { get { return WeaponAbility.ArmorIgnore; } }
         public override WeaponAbility SecondaryAbility { get { return WeaponAbility.InfectiousStrike; } }
 
@@ -40,85 +42,6 @@ namespace Server.Items
 		{
 		}
 
-        public override void OnSingleClick(Mobile from)
-        {
-
-            string durabilitylevel = GetDurabilityString();
-            string accuracylevel = GetAccuracyString();
-            string damagelevel = GetDamageString();
-            string beginning;
-
-            if ((durabilitylevel == "indestructible") || (accuracylevel == "accurate") || (accuracylevel == "eminently accurate") || (accuracylevel == "exceedingly accurate"))
-            {
-                beginning = "an ";
-            }
-            else
-            {
-                beginning = "a ";
-            }
-
-            if (this.Name != null)
-            {
-                from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", this.Name));
-            }
-            else
-            {
-                if (this.Quality == WeaponQuality.Exceptional)
-                {
-                    if (this.Crafter != null)
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("an exceptional kryss (crafted by {0})", this.Crafter.Name)));
-                    else
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "an exceptional kryss"));
-                }
-                else if ((this.IsInIDList(from) == false) && ((this.DamageLevel != WeaponDamageLevel.Regular) || (Slayer == SlayerName.Silver) || (Effect != WeaponEffect.None) || (this.DurabilityLevel != WeaponDurabilityLevel.Regular) || (this.AccuracyLevel != WeaponAccuracyLevel.Regular)))
-                {
-                    from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a magic kryss"));
-                }
-                else if (IsInIDList(from) || from.AccessLevel >= AccessLevel.GameMaster)
-                {
-                    if ((this.DamageLevel > WeaponDamageLevel.Regular || Effect != WeaponEffect.None) && ((this.DurabilityLevel == WeaponDurabilityLevel.Regular) && (this.AccuracyLevel == WeaponAccuracyLevel.Regular)))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a " + (Slayer == SlayerName.Silver ? "silver " : "") + "kryss " + damagelevel));
-                    }
-                    else if ((this.DurabilityLevel > WeaponDurabilityLevel.Regular) && ((this.DamageLevel == WeaponDamageLevel.Regular && Effect == WeaponEffect.None) && (this.AccuracyLevel == WeaponAccuracyLevel.Regular)))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + durabilitylevel + " kryss"));
-                    }
-                    else if ((this.AccuracyLevel > WeaponAccuracyLevel.Regular) && ((this.DamageLevel == WeaponDamageLevel.Regular && Effect == WeaponEffect.None) && (this.DurabilityLevel == WeaponDurabilityLevel.Regular)))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + accuracylevel + " kryss"));
-                    }
-
-
-
-                    else if (((this.DamageLevel > WeaponDamageLevel.Regular || Effect != WeaponEffect.None) && (this.DurabilityLevel > WeaponDurabilityLevel.Regular)) && (this.AccuracyLevel == WeaponAccuracyLevel.Regular))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + durabilitylevel + " kryss " + damagelevel));
-                    }
-                    else if ((this.DamageLevel > WeaponDamageLevel.Regular || Effect != WeaponEffect.None) && (this.AccuracyLevel > WeaponAccuracyLevel.Regular) && (this.DurabilityLevel == WeaponDurabilityLevel.Regular))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + accuracylevel + " kryss " + damagelevel));
-                    }
-                    else if ((this.DurabilityLevel > WeaponDurabilityLevel.Regular) && (this.AccuracyLevel > WeaponAccuracyLevel.Regular) && (this.DamageLevel == WeaponDamageLevel.Regular && Effect == WeaponEffect.None))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + durabilitylevel + ", " + accuracylevel + " kryss"));
-                    }
-                    else if ((this.DurabilityLevel > WeaponDurabilityLevel.Regular) && (this.AccuracyLevel > WeaponAccuracyLevel.Regular) && (this.DamageLevel > WeaponDamageLevel.Regular || Effect != WeaponEffect.None))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + durabilitylevel + ", " + accuracylevel + " kryss " + damagelevel));
-                    }
-                    else
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a " + (Slayer == SlayerName.Silver ? "silver " : "") + "kryss"));
-                    }
-                }
-                else
-                {
-                    from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a kryss"));
-                }
-            }
-        }
-
 		public override void Serialize( GenericWriter writer )
 		{
 			base.Serialize( writer );
@@ -140,6 +63,8 @@ namespace Server.Items
     [FlipableAttribute(0x1401, 0x1400)]
     public class PracticeKryss : BaseSword
     {
+        public override string AsciiName { get { return "kryss (practice weapon)"; } }
+
         public override WeaponAbility PrimaryAbility { get { return WeaponAbility.ArmorIgnore; } }
         public override WeaponAbility SecondaryAbility { get { return WeaponAbility.InfectiousStrike; } }
 

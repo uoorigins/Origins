@@ -7,6 +7,7 @@ namespace Server.Items
 	[FlipableAttribute( 0x26BD, 0x26C7 )]
 	public class BladedStaff : BaseSpear
 	{
+        public override string AsciiName { get { return "bladed staff"; } }
 		public override WeaponAbility PrimaryAbility{ get{ return WeaponAbility.ArmorIgnore; } }
 		public override WeaponAbility SecondaryAbility{ get{ return WeaponAbility.Dismount; } }
 

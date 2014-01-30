@@ -7,6 +7,8 @@ namespace Server.Items
 	[FlipableAttribute( 0x2D33, 0x2D27 )]
 	public class RadiantScimitar : BaseSword
 	{
+        public override string AsciiName { get { return "radiant scimitar"; } }
+
 		public override WeaponAbility PrimaryAbility{ get{ return WeaponAbility.WhirlwindAttack; } }
 		public override WeaponAbility SecondaryAbility{ get{ return WeaponAbility.Bladeweave; } }
 

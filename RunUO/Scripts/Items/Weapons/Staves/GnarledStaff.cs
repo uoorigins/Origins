@@ -14,6 +14,8 @@ namespace Server.Items
 	[FlipableAttribute( 0x13F8, 0x13F9 )]
 	public class GnarledStaff : BaseStaff
 	{
+        public override string AsciiName { get { return "gnarled staff"; } }
+
         public override WeaponAbility PrimaryAbility { get { return WeaponAbility.ConcussionBlow; } }
         public override WeaponAbility SecondaryAbility { get { return WeaponAbility.ParalyzingBlow; } }
 
@@ -39,130 +41,6 @@ namespace Server.Items
 		public GnarledStaff( Serial serial ) : base( serial )
 		{
 		}
-
-        /*public override void OnSingleClick(Mobile from)
-        {
-
-            string durabilitylevel = GetDurabilityString();
-            string accuracylevel = GetAccuracyString();
-            string damagelevel = GetDamageString();
-            string beginning;
-
-            if ((durabilitylevel == "indestructible") || (accuracylevel == "accurate") || (accuracylevel == "eminently accurate") || (accuracylevel == "exceedingly accurate"))
-            {
-                beginning = "an ";
-            }
-            else
-            {
-                beginning = "a ";
-            }
-
-            if (this.Name != null)
-            {
-                from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", this.Name));
-            }
-            else
-            {
-                if (this.Quality == WeaponQuality.Exceptional)
-                {
-                    if (this.Crafter != null)
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("an exceptional gnarled staff (crafted by {0})", this.Crafter.Name)));
-                    else
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "an exceptional gnarled staff"));
-                }
-                else if ((this.IsInIDList(from) == false) && ((this.DamageLevel != WeaponDamageLevel.Regular) || (Slayer == SlayerName.Silver) || (Effect != WeaponEffect.None) || (this.DurabilityLevel != WeaponDurabilityLevel.Regular) || (this.AccuracyLevel != WeaponAccuracyLevel.Regular)))
-                {
-                    from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a magic gnarled staff"));
-                }
-                else if (IsInIDList(from) || from.AccessLevel >= AccessLevel.GameMaster)
-                {
-                    if ((this.DamageLevel > WeaponDamageLevel.Regular || Effect != WeaponEffect.None) && ((this.DurabilityLevel == WeaponDurabilityLevel.Regular) && (this.AccuracyLevel == WeaponAccuracyLevel.Regular)))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", (Slayer == SlayerName.Silver ? "a silver " : "a ") + "gnarled staff " + damagelevel));
-                    }
-                    else if ((this.DurabilityLevel > WeaponDurabilityLevel.Regular) && ((this.DamageLevel == WeaponDamageLevel.Regular && Effect == WeaponEffect.None) && (this.AccuracyLevel == WeaponAccuracyLevel.Regular)))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + durabilitylevel + " gnarled staff"));
-                    }
-                    else if ((this.AccuracyLevel > WeaponAccuracyLevel.Regular) && ((this.DamageLevel == WeaponDamageLevel.Regular && Effect == WeaponEffect.None) && (this.DurabilityLevel == WeaponDurabilityLevel.Regular)))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + accuracylevel + " gnarled staff"));
-                    }
-
-
-
-                    else if (((this.DamageLevel > WeaponDamageLevel.Regular || Effect != WeaponEffect.None) && (this.DurabilityLevel > WeaponDurabilityLevel.Regular)) && (this.AccuracyLevel == WeaponAccuracyLevel.Regular))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + durabilitylevel + " gnarled staff " + damagelevel));
-                    }
-                    else if ((this.DamageLevel > WeaponDamageLevel.Regular || Effect != WeaponEffect.None) && (this.AccuracyLevel > WeaponAccuracyLevel.Regular) && (this.DurabilityLevel == WeaponDurabilityLevel.Regular))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + accuracylevel + " gnarled staff " + damagelevel));
-                    }
-                    else if ((this.DurabilityLevel > WeaponDurabilityLevel.Regular) && (this.AccuracyLevel > WeaponAccuracyLevel.Regular) && (this.DamageLevel == WeaponDamageLevel.Regular && Effect == WeaponEffect.None))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + durabilitylevel + ", " + accuracylevel + " gnarled staff"));
-                    }
-                    else if ((this.DurabilityLevel > WeaponDurabilityLevel.Regular) && (this.AccuracyLevel > WeaponAccuracyLevel.Regular) && (this.DamageLevel > WeaponDamageLevel.Regular || Effect != WeaponEffect.None))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + durabilitylevel + ", " + accuracylevel + " gnarled staff " + damagelevel));
-                    }
-                    else
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", (Slayer == SlayerName.Silver ? "a silver " : "a ") + "gnarled staff"));
-                    }
-                }
-                else
-                {
-                    from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a gnarled staff"));
-                }
-            }
-        }*/
-
-        public override void OnSingleClick(Mobile from)
-        {
-            if (this.Name != null)
-            {
-                from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", this.Name));
-            }
-            else
-            {
-                if (StaffEffect != WandEffect.None)
-                {
-                    if (IsInIDList(from))
-                    {
-                        if (StaffEffect == WandEffect.Clumsiness)
-                            from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a gnarled staff of clumsiness ({0} charges)", Charges)));
-                        else if (StaffEffect == WandEffect.Identification)
-                            from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a gnarled staff of identification ({0} charges)", Charges)));
-                        else if (StaffEffect == WandEffect.Paralyze)
-                            from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a gnarled staff of ghoul's touch ({0} charges)", Charges)));
-                        else if (StaffEffect == WandEffect.Feeblemindedness)
-                            from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a gnarled staff of feeblemindedness ({0} charges)", Charges)));
-                        else if (StaffEffect == WandEffect.Weakness)
-                            from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a gnarled staff of weakness ({0} charges)", Charges)));
-                        else if (StaffEffect == WandEffect.MagicArrow)
-                            from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a gnarled staff of burning ({0} charges)", Charges)));
-                        else if (StaffEffect == WandEffect.Harming)
-                            from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a gnarled staff of wounding ({0} charges)", Charges)));
-                        else if (StaffEffect == WandEffect.Fireball)
-                            from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a gnarled staff of daemon's breath ({0} charges)", Charges)));
-                        else if (StaffEffect == WandEffect.Curse)
-                            from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a gnarled staff of evil ({0} charges)", Charges)));
-                        else if (StaffEffect == WandEffect.Lightning)
-                            from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a gnarled staff of thunder ({0} charges)", Charges)));
-                        else if (StaffEffect == WandEffect.ManaDraining)
-                            from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("a gnarled staff of mage's bane ({0} charges)", Charges)));
-                    }
-                    else
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a magic gnarled staff"));
-                    }
-                }
-                else
-                    from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a gnarled staff"));
-            }
-        }
 
         public override void OnDoubleClick(Mobile from)
         {

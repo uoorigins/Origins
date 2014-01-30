@@ -7,6 +7,8 @@ namespace Server.Items
 	[FlipableAttribute( 0x26BF, 0x26C9 )]
 	public class DoubleBladedStaff : BaseSpear
 	{
+        public override string AsciiName { get { return "double bladed staff"; } }
+
 		public override WeaponAbility PrimaryAbility{ get{ return WeaponAbility.DoubleStrike; } }
 		public override WeaponAbility SecondaryAbility{ get{ return WeaponAbility.InfectiousStrike; } }
 

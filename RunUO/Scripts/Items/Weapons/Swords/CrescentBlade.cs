@@ -7,6 +7,8 @@ namespace Server.Items
 	[FlipableAttribute( 0x26C1, 0x26CB )]
 	public class CrescentBlade : BaseSword
 	{
+        public override string AsciiName { get { return "crescent blade"; } }
+
 		public override WeaponAbility PrimaryAbility{ get{ return WeaponAbility.DoubleStrike; } }
 		public override WeaponAbility SecondaryAbility{ get{ return WeaponAbility.MortalStrike; } }
 

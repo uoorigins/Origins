@@ -822,8 +822,11 @@ namespace Server
                 bool isMagic = GetRandomOldBonus() > 0;
                 if ( item is BaseWeapon || item is BaseArmor || item is BaseJewel || item is BaseHat || item is BaseShield )
                 {
-                    if ( item is BaseWeapon && !( item is BaseWand ) && !( item is GnarledStaff ) )
+                    if ( item is BaseWeapon )
                     {
+                        if ( item is BaseWand || item is GnarledStaff )
+                            return item;
+
                         BaseWeapon weapon = (BaseWeapon)item;
                         int rand = 0;
 
@@ -899,90 +902,6 @@ namespace Server
                             if ( 5 > Utility.Random( 100 ) )
                                 weapon.Slayer = SlayerName.Silver;
                         }
-
-                        //pre-t2a
-                        /*if ( from != null && weapon.AccuracyLevel == 0 && weapon.DamageLevel == 0 && weapon.DurabilityLevel == 0 && weapon.Slayer == SlayerName.None && 5 > Utility.Random( 100 ) )
-                            weapon.Slayer = SlayerGroup.GetLootSlayerType( from.GetType() );*/
-                    }
-                    else if ( item is GnarledStaff )
-                    {
-                        BaseStaff staff = (BaseStaff)item;
-
-                        if ( GetRandomOldBonus() > 0 )
-                        {
-                            int rand = Utility.Random( 100 );
-                            #region Random Magic Effect
-                            if ( 10 > rand )
-                            {
-                                staff.Charges = Utility.RandomMinMax( 5, 50 );
-                                staff.StaffEffect = WandEffect.Clumsiness;
-                            }
-                            else if ( 20 > rand )
-                            {
-                                staff.Charges = Utility.RandomMinMax( 5, 50 );
-                                staff.StaffEffect = WandEffect.Feeblemindedness;
-                            }
-                            else if ( 30 > rand )
-                            {
-                                staff.Charges = Utility.RandomMinMax( 5, 50 );
-                                staff.StaffEffect = WandEffect.MagicArrow;
-                            }
-                            else if ( 40 > rand )
-                            {
-                                staff.Charges = Utility.RandomMinMax( 5, 50 );
-                                staff.StaffEffect = WandEffect.Weakness;
-                            }
-                            else if ( 50 > rand )
-                            {
-                                staff.Charges = Utility.RandomMinMax( 5, 50 );
-                                staff.StaffEffect = WandEffect.Harming;
-                            }
-                            else if ( 60 > rand )
-                            {
-                                if ( Utility.RandomBool() )
-                                {
-                                    staff.Charges = Utility.RandomMinMax( 5, 50 );
-                                    staff.StaffEffect = WandEffect.Paralyze;
-                                }
-                                else
-                                {
-                                    staff.Charges = Utility.RandomMinMax( 5, 50 );
-                                    staff.StaffEffect = WandEffect.Identification;
-                                }
-                            }
-                            else if ( 65 > rand )
-                            {
-                                staff.Charges = Utility.RandomMinMax( 5, 50 );
-                                staff.StaffEffect = WandEffect.Fireball;
-                            }
-                            else if ( 70 > rand )
-                            {
-                                staff.Charges = Utility.RandomMinMax( 5, 50 );
-                                staff.StaffEffect = WandEffect.Curse;
-                            }
-                            else if ( 75 > rand )
-                            {
-                                staff.Charges = Utility.RandomMinMax( 5, 50 );
-                                staff.StaffEffect = WandEffect.ManaDraining;
-                            }
-                            else if ( 78 > rand )
-                            {
-                                staff.Charges = Utility.RandomMinMax( 5, 50 );
-                                staff.StaffEffect = WandEffect.Lightning;
-                            }
-                            #endregion
-                        }
-
-                    }
-                    else if ( item is BaseWand )
-                    {
-                        BaseWeapon weapon = (BaseWeapon)item;
-
-                        if ( GetRandomOldBonus() == 0 )
-                        {
-                            weapon.Delete();
-                            return null;
-                        }
                     }
                     else if ( item is BaseArmor )
                     {
@@ -1025,103 +944,7 @@ namespace Server
                             jewel.Charges = Utility.RandomMinMax( 10, 31 );
                         }
                     }
-                    else if ( item is BaseClothing )
-                    {
-                        BaseClothing clothing = (BaseClothing)item;
-                        int random = Utility.Random( 100 );
-                        if ( GetRandomOldBonus() > 0 )
-                        {
-                            #region Random
-                            if ( 33 >= random )
-                            {
-                                clothing.Effect = ClothEffect.NightSight;
-                                clothing.Charges = Utility.RandomMinMax( 10, 31 );
-                            }
-                            else if ( 46 >= random )
-                            {
-                                clothing.Effect = ClothEffect.Protection;
-                                clothing.Charges = Utility.RandomMinMax( 10, 31 );
-                            }
-                            else if ( 54 >= random )
-                            {
-                                clothing.Effect = ClothEffect.Agility;
-                                clothing.Charges = Utility.RandomMinMax( 10, 31 );
-                            }
-                            else if ( 62 >= random )
-                            {
-                                clothing.Effect = ClothEffect.Cunning;
-                                clothing.Charges = Utility.RandomMinMax( 10, 31 );
-                            }
-                            else if ( 70 >= random )
-                            {
-                                clothing.Effect = ClothEffect.Strength;
-                                clothing.Charges = Utility.RandomMinMax( 10, 31 );
-                            }
-                            else if ( 78 >= random )
-                            {
-                                clothing.Effect = ClothEffect.Invisibility;
-                                clothing.Charges = Utility.RandomMinMax( 10, 31 );
-                            }
-                            else if ( 83 >= random )
-                            {
-                                clothing.Effect = ClothEffect.MagicReflection;
-                                clothing.Charges = Utility.RandomMinMax( 10, 31 );
-                            }
-                            else if ( 87 >= random )
-                            {
-                                clothing.Effect = ClothEffect.Feeblemind;
-                                clothing.Charges = Utility.RandomMinMax( 10, 31 );
-                            }
-                            else if ( 91 >= random )
-                            {
-                                clothing.Effect = ClothEffect.Clumsy;
-                                clothing.Charges = Utility.RandomMinMax( 10, 31 );
-                            }
-                            else if ( 95 >= random )
-                            {
-                                clothing.Effect = ClothEffect.Weaken;
-                                clothing.Charges = Utility.RandomMinMax( 10, 31 );
-                            }
-                            else if ( 98 >= random )
-                            {
-                                clothing.Effect = ClothEffect.Bless;
-                                clothing.Charges = Utility.RandomMinMax( 10, 31 );
-                            }
-                            else
-                            {
-                                clothing.Effect = ClothEffect.Curse;
-                                clothing.Charges = Utility.RandomMinMax( 10, 31 );
-                            }
-                            #endregion
-                        }
-                    }
                 }
-            }
-            else if ( item is BaseInstrument )
-            {
-                SlayerName slayer = SlayerName.None;
-
-                if ( from == null )
-                {
-                    item.Delete();
-                    return null;
-                }
-
-                if ( Core.AOS )
-                    slayer = BaseRunicTool.GetRandomSlayer();
-                else
-                    slayer = SlayerGroup.GetLootSlayerType( from.GetType() );
-
-                if ( slayer == SlayerName.None )
-                {
-                    item.Delete();
-                    return null;
-                }
-
-                BaseInstrument instr = (BaseInstrument)item;
-
-                instr.Quality = InstrumentQuality.Regular;
-                instr.Slayer = slayer;
             }
 
             if ( item.Stackable )

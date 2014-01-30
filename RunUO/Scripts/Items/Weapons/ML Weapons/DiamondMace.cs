@@ -7,6 +7,8 @@ namespace Server.Items
 	[FlipableAttribute( 0x2D24, 0x2D30 )]
 	public class DiamondMace : BaseBashing
 	{
+        public override string AsciiName { get { return "diamond mace"; } }
+
 		public override WeaponAbility PrimaryAbility{ get{ return WeaponAbility.ConcussionBlow; } }
 		public override WeaponAbility SecondaryAbility{ get{ return WeaponAbility.CrushingBlow; } }
 

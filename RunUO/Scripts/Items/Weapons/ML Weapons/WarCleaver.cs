@@ -7,6 +7,8 @@ namespace Server.Items
 	[FlipableAttribute( 0x2D2F, 0x2D23 )]
 	public class WarCleaver : BaseKnife
 	{
+        public override string AsciiName { get { return "war cleaver"; } }
+
 		public override WeaponAbility PrimaryAbility{ get{ return WeaponAbility.Disarm; } }
 		public override WeaponAbility SecondaryAbility{ get{ return WeaponAbility.Bladeweave; } }
 

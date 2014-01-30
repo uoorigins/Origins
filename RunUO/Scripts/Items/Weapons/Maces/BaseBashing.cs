@@ -34,20 +34,5 @@ namespace Server.Items
 
 			int version = reader.ReadInt();
 		}
-
-		public override double GetBaseDamage( Mobile attacker )
-		{
-			double damage = base.GetBaseDamage( attacker );
-
-			/*if ( !Core.AOS && (attacker.Player || attacker.Body.IsHuman) && Layer == Layer.TwoHanded && (attacker.Skills[SkillName.Anatomy].Value / 400.0) >= Utility.RandomDouble() )
-			{
-				damage *= 1.5;
-
-				attacker.SendMessage( "You deliver a crushing blow!" ); // Is this not localized?
-				attacker.PlaySound( 0x11C );
-			}*/
-
-			return damage;
-		}
 	}
 }

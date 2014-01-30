@@ -7,6 +7,7 @@ namespace Server.Items
 	[FlipableAttribute( 0x27A7, 0x27F2 )]
 	public class Lajatang : BaseKnife
 	{
+        public override string AsciiName { get { return "lajatang"; } }
 		public override WeaponAbility PrimaryAbility{ get{ return WeaponAbility.DefenseMastery; } }
 		public override WeaponAbility SecondaryAbility{ get{ return WeaponAbility.FrenziedWhirlwind; } }
 

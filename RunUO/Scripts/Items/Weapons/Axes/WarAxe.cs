@@ -8,6 +8,7 @@ namespace Server.Items
 	[FlipableAttribute( 0x13B0, 0x13AF )]
 	public class WarAxe : BaseAxe
 	{
+        public override string AsciiName { get { return "war axe"; } }
         public override WeaponAbility PrimaryAbility { get { return WeaponAbility.ArmorIgnore; } }
         public override WeaponAbility SecondaryAbility { get { return WeaponAbility.BleedAttack; } }
 
@@ -46,82 +47,6 @@ namespace Server.Items
             base.OnHit(attacker, defender, damageBonus);
 
             defender.Stam -= Utility.Random(3, 5); // 3-5 points of stamina loss
-        }
-
-        public override void OnSingleClick(Mobile from)
-        {
-
-            string durabilitylevel = GetDurabilityString();
-            string accuracylevel = GetAccuracyString();
-            string damagelevel = GetDamageString();
-            string beginning;
-
-            if ((durabilitylevel == "indestructible") || (accuracylevel == "accurate") || (accuracylevel == "eminently accurate") || (accuracylevel == "exceedingly accurate"))
-            {
-                beginning = "an ";
-            }
-            else
-            {
-                beginning = "a ";
-            }
-
-            if (this.Name != null)
-            {
-                from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", this.Name));
-            }
-            else
-            {
-                if (this.Quality == WeaponQuality.Exceptional)
-                {
-                    if (this.Crafter != null)
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("an exceptional war axe (crafted by {0})", this.Crafter.Name)));
-                    else
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "an exceptional war axe"));
-                }
-                else if ((IsInIDList(from) == false) && ((this.DamageLevel != WeaponDamageLevel.Regular) || (Slayer == SlayerName.Silver) || (Effect != WeaponEffect.None) || (this.DurabilityLevel != WeaponDurabilityLevel.Regular) || (this.AccuracyLevel != WeaponAccuracyLevel.Regular)))
-                {
-                    from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a magic war axe"));
-                }
-                else if (IsInIDList(from) || from.AccessLevel >= AccessLevel.GameMaster)
-                {
-                    if ((this.DamageLevel > WeaponDamageLevel.Regular || Effect != WeaponEffect.None) && ((this.DurabilityLevel == WeaponDurabilityLevel.Regular) && (this.AccuracyLevel == WeaponAccuracyLevel.Regular)))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a " + (Slayer == SlayerName.Silver ? "silver " : "") + "war axe " + damagelevel));
-                    }
-                    else if ((this.DurabilityLevel > WeaponDurabilityLevel.Regular) && ((this.DamageLevel == WeaponDamageLevel.Regular && Effect == WeaponEffect.None) && (this.AccuracyLevel == WeaponAccuracyLevel.Regular)))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + durabilitylevel + " war axe"));
-                    }
-                    else if ((this.AccuracyLevel > WeaponAccuracyLevel.Regular) && ((this.DamageLevel == WeaponDamageLevel.Regular && Effect == WeaponEffect.None) && (this.DurabilityLevel == WeaponDurabilityLevel.Regular)))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + accuracylevel + " war axe"));
-                    }
-                    else if (((this.DamageLevel > WeaponDamageLevel.Regular || Effect != WeaponEffect.None) && (this.DurabilityLevel > WeaponDurabilityLevel.Regular)) && (this.AccuracyLevel == WeaponAccuracyLevel.Regular))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + durabilitylevel + " war axe " + damagelevel));
-                    }
-                    else if ((this.DamageLevel > WeaponDamageLevel.Regular || Effect != WeaponEffect.None) && (this.AccuracyLevel > WeaponAccuracyLevel.Regular) && (this.DurabilityLevel == WeaponDurabilityLevel.Regular))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + accuracylevel + " war axe " + damagelevel));
-                    }
-                    else if ((this.DurabilityLevel > WeaponDurabilityLevel.Regular) && (this.AccuracyLevel > WeaponAccuracyLevel.Regular) && (this.DamageLevel == WeaponDamageLevel.Regular && Effect == WeaponEffect.None))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + durabilitylevel + ", " + accuracylevel + " war axe"));
-                    }
-                    else if ((this.DurabilityLevel > WeaponDurabilityLevel.Regular) && (this.AccuracyLevel > WeaponAccuracyLevel.Regular) && (this.DamageLevel > WeaponDamageLevel.Regular || Effect != WeaponEffect.None))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + durabilitylevel + ", " + accuracylevel + " war axe " + damagelevel));
-                    }
-                    else
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a " + (Slayer == SlayerName.Silver ? "silver " : "") + "war axe"));
-                    }
-                }
-                else
-                {
-                    from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a war axe"));
-                }
-            }
         }
 
 		public override void Serialize( GenericWriter writer )

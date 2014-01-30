@@ -25,6 +25,26 @@ namespace Server.Items
             set { m_WandEffect = value; InvalidateProperties(); }
         }
 
+        public override string GetEffectString()
+        {
+            switch ( m_WandEffect )
+            {
+                default:
+                case WandEffect.None: return "";
+                case WandEffect.Clumsiness: return "clumsiness";
+                case WandEffect.Curse: return "evil";
+                case WandEffect.Feeblemindedness: return "feeblemindedness";
+                case WandEffect.Fireball: return "daemon's breath";
+                case WandEffect.Harming: return "wounding";
+                case WandEffect.Identification: return "identification";
+                case WandEffect.Lightning: return "thunder";
+                case WandEffect.MagicArrow: return "burning";
+                case WandEffect.ManaDraining: return "mage's bane";
+                case WandEffect.Paralyze: return "ghoul's touch";
+                case WandEffect.Weakness: return "weakness";
+            }
+        }
+
 		public BaseStaff( int itemID ) : this( itemID, WandEffect.None, 0, 0 )
 		{
 		}

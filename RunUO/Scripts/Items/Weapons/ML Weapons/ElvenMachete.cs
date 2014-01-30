@@ -7,6 +7,8 @@ namespace Server.Items
 	[FlipableAttribute( 0x2D35, 0x2D29 )]
 	public class ElvenMachete : BaseSword
 	{
+        public override string AsciiName { get { return "elven machete"; } }
+
 		public override WeaponAbility PrimaryAbility{ get{ return WeaponAbility.DefenseMastery; } }
 		public override WeaponAbility SecondaryAbility{ get{ return WeaponAbility.Bladeweave; } }
 

@@ -7,6 +7,8 @@ namespace Server.Items
 	[FlipableAttribute( 0x27AF, 0x27FA )]
 	public class Sai : BaseKnife
 	{
+        public override string AsciiName { get { return "sai"; } }
+
 		public override WeaponAbility PrimaryAbility{ get{ return WeaponAbility.Block; } }
 		public override WeaponAbility SecondaryAbility{ get{ return WeaponAbility.ArmorPierce; } }
 

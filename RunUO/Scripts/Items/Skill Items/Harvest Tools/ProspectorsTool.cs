@@ -10,6 +10,8 @@ namespace Server.Items
 	{
 		private int m_UsesRemaining;
 
+        public override string AsciiName { get { return "prospectors tool"; } }
+
 		[CommandProperty( AccessLevel.GameMaster )]
 		public int UsesRemaining
 		{
@@ -44,18 +46,6 @@ namespace Server.Items
 		public ProspectorsTool( Serial serial ) : base( serial )
 		{
 		}
-
-        public override void OnSingleClick(Mobile from)
-        {
-            if (this.Name != null)
-            {
-                from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", this.Name));
-            }
-            else
-            {
-                from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a prospectors tool"));
-            }
-        }
 
 		public override void OnDoubleClick( Mobile from )
 		{

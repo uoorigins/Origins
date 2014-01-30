@@ -7,6 +7,7 @@ namespace Server.Items
 	[FlipableAttribute( 0x27AD, 0x27F8 )]
 	public class Kama : BaseKnife
 	{
+        public override string AsciiName { get { return "pickaxe"; } }
 		public override WeaponAbility PrimaryAbility{ get{ return WeaponAbility.WhirlwindAttack; } }
 		public override WeaponAbility SecondaryAbility{ get{ return WeaponAbility.DefenseMastery; } }
 

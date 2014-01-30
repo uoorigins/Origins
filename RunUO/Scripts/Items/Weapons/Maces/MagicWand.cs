@@ -6,6 +6,8 @@ namespace Server.Items
 {
 	public class MagicWand : BaseBashing
 	{
+        public override string AsciiName { get { return "wand"; } }
+
 		public override int AosStrengthReq{ get{ return 5; } }
 		public override int AosMinDamage{ get{ return 9; } }
 		public override int AosMaxDamage{ get{ return 11; } }
@@ -28,85 +30,6 @@ namespace Server.Items
 		public MagicWand( Serial serial ) : base( serial )
 		{
 		}
-
-        public override void OnSingleClick(Mobile from)
-        {
-
-            string durabilitylevel = GetDurabilityString();
-            string accuracylevel = GetAccuracyString();
-            string damagelevel = GetDamageString();
-            string beginning;
-
-            if ((durabilitylevel == "indestructible") || (accuracylevel == "accurate") || (accuracylevel == "eminently accurate") || (accuracylevel == "exceedingly accurate"))
-            {
-                beginning = "an ";
-            }
-            else
-            {
-                beginning = "a ";
-            }
-
-            if (this.Name != null)
-            {
-                from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", this.Name));
-            }
-            else
-            {
-                if (this.Quality == WeaponQuality.Exceptional)
-                {
-                    if (this.Crafter != null)
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("an exceptional wand (crafted by {0})", this.Crafter.Name)));
-                    else
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "an exceptional wand"));
-                }
-                else if ((this.IsInIDList(from) == false) && ((this.DamageLevel != WeaponDamageLevel.Regular) || (this.DurabilityLevel != WeaponDurabilityLevel.Regular) || (this.AccuracyLevel != WeaponAccuracyLevel.Regular)))
-                {
-                    from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a magic wand"));
-                }
-                else if (this.IsInIDList(from) == true)
-                {
-                    if ((this.DamageLevel > WeaponDamageLevel.Regular) && ((this.DurabilityLevel == WeaponDurabilityLevel.Regular) && (this.AccuracyLevel == WeaponAccuracyLevel.Regular)))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a wand " + damagelevel));
-                    }
-                    else if ((this.DurabilityLevel > WeaponDurabilityLevel.Regular) && ((this.DamageLevel == WeaponDamageLevel.Regular) && (this.AccuracyLevel == WeaponAccuracyLevel.Regular)))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + durabilitylevel + " wand"));
-                    }
-                    else if ((this.AccuracyLevel > WeaponAccuracyLevel.Regular) && ((this.DamageLevel == WeaponDamageLevel.Regular) && (this.DurabilityLevel == WeaponDurabilityLevel.Regular)))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + accuracylevel + " wand"));
-                    }
-
-
-
-                    else if (((this.DamageLevel > WeaponDamageLevel.Regular) && (this.DurabilityLevel > WeaponDurabilityLevel.Regular)) && (this.AccuracyLevel == WeaponAccuracyLevel.Regular))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + durabilitylevel + " wand " + damagelevel));
-                    }
-                    else if ((this.DamageLevel > WeaponDamageLevel.Regular) && (this.AccuracyLevel > WeaponAccuracyLevel.Regular) && (this.DurabilityLevel == WeaponDurabilityLevel.Regular))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + accuracylevel + " wand " + damagelevel));
-                    }
-                    else if ((this.DurabilityLevel > WeaponDurabilityLevel.Regular) && (this.AccuracyLevel > WeaponAccuracyLevel.Regular) && (this.DamageLevel == WeaponDamageLevel.Regular))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + durabilitylevel + ", " + accuracylevel + " wand"));
-                    }
-                    else if ((this.DurabilityLevel > WeaponDurabilityLevel.Regular) && (this.AccuracyLevel > WeaponAccuracyLevel.Regular) && (this.DamageLevel > WeaponDamageLevel.Regular))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + durabilitylevel + ", " + accuracylevel + " wand " + damagelevel));
-                    }
-                    else
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a wand"));
-                    }
-                }
-                else
-                {
-                    from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a wand"));
-                }
-            }
-        }
 
 		public override void Serialize( GenericWriter writer )
 		{

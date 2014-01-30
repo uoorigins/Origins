@@ -6,6 +6,8 @@ namespace Server.Items
 {
 	public class SturdyPickaxe : BaseAxe
 	{
+        public override string AsciiName{ get{ return "sturdy pickaxe"; } }
+
 		public override int LabelNumber{ get{ return 1045126; } } // sturdy pickaxe
 		public override HarvestSystem HarvestSystem{ get{ return Mining.System; } }
 

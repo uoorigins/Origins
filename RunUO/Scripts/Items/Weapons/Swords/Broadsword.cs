@@ -7,6 +7,8 @@ namespace Server.Items
 	[FlipableAttribute( 0xF5E, 0xF5F )]
 	public class Broadsword : BaseSword
 	{
+        public override string AsciiName { get { return "broadsword"; } }
+
         public override WeaponAbility PrimaryAbility { get { return WeaponAbility.CrushingBlow; } }
         public override WeaponAbility SecondaryAbility { get { return WeaponAbility.ArmorIgnore; } }
 
@@ -35,85 +37,6 @@ namespace Server.Items
 		public Broadsword( Serial serial ) : base( serial )
 		{
 		}
-
-        public override void OnSingleClick(Mobile from)
-        {
-
-            string durabilitylevel = GetDurabilityString();
-            string accuracylevel = GetAccuracyString();
-            string damagelevel = GetDamageString();
-            string beginning;
-
-            if ((durabilitylevel == "indestructible") || (accuracylevel == "accurate") || (accuracylevel == "eminently accurate") || (accuracylevel == "exceedingly accurate"))
-            {
-                beginning = "an ";
-            }
-            else
-            {
-                beginning = "a ";
-            }
-
-            if (this.Name != null)
-            {
-                from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", this.Name));
-            }
-            else
-            {
-                if (this.Quality == WeaponQuality.Exceptional)
-                {
-                    if (this.Crafter != null)
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", String.Format("an exceptional broadsword (crafted by {0})", this.Crafter.Name)));
-                    else
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "an exceptional broadsword"));
-                }
-                else if ((this.IsInIDList(from) == false) && ((this.DamageLevel != WeaponDamageLevel.Regular) || (Slayer == SlayerName.Silver) || (Effect != WeaponEffect.None) || (this.DurabilityLevel != WeaponDurabilityLevel.Regular) || (this.AccuracyLevel != WeaponAccuracyLevel.Regular)))
-                {
-                    from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a magic broadsword"));
-                }
-                else if (IsInIDList(from) || from.AccessLevel >= AccessLevel.GameMaster)
-                {
-                    if ((this.DamageLevel > WeaponDamageLevel.Regular || Effect != WeaponEffect.None) && ((this.DurabilityLevel == WeaponDurabilityLevel.Regular) && (this.AccuracyLevel == WeaponAccuracyLevel.Regular)))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a " + (Slayer == SlayerName.Silver ? "silver " : "") + "broadsword " + damagelevel));
-                    }
-                    else if ((this.DurabilityLevel > WeaponDurabilityLevel.Regular) && ((this.DamageLevel == WeaponDamageLevel.Regular && Effect == WeaponEffect.None) && (this.AccuracyLevel == WeaponAccuracyLevel.Regular)))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + durabilitylevel + " broadsword"));
-                    }
-                    else if ((this.AccuracyLevel > WeaponAccuracyLevel.Regular) && ((this.DamageLevel == WeaponDamageLevel.Regular && Effect == WeaponEffect.None) && (this.DurabilityLevel == WeaponDurabilityLevel.Regular)))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + accuracylevel + " broadsword"));
-                    }
-
-
-
-                    else if (((this.DamageLevel > WeaponDamageLevel.Regular || Effect != WeaponEffect.None) && (this.DurabilityLevel > WeaponDurabilityLevel.Regular)) && (this.AccuracyLevel == WeaponAccuracyLevel.Regular))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + durabilitylevel + " broadsword " + damagelevel));
-                    }
-                    else if ((this.DamageLevel > WeaponDamageLevel.Regular || Effect != WeaponEffect.None) && (this.AccuracyLevel > WeaponAccuracyLevel.Regular) && (this.DurabilityLevel == WeaponDurabilityLevel.Regular))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + accuracylevel + " broadsword " + damagelevel));
-                    }
-                    else if ((this.DurabilityLevel > WeaponDurabilityLevel.Regular) && (this.AccuracyLevel > WeaponAccuracyLevel.Regular) && (this.DamageLevel == WeaponDamageLevel.Regular && Effect == WeaponEffect.None))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + durabilitylevel + ", " + accuracylevel + " broadsword"));
-                    }
-                    else if ((this.DurabilityLevel > WeaponDurabilityLevel.Regular) && (this.AccuracyLevel > WeaponAccuracyLevel.Regular) && (this.DamageLevel > WeaponDamageLevel.Regular || Effect != WeaponEffect.None))
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", beginning + durabilitylevel + ", " + accuracylevel + " broadsword " + damagelevel));
-                    }
-                    else
-                    {
-                        from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a " + (Slayer == SlayerName.Silver ? "silver " : "") + "broadsword"));
-                    }
-                }
-                else
-                {
-                    from.Send(new AsciiMessage(Serial, ItemID, MessageType.Label, 0, 3, "", "a broadsword"));
-                }
-            }
-        }
 
 		public override void Serialize( GenericWriter writer )
 		{

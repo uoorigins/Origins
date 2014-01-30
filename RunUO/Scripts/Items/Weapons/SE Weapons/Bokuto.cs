@@ -7,6 +7,8 @@ namespace Server.Items
 	[FlipableAttribute( 0x27A8, 0x27F3 )]
 	public class Bokuto : BaseSword
 	{
+        public override string AsciiName { get { return "bokuto"; } }
+
 		public override WeaponAbility PrimaryAbility{ get{ return WeaponAbility.Feint; } }
 		public override WeaponAbility SecondaryAbility{ get{ return WeaponAbility.NerveStrike; } }
 

@@ -7,6 +7,8 @@ namespace Server.Items
 	[FlipableAttribute( 0x26C2, 0x26CC )]
 	public class CompositeBow : BaseRanged
 	{
+        public override string AsciiName { get { return "composite bow"; } }
+
 		public override int EffectID{ get{ return 0xF42; } }
 		public override Type AmmoType{ get{ return typeof( Arrow ); } }
 		public override Item Ammo{ get{ return new Arrow(); } }

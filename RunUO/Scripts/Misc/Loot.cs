@@ -36,12 +36,12 @@ namespace Server
 				typeof( Mace ),					typeof( Maul ),					typeof( WarHammer ),
 				typeof( WarMace ),				typeof( Bardiche ),				typeof( Halberd ),
 				typeof( Spear ),				typeof( ShortSpear ),			typeof( Pitchfork ),
-				typeof( WarFork ),				typeof( BlackStaff ),			typeof( GnarledStaff ),
+				typeof( WarFork ),				typeof( BlackStaff ),
 				typeof( QuarterStaff ),			typeof( Broadsword ),			typeof( Cutlass ),
 				typeof( Katana ),				typeof( Kryss ),				typeof( Longsword ),
-				typeof( Scimitar ),				typeof( VikingSword ),			/*typeof( Pickaxe ),*/
+				typeof( Scimitar ),				typeof( VikingSword ),
 				typeof( HammerPick ),			typeof( ButcherKnife ),			typeof( Cleaver ),
-				typeof( Dagger ),				typeof( SkinningKnife )/*,		typeof( ShepherdsCrook )*/
+				typeof( Dagger ),				typeof( SkinningKnife )
 			};
 
 		public static Type[] WeaponTypes{ get{ return m_WeaponTypes; } }
@@ -401,26 +401,84 @@ namespace Server
 
 		#region Accessors
 
-		public static BaseWand RandomWand()
+		public static Item RandomWand()
 		{
-			return Construct( m_WandTypes ) as BaseWand;
+            int rand = Utility.Random( 3 );
+            if ( 2 > rand )
+                return Construct( m_WandTypes ) as BaseWand;
+            else
+                return RandomGnarledStaff() as BaseStaff;
 		}
 
-		/*public static BaseClothing RandomClothing()
-		{
-			return RandomClothing( false );
-		}
+        public static BaseStaff RandomGnarledStaff()
+        {
+            BaseStaff staff = new GnarledStaff();
 
-		public static BaseClothing RandomClothing( bool inTokuno )
-		{
-			if ( Core.SE && inTokuno )
-				return Construct( m_SEClothingTypes, m_AosClothingTypes, m_ClothingTypes ) as BaseClothing;
+            int rand = Utility.Random( 100 );
 
-			if ( Core.AOS )
-				return Construct( m_AosClothingTypes, m_ClothingTypes ) as BaseClothing;
+            #region Random Magic Effect
+            if ( 10 > rand )
+            {
+                staff.Charges = Utility.RandomMinMax( 5, 50 );
+                staff.StaffEffect = WandEffect.Clumsiness;
+            }
+            else if ( 20 > rand )
+            {
+                staff.Charges = Utility.RandomMinMax( 5, 50 );
+                staff.StaffEffect = WandEffect.Feeblemindedness;
+            }
+            else if ( 30 > rand )
+            {
+                staff.Charges = Utility.RandomMinMax( 5, 50 );
+                staff.StaffEffect = WandEffect.MagicArrow;
+            }
+            else if ( 40 > rand )
+            {
+                staff.Charges = Utility.RandomMinMax( 5, 50 );
+                staff.StaffEffect = WandEffect.Weakness;
+            }
+            else if ( 50 > rand )
+            {
+                staff.Charges = Utility.RandomMinMax( 5, 50 );
+                staff.StaffEffect = WandEffect.Harming;
+            }
+            else if ( 60 > rand )
+            {
+                if ( Utility.RandomBool() )
+                {
+                    staff.Charges = Utility.RandomMinMax( 5, 50 );
+                    staff.StaffEffect = WandEffect.Paralyze;
+                }
+                else
+                {
+                    staff.Charges = Utility.RandomMinMax( 5, 50 );
+                    staff.StaffEffect = WandEffect.Identification;
+                }
+            }
+            else if ( 65 > rand )
+            {
+                staff.Charges = Utility.RandomMinMax( 5, 50 );
+                staff.StaffEffect = WandEffect.Fireball;
+            }
+            else if ( 70 > rand )
+            {
+                staff.Charges = Utility.RandomMinMax( 5, 50 );
+                staff.StaffEffect = WandEffect.Curse;
+            }
+            else if ( 75 > rand )
+            {
+                staff.Charges = Utility.RandomMinMax( 5, 50 );
+                staff.StaffEffect = WandEffect.ManaDraining;
+            }
+            else if ( 78 > rand )
+            {
+                staff.Charges = Utility.RandomMinMax( 5, 50 );
+                staff.StaffEffect = WandEffect.Lightning;
+            }
+            #endregion Random Magic Effect
 
-			return Construct( m_ClothingTypes ) as BaseClothing;
-		}*/
+            return staff;
+        }
 
         public static int GetRandomHue()
         {
@@ -883,7 +941,7 @@ namespace Server
 			}
 
 			return null;
-		}
-		#endregion
-	}
+        }
+        #endregion
+    }
 }

@@ -7,6 +7,8 @@ namespace Server.Items
 	[FlipableAttribute( 0x26BE, 0x26C8 )]
 	public class Pike : BaseSpear
 	{
+        public override string AsciiName { get { return "pike"; } }
+
 		public override WeaponAbility PrimaryAbility{ get{ return WeaponAbility.ParalyzingBlow; } }
 		public override WeaponAbility SecondaryAbility{ get{ return WeaponAbility.InfectiousStrike; } }
 

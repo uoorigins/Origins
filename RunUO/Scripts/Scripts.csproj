@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\</OutputPath>
+    <OutputPath>..\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -1758,6 +1758,8 @@
     <Compile Include="Items\Traps\SpikeTrap.cs" />
     <Compile Include="Items\Traps\StoneFaceTrap.cs" />
     <Compile Include="Items\Wands\BaseWand.cs" />
+    <None Include="Items\Wands\GreaterHealWand.cs.disable" />
+    <None Include="Items\Wands\HealWand.cs.disable" />
     <Compile Include="Items\Wands\ClumsyWand.cs" />
     <Compile Include="Items\Wands\CurseWand.cs" />
     <Compile Include="Items\Wands\FeebleWand.cs" />
@@ -2712,8 +2714,6 @@
   <ItemGroup>
     <None Include="Gumps\ResurrectGump.cs.backup" />
     <None Include="Items\Misc\BulletinBoards.cs.no" />
-    <None Include="Items\Wands\GreaterHealWand.cs.disable" />
-    <None Include="Items\Wands\HealWand.cs.disable" />
     <None Include="Items\Weapons\Axes\Copy of WarAxe.cs.backp" />
     <None Include="Spells\Second\Protection.cs.backup" />
   </ItemGroup>

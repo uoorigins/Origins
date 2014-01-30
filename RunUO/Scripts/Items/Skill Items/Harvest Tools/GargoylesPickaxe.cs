@@ -6,6 +6,8 @@ namespace Server.Items
 {
 	public class GargoylesPickaxe : BaseAxe
 	{
+        public override string AsciiName { get { return "gargoyle's pickaxe"; } }
+
 		public override int LabelNumber{ get{ return 1041281; } } // a gargoyle's pickaxe
 		public override HarvestSystem HarvestSystem{ get{ return Mining.System; } }
 

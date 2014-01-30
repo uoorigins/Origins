@@ -10,13 +10,6 @@ namespace Server.Items
 
 		private int m_Charges;
 
-		[CommandProperty( AccessLevel.GameMaster )]
-		public int Charges
-		{
-			get{ return m_Charges; }
-			set{ m_Charges = value; InvalidateProperties(); }
-		}
-
 		[Constructable]
 		public FireworksWand() : this( 100 )
 		{

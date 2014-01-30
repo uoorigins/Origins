@@ -7,6 +7,8 @@ namespace Server.Items
 	[FlipableAttribute( 0x27A5, 0x27F0 )]
 	public class Yumi : BaseRanged
 	{
+        public override string AsciiName { get { return "yumi"; } }
+
 		public override int EffectID{ get{ return 0xF42; } }
 		public override Type AmmoType{ get{ return typeof( Arrow ); } }
 		public override Item Ammo{ get{ return new Arrow(); } }

@@ -7,6 +7,8 @@ namespace Server.Items
 	[FlipableAttribute( 0x27AE, 0x27F9 )]
 	public class Nunchaku : BaseBashing
 	{
+        public override string AsciiName { get { return "nunchaku"; } }
+
 		public override WeaponAbility PrimaryAbility{ get{ return WeaponAbility.Block; } }
 		public override WeaponAbility SecondaryAbility{ get{ return WeaponAbility.Feint; } }
 

@@ -7,6 +7,8 @@ namespace Server.Items
 	[FlipableAttribute( 0x2D32, 0x2D26 )]
 	public class RuneBlade : BaseSword
 	{
+        public override string AsciiName { get { return "rune blade"; } }
+
 		public override WeaponAbility PrimaryAbility{ get{ return WeaponAbility.Disarm; } }
 		public override WeaponAbility SecondaryAbility{ get{ return WeaponAbility.Bladeweave; } }
 

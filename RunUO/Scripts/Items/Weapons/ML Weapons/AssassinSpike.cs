@@ -7,6 +7,8 @@ namespace Server.Items
 	[FlipableAttribute( 0x2D21, 0x2D2D )]
 	public class AssassinSpike : BaseKnife
 	{
+        public override string AsciiName { get { return "assassin spike"; } }
+
 		public override WeaponAbility PrimaryAbility{ get{ return WeaponAbility.InfectiousStrike; } }
 		public override WeaponAbility SecondaryAbility{ get{ return WeaponAbility.ShadowStrike; } }
 

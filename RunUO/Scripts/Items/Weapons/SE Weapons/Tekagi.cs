@@ -7,6 +7,7 @@ namespace Server.Items
 	[FlipableAttribute( 0x27Ab, 0x27F6 )]
 	public class Tekagi : BaseKnife
 	{
+        public override string AsciiName { get { return "tekagi"; } }
 		public override WeaponAbility PrimaryAbility{ get{ return WeaponAbility.DualWield; } }
 		public override WeaponAbility SecondaryAbility{ get{ return WeaponAbility.TalonStrike; } }
 

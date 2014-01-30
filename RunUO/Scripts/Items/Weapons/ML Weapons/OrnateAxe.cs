@@ -7,6 +7,8 @@ namespace Server.Items
 	[FlipableAttribute( 0x2D28, 0x2D34 )]
 	public class OrnateAxe : BaseAxe
 	{
+        public override string AsciiName { get { return "ornate axe"; } }
+
 		public override WeaponAbility PrimaryAbility{ get{ return WeaponAbility.Disarm; } }
 		public override WeaponAbility SecondaryAbility{ get{ return WeaponAbility.CrushingBlow; } }
 

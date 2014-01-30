@@ -7,6 +7,8 @@ namespace Server.Items
 	[FlipableAttribute( 0x27A9, 0x27F4 )]
 	public class Daisho : BaseSword
 	{
+        public override string AsciiName { get { return "daisho"; } }
+
 		public override WeaponAbility PrimaryAbility{ get{ return WeaponAbility.Feint; } }
 		public override WeaponAbility SecondaryAbility{ get{ return WeaponAbility.DoubleStrike; } }
 

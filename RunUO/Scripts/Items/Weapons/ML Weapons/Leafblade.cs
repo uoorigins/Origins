@@ -7,6 +7,8 @@ namespace Server.Items
 	[FlipableAttribute( 0x2D22, 0x2D2E )]
 	public class Leafblade : BaseKnife
 	{
+        public override string AsciiName { get { return "leaf blade"; } }
+
 		public override WeaponAbility PrimaryAbility{ get{ return WeaponAbility.Feint; } }
 		public override WeaponAbility SecondaryAbility{ get{ return WeaponAbility.ArmorIgnore; } }
 

@@ -40,6 +40,8 @@ namespace Server.Items
 
 	public abstract class BaseWeapon : Item, IWeapon, IFactionItem, ICraftable, ISlayer, IDurability
 	{
+        public abstract string AsciiName{ get; }
+
 		private string m_EngravedText;
 		
 		[CommandProperty( AccessLevel.GameMaster )]
@@ -547,86 +549,63 @@ namespace Server.Items
 
         public string GetDurabilityString()
         {
-            string name = "";
-            string name2 = "";
             switch (m_DurabilityLevel)
             {
-                case WeaponDurabilityLevel.Durable: name = "durable"; break;
-                case WeaponDurabilityLevel.Substantial: name = "substantial"; break;
-                case WeaponDurabilityLevel.Massive: name = "massive"; break;
-                case WeaponDurabilityLevel.Fortified: name = "fortified"; break;
-                case WeaponDurabilityLevel.Indestructible: name = "indestructible"; break;
+                default:
+                case WeaponDurabilityLevel.Regular: return "";
+                case WeaponDurabilityLevel.Durable: return "durable"; 
+                case WeaponDurabilityLevel.Substantial: return "substantial"; 
+                case WeaponDurabilityLevel.Massive: return "massive"; 
+                case WeaponDurabilityLevel.Fortified: return "fortified"; 
+                case WeaponDurabilityLevel.Indestructible: return "indestructible"; 
             }
-
-            if (m_AccuracyLevel == 0)
-            {
-                if (m_Slayer == SlayerName.Silver)
-                    name2 = "silver";
-            }
-
-            if (name2 == "")
-                return name;
-            else
-                return (name + " " + name2);
         }
 
         public string GetAccuracyString()
         {
-            string name = "";
-            string name2 = "";
-
             switch (m_AccuracyLevel)
             {
-                case WeaponAccuracyLevel.Accurate: name = "accurate"; break;
-                case WeaponAccuracyLevel.Surpassingly: name = "surpassingly accurate"; break;
-                case WeaponAccuracyLevel.Eminently: name = "eminently accurate"; break;
-                case WeaponAccuracyLevel.Exceedingly: name = "exceedingly accurate"; break;
-                case WeaponAccuracyLevel.Supremely: name = "supremely accurate"; break;
+                default:
+                case WeaponAccuracyLevel.Regular: return "";
+                case WeaponAccuracyLevel.Accurate: return "accurate"; 
+                case WeaponAccuracyLevel.Surpassingly: return "surpassingly accurate"; 
+                case WeaponAccuracyLevel.Eminently: return "eminently accurate";
+                case WeaponAccuracyLevel.Exceedingly: return "exceedingly accurate";
+                case WeaponAccuracyLevel.Supremely: return "supremely accurate"; 
             }
-
-            if (m_Slayer == SlayerName.Silver)
-                name2 = "silver";
-
-            if (name2 == "")
-                return name;
-            else
-                return (name + " " + name2);
         }
 
         public string GetDamageString()
         {
-            string name = "";
-            string name2 = "";
-
             switch (m_DamageLevel)
             {
-                case WeaponDamageLevel.Ruin: name = "of ruin"; break;
-                case WeaponDamageLevel.Might: name = "of might"; break;
-                case WeaponDamageLevel.Force: name = "of force"; break;
-                case WeaponDamageLevel.Power: name = "of power"; break;
-                case WeaponDamageLevel.Vanq: name = "of vanquishing"; break;
+                default:
+                case WeaponDamageLevel.Regular: return "";
+                case WeaponDamageLevel.Ruin: return "of ruin"; 
+                case WeaponDamageLevel.Might: return "of might"; 
+                case WeaponDamageLevel.Force: return "of force"; 
+                case WeaponDamageLevel.Power: return "of power"; 
+                case WeaponDamageLevel.Vanq: return "of vanquishing"; 
             }
+        }
 
-            switch (m_WeaponEffect)
+        public virtual string GetEffectString()
+        {
+            switch ( m_WeaponEffect )
             {
-                case WeaponEffect.Clumsy: name2 = String.Format("of clumsiness ({0} charges)", Charges); break;
-                case WeaponEffect.Feeblemind: name2 = String.Format("of feeblemindedness ({0} charges)", Charges); break;
-                case WeaponEffect.MagicArrow: name2 = String.Format("of burning ({0} charges)", Charges); break;
-                case WeaponEffect.Weakness: name2 = String.Format("of weakness ({0} charges)", Charges); break;
-                case WeaponEffect.Harm: name2 = String.Format("of wounding ({0} charges)", Charges); break;
-                case WeaponEffect.Paralyze: name2 = String.Format("of ghoul's touch ({0} charges)", Charges); break;
-                case WeaponEffect.Fireball: name2 = String.Format("of daemon's breath ({0} charges)", Charges); break;
-                case WeaponEffect.Curse: name2 = String.Format("of evil ({0} charges)", Charges); break;
-                case WeaponEffect.ManaDrain: name2 = String.Format("of mage's bane ({0} charges)", Charges); break;
-                case WeaponEffect.Lightning: name2 = String.Format("of thunder ({0} charges)", Charges); break;
+                default:
+                case WeaponEffect.None: return "";
+                case WeaponEffect.Clumsy: return "clumsiness"; 
+                case WeaponEffect.Feeblemind: return "feeblemindedness"; 
+                case WeaponEffect.MagicArrow: return "burning"; 
+                case WeaponEffect.Weakness: return "weakness"; 
+                case WeaponEffect.Harm: return "wounding"; 
+                case WeaponEffect.Paralyze: return "ghoul\'s touch"; 
+                case WeaponEffect.Fireball: return "daemon\'s breath"; 
+                case WeaponEffect.Curse: return "evil"; 
+                case WeaponEffect.ManaDrain: return "mage\'s bane"; 
+                case WeaponEffect.Lightning: return "thunder"; 
             }
-
-            if (name == "")
-                return name2;
-            else if (name2 == "")
-                return name;
-            else
-                return (name + " " + name2);
         }
 
 		public int GetLowerStatReq()
@@ -3181,76 +3160,85 @@ namespace Server.Items
 				list.Add( 1060639, "{0}\t{1}", m_Hits, m_MaxHits ); // durability ~1_val~ / ~2_val~
 		}
 
-		public override void OnSingleClick( Mobile from )
-		{
-			List<EquipInfoAttribute> attrs = new List<EquipInfoAttribute>();
+        public bool IsMagic()
+        {
+            return ( ( DamageLevel != WeaponDamageLevel.Regular ) || ( Slayer == SlayerName.Silver ) || ( Effect != WeaponEffect.None ) || ( DurabilityLevel != WeaponDurabilityLevel.Regular ) || ( AccuracyLevel != WeaponAccuracyLevel.Regular ) );
+        }
 
-			if ( DisplayLootType )
-			{
-				if ( LootType == LootType.Blessed )
-					attrs.Add( new EquipInfoAttribute( 1038021 ) ); // blessed
-				else if ( LootType == LootType.Cursed )
-					attrs.Add( new EquipInfoAttribute( 1049643 ) ); // cursed
-			}
+        public string GetBeginning(string text)
+        {
+            if ( text.Length < 1 )
+                return "";
 
-			#region Factions
-			if ( m_FactionState != null )
-				attrs.Add( new EquipInfoAttribute( 1041350 ) ); // faction item
-			#endregion
+            char start = text[0]; 
 
-			if ( m_Quality == WeaponQuality.Exceptional )
-				attrs.Add( new EquipInfoAttribute( 1018305 - (int)m_Quality ) );
+            // a, e, i, o, u
+            return (start == 'a' || start == 'e' || start == 'i' || start == 'o' || start == 'u' ? "an" : "a");
+        }
 
-			if ( m_Identified || from.AccessLevel >= AccessLevel.GameMaster )
-			{
-				if( m_Slayer != SlayerName.None )
-				{
-					SlayerEntry entry = SlayerGroup.GetEntryByName( m_Slayer );
-					if( entry != null )
-						attrs.Add( new EquipInfoAttribute( entry.Title ) );
-				}
+        public override void OnSingleClick( Mobile from )
+        {
+            //Slayer text
+            string slayerText = ( Slayer != SlayerName.None ? "silver" : "" );
 
-				if( m_Slayer2 != SlayerName.None )
-				{
-					SlayerEntry entry = SlayerGroup.GetEntryByName( m_Slayer2 );
-					if( entry != null )
-						attrs.Add( new EquipInfoAttribute( entry.Title ) );
-				}
+            //Exceptional text
+            string exceptionalText = ( Quality == WeaponQuality.Exceptional ? "exceptional" : "" );
 
-				if ( m_DurabilityLevel != WeaponDurabilityLevel.Regular )
-					attrs.Add( new EquipInfoAttribute( 1038000 + (int)m_DurabilityLevel ) );
+            //Durability text
+            string durabilityText = "";
 
-				if ( m_DamageLevel != WeaponDamageLevel.Regular )
-					attrs.Add( new EquipInfoAttribute( 1038015 + (int)m_DamageLevel ) );
+            if ( DurabilityLevel != WeaponDurabilityLevel.Regular && AccuracyLevel != WeaponAccuracyLevel.Regular )
+            {
+                durabilityText = String.Format("{0},", GetDurabilityString());
+            }
+            else if ( DurabilityLevel != WeaponDurabilityLevel.Regular )
+            {
+                durabilityText = GetDurabilityString();
+            }
 
-				if ( m_AccuracyLevel != WeaponAccuracyLevel.Regular )
-					attrs.Add( new EquipInfoAttribute( 1038010 + (int)m_AccuracyLevel ) );
-			}
-			else if( m_Slayer != SlayerName.None || m_Slayer2 != SlayerName.None || m_DurabilityLevel != WeaponDurabilityLevel.Regular || m_DamageLevel != WeaponDamageLevel.Regular || m_AccuracyLevel != WeaponAccuracyLevel.Regular )
-				attrs.Add( new EquipInfoAttribute( 1038000 ) ); // Unidentified
+            //Effect text
+            string effectText = "";
+            bool isMagicWand = this is BaseWand && ( (BaseWand)this ).Effect != WandEffect.None;
+            bool isMagicStaff = this is GnarledStaff && ( (BaseStaff)this ).StaffEffect != WandEffect.None;
 
-			if ( m_Poison != null && m_PoisonCharges > 0 )
-				attrs.Add( new EquipInfoAttribute( 1017383, m_PoisonCharges ) );
+            if ( ( Effect != WeaponEffect.None || isMagicWand || isMagicStaff ) && DamageLevel != WeaponDamageLevel.Regular )
+            {
+                effectText = String.Format( "and {0} ({1} charges)", GetEffectString(), Charges );
+            }
+            else if ( Effect != WeaponEffect.None || isMagicWand || isMagicStaff )
+            {
+                effectText = String.Format( "of {0} ({1} charges)", GetEffectString(), Charges );
+            }
 
-			int number;
+            string displayText;
 
-			if ( Name == null )
-			{
-				number = LabelNumber;
-			}
-			else
-			{
-				this.LabelTo( from, Name );
-				number = 1041000;
-			}
+            if ( !IsInIDList( from ) && IsMagic() && from.AccessLevel == AccessLevel.Player ) {
+                displayText = String.Format( "{0} magic {1}", exceptionalText, ( Name != null ? Name : AsciiName ) );
+            }
+            else {
+                displayText = String.Format( "{0} {1} {2} {3} {4} {5} {6}", exceptionalText, slayerText, durabilityText, GetAccuracyString(), ( Name != null ? Name : AsciiName ), GetDamageString(), effectText );
+            }
 
-			if ( attrs.Count == 0 && Crafter == null && Name != null )
-				return;
+            //Trim the ends
+            displayText = displayText.Trim();
 
-			EquipmentInfo eqInfo = new EquipmentInfo( number, m_Crafter, false, attrs.ToArray() );
+            //Remove double whitespaces
+            while ( displayText.Contains( "  " ) )
+            {
+                displayText = displayText.Replace( "  ", " " );
+            }
 
-			from.Send( new DisplayEquipmentInfo( this, eqInfo ) );
-		}
+            displayText = String.Format( "{0} {1}", GetBeginning( displayText ), displayText );
+
+            if ( this is BaseWand )
+            {
+                from.Send( new AsciiMessage( Serial, 3574, MessageType.Label, 0, 3, "", displayText ) );
+            }
+            else
+            {
+                from.Send( new AsciiMessage( Serial, ItemID, MessageType.Label, 0, 3, "", displayText ) );
+            }
+        }
 
 		private static BaseWeapon m_Fists; // This value holds the default--fist--weapon
 

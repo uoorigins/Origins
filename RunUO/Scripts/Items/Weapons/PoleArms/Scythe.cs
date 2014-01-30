@@ -8,6 +8,7 @@ namespace Server.Items
 	[FlipableAttribute( 0x26BA, 0x26C4 )]
 	public class Scythe : BasePoleArm
 	{
+        public override string AsciiName { get { return "pickaxe"; } }
 		public override WeaponAbility PrimaryAbility{ get{ return WeaponAbility.BleedAttack; } }
 		public override WeaponAbility SecondaryAbility{ get{ return WeaponAbility.ParalyzingBlow; } }
 

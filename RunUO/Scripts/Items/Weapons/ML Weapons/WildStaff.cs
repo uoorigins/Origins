@@ -7,6 +7,8 @@ namespace Server.Items
 	[FlipableAttribute( 0x2D25, 0x2D31 )]
 	public class WildStaff : BaseStaff
 	{
+        public override string AsciiName { get { return "wild staff"; } }
+
 		public override WeaponAbility PrimaryAbility{ get{ return WeaponAbility.Block; } }
 		public override WeaponAbility SecondaryAbility{ get{ return WeaponAbility.ForceOfNature; } }
 

@@ -7,6 +7,7 @@ namespace Server.Items
 	[FlipableAttribute( 0x27A4, 0x27EF )]
 	public class Wakizashi : BaseSword
 	{
+        public override string AsciiName { get { return "wakizashi"; } }
 		public override WeaponAbility PrimaryAbility{ get{ return WeaponAbility.FrenziedWhirlwind; } }
 		public override WeaponAbility SecondaryAbility{ get{ return WeaponAbility.DoubleStrike; } }
 

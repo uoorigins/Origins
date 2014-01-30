@@ -7,6 +7,7 @@ namespace Server.Items
 	[FlipableAttribute( 0xF62, 0xF63 )]
 	public class TribalSpear : BaseSpear
 	{
+        public override string AsciiName { get { return "tribal spear"; } }
 		public override WeaponAbility PrimaryAbility{ get{ return WeaponAbility.ArmorIgnore; } }
 		public override WeaponAbility SecondaryAbility{ get{ return WeaponAbility.ParalyzingBlow; } }
 
