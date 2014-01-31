@@ -412,8 +412,15 @@ namespace Server
         }
 
         public static BaseStaff RandomGnarledStaff()
-        {
-            return new GnarledStaff();
+        {           
+            try
+            {
+                return Activator.CreateInstance( typeof( GnarledStaff )) as BaseStaff;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public static int GetRandomHue()

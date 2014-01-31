@@ -182,8 +182,7 @@ namespace Server
 
         public static readonly LootPackItem[] Clothing = new LootPackItem[]
 			{
-                //hammer = non-magic clothing
-				new LootPackItem( typeof(Hammer), 1 )
+				new LootPackItem( typeof( BaseClothing ), 1 )
 			};
 
         #region Old Magic Items
@@ -610,7 +609,7 @@ namespace Server
         //Blood
         public static readonly LootPack OldUltraRich = new LootPack( new LootPackEntry[]
 			{
-                new LootPackEntry( true, OldMagicItems,  25.00, 10, 1, (int)Intensity.Level2Min, (int)Intensity.Level5Max ),
+                new LootPackEntry( true, OldMagicItems,  25.00, 10, 1, (int)Intensity.Level3Min, (int)Intensity.Level5Max ),
                 new LootPackEntry( true, PotionReagent,	 50.00, Utility.RandomMinMax( 3, 6 ) ),
 				new LootPackEntry( true, Missle,         50.00, Utility.RandomMinMax( 5, 15 ) ),
                 new LootPackEntry( true,  Beverage,     100.00, 1),
@@ -621,7 +620,7 @@ namespace Server
         //Dragon 
         public static readonly LootPack OldSuperBoss = new LootPack( new LootPackEntry[]
 			{
-                new LootPackEntry( true, OldMagicItems,  40.00, 10, 1, (int)Intensity.Level3Min, (int)Intensity.Level5Max ),
+                new LootPackEntry( true, OldMagicItems,  40.00, 10, 1, (int)Intensity.Level4Min, (int)Intensity.Level5Max-1 ),
                 new LootPackEntry( true, PotionReagent,	 50.00, Utility.RandomMinMax( 3, 6 ) ),
 				new LootPackEntry( true, Missle,         50.00, Utility.RandomMinMax( 5, 15 ) ),
                 new LootPackEntry( true,  Beverage,     100.00, 1),
@@ -632,7 +631,7 @@ namespace Server
         //AW
         public static readonly LootPack OldSpecial = new LootPack( new LootPackEntry[]
 			{
-                new LootPackEntry( true, OldMagicItems,  55.00, 10, 1, (int)Intensity.Level3Min, (int)Intensity.Level5Max ),
+                new LootPackEntry( true, OldMagicItems,  55.00, 10, 1, (int)Intensity.Level4Min, (int)Intensity.Level5Max-1 ),
                 new LootPackEntry( true, PotionReagent,	 50.00, Utility.RandomMinMax( 3, 6 ) ),
 				new LootPackEntry( true, Missle,         50.00, Utility.RandomMinMax( 5, 15 ) ),
                 new LootPackEntry( true, Beverage,      100.00, 1),
@@ -832,7 +831,7 @@ namespace Server
             {
                 bool isMagic = GetRandomOldBonus() > 0;
 
-                if ( item is GnarledStaff )
+                if ( item is GnarledStaff && isMagic )
                 {
                     GnarledStaff staff = (GnarledStaff)item;
                     int rand = Utility.Random( 100 );
@@ -1009,7 +1008,7 @@ namespace Server
                             shield.Durability = (ArmorDurabilityLevel)GetRandomOldBonus();
                     }
                 }
-                else if ( item is BaseClothing )
+                else if ( item is BaseClothing && isMagic )
                 {
                     BaseClothing clothing = (BaseClothing)item;
 
@@ -1077,7 +1076,7 @@ namespace Server
                     }
                     #endregion
                 }
-                else if ( item is BaseJewel )
+                else if ( item is BaseJewel && isMagic )
                 {
                     BaseJewel jewel = (BaseJewel)item;
 
