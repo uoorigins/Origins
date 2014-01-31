@@ -73,6 +73,10 @@ namespace Server.SkillHandlers
 						from.Target = new InternalSecondTarget( from, m_Instrument, creature );
 					}
 				}
+                else if (targeted is PlayerMobile)
+                {
+                    from.SendAsciiMessage("Verbal taunts might be more effective!");
+                }
 				else
 				{
                     from.SendAsciiMessage("You can't incite that!");
@@ -135,10 +139,7 @@ namespace Server.SkillHandlers
 							}
 							else
 							{
-								//from.DoHarmful( m_Creature );
-								//from.DoHarmful( creature );
-
-                                if ( /*!from.CheckTargetSkill( SkillName.Provocation, creature, diff-25.0, diff+25.0 )*/!from.CheckTargetSkill(SkillName.Provocation, creature, 0, 100))
+                                if ( !from.CheckTargetSkill(SkillName.Provocation, creature, 0, 100))
 								{
 									from.NextSkillTime = DateTime.Now + TimeSpan.FromSeconds( 6.0 );
                                     //creature.SayTo(from, true, "Your music fails to incite enough anger.");
@@ -162,10 +163,68 @@ namespace Server.SkillHandlers
                         from.SendAsciiMessage("You can't tell someone to attack themselves!"); // You can't tell someone to attack themselves!
 					}
 				}
-				else
-				{
-                    from.SendAsciiMessage("You can't incite that!"); // You can't incite that!
-				}
+                else if ( targeted is Mobile )
+                {
+                    Mobile m = (Mobile)targeted;
+
+                    if ( !m_Instrument.IsChildOf( from.Backpack ) )
+                    {
+                        from.SendAsciiMessage( "The instrument you are trying to play is no longer in your backpack!" ); // The instrument you are trying to play is no longer in your backpack!
+                    }
+                    else if ( m_Creature.Unprovokable )
+                    {
+                        from.SendAsciiMessage( "You have no chance of provoking those creatures." ); // You have no chance of provoking those creatures.
+                    }
+                    else if ( m_Creature.Map != m.Map || !m_Creature.InRange( m, BaseInstrument.GetBardRange( from, SkillName.Provocation ) ) )
+                    {
+                        from.SendAsciiMessage( "The creatures you are trying to provoke are too far away from each other for your music to have an effect." ); // The creatures you are trying to provoke are too far away from each other for your music to have an effect.
+                    }
+                    else
+                    {
+                        from.NextSkillTime = DateTime.Now + TimeSpan.FromSeconds( 6.0 );
+
+                        double diff = ( ( m_Instrument.GetDifficultyFor( m_Creature ) + m_Instrument.GetDifficultyFor( m ) ) * 0.5 ) - 5.0;
+                        double music = from.Skills[SkillName.Musicianship].Value;
+
+                        if ( music > 100.0 )
+                            diff -= ( music - 100.0 ) * 0.5;
+
+                        if ( from.CanBeHarmful( m_Creature, true ) && from.CanBeHarmful( m, true ) )
+                        {
+                            if ( !BaseInstrument.CheckMusicianship( from ) )
+                            {
+                                from.NextSkillTime = DateTime.Now + TimeSpan.FromSeconds( 6.0 );
+                                //from.SayTo(from, true, "You play poorly, and there is no effect.");
+                                from.SendAsciiMessage( "You play poorly, and there is no effect." ); // You play poorly, and there is no effect.
+                                m_Instrument.PlayInstrumentBadly( from );
+                                m_Instrument.ConsumeUse( from );
+                            }
+                            else
+                            {
+                                if ( !from.CheckTargetSkill( SkillName.Provocation, m, 0, 100 ) )
+                                {
+                                    from.NextSkillTime = DateTime.Now + TimeSpan.FromSeconds( 6.0 );
+                                    //creature.SayTo(from, true, "Your music fails to incite enough anger.");
+                                    from.SendAsciiMessage( "Your music fails to incite enough anger." ); // Your music fails to incite enough anger.
+                                    m_Instrument.PlayInstrumentBadly( from );
+                                    m_Instrument.ConsumeUse( from );
+                                }
+                                else
+                                {
+                                    //creature.SayTo(from, true, "Your music succeeds, as you start a fight.");
+                                    from.SendAsciiMessage( "Your music succeeds, as you start a fight." ); // Your music succeeds, as you start a fight.
+                                    m_Instrument.PlayInstrumentWell( from );
+                                    m_Instrument.ConsumeUse( from );
+                                    m_Creature.Provoke( from, m, true );
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    from.SendAsciiMessage( "You can't incite that!" ); // You can't incite that!
+                }
 			}
 		}
 	}
