@@ -37,6 +37,7 @@ namespace Server.SkillHandlers
             public DiscordanceTarget(Mobile from, BaseInstrument instrument) : base(BaseInstrument.GetBardRange(from, SkillName.Discordance), false, TargetFlags.None)
             {
                 m_Instrument = instrument;
+                CheckLOS = false;
             }
 
             protected override void OnTargetFinish(Mobile from)
@@ -95,12 +96,70 @@ namespace Server.SkillHandlers
                         }
                         else if (targ is BaseCreature)
                         {
-                            ((BaseCreature)targ).TargetLocation = new Point2D((IPoint2D)from.Location);
+                            BaseCreature bc = (BaseCreature)targ;
+
+                            if ( bc.EnticeTimer != null )
+                            {
+                                bc.EnticeTimer.Stop();
+                                bc.EnticeTimer = null;
+                            }
+
+                            bc.EnticeTimer = new EnticementTimer( from, bc );
+                            bc.EnticeTimer.Start();
                         }
                     }
                 }
                 else
                     from.SendAsciiMessage("You cannot entice that!");
+            }
+        }
+    }
+
+    public class EnticementTimer : Timer
+    {
+        private Mobile m_Player;
+        private BaseCreature m_Target;
+        private int Count;
+
+        public EnticementTimer( Mobile from, BaseCreature target )
+            : base( TimeSpan.Zero, TimeSpan.FromSeconds( 1.0 ) )
+        {
+            m_Player = from;
+            m_Target = target;
+            Priority = TimerPriority.OneSecond;
+            Count = 0;
+        }
+
+        protected override void OnTick()
+        {
+            Count++;
+            if ( Count > 10 )
+            {
+                Stop();
+                return;
+            }
+
+            if ( m_Target.InRange( m_Player.Location, 1 ) )
+            {
+                Stop();
+                return;
+            }
+            else if ( m_Target.GetDistanceToSqrt( m_Player.Location ) > 20 )
+            {
+                Stop();
+                return;
+            }
+            else
+            {
+                m_Target.TargetLocation = new Point2D( (IPoint2D)m_Player.Location );
+                m_Target.BardEndTime = DateTime.Now;
+                m_Target.BardTarget = null;
+                m_Target.BardMaster = null;
+                m_Target.BardProvoked = false;
+                m_Target.Combatant = null;
+                m_Target.Warmode = false;
+                m_Target.NextCombatTime = DateTime.Now + TimeSpan.FromSeconds( 2.0 );
+                m_Target.AIObject.Action = ActionType.Wander;
             }
         }
     }

@@ -17,6 +17,7 @@ using Server.Factions;
 using Server.Spells.Bushido;
 using Server.Spells.Spellweaving;
 using Server.Spells.Necromancy;
+using Server.SkillHandlers;
 
 namespace Server.Mobiles
 {
@@ -186,6 +187,8 @@ namespace Server.Mobiles
 		public const int MaxLoyalty = 100;
 
         public DateTime LastTimeInHomeRange;
+
+        public EnticementTimer EnticeTimer;
 
         public TimeSpan DeleteDelay = TimeSpan.FromDays(4.0);
         private DateTime m_ReleaseTime;
