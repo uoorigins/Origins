@@ -74,7 +74,7 @@ namespace Server.Mobiles
 
         public override bool IsEnemy(Mobile m)
         {
-            if (m.Player && m.FindItemOnLayer(Layer.Helm) is OrcishKinMask || (m.Guild != null && m.Guild.Id == 10))
+            if ( m.Player && m.FindItemOnLayer( Layer.Helm ) is OrcishKinMask || ( m.Guild != null && m.Guild.Id == 34 ) )
                 return false;
 
             return base.IsEnemy(m);

@@ -129,10 +129,9 @@ namespace Server.Mobiles
 					m_NextResurrect = DateTime.Now + ResurrectDelay;
 
                     //patio check
-                    BaseHouse myhouse = BaseHouse.FindHouseAt(this);
                     BaseHouse hishouse = BaseHouse.FindHouseAt(m);
 
-                    if (!(myhouse == null && hishouse != null))
+                    if (hishouse == null)
                     {
                         if (m.Map == null || !m.Map.CanFit(m.Location, 16, false, false))
                         {
