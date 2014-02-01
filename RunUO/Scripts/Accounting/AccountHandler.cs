@@ -59,13 +59,6 @@ namespace Server.Misc
 
 			if ( PasswordCommandEnabled )
 				CommandSystem.Register( "Password", AccessLevel.Player, new CommandEventHandler( Password_OnCommand ) );
-
-			if ( Core.AOS )
-			{
-				//CityInfo haven = new CityInfo( "Haven", "Uzeraan's Mansion", 3618, 2591, 0 );
-				CityInfo haven = new CityInfo( "Haven", "Uzeraan's Mansion", 3503, 2574, 14 );
-				StartingCities[StartingCities.Length - 1] = haven;
-			}
 		}
 
 		[Usage( "Password <newPassword> <repeatPassword>" )]
@@ -112,7 +105,7 @@ namespace Server.Misc
 			bool isSafe = true;
 
 			for ( int i = 0; isSafe && i < pass.Length; ++i )
-				isSafe = ( pass[i] >= 0x20 && pass[i] < 0x80 );
+				isSafe = ( pass[i] >= 0x20 && pass[i] < 0x7F );
 
 			if ( !isSafe )
 			{
@@ -245,20 +238,34 @@ namespace Server.Misc
 
 				return m_IPTable;
 			}
-		}	
+		}
+
+		private static readonly char[] m_ForbiddenChars = new char[]
+		{
+			'<', '>', ':', '"', '/', '\\', '|', '?', '*'
+		};
+
+		private static bool IsForbiddenChar( char c )
+		{
+			for ( int i = 0; i < m_ForbiddenChars.Length; ++i )
+				if ( c == m_ForbiddenChars[i] )
+					return true;
+
+			return false;
+		}
 
 		private static Account CreateAccount( NetState state, string un, string pw )
 		{
 			if ( un.Length == 0 || pw.Length == 0 )
 				return null;
 
-			bool isSafe = true;
+			bool isSafe = !( un.StartsWith( " " ) || un.EndsWith( " " ) || un.EndsWith( "." ) );
 
 			for ( int i = 0; isSafe && i < un.Length; ++i )
-				isSafe = ( un[i] >= 0x20 && un[i] < 0x80 );
+				isSafe = ( un[i] >= 0x20 && un[i] < 0x7F && !IsForbiddenChar( un[i] ) );
 
 			for ( int i = 0; isSafe && i < pw.Length; ++i )
-				isSafe = ( pw[i] >= 0x20 && pw[i] < 0x80 );
+				isSafe = ( pw[i] >= 0x20 && pw[i] < 0x7F );
 
 			if ( !isSafe )
 				return null;
@@ -299,7 +306,7 @@ namespace Server.Misc
 
 			if ( acct == null )
 			{
-				if ( AutoAccountCreation && un.Trim().Length > 0 )	//To prevent someone from making an account of just '' or a bunch of meaningless spaces 
+				if ( AutoAccountCreation && un.Trim().Length > 0 ) // To prevent someone from making an account of just '' or a bunch of meaningless spaces
 				{
 					e.State.Account = acct = CreateAccount( e.State, un, pw );
 					e.Accepted = acct == null ? false : acct.CheckAccess( e.State );
@@ -393,6 +400,25 @@ namespace Server.Misc
 
 			if ( !e.Accepted )
 				AccountAttackLimiter.RegisterInvalidAccess( e.State );
+		}
+
+		public static bool CheckAccount( Mobile mobCheck, Mobile accCheck )
+		{
+			if ( accCheck != null )
+			{
+				Account a = accCheck.Account as Account;
+
+				if ( a != null )
+				{
+					for ( int i = 0; i < a.Length; ++i )
+					{
+						if ( a[i] == mobCheck )
+							return true;
+					}
+				}
+			}
+
+			return false;
 		}
 	}
 }

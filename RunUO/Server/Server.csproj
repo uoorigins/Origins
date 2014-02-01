@@ -98,6 +98,7 @@
     <Compile Include="Gumps\GumpImageTileButton.cs" />
     <Compile Include="Gumps\GumpImageTiled.cs" />
     <Compile Include="Gumps\GumpItem.cs" />
+    <Compile Include="Gumps\GumpItemProperty.cs" />
     <Compile Include="Gumps\GumpLabel.cs" />
     <Compile Include="Gumps\GumpLabelCropped.cs" />
     <Compile Include="Gumps\GumpPage.cs" />

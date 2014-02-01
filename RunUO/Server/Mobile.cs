@@ -5,7 +5,7 @@
  *   copyright            : (C) The RunUO Software Team
  *   email                : info@runuo.com
  *
- *   $Id: Mobile.cs 764 2011-09-25 04:02:03Z mark $
+ *   $Id: Mobile.cs 1074 2013-08-20 16:17:01Z eos@runuo.com $
  *
  ***************************************************************************/
 
@@ -170,7 +170,7 @@ namespace Server
 			{
 				if( m_Skill != value )
 				{
-					Skill oldUpdate = (m_Owner == null ? m_Owner.Skills[m_Skill] : null);
+					Skill oldUpdate = (m_Owner != null ? m_Owner.Skills[m_Skill] : null);
 
 					m_Skill = value;
 
@@ -495,6 +495,8 @@ namespace Server
 
 	public delegate Container CreateCorpseHandler( Mobile from, HairInfo hair, FacialHairInfo facialhair, List<Item> initialContent, List<Item> equipedItems );
 
+	public delegate int AOSStatusHandler( Mobile from, int index );
+
 	#endregion
 
 	/// <summary>
@@ -577,6 +579,14 @@ namespace Server
 		{
 			get { return m_SkillCheckDirectLocationHandler; }
 			set { m_SkillCheckDirectLocationHandler = value; }
+		}
+
+		private static AOSStatusHandler m_AOSStatusHandler;
+
+		public static AOSStatusHandler AOSStatusHandler
+		{
+			get { return m_AOSStatusHandler; }
+			set { m_AOSStatusHandler = value; }
 		}
 
 		#endregion
@@ -1013,6 +1023,11 @@ namespace Server
 				return m_MaxPlayerResistance;
 
 			return int.MaxValue;
+		}
+
+		public int GetAOSStatus( int index )
+		{
+			return ( m_AOSStatusHandler == null ) ? 0 : m_AOSStatusHandler( this, index );
 		}
 
 		public virtual void SendPropertiesTo( Mobile from )
@@ -1686,6 +1701,7 @@ namespace Server
 				if( m_Paralyzed != value )
 				{
 					m_Paralyzed = value;
+					Delta( MobileDelta.Flags );
 
 					this.SendAsciiMessage( m_Paralyzed ? "You cannot move!" : "You can move!" );
 
@@ -1738,6 +1754,7 @@ namespace Server
 				if( m_Frozen != value )
 				{
 					m_Frozen = value;
+					Delta( MobileDelta.Flags );
 
 					if( m_FrozenTimer != null )
 					{
@@ -1763,7 +1780,7 @@ namespace Server
 		{
 			if( !m_Frozen )
 			{
-				m_Frozen = true;
+				Frozen = true;
 
 				m_FrozenTimer = new FrozenTimer( this, duration );
 				m_FrozenTimer.Start();
@@ -1784,9 +1801,7 @@ namespace Server
 			{
 				if( m_StrLock != value )
 				{
-                    this.SendAsciiMessage("You cannot set your skills DOWN or LOCKED. This has been disabled for historical accuracy.");
-
-                    m_StrLock = StatLockType.Up;
+					m_StrLock = value;
 
 					if( m_NetState != null )
 						m_NetState.Send( new StatLockInfo( this ) );
@@ -1808,9 +1823,7 @@ namespace Server
 			{
 				if( m_DexLock != value )
 				{
-                    this.SendAsciiMessage("You cannot set your skills DOWN or LOCKED. This has been disabled for historical accuracy.");
-
-                    m_DexLock = StatLockType.Up;
+					m_DexLock = value;
 
 					if( m_NetState != null )
 						m_NetState.Send( new StatLockInfo( this ) );
@@ -1832,9 +1845,7 @@ namespace Server
 			{
 				if( m_IntLock != value )
 				{
-                    this.SendAsciiMessage("You cannot set your skills DOWN or LOCKED. This has been disabled for historical accuracy.");
-
-                    m_IntLock = StatLockType.Up;
+					m_IntLock = value;
 
 					if( m_NetState != null )
 						m_NetState.Send( new StatLockInfo( this ) );
@@ -2069,7 +2080,7 @@ namespace Server
 
 			protected override void OnTick()
 			{
-				if( /*(DateTime.Now > m_Mobile.m_NextCombatTime*/ true )
+				if( true )
 				{
 					Mobile combatant = m_Mobile.Combatant;
 
@@ -2843,8 +2854,14 @@ namespace Server
 			{
 				m_ContextMenu = value;
 
-				if( m_ContextMenu != null )
-					Send( new DisplayContextMenu( m_ContextMenu ) );
+				if ( m_ContextMenu != null && m_NetState != null )
+				{
+					// Old packet is preferred until assistants catch up
+					if ( m_NetState.NewHaven && m_ContextMenu.RequiresNewPacket )
+						Send( new DisplayContextMenu( m_ContextMenu ) );
+					else
+						Send( new DisplayContextMenuOld( m_ContextMenu ) );
+				}
 			}
 		}
 
@@ -3111,10 +3128,10 @@ namespace Server
 		private static TimeSpan m_WalkMount = TimeSpan.FromSeconds( 0.2 );
 		private static TimeSpan m_RunMount = TimeSpan.FromSeconds( 0.1 );
 
-		public static TimeSpan WalkFoot { get { return m_WalkFoot; } }
-		public static TimeSpan RunFoot { get { return m_RunFoot; } }
-		public static TimeSpan WalkMount { get { return m_WalkMount; } }
-		public static TimeSpan RunMount { get { return m_RunMount; } }
+		public static TimeSpan WalkFoot { get { return m_WalkFoot; } set { m_WalkFoot = value; } }
+		public static TimeSpan RunFoot { get { return m_RunFoot; } set { m_RunFoot = value; } }
+		public static TimeSpan WalkMount { get { return m_WalkMount; } set { m_WalkMount = value; } }
+		public static TimeSpan RunMount { get { return m_RunMount; } set { m_RunMount = value; } }
 
 		private DateTime m_EndQueue;
 
@@ -3661,7 +3678,7 @@ namespace Server
 
 		private IAccount m_Account;
 
-		[CommandProperty( AccessLevel.Counselor, AccessLevel.Owner )]
+		[CommandProperty( AccessLevel.GameMaster, AccessLevel.Owner )]
 		public IAccount Account
 		{
 			get
@@ -4261,7 +4278,7 @@ namespace Server
 
 		public virtual void Use( Item item )
 		{
-			if( item == null || item.Deleted || this.Deleted )
+			if( item == null || item.Deleted || item.QuestItem || this.Deleted )
 				return;
 
 			DisruptiveAction();
@@ -4326,6 +4343,14 @@ namespace Server
 				m.OnDoubleClick( this );
 		}
 
+		private static TimeSpan m_ActionDelay = TimeSpan.FromSeconds( 0.5 );
+
+		public static TimeSpan ActionDelay
+		{
+			get { return m_ActionDelay; }
+			set { m_ActionDelay = value; }
+		}
+
 		public virtual void Lift( Item item, int amount, out bool rejected, out LRReason reject )
 		{
 			rejected = true;
@@ -4361,6 +4386,13 @@ namespace Server
 					}
 					else if( !item.IsAccessibleTo( from ) )
 					{
+						reject = LRReason.CannotLift;
+					}
+					else if( item.Nontransferable && amount != item.Amount )
+					{
+						if ( item.QuestItem )
+							from.SendLocalizedMessage( 1074868 ); // Stacks of quest items cannot be unstacked.
+
 						reject = LRReason.CannotLift;
 					}
 					else if( !item.CheckLift( from, item, ref reject ) )
@@ -4407,14 +4439,14 @@ namespace Server
 
 							Map map = from.Map;
 
-							if( Mobile.DragEffects && map != null && (root == null || root is Item) )
+							if( m_DragEffects && map != null && (root == null || root is Item) )
 							{
 								IPooledEnumerable eable = map.GetClientsInRange( from.Location );
 								Packet p = null;
 
 								foreach( NetState ns in eable )
 								{
-									if( !ns.StygianAbyss && ns.Mobile != from && ns.Mobile.CanSee( from ) )
+									if( ns.Mobile != from && ns.Mobile.CanSee( from ) && ns.Mobile.InLOS( from ) && ns.Mobile.CanSee( root ) )
 									{
 										if( p == null )
 										{
@@ -4452,7 +4484,7 @@ namespace Server
 							if( liftSound != -1 )
 								from.Send( new PlaySound( liftSound, from ) );
 
-							from.NextActionTime = DateTime.Now + TimeSpan.FromSeconds( 0.5 );
+							from.NextActionTime = DateTime.Now + m_ActionDelay;
 
 							if( fixMap != null && shouldFix )
 								fixMap.FixColumn( fixLoc.m_X, fixLoc.m_Y );
@@ -4476,6 +4508,9 @@ namespace Server
 			if( rejected && state != null )
 			{
 				state.Send( new LiftRej( reject ) );
+
+				if( item.Deleted )
+					return;
 
 				if( item.Parent is Item ) {
 					if ( state.ContainerGridLines )
@@ -4538,7 +4573,7 @@ namespace Server
 
 		public virtual void SendDropEffect( Item item )
 		{
-			if( Mobile.DragEffects )
+			if( m_DragEffects && !item.Deleted )
 			{
 				Map map = m_Map;
 				object root = item.RootParent;
@@ -4548,9 +4583,11 @@ namespace Server
 					IPooledEnumerable eable = map.GetClientsInRange( m_Location );
 					Packet p = null;
 
+					bool sameLoc = false;
+
 					foreach( NetState ns in eable )
 					{
-						if( !ns.StygianAbyss && ns.Mobile != this && ns.Mobile.CanSee( this ) )
+						if( ns.Mobile != this && ns.Mobile.CanSee( this ) && ns.Mobile.InLOS( this ) && ns.Mobile.CanSee( root ) )
 						{
 							if( p == null )
 							{
@@ -4561,8 +4598,14 @@ namespace Server
 								else
 									trg = new Entity( ((Item)root).Serial, ((Item)root).Location, map );
 
+								if ( m_Location == trg.Location )
+									sameLoc = true;
+
 								p = Packet.Acquire( new DragEffect( this, trg, item.ItemID, item.Hue, item.Amount ) );
 							}
+
+							if ( ns.StygianAbyss && sameLoc )
+								continue; // prevents crash
 
 							ns.Send( p );
 						}
@@ -7946,6 +7989,9 @@ namespace Server
 		{
 			int flags = 0x0;
 
+			if( m_Paralyzed || m_Frozen )
+				flags |= 0x01;
+
 			if( m_Female )
 				flags |= 0x02;
 
@@ -7968,6 +8014,9 @@ namespace Server
 		public virtual int GetOldPacketFlags()
 		{
 			int flags = 0x0;
+
+			if( m_Paralyzed || m_Frozen )
+				flags |= 0x01;
 
 			if( m_Female )
 				flags |= 0x02;
@@ -8144,6 +8193,7 @@ namespace Server
 		{
 		}
 
+		[CommandProperty( AccessLevel.GameMaster, AccessLevel.Owner )]
 		public NetState NetState
 		{
 			get
@@ -8237,7 +8287,7 @@ namespace Server
 								}
 							}
 
-							item.Delete();
+							Timer.DelayCall( TimeSpan.Zero, delegate { item.Delete(); } );
 						}
 					}
 
@@ -8311,7 +8361,7 @@ namespace Server
 
 			return this == m || (
 				m.m_Map == m_Map &&
-				(!m.Hidden || (m_AccessLevel != AccessLevel.Player && (m_AccessLevel >= m.AccessLevel || m_AccessLevel >= AccessLevel.Developer))) &&
+				(!m.Hidden || (m_AccessLevel != AccessLevel.Player && (m_AccessLevel >= m.AccessLevel || m_AccessLevel >= AccessLevel.Administrator))) &&
 				((m.Alive || (Core.SE && Skills.SpiritSpeak.Value >= 100.0)) || !Alive || m_AccessLevel > AccessLevel.Player || m.Warmode));
 
 		}
@@ -8500,11 +8550,17 @@ namespace Server
 			{
 				if( m_Name != value ) // I'm leaving out the && m_NameMod == null
 				{
+					string oldName = m_Name;
 					m_Name = value;
+					OnAfterNameChange( oldName, m_Name );
 					Delta( MobileDelta.Name );
 					InvalidateProperties();
 				}
 			}
+		}
+
+		public virtual void OnAfterNameChange( string oldName, string newName )
+		{
 		}
 
 		[CommandProperty( AccessLevel.GameMaster )]
@@ -9230,7 +9286,7 @@ namespace Server
 				if( m_Map != null )
 					m_Map.OnMove( oldLocation, this );
 
-				if( isTeleport && m_NetState != null )
+				if( isTeleport && m_NetState != null && ( !m_NetState.HighSeas || !m_NoMoveHS ) )
 				{
 					m_NetState.Sequence = 0;
 
@@ -9293,7 +9349,7 @@ namespace Server
 
 								bool inOldRange = Utility.InUpdateRange( oldLocation, m.m_Location );
 
-								if( (isTeleport || !inOldRange) && m.m_NetState != null && m.CanSee( this ) )
+								if( m.m_NetState != null && ( ( isTeleport && ( !m.m_NetState.HighSeas || !m_NoMoveHS ) ) || !inOldRange ) && m.CanSee( this ) )
 								{
 									if ( m.m_NetState.StygianAbyss ) {
 										m.m_NetState.Send( new MobileIncoming( m, this ) );
@@ -9356,7 +9412,7 @@ namespace Server
 						// We're not attached to a client, so simply send an Incoming
 						foreach( NetState ns in eable )
 						{
-							if( (isTeleport || !Utility.InUpdateRange( oldLocation, ns.Mobile.Location )) && ns.Mobile.CanSee( this ) )
+							if( ( ( isTeleport && ( !ns.HighSeas || !m_NoMoveHS ) ) || !Utility.InUpdateRange( oldLocation, ns.Mobile.Location )) && ns.Mobile.CanSee( this ) )
 							{
 								if ( ns.StygianAbyss ) {
 									ns.Send( new MobileIncoming( ns.Mobile, this ) );
@@ -9845,6 +9901,13 @@ namespace Server
 		/// <returns>True if the request is accepted, false if otherwise.</returns>
 		public virtual bool OnEquip( Item item )
 		{
+			// For some reason OSI allows equipping quest items, but they are unmarked in the process
+			if ( item.QuestItem )
+			{
+				item.QuestItem = false;
+				SendLocalizedMessage( 1074769 ); // An item must be in your backpack (and not in a container within) to be toggled as a quest item.
+			}
+
 			return true;
 		}
 
@@ -10055,6 +10118,14 @@ namespace Server
 			}
 
 			Core.Set();
+		}
+
+		private bool m_NoMoveHS;
+
+		public bool NoMoveHS
+		{
+			get { return m_NoMoveHS; }
+			set { m_NoMoveHS = value; }
 		}
 
 		#region GetDirectionTo[..]
@@ -10870,7 +10941,7 @@ namespace Server
 
 		public void SendLocalizedMessage( int number, bool append, string affix, string args )
 		{
-			SendLocalizedMessage( number, append, affix, args );
+			SendLocalizedMessage( number, append, affix, args, 0x3B2 );
 		}
 
 		public void SendLocalizedMessage( int number, bool append, string affix, string args, int hue )

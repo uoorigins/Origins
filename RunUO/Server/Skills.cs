@@ -5,7 +5,7 @@
  *   copyright            : (C) The RunUO Software Team
  *   email                : info@runuo.com
  *
- *   $Id: Skills.cs 634 2010-12-18 23:01:22Z asayre $
+ *   $Id: Skills.cs 841 2012-03-07 08:27:20Z asayre $
  *
  ***************************************************************************/
 
@@ -704,7 +704,7 @@ namespace Server
 	}
 
 	[PropertyObject]
-	public class Skills
+	public class Skills : IEnumerable
 	{
 		private Mobile m_Owner;
 		private Skill[] m_Skills;
@@ -1121,6 +1121,11 @@ namespace Server
 
 			if ( ns != null )
 				ns.Send( new SkillChange( skill ) );
+		}
+
+		public IEnumerator GetEnumerator()
+		{
+			return m_Skills.GetEnumerator();
 		}
 	}
 }

@@ -5,7 +5,7 @@
  *   copyright            : (C) The RunUO Software Team
  *   email                : info@runuo.com
  *
- *   $Id: BaseMulti.cs 591 2010-12-06 06:45:45Z mark $
+ *   $Id: BaseMulti.cs 1064 2013-05-28 17:44:07Z mark@runuo.com $
  *
  ***************************************************************************/
 
@@ -86,6 +86,11 @@ namespace Server.Items
 
 				return base.LabelNumber;
 			}
+		}
+
+		public virtual bool AllowsRelativeDrop
+		{
+			get { return false; }
 		}
 
 		public override int GetMaxUpdateRange()

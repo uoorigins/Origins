@@ -228,8 +228,6 @@
     <Compile Include="Custom\TentChest.cs" />
     <Compile Include="Custom\TentDeeds.cs" />
     <Compile Include="Custom\Tents.cs" />
-    <Compile Include="Custom\Web Accounting\WAConfig.cs" />
-    <Compile Include="Custom\Web Accounting\WebAccounting.cs" />
     <Compile Include="Custom\WrongMaze.cs" />
     <Compile Include="Custom\XmlSpawner\BaseXmlSpawner.cs" />
     <Compile Include="Custom\XmlSpawner\ItemFlags.cs" />
@@ -1940,6 +1938,7 @@
     <Compile Include="Misc\Emitter.cs" />
     <Compile Include="Misc\Fastwalk.cs" />
     <Compile Include="Misc\FoodDecay.cs" />
+    <Compile Include="Misc\Geometry.cs" />
     <Compile Include="Misc\Gifts\GiftGiving.cs" />
     <Compile Include="Misc\Gifts\Winter2004\DecorativeTopiary.cs" />
     <Compile Include="Misc\Gifts\Winter2004\FestiveCactus.cs" />
@@ -1959,6 +1958,7 @@
     <Compile Include="Misc\Loot.cs" />
     <Compile Include="Misc\LootPack.cs" />
     <Compile Include="Misc\MapDefinitions.cs" />
+    <Compile Include="Misc\MapUO.cs" />
     <Compile Include="Misc\NameList.cs" />
     <Compile Include="Misc\NameVerification.cs" />
     <Compile Include="Misc\Notoriety.cs" />
@@ -1979,6 +1979,7 @@
     <Compile Include="Misc\Test Center\TestCenter.cs" />
     <Compile Include="Misc\TextDefinition.cs" />
     <Compile Include="Misc\Titles.cs" />
+    <Compile Include="Misc\ToggleItem.cs" />
     <Compile Include="Misc\TreasureMapProtection.cs" />
     <Compile Include="Misc\uoamVendors.cs" />
     <Compile Include="Misc\ValidationQueue.cs" />

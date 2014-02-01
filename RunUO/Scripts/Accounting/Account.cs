@@ -18,6 +18,10 @@ namespace Server.Accounting
 	{
 		public static readonly TimeSpan YoungDuration = TimeSpan.FromHours( 40.0 );
 
+		public static readonly TimeSpan InactiveDuration = TimeSpan.FromDays( 180.0 );
+		
+		public static readonly TimeSpan EmptyInactiveDuration = TimeSpan.FromDays( 30.0 );
+
 		private string m_Username, m_PlainPassword, m_CryptPassword, m_NewCryptPassword, m_Email;
 		private AccessLevel m_AccessLevel;
 		private int m_Flags;
@@ -29,7 +33,6 @@ namespace Server.Accounting
 		private string[] m_IPRestrictions;
 		private IPAddress[] m_LoginIPs;
 		private HardwareInfo m_HardwareInfo;
-		private bool m_Deleted;
 
 		/// <summary>
 		/// Deletes the account, all characters of the account, and all houses of those characters
@@ -54,14 +57,10 @@ namespace Server.Accounting
 				m_Mobiles[i] = null;
 			}
 
-			m_Deleted = true;
-			Accounts.UnregisterEmail( m_Email );
-			Accounts.Remove( m_Username );
-		}
+			if ( m_LoginIPs.Length != 0 && AccountHandler.IPTable.ContainsKey( m_LoginIPs[0] ) )
+				--AccountHandler.IPTable[m_LoginIPs[0]];
 
-		public bool Deleted
-		{
-			get { return m_Deleted; }
+			Accounts.Remove( m_Username );
 		}
 
 		/// <summary>
@@ -137,23 +136,12 @@ namespace Server.Accounting
 		/// <summary>
 		/// Account username and password hashed with SHA1. May be null.
 		/// </summary>
-        public string NewCryptPassword
-        {
-            get { return m_NewCryptPassword; }
-            set { m_NewCryptPassword = value; }
-        }
-        /// <summary>
-        /// Account E-Mail. May be "".
-        /// </summary>
-        public string Email
-        {
-            get { return m_Email; }
-            set
-            {
-                if (Accounts.RegisterEmail(this, value))
-                    m_Email = value;
-            }
-        }
+		public string NewCryptPassword
+		{
+			get { return m_NewCryptPassword; }
+			set { m_NewCryptPassword = value; }
+		}
+
 		/// <summary>
 		/// Initial AccessLevel for new characters created on this account.
 		/// </summary>
@@ -236,6 +224,22 @@ namespace Server.Accounting
 		{
 			get { return m_LastLogin; }
 			set { m_LastLogin = value; }
+		}
+
+		/// <summary>
+		/// An account is considered inactive based upon LastLogin and InactiveDuration.  If the account is empty, it is based upon EmptyInactiveDuration
+		/// </summary>
+		public bool Inactive
+		{
+			get 
+			{
+				if( this.AccessLevel != AccessLevel.Player )
+					return false;
+
+				TimeSpan inactiveLength = DateTime.Now - m_LastLogin;
+
+				return (inactiveLength > ((this.Count == 0) ? EmptyInactiveDuration : InactiveDuration));
+			}
 		}
 
 		/// <summary>
@@ -665,8 +669,11 @@ namespace Server.Accounting
 						break;
 					}
 			}
-
+#if Framework_4_0
+			Enum.TryParse( Utility.GetText( node["accessLevel"], "Player" ), true, out m_AccessLevel );
+#else
 			m_AccessLevel = (AccessLevel)Enum.Parse( typeof( AccessLevel ), Utility.GetText( node["accessLevel"], "Player" ), true );
+#endif
 			m_Flags = Utility.GetXMLInt32( Utility.GetText( node["flags"], "0" ), 0 );
 			m_Created = Utility.GetXMLDateTime( Utility.GetText( node["created"], null ), DateTime.Now );
 			m_LastLogin = Utility.GetXMLDateTime( Utility.GetText( node["lastLogin"], null ), DateTime.Now );
@@ -746,7 +753,7 @@ namespace Server.Accounting
 
 			if ( addressList != null )
 			{
-                int count = Utility.GetXMLInt32(Utility.GetAttribute(addressList, "count", "0"), 0);
+				int count = Utility.GetXMLInt32( Utility.GetAttribute( addressList, "count", "0" ), 0 );
 
 				list = new IPAddress[count];
 
@@ -803,8 +810,8 @@ namespace Server.Accounting
 				{
 					try
 					{
-                        int index = Utility.GetXMLInt32(Utility.GetAttribute(ele, "index", "0"), 0);
-                        int serial = Utility.GetXMLInt32(Utility.GetText(ele, "0"), 0);
+						int index = Utility.GetXMLInt32( Utility.GetAttribute( ele, "index", "0" ), 0 );
+						int serial = Utility.GetXMLInt32( Utility.GetText( ele, "0" ), 0 );
 
 						if ( index >= 0 && index < list.Length )
 							list[index] = World.FindMobile( serial );
@@ -1120,7 +1127,7 @@ namespace Server.Accounting
 		}
 
 		/// <summary>
-		/// Gets the maximum amount of characters allowed to be created on this account. Values other than 1, 5, or 6 are not supported by the client.
+		/// Gets the maximum amount of characters allowed to be created on this account. Values other than 1, 5, 6, or 7 are not supported by the client.
 		/// </summary>
 		public int Limit
 		{
@@ -1180,9 +1187,17 @@ namespace Server.Accounting
 		public int CompareTo( Account other )
 		{
 			if ( other == null )
-				return -1;
+				return 1;
 
 			return m_Username.CompareTo( other.m_Username );
+		}
+
+		public int CompareTo( IAccount other )
+		{
+			if ( other == null )
+				return 1;
+
+			return m_Username.CompareTo( other.Username );
 		}
 
 		public int CompareTo( object obj )

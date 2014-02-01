@@ -5,7 +5,7 @@
  *   copyright            : (C) The RunUO Software Team
  *   email                : info@runuo.com
  *
- *   $Id: Body.cs 4 2006-06-15 04:28:39Z mark $
+ *   $Id: Body.cs 844 2012-03-07 13:47:33Z mark $
  *
  ***************************************************************************/
 
@@ -33,20 +33,19 @@ namespace Server
 		Equipment
 	}
 
-    [Parsable]
 	public struct Body
 	{
 		private int m_BodyID;
 
 		private static BodyType[] m_Types;
-        
+
 		static Body()
 		{
 			if ( File.Exists( "Data/bodyTable.cfg" ) )
 			{
 				using ( StreamReader ip = new StreamReader( "Data/bodyTable.cfg" ) )
 				{
-					m_Types = new BodyType[1000];
+					m_Types = new BodyType[0x1000];
 
 					string line;
 
@@ -56,7 +55,20 @@ namespace Server
 							continue;
 
 						string[] split = line.Split( '\t' );
+#if Framework_4_0
+						BodyType type;
+						int bodyID;
 
+						if( int.TryParse( split[0], out bodyID ) && Enum.TryParse( split[1], true, out type ) && bodyID >= 0 && bodyID < m_Types.Length )
+						{
+							m_Types[bodyID] = type;
+						}
+						else
+						{
+							Console.WriteLine( "Warning: Invalid bodyTable entry:" );
+							Console.WriteLine( line );
+						}
+#else
 						try
 						{
 							int bodyID = int.Parse( split[0] );
@@ -70,6 +82,7 @@ namespace Server
 							Console.WriteLine( "Warning: Invalid bodyTable entry:" );
 							Console.WriteLine( line );
 						}
+#endif
 					}
 				}
 			}
