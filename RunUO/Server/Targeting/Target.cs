@@ -5,7 +5,7 @@
  *   copyright            : (C) The RunUO Software Team
  *   email                : info@runuo.com
  *
- *   $Id: Target.cs 1070 2013-06-16 01:24:45Z eos@runuo.com $
+ *   $Id: Target.cs 551 2010-10-15 03:54:16Z mark $
  *
  ***************************************************************************/
 
@@ -26,14 +26,6 @@ namespace Server.Targeting
 	public abstract class Target
 	{
 		private static int m_NextTargetID;
-
-		private static bool m_TargetIDValidation = true;
-
-		public static bool TargetIDValidation
-		{
-			get { return m_TargetIDValidation; }
-			set { m_TargetIDValidation = value; }
-		}
 
 		private int m_TargetID;
 		private int m_Range;
@@ -300,32 +292,32 @@ namespace Server.Targeting
 
 		protected virtual void OnTargetNotAccessible( Mobile from, object targeted )
 		{
-			from.SendLocalizedMessage( 500447 ); // That is not accessible.
+            from.SendAsciiMessage("That is not accessible."); // That is not accessible.
 		}
 
 		protected virtual void OnTargetInSecureTrade( Mobile from, object targeted )
 		{
-			from.SendLocalizedMessage( 500447 ); // That is not accessible.
+            from.SendAsciiMessage("That is not accessible."); // That is not accessible.
 		}
 
 		protected virtual void OnNonlocalTarget( Mobile from, object targeted )
 		{
-			from.SendLocalizedMessage( 500447 ); // That is not accessible.
+            from.SendAsciiMessage("That is not accessible."); // That is not accessible.
 		}
 
 		protected virtual void OnCantSeeTarget( Mobile from, object targeted )
 		{
-			from.SendLocalizedMessage( 500237 ); // Target can not be seen.
+            from.SendAsciiMessage("Target can not be seen."); // Target can not be seen.
 		}
 
 		protected virtual void OnTargetOutOfLOS( Mobile from, object targeted )
 		{
-			from.SendLocalizedMessage( 500237 ); // Target can not be seen.
+            from.SendAsciiMessage("Target can not be seen."); // Target can not be seen.
 		}
 
 		protected virtual void OnTargetOutOfRange( Mobile from, object targeted )
 		{
-			from.SendLocalizedMessage( 500446 ); // That is too far away.
+            from.SendAsciiMessage("That is too far away."); // That is too far away.
 		}
 
 		protected virtual void OnTargetDeleted( Mobile from, object targeted )
@@ -334,7 +326,7 @@ namespace Server.Targeting
 
 		protected virtual void OnTargetUntargetable( Mobile from, object targeted )
 		{
-			from.SendLocalizedMessage( 500447 ); // That is not accessible.
+            from.SendAsciiMessage("That is not accessible."); // That is not accessible.
 		}
 
 		protected virtual void OnTargetCancel( Mobile from, TargetCancelType cancelType )

@@ -5,7 +5,7 @@
  *   copyright            : (C) The RunUO Software Team
  *   email                : info@runuo.com
  *
- *   $Id: Listener.cs 826 2012-02-08 03:32:56Z asayre $
+ *   $Id: Listener.cs 646 2010-12-23 22:29:59Z mark $
  *
  ***************************************************************************/
 
@@ -36,7 +36,7 @@ namespace Server.Network
 		private Queue<Socket> m_Accepted;
 		private object m_AcceptedSyncRoot;
 
-#if NewAsyncSockets
+#if Framework_4_0
 		private SocketAsyncEventArgs m_EventArgs;
 #else
 		private AsyncCallback m_OnAccept;
@@ -63,7 +63,7 @@ namespace Server.Network
 
 			DisplayListener();
 
-#if NewAsyncSockets
+#if Framework_4_0
 			m_EventArgs = new SocketAsyncEventArgs();
 			m_EventArgs.Completed += new EventHandler<SocketAsyncEventArgs>( Accept_Completion );
 			Accept_Start();
@@ -146,7 +146,7 @@ namespace Server.Network
 			}
 		}
 
-#if NewAsyncSockets
+#if Framework_4_0
 		private void Accept_Start()
 		{
 			bool result = false;

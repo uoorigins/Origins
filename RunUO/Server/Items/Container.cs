@@ -171,7 +171,7 @@ namespace Server.Items
 		{
 			if ( item != this && from.AccessLevel < AccessLevel.GameMaster && IsDecoContainer )
 			{
-				from.LocalOverheadMessage( MessageType.Regular, 0x3B2, 1019045 ); // I can't reach that.
+				from.LocalOverheadMessage( MessageType.Regular, 0x3B2, true, "I can't reach that." ); // I can't reach that.
 				return false;
 			}
 
@@ -240,17 +240,17 @@ namespace Server.Items
 
 		public virtual void SendFullItemsMessage( Mobile to, Item item )
 		{
-			to.SendMessage( "That container cannot hold more items." );
+			to.SendAsciiMessage( "That container cannot hold more items." );
 		}
 
 		public virtual void SendFullWeightMessage( Mobile to, Item item )
 		{
-			to.SendMessage( "That container cannot hold more weight." );
+			to.SendAsciiMessage( "That container cannot hold more weight." );
 		}
 
 		public virtual void SendCantStoreMessage( Mobile to, Item item )
 		{
-			to.SendLocalizedMessage( 500176 ); // That is not your container, you can't store things here.
+            to.SendAsciiMessage("That is not your container, you can't store things here."); // That is not your container, you can't store things here.
 		}
 
 		public virtual bool OnDragDropInto( Mobile from, Item item, Point3D p )
@@ -1574,7 +1574,7 @@ namespace Server.Items
 			}
 			else
 			{
-				from.SendLocalizedMessage( 500446 ); // That is too far away.
+				from.SendAsciiMessage( "That is too far away." ); // That is too far away.
 			}
 		}
 
@@ -1718,7 +1718,7 @@ namespace Server.Items
 			if ( from.AccessLevel > AccessLevel.Player || from.InRange( this.GetWorldLocation(), 2 ) )
 				DisplayTo( from );
 			else
-				from.SendLocalizedMessage( 500446 ); // That is too far away.
+				from.SendAsciiMessage( "That is too far away." ); // That is too far away.
 		}
 	}
 

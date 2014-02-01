@@ -5,7 +5,7 @@
  *   copyright            : (C) The RunUO Software Team
  *   email                : info@runuo.com
  *
- *   $Id: ScriptCompiler.cs 856 2012-03-21 22:25:44Z eos $
+ *   $Id: ScriptCompiler.cs 651 2010-12-28 09:24:08Z asayre $
  *
  ***************************************************************************/
 
@@ -55,11 +55,7 @@ namespace Server
 		{
 			List<string> list = new List<string>();
 
-#if Framework_4_0
-			string path = Path.Combine( Core.BaseDirectory, "Data/Assemblies_4_0.cfg" );
-#else
 			string path = Path.Combine( Core.BaseDirectory, "Data/Assemblies.cfg" );
-#endif
 
 			if( File.Exists( path ) )
 			{
@@ -82,30 +78,28 @@ namespace Server
 			return list.ToArray();
 		}
 
-		public static string GetCompilerOptions( bool debug )
+		public static string GetDefines()
 		{
 			StringBuilder sb = null;
 
-			if( !debug )
-				AppendCompilerOption( ref sb, "/optimize" );
-
 #if MONO
-			AppendCompilerOption( ref sb, "/d:MONO" );
+			AppendDefine( ref sb, "/d:MONO" );
 #endif
 
 			//These two defines are legacy, ie, depreciated.
 			if( Core.Is64Bit )
-				AppendCompilerOption( ref sb, "/d:x64" );
+				AppendDefine( ref sb, "/d:x64" );
 
-			AppendCompilerOption( ref sb, "/d:Framework_2_0" );
+			AppendDefine( ref sb, "/d:Framework_2_0" );
+
 #if Framework_4_0
-			AppendCompilerOption( ref sb, "/d:Framework_4_0" );
+			AppendDefine( ref sb, "/d:Framework_4_0" );
 #endif
 
 			return (sb == null ? null : sb.ToString());
 		}
 
-		private static void AppendCompilerOption( ref StringBuilder sb, string define )
+		public static void AppendDefine( ref StringBuilder sb, string define )
 		{
 			if( sb == null )
 				sb = new StringBuilder();
@@ -225,10 +219,10 @@ namespace Server
 
 				CompilerParameters parms = new CompilerParameters( GetReferenceAssemblies(), path, debug );
 
-				string options = GetCompilerOptions( debug );
+				string defines = GetDefines();
 
-				if( options != null )
-					parms.CompilerOptions = options;
+				if( defines != null )
+					parms.CompilerOptions = defines;
 
 				if( Core.HaltOnWarning )
 					parms.WarningLevel = 4;
@@ -365,10 +359,10 @@ namespace Server
 
 				CompilerParameters parms = new CompilerParameters( GetReferenceAssemblies(), path, debug );
 
-				string options = GetCompilerOptions( debug );
+				string defines = GetDefines();
 
-				if( options != null )
-					parms.CompilerOptions = options;
+				if( defines != null )
+					parms.CompilerOptions = String.Format( "/D:{0}", defines );
 
 				if( Core.HaltOnWarning )
 					parms.WarningLevel = 4;

@@ -5,7 +5,7 @@
  *   copyright            : (C) The RunUO Software Team
  *   email                : info@runuo.com
  *
- *   $Id: Item.cs 1065 2013-06-02 13:12:09Z eos@runuo.com $
+ *   $Id: Item.cs 602 2010-12-09 02:48:29Z mark $
  *
  ***************************************************************************/
 
@@ -547,17 +547,16 @@ namespace Server
 	[Flags]
 	public enum ExpandFlag
 	{
-		None		= 0x000,
+		None		= 0x00,
 
-		Name		= 0x001,
-		Items		= 0x002,
-		Bounce		= 0x004,
-		Holder		= 0x008,
-		Blessed		= 0x010,
-		TempFlag	= 0x020,
-		SaveFlag	= 0x040,
-		Weight		= 0x080,
-		Spawner		= 0x100
+		Name		= 0x01,
+		Items		= 0x02,
+		Bounce		= 0x04,
+		Holder		= 0x08,
+		Blessed		= 0x10,
+		TempFlag	= 0x20,
+		SaveFlag	= 0x40,
+		Weight		= 0x80
 	}
 
 	public class Item : IEntity, IHued, IComparable<Item>, ISerializable, ISpawnable
@@ -705,8 +704,6 @@ namespace Server
 			public Mobile m_HeldBy;
 			public Mobile m_BlessedFor;
 
-			public ISpawner m_Spawner;
-
 			public int m_TempFlags;
 			public int m_SavedFlags;
 
@@ -737,9 +734,6 @@ namespace Server
 
 				if ( info.m_Name != null )
 					flags |= ExpandFlag.Name;
-
-				if (info.m_Spawner != null)
-					flags |= ExpandFlag.Spawner;
 
 				if ( info.m_SavedFlags != 0 )
 					flags |= ExpandFlag.SaveFlag;
@@ -784,7 +778,6 @@ namespace Server
 							|| ( info.m_Bounce != null )
 							|| ( info.m_HeldBy != null )
 							|| ( info.m_BlessedFor != null )
-							|| ( info.m_Spawner != null )
 							|| ( info.m_TempFlags != 0 )
 							|| ( info.m_SavedFlags != 0 )
 							|| ( info.m_Weight != -1 );
@@ -812,16 +805,16 @@ namespace Server
 			{
 				Container cont = this as Container;
 
-				if ( cont.m_Items == null )
+				if ( cont.m_Items == null ) {
 					cont.m_Items = new List<Item>();
+				}
 
 				return cont.m_Items;
 			}
 
 			CompactInfo info = AcquireCompactInfo();
 
-			if ( info.m_Items == null )
-				info.m_Items = new List<Item>();
+			info.m_Items = new List<Item>();
 
 			return info.m_Items;
 		}
@@ -1275,7 +1268,7 @@ namespace Server
 
 		public void LabelTo( Mobile to, int number )
 		{
-			to.Send( new MessageLocalized( m_Serial, m_ItemID, MessageType.Label, 0x3B2, 3, number, "", "" ) );
+			to.Send( new AsciiMessage( m_Serial, m_ItemID, MessageType.Label, 0, 3, "", Parse(number)) );
 		}
 
 		public void LabelTo( Mobile to, int number, string args )
@@ -1285,7 +1278,7 @@ namespace Server
 
 		public void LabelTo( Mobile to, string text )
 		{
-			to.Send( new UnicodeMessage( m_Serial, m_ItemID, MessageType.Label, 0x3B2, 3, "ENU", "", text ) );
+			to.Send( new AsciiMessage( m_Serial, m_ItemID, MessageType.Label, 0, 3, "", text ) );
 		}
 
 		public void LabelTo( Mobile to, string format, params object[] args )
@@ -1493,7 +1486,7 @@ namespace Server
 		private static TimeSpan m_DDT = TimeSpan.FromHours( 1.0 );
 
 		public static TimeSpan DefaultDecayTime{ get{ return m_DDT; } set{ m_DDT = value; } }
-
+        
 		[CommandProperty( AccessLevel.GameMaster )]
 		public virtual TimeSpan DecayTime
 		{
@@ -1508,8 +1501,10 @@ namespace Server
 		{
 			get
 			{
-				// TODO: Make item decay an option on the spawner
-				return (Movable && Visible/* && Spawner == null*/);
+                if (Spawner != null)
+                    return GetSavedFlag(0x00100000) && (Movable && Visible);
+                else
+				    return (Movable && Visible);
 			}
 		}
 
@@ -1542,7 +1537,7 @@ namespace Server
 
 		public virtual bool StackWith( Mobile from, Item dropped, bool playSound )
 		{
-			if ( dropped.Stackable && Stackable && dropped.GetType() == GetType() && dropped.ItemID == ItemID && dropped.Hue == Hue && dropped.Name == Name && (dropped.Amount + Amount) <= 60000 && dropped != this && !dropped.Nontransferable && !Nontransferable )
+			if ( dropped.Stackable && Stackable && dropped.GetType() == GetType() && dropped.ItemID == ItemID && dropped.Hue == Hue && dropped.Name == Name && (dropped.Amount + Amount) <= 60000 )
 			{
 				if ( m_LootType != dropped.m_LootType )
 					m_LootType = LootType.Regular;
@@ -1984,8 +1979,9 @@ namespace Server
 
 		public virtual void Serialize( GenericWriter writer )
 		{
-			writer.Write( 9 ); // version
+			writer.Write( 11 ); // version
 
+            writer.Write(m_Tag);
 			SaveFlag flags = SaveFlag.None;
 
 			int x = m_Location.m_X, y = m_Location.m_Y, z = m_Location.m_Z;
@@ -2307,7 +2303,18 @@ namespace Server
 
 			switch ( version )
 			{
+                case 11:
+                    {
+                        m_Tag = reader.ReadString();
+                        goto case 10;
+                    }
+				case 10:
+				{
+					 goto case 8;
+				}
 				case 9:
+                        int blah = reader.ReadEncodedInt();
+                        goto case 8;
 				case 8:
 				case 7:
 				case 6:
@@ -2841,7 +2848,7 @@ namespace Server
 		{
 			get
 			{
-				return m_Hue;
+				return (QuestItem ? QuestItemHue : m_Hue);
 			}
 			set
 			{
@@ -2855,7 +2862,10 @@ namespace Server
 			}
 		}
 
-		public const int QuestItemHue = 0x4EA; // Hmmmm... "for EA"?
+		public virtual int QuestItemHue
+		{
+			get { return 0x04EA; }	//HMMMM... For EA?
+		}
 
 		public virtual bool Nontransferable
 		{
@@ -2864,9 +2874,8 @@ namespace Server
 
 		public virtual void HandleInvalidTransfer( Mobile from )
 		{
-			// OSI sends 1074769, bug!
 			if( QuestItem )
-				from.SendLocalizedMessage( 1049343 ); // You can only drop quest items into the top-most level of your backpack while you still need them for your quest.
+				from.SendLocalizedMessage( 1074769 ); // An item must be in your backpack (and not in a container within) to be toggled as a quest item.
 		}
 
 		[CommandProperty( AccessLevel.GameMaster )]
@@ -3028,14 +3037,6 @@ namespace Server
 
 				m_DeltaQueue.Remove( this );
 			}
-		}
-
-		private bool m_NoMoveHS;
-
-		public bool NoMoveHS
-		{
-			get { return m_NoMoveHS; }
-			set { m_NoMoveHS = value; }
 		}
 
 		public void ProcessDelta()
@@ -3277,10 +3278,10 @@ namespace Server
 
 		public virtual void OnDelete()
 		{
-			if (this.Spawner != null)
+			if ( m_Spawner != null )
 			{
-				this.Spawner.Remove(this);
-				this.Spawner = null;
+				m_Spawner.Remove( this );
+				m_Spawner = null;
 			}
 		}
 
@@ -3452,28 +3453,10 @@ namespace Server
 			return true;
 		}
 
-		public ISpawner Spawner
-		{ 
-			get
-			{
-				CompactInfo info = LookupCompactInfo();
+		//TODO: Move to CompactInfo.
+		private ISpawner m_Spawner;
 
-				if (info != null)
-					return info.m_Spawner;
-
-				return null;
-
-			} 
-			set
-			{
-				CompactInfo info = AcquireCompactInfo();
-
-				info.m_Spawner = value;
-
-				if (info.m_Spawner == null)
-					VerifyCompactInfo();
-			} 
-		}
+		public ISpawner Spawner{ get{ return m_Spawner; } set{ m_Spawner = value; } }
 
 		public virtual void OnBeforeSpawn( Point3D location, Map m )
 		{
@@ -3567,7 +3550,6 @@ namespace Server
 								eable.Free();
 							}
 
-							Point3D oldLoc = m_Location;
 							m_Location = value;
 							ReleaseWorldPackets();
 
@@ -3579,7 +3561,7 @@ namespace Server
 							{
 								Mobile m = state.Mobile;
 
-								if ( m.CanSee( this ) && m.InRange( m_Location, GetUpdateRange( m ) ) && ( !state.HighSeas || !m_NoMoveHS || ( m_DeltaFlags & ItemDelta.Update ) != 0 || !m.InRange( oldLoc, GetUpdateRange( m ) ) ) )
+								if ( m.CanSee( this ) && m.InRange( m_Location, GetUpdateRange( m ) ) )
 									SendInfoTo( state );
 							}
 
@@ -3666,6 +3648,25 @@ namespace Server
 		{
 			get { return null; }
 		}
+
+        private string m_Tag;
+        [CommandProperty(AccessLevel.Counselor, AccessLevel.GameMaster)]
+        public string Tag
+        {
+            get
+            {
+                return m_Tag;
+            }
+            set
+            {
+                string old = m_Tag;
+
+                if (old != value)
+                {
+                    m_Tag = value;
+                }
+            }
+        }
 
 		[CommandProperty( AccessLevel.GameMaster )]
 		public string Name
@@ -3805,7 +3806,7 @@ namespace Server
 
 		public virtual bool OnDroppedToMobile( Mobile from, Mobile target )
 		{
-			if( Nontransferable && from.Player )
+			if( Nontransferable && from.Player && from.AccessLevel <= AccessLevel.GameMaster )
 			{
 				HandleInvalidTransfer( from );
 				return false;
@@ -3838,7 +3839,7 @@ namespace Server
 			{
 				return false;
 			}
-			else if( Nontransferable && from.Player && target != from.Backpack )
+			else if( Nontransferable && from.Player && target != from.Backpack && from.AccessLevel <= AccessLevel.GameMaster )
 			{
 				HandleInvalidTransfer( from );
 				return false;
@@ -3859,7 +3860,7 @@ namespace Server
 				return false;
 			else if ( !from.OnDroppedItemOnto( this, target ) )
 				return false;
-			else if( Nontransferable && from.Player && target != from.Backpack )
+			else if( Nontransferable && from.Player && from.AccessLevel <= AccessLevel.GameMaster )
 			{
 				HandleInvalidTransfer( from );
 				return false;
@@ -3893,7 +3894,7 @@ namespace Server
 
 		public virtual bool OnDroppedToWorld( Mobile from, Point3D p )
 		{
-			if( Nontransferable && from.Player )
+			if( Nontransferable && from.Player && from.AccessLevel <= AccessLevel.GameMaster )
 			{
 				HandleInvalidTransfer( from );
 				return false;
@@ -4200,7 +4201,7 @@ namespace Server
 			if ( Deleted || !to.CanSee( this ) )
 				return;
 
-			to.Send( new MessageLocalized( Serial, ItemID, MessageType.Regular, 0x3B2, 3, number, "", "" ) );
+			to.Send( new AsciiMessage( Serial, ItemID, MessageType.Regular, 0, 3, "", Parse(number)) );
 		}
 
 		public void SendLocalizedMessageTo( Mobile to, int number, string args )
@@ -4235,17 +4236,17 @@ namespace Server
 
 		public virtual void OnDoubleClickDead( Mobile from )
 		{
-			from.LocalOverheadMessage( MessageType.Regular, 0x3B2, 1019048 ); // I am dead and cannot do that.
+			from.LocalOverheadMessage( MessageType.Regular, 0x3B2, true, "I am dead and cannot do that." ); // I am dead and cannot do that.
 		}
 
 		public virtual void OnDoubleClickNotAccessible( Mobile from )
 		{
-			from.SendLocalizedMessage( 500447 ); // That is not accessible.
+			from.SendAsciiMessage( "That is not accessible." ); // That is not accessible.
 		}
 
 		public virtual void OnDoubleClickSecureTrade( Mobile from )
 		{
-			from.SendLocalizedMessage( 500447 ); // That is not accessible.
+			from.SendAsciiMessage( "That is not accessible." ); // That is not accessible.
 		}
 		#endregion
 
@@ -4434,16 +4435,60 @@ namespace Server
 
 		public virtual bool CheckLift( Mobile from, Item item, ref LRReason reject )
 		{
-			if ( m_Parent is Item )
-				return ((Item)m_Parent).CheckLift( from, item, ref reject );
-			else if ( m_Parent is Mobile )
-				return ((Mobile)m_Parent).CheckLift( from, item, ref reject );
-			else
-				return true;
+            if (m_Parent is Item)
+                return ((Item)m_Parent).CheckLift(from, item, ref reject);
+            else if (m_Parent is Mobile)
+                return ((Mobile)m_Parent).CheckLift(from, item, ref reject);
+            else
+                return Region.Find(Location, Map).CheckLift(from, this);//return true;
 		}
 
 		public virtual bool CanTarget{ get{ return true; } }
 		public virtual bool DisplayLootType{ get{ return true; } }
+
+        public static String Parse(int toSend)
+        {
+            string cfg = Path.Combine(Core.BaseDirectory, "Data/cliloc.cfg");
+
+            if (File.Exists(cfg))
+            {
+                List<String> list = new List<String>();
+
+                using (StreamReader ip = new StreamReader(cfg))
+                {
+                    string line;
+                    //int number = Int32.Parse(toSend);
+                    bool found = false;
+
+                    while ((line = ip.ReadLine()) != null)
+                    {
+                        if (line.Equals("*********************") || line.Equals(""))
+                            continue;
+
+                        string[] split = line.Split(' ');
+
+                        if (split[0].Equals("ID:"))
+                        {
+                            if (split[1].Equals(toSend.ToString()))
+                            {
+                                found = true;
+                                continue;
+                            }
+                        }
+
+                        if (found)
+                        {
+                            return line;
+                        }
+                    }
+                }
+                return "";
+            }
+            else
+            {
+                return "";
+            }
+        }
 
 		public virtual void OnSingleClickContained( Mobile from, Item item )
 		{
@@ -4474,13 +4519,13 @@ namespace Server
 				if ( this.Name == null )
 				{
 					if ( m_Amount <= 1 )
-						ns.Send( new MessageLocalized( m_Serial, m_ItemID, MessageType.Label, 0x3B2, 3, LabelNumber, "", "" ) );
+						ns.Send( new AsciiMessage( m_Serial, m_ItemID, MessageType.Label, 0, 3, "", Parse(LabelNumber)) );
 					else
-						ns.Send( new MessageLocalizedAffix( m_Serial, m_ItemID, MessageType.Label, 0x3B2, 3, LabelNumber, "", AffixType.Append, String.Format( " : {0}", m_Amount ), "" ) );
+                        ns.Send(new AsciiMessage(m_Serial, m_ItemID, MessageType.Label, 0, 3, "", String.Format("{0} {1}",m_Amount,Parse(LabelNumber))));
 				}
 				else
 				{
-					ns.Send( new UnicodeMessage( m_Serial, m_ItemID, MessageType.Label, 0x3B2, 3, "ENU", "", this.Name + ( m_Amount > 1 ? " : " + m_Amount : "" ) ) );
+                    ns.Send(new AsciiMessage(m_Serial, m_ItemID, MessageType.Label, 0, 3, "", this.Name + (m_Amount > 1 ? " : " + m_Amount : "")));
 				}
 			}
 		}
@@ -4539,21 +4584,6 @@ namespace Server
 
 			if ( this.Amount <= 0 )
 				this.Delete();
-		}
-
-		public virtual void ReplaceWith( Item newItem )
-		{
-			if ( m_Parent is Container )
-			{
-				((Container)m_Parent).AddItem( newItem );
-				newItem.Location = m_Location;
-			}
-			else
-			{
-				newItem.MoveToWorld( GetWorldLocation(), m_Map );
-			}
-
-			Delete();
 		}
 
 		[CommandProperty( AccessLevel.GameMaster )]

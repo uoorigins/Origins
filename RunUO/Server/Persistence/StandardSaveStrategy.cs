@@ -5,7 +5,7 @@
  *   copyright            : (C) The RunUO Software Team
  *   email                : info@runuo.com
  *
- *   $Id: StandardSaveStrategy.cs 828 2012-02-11 04:36:54Z asayre $
+ *   $Id: StandardSaveStrategy.cs 164 2007-04-20 22:35:41Z krrios $
  *
  ***************************************************************************/
 
@@ -30,14 +30,6 @@ using Server.Guilds;
 
 namespace Server {
 	public class StandardSaveStrategy : SaveStrategy {
-		public enum SaveOption
-		{
-			Normal,
-			Threaded
-		}
-
-		public static SaveOption SaveType = SaveOption.Normal;
-
 		public override string Name {
 			get { return "Standard"; }
 		}
@@ -51,7 +43,7 @@ namespace Server {
 
 		protected bool PermitBackgroundWrite { get { return _permitBackgroundWrite; } set { _permitBackgroundWrite = value; } }
 
-		protected bool UseSequentialWriters { get { return (StandardSaveStrategy.SaveType == SaveOption.Normal || !_permitBackgroundWrite); } }
+		protected bool UseSequentialWriters { get { return (World.SaveType == World.SaveOption.Normal || !_permitBackgroundWrite); } }
 
 		public override void Save(SaveMetrics metrics, bool permitBackgroundWrite)
 		{

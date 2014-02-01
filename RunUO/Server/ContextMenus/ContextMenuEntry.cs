@@ -5,7 +5,7 @@
  *   copyright            : (C) The RunUO Software Team
  *   email                : info@runuo.com
  *
- *   $Id: ContextMenuEntry.cs 1065 2013-06-02 13:12:09Z eos@runuo.com $
+ *   $Id: ContextMenuEntry.cs 4 2006-06-15 04:28:39Z mark $
  *
  ***************************************************************************/
 
@@ -123,11 +123,7 @@ namespace Server.ContextMenus
 		/// </param>
 		public ContextMenuEntry( int number, int range )
 		{
-			if ( number <= 0x7FFF ) // Legacy code support
-				m_Number = 3000000 + number;
-			else
-				m_Number = number;
-
+			m_Number = number;
 			m_Range = range;
 			m_Enabled = true;
 			m_Color = 0xFFFF;

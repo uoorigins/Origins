@@ -5,7 +5,7 @@
  *   copyright            : (C) The RunUO Software Team
  *   email                : info@runuo.com
  *
- *   $Id: Gump.cs 1065 2013-06-02 13:12:09Z eos@runuo.com $
+ *   $Id: Gump.cs 521 2010-06-17 07:11:43Z mark $
  *
  ***************************************************************************/
 
@@ -308,11 +308,6 @@ namespace Server.Gumps
 
 		public void AddTextEntry( int x, int y, int width, int height, int hue, int entryID, string initialText, int size ) {
 			Add( new GumpTextEntryLimited( x, y, width, height, hue, entryID, initialText, size ) );
-		}
-
-		public void AddItemProperty( int serial )
-		{
-			Add( new GumpItemProperty( serial ) );
 		}
 
 		public void Add( GumpEntry g )

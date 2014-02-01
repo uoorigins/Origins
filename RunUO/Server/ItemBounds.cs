@@ -5,7 +5,7 @@
  *   copyright            : (C) The RunUO Software Team
  *   email                : info@runuo.com
  *
- *   $Id: ItemBounds.cs 804 2012-01-02 10:24:08Z asayre $
+ *   $Id: ItemBounds.cs 644 2010-12-23 09:18:45Z asayre $
  *
  ***************************************************************************/
 
@@ -37,17 +37,15 @@ namespace Server
 
 		static ItemBounds()
 		{
-			m_Bounds = new Rectangle2D[TileData.ItemTable.Length];
-
 			if ( File.Exists( "Data/Binary/Bounds.bin" ) )
 			{
 				using ( FileStream fs = new FileStream( "Data/Binary/Bounds.bin", FileMode.Open, FileAccess.Read, FileShare.Read ) )
 				{
 					BinaryReader bin = new BinaryReader( fs );
 
-					int count = Math.Min( m_Bounds.Length, (int)( fs.Length / 8 ) );
+					m_Bounds = new Rectangle2D[0x4000];
 
-					for ( int i = 0; i < count; ++i )
+					for ( int i = 0; i < 0x4000; ++i )
 					{
 						int xMin = bin.ReadInt16();
 						int yMin = bin.ReadInt16();
@@ -63,6 +61,8 @@ namespace Server
 			else
 			{
 				Console.WriteLine( "Warning: Data/Binary/Bounds.bin does not exist" );
+
+				m_Bounds = new Rectangle2D[0x4000];
 			}
 		}
 	}

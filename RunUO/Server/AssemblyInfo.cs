@@ -5,7 +5,7 @@
  *   copyright            : (C) The RunUO Software Team
  *   email                : info@runuo.com
  *
- *   $Id: AssemblyInfo.cs 805 2012-01-02 12:08:28Z asayre $
+ *   $Id: AssemblyInfo.cs 400 2009-10-07 10:25:04Z mark $
  *
  ***************************************************************************/
 
@@ -47,7 +47,7 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
 
-[assembly: AssemblyVersion("2.2.*")]
+[assembly: AssemblyVersion("2.1.*")]
 
 //
 // In order to sign your assembly you must specify a key to use. Refer to the 

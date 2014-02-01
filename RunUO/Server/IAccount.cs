@@ -5,7 +5,7 @@
  *   copyright            : (C) The RunUO Software Team
  *   email                : info@runuo.com
  *
- *   $Id: IAccount.cs 856 2012-03-21 22:25:44Z eos $
+ *   $Id: IAccount.cs 4 2006-06-15 04:28:39Z mark $
  *
  ***************************************************************************/
 
@@ -22,7 +22,7 @@ using System;
 
 namespace Server.Accounting
 {
-	public interface IAccount : IComparable<IAccount>
+	public interface IAccount
 	{
 		string Username { get; set; }
 		AccessLevel AccessLevel { get; set; }

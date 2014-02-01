@@ -28,6 +28,7 @@ namespace Server.Menus.ItemLists
 		private string m_Name;
 		private int m_ItemID;
 		private int m_Hue;
+        private int m_craftIndex;
 
 		public string Name
 		{
@@ -53,16 +54,29 @@ namespace Server.Menus.ItemLists
 			}
 		}
 
+        public int craftIndex
+		{
+			get
+			{
+                return m_craftIndex;
+			}
+		}
+
 		public ItemListEntry( string name, int itemID ) : this( name, itemID, 0 )
 		{
 		}
 
-		public ItemListEntry( string name, int itemID, int hue )
+		public ItemListEntry( string name, int itemID, int hue ) : this( name, itemID, 0, 0 )
 		{
-			m_Name = name;
-			m_ItemID = itemID;
-			m_Hue = hue;
 		}
+
+        public ItemListEntry(string name, int itemID, int hue, int craftIndex)
+        {
+            m_Name = name;
+            m_ItemID = itemID;
+            m_Hue = hue;
+            m_craftIndex = craftIndex;
+        }
 	}
 
 	public class ItemListMenu : IMenu
@@ -134,7 +148,10 @@ namespace Server.Menus.ItemLists
 		public void SendTo( NetState state )
 		{
 			state.AddMenu( this );
-			state.Send( new DisplayItemListMenu( this ) );
+            if (state != null && state.ContainerGridLines)
+			state.Send( new DisplayItemListMenuNew( this ) );
+            else
+            state.Send(new DisplayItemListMenu(this));
 		}
 	}
 }

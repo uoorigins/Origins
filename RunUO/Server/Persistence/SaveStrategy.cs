@@ -5,7 +5,7 @@
  *   copyright            : (C) The RunUO Software Team
  *   email                : info@runuo.com
  *
- *   $Id: SaveStrategy.cs 844 2012-03-07 13:47:33Z mark $
+ *   $Id: SaveStrategy.cs 286 2008-02-20 06:50:39Z mark $
  *
  ***************************************************************************/
 
@@ -29,22 +29,20 @@ namespace Server
 		{
 			if (Core.MultiProcessor)
 			{
-				int processorCount = Core.ProcessorCount;
+                int processorCount = Core.ProcessorCount;
 
-#if Framework_4_0
-				if (processorCount > 2)
-				{
-					return new DynamicSaveStrategy();
-				}
-#else
 				if (processorCount > 16)
 				{
+#if Framework_4_0
+					return new DynamicSaveStrategy();
+#else
 					return new ParallelSaveStrategy(processorCount);
-				}
 #endif
+				}
 				else
 				{
-					return new DualSaveStrategy();
+                    return new StandardSaveStrategy();
+					//return new DualSaveStrategy();
 				}
 			}
 			else

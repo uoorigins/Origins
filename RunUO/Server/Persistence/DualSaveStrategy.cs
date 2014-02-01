@@ -5,7 +5,7 @@
  *   copyright            : (C) The RunUO Software Team
  *   email                : info@runuo.com
  *
- *   $Id: DualSaveStrategy.cs 642 2010-12-20 11:31:46Z asayre $
+ *   $Id: DualSaveStrategy.cs 4 2006-06-15 04:28:39Z mark $
  *
  ***************************************************************************/
 

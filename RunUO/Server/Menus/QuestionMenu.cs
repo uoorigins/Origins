@@ -65,6 +65,10 @@ namespace Server.Menus.Questions
 			{
 				return m_Answers;
 			}
+            set
+            {
+                m_Answers = value;
+            }
 		}
 
 		public QuestionMenu( string question, string[] answers )

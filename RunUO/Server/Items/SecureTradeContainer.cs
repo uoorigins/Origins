@@ -5,7 +5,7 @@
  *   copyright            : (C) The RunUO Software Team
  *   email                : info@runuo.com
  *
- *   $Id: SecureTradeContainer.cs 793 2011-12-18 05:09:31Z mark $
+ *   $Id: SecureTradeContainer.cs 4 2006-06-15 04:28:39Z mark $
  *
  ***************************************************************************/
 
@@ -66,7 +66,7 @@ namespace Server.Items
 
 		public override bool IsAccessibleTo( Mobile check )
 		{
-			if ( !IsChildOf( check ) || m_Trade == null || !m_Trade.Valid )
+			if ( !IsChildOf( check ) )
 				return false;
 
 			return base.IsAccessibleTo( check );

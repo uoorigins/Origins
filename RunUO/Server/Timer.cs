@@ -5,7 +5,7 @@
  *   copyright            : (C) The RunUO Software Team
  *   email                : info@runuo.com
  *
- *   $Id: Timer.cs 816 2012-01-04 08:45:24Z asayre $
+ *   $Id: Timer.cs 362 2009-08-09 02:20:57Z mark $
  *
  ***************************************************************************/
 
@@ -465,11 +465,6 @@ namespace Server
 
 		#region DelayCall(..)
 
-		public static Timer DelayCall( TimerCallback callback )
-		{
-			return DelayCall( TimeSpan.Zero, TimeSpan.Zero, 1, callback );
-		}
-
 		public static Timer DelayCall( TimeSpan delay, TimerCallback callback )
 		{
 			return DelayCall( delay, TimeSpan.Zero, 1, callback );
@@ -492,11 +487,6 @@ namespace Server
 			t.Start();
 
 			return t;
-		}
-
-		public static Timer DelayCall( TimerStateCallback callback, object state )
-		{
-			return DelayCall( TimeSpan.Zero, TimeSpan.Zero, 1, callback, state );
 		}
 
 		public static Timer DelayCall( TimeSpan delay, TimerStateCallback callback, object state )
@@ -525,11 +515,6 @@ namespace Server
 		#endregion
 
 		#region DelayCall<T>(..)
-		public static Timer DelayCall<T>( TimerStateCallback<T> callback, T state )
-		{
-			return DelayCall( TimeSpan.Zero, TimeSpan.Zero, 1, callback, state );
-		}
-
 		public static Timer DelayCall<T>( TimeSpan delay, TimerStateCallback<T> callback, T state )
 		{
 			return DelayCall( delay, TimeSpan.Zero, 1, callback, state );
