@@ -190,7 +190,7 @@ namespace Server.Items
 			TrapType = TrapType.MagicTrap;
 			TrapPower = 3 * Utility.Random( 1, 25 );
 
-            LootPack.OldRich.Generate(null, this, true, 100);
+            LootPack.OldFilthyRich.Generate( null, this, true, 100 );
             LootPack.UltraRichPile.Generate(null, this, true, 100);
 		} 
 
@@ -227,7 +227,7 @@ namespace Server.Items
 			TrapType = TrapType.MagicTrap;
 			TrapPower = 4 * Utility.Random( 1, 25 );
 
-            LootPack.OldFilthyRich.Generate(null, this, true, 100);
+            LootPack.OldSuperBoss.Generate( null, this, true, 100 );
             LootPack.SpecialPile.Generate(null, this, true, 100);
 		} 
 
