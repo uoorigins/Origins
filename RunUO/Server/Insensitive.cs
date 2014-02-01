@@ -73,20 +73,5 @@ namespace Server
 
 			return ( a.IndexOf( b ) >= 0 );
 		}
-
-        public static bool Speech(string a, string b)
-        {
-            if (a == null || b == null || a.Length < b.Length)
-                return false;
-
-            a = a.ToLower();
-            b = b.ToLower();
-            int i = a.IndexOf(b);
-
-            if (Equals(a, b))
-                return true;
-
-            return (a.IndexOf(b) >= 0 && ((((i - 1) > 0 && a[i - 1] == ' ') && ((i+b.Length) < a.Length && a[i+b.Length] == ' ')) || (i+b.Length == b.Length && a[i+b.Length] == ' ') || (i+b.Length == a.Length && a[i-1] == ' ') ));
-        }
 	}
 }

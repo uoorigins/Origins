@@ -5,7 +5,7 @@
  *   copyright            : (C) The RunUO Software Team
  *   email                : info@runuo.com
  *
- *   $Id: Main.cs 651 2010-12-28 09:24:08Z asayre $
+ *   $Id: Main.cs 1075 2013-09-04 23:07:39Z mark@runuo.com $
  *
  ***************************************************************************/
 
@@ -202,6 +202,11 @@ namespace Server
 			get { return m_Expansion >= Expansion.SA; }
 		}
 
+		public static bool HS
+		{
+			get { return m_Expansion >= Expansion.HS; }
+		}
+
 		#endregion
 
 		public static string ExePath
@@ -277,15 +282,11 @@ namespace Server
 					{
 					}
 
-					if ( m_Service ) {
-						Console.WriteLine( "This exception is fatal." );
-					} else {
-						Console.WriteLine( "This exception is fatal, press return to exit" );
-						Console.ReadLine();
-					}
+					Console.WriteLine( "This exception is fatal, press return to exit" );
+					Console.ReadLine();
 				}
 
-				m_Closing = true;
+				Kill();
 			}
 		}
 
@@ -489,7 +490,7 @@ namespace Server
 
 			ScriptCompiler.Invoke( "Initialize" );
 
-			MessagePump messagePump = new MessagePump();
+			MessagePump messagePump = m_MessagePump = new MessagePump();
 
 			timerThread.Start();
 
@@ -502,15 +503,18 @@ namespace Server
 
 			try
 			{
-				DateTime now, last = DateTime.Now;
+				DateTime now, last = DateTime.UtcNow;
 
 				const int sampleInterval = 100;
 				const float ticksPerSecond = (float)(TimeSpan.TicksPerSecond * sampleInterval);
+				TimeSpan _oneMS = TimeSpan.FromMilliseconds( 1 );
 
 				long sample = 0;
 
-				while( m_Signal.WaitOne() )
+				while( !m_Closing )
 				{
+					m_Signal.WaitOne( _oneMS );
+
 					Mobile.ProcessDeltaQueue();
 					Item.ProcessDeltaQueue();
 
@@ -525,7 +529,7 @@ namespace Server
 
 					if( (++sample % sampleInterval) == 0 )
 					{
-						now = DateTime.Now;
+						now = DateTime.UtcNow;
 						m_CyclesPerSecond[m_CycleIndex++ % m_CyclesPerSecond.Length] =
 							ticksPerSecond / (now.Ticks - last.Ticks);
 						last = now;

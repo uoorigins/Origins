@@ -5,7 +5,7 @@
  *   copyright            : (C) The RunUO Software Team
  *   email                : info@runuo.com
  *
- *   $Id: MultiTarget.cs 551 2010-10-15 03:54:16Z mark $
+ *   $Id: MultiTarget.cs 644 2010-12-23 09:18:45Z asayre $
  *
  ***************************************************************************/
 

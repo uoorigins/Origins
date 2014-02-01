@@ -5,7 +5,7 @@
  *   copyright            : (C) The RunUO Software Team
  *   email                : info@runuo.com
  *
- *   $Id: Guild.cs 92 2006-10-05 06:04:38Z asayre $
+ *   $Id: Guild.cs 644 2010-12-23 09:18:45Z asayre $
  *
  ***************************************************************************/
 

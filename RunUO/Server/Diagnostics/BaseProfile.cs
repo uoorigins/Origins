@@ -5,7 +5,7 @@
  *   copyright            : (C) The RunUO Software Team
  *   email                : info@runuo.com
  *
- *   $Id: BaseProfile.cs 169 2007-04-22 07:31:23Z krrios $
+ *   $Id: BaseProfile.cs 644 2010-12-23 09:18:45Z asayre $
  *
  ***************************************************************************/
 

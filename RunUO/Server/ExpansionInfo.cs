@@ -5,7 +5,7 @@
  *   copyright            : (C) The RunUO Software Team
  *   email                : info@runuo.com
  *
- *   $Id: ExpansionInfo.cs 598 2010-12-08 05:29:16Z mark $
+ *   $Id: ExpansionInfo.cs 1065 2013-06-02 13:12:09Z eos@runuo.com $
  *
  ***************************************************************************/
 
@@ -32,7 +32,8 @@ namespace Server
 		AOS,
 		SE,
 		ML,
-		SA
+		SA,
+		HS
 	}
 
 	[Flags]
@@ -70,8 +71,10 @@ namespace Server
 		Unk5			= 0x00002000,
 		Unk6			= 0x00004000,
 		Unk7			= 0x00008000,
-		SA			= 0x00010000,
-
+		SA				= 0x00010000,
+		HS				= 0x00020000,
+		Gothic			= 0x00040000,
+		Rustic			= 0x00080000,
 
 		ExpansionNone		= None,
 		ExpansionT2A		= T2A,
@@ -81,7 +84,8 @@ namespace Server
 		ExpansionAOS		= ExpansionLBR	| AOS	| Unk7,
 		ExpansionSE		= ExpansionAOS	| SE,
 		ExpansionML		= ExpansionSE	| ML	| Unk2,
-		ExpansionSA		= ExpansionML	| SA
+		ExpansionSA		= ExpansionML	| SA	| Gothic	| Rustic,
+		ExpansionHS		= ExpansionSA
 	}
 
 	[Flags]
@@ -111,15 +115,16 @@ namespace Server
 		ExpansionAOS		= ContextMenus	| AOS,
 		ExpansionSE		= ExpansionAOS	| SE,
 		ExpansionML		= ExpansionSE	| ML,
-		ExpansionSA		= ExpansionML
+		ExpansionSA		= ExpansionML,
+		ExpansionHS		= ExpansionSA
 	}
 
 	public class ExpansionInfo
 	{
 		public static ExpansionInfo[] Table { get { return m_Table; } }
 		private static ExpansionInfo[] m_Table = new ExpansionInfo[]
-			{                                         //ClientFlags.None,		FeatureFlags.ExpansionNone,	CharacterListFlags.ExpansionNone,	0x0000
-				new ExpansionInfo( 0, "None",			ClientFlags.None,		FeatureFlags.ExpansionLBR,	CharacterListFlags.ExpansionT2A,		0x0000 ), // 0x20 | 0x80 | 0x200 | 0x10000
+			{
+				new ExpansionInfo( 0, "None",			ClientFlags.None,		FeatureFlags.ExpansionNone,	CharacterListFlags.ExpansionNone,	0x0000 ),
 				new ExpansionInfo( 1, "The Second Age",		ClientFlags.Felucca,		FeatureFlags.ExpansionT2A,	CharacterListFlags.ExpansionT2A,	0x0000 ),
 				new ExpansionInfo( 2, "Renaissance",		ClientFlags.Trammel,		FeatureFlags.ExpansionUOR,	CharacterListFlags.ExpansionUOR,	0x0000 ),
 				new ExpansionInfo( 3, "Third Dawn",		ClientFlags.Ilshenar,		FeatureFlags.ExpansionUOTD,	CharacterListFlags.ExpansionUOTD,	0x0000 ),
@@ -127,7 +132,8 @@ namespace Server
 				new ExpansionInfo( 5, "Age of Shadows",		ClientFlags.Malas,		FeatureFlags.ExpansionAOS,	CharacterListFlags.ExpansionAOS,	0x0000 ),
 				new ExpansionInfo( 6, "Samurai Empire",		ClientFlags.Tokuno,		FeatureFlags.ExpansionSE,	CharacterListFlags.ExpansionSE,		0x00C0 ), // 0x20 | 0x80
 				new ExpansionInfo( 7, "Mondain's Legacy",	new ClientVersion( "5.0.0a" ),	FeatureFlags.ExpansionML,	CharacterListFlags.ExpansionML,		0x02C0 ), // 0x20 | 0x80 | 0x200
-				new ExpansionInfo( 8, "Stygian Abyss",		ClientFlags.TerMur,		FeatureFlags.ExpansionSA,	CharacterListFlags.ExpansionSA,		0x102C0 ) // 0x20 | 0x80 | 0x200 | 0x10000
+				new ExpansionInfo( 8, "Stygian Abyss",		ClientFlags.TerMur,		FeatureFlags.ExpansionSA,	CharacterListFlags.ExpansionSA,		0xD02C0 ), // 0x20 | 0x80 | 0x200 | 0x10000 | 0x40000 | 0x80000
+				new ExpansionInfo( 9, "High Seas",		new ClientVersion( "7.0.9.0" ),		FeatureFlags.ExpansionHS,	CharacterListFlags.ExpansionHS,		0xD02C0 ) // 0x20 | 0x80 | 0x200 | 0x10000 | 0x40000 | 0x80000
 			};
 
 		private string m_Name;

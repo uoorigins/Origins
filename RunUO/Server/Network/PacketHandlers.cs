@@ -5,7 +5,7 @@
  *   copyright            : (C) The RunUO Software Team
  *   email                : info@runuo.com
  *
- *   $Id: PacketHandlers.cs 698 2011-07-31 04:05:09Z mark $
+ *   $Id: PacketHandlers.cs 1070 2013-06-16 01:24:45Z eos@runuo.com $
  *
  ***************************************************************************/
 
@@ -820,6 +820,18 @@ namespace Server.Network
 
 					break;
 				}
+				case 0x2F: // Old scroll double click
+				{
+					/*
+					 * This command is still sent for items 0xEF3 - 0xEF9
+					 *
+					 * Command is one of three, depending on the item ID of the scroll:
+					 * - [scroll serial]
+					 * - [scroll serial] [target serial]
+					 * - [scroll serial] [x] [y] [z]
+					 */
+					break;
+				}
 				default:
 				{
 					Console.WriteLine( "Client: {0}: Unknown text-command type 0x{1:X2}: {2}", state, type, command );
@@ -1000,11 +1012,28 @@ namespace Server.Network
 			Mobile from = state.Mobile;
 
 			if ( dest.IsMobile )
+			{
 				from.Drop( World.FindMobile( dest ), loc );
+			}
 			else if ( dest.IsItem )
-				from.Drop( World.FindItem( dest ), loc );
+			{
+				Item item = World.FindItem( dest );
+
+				if ( item is BaseMulti && ((BaseMulti)item).AllowsRelativeDrop )
+				{
+					loc.m_X += item.X;
+					loc.m_Y += item.Y;
+					from.Drop( loc );
+				}
+				else
+				{
+					from.Drop( item, loc );
+				}
+			}
 			else
+			{
 				from.Drop( loc );
+			}
 		}
 
 		public static void DropReq6017( NetState state, PacketReader pvSrc )
@@ -1021,11 +1050,28 @@ namespace Server.Network
 			Mobile from = state.Mobile;
 
 			if ( dest.IsMobile )
+			{
 				from.Drop( World.FindMobile( dest ), loc );
+			}
 			else if ( dest.IsItem )
-				from.Drop( World.FindItem( dest ), loc );
+			{
+				Item item = World.FindItem( dest );
+
+				if ( item is BaseMulti && ((BaseMulti)item).AllowsRelativeDrop )
+				{
+					loc.m_X += item.X;
+					loc.m_Y += item.Y;
+					from.Drop( loc );
+				}
+				else
+				{
+					from.Drop( item, loc );
+				}
+			}
 			else
+			{
 				from.Drop( loc );
+			}
 		}
 
 		public static void ConfigurationFile( NetState state, PacketReader pvSrc )
@@ -1041,12 +1087,8 @@ namespace Server.Network
 		{
 			Skill s = state.Mobile.Skills[pvSrc.ReadInt16()];
 
-            if (s != null)
-            {
-                state.Mobile.SendAsciiMessage("You cannot set your skills DOWN or LOCKED. This has been disabled for historical accuracy.");
-                s.SetLockNoRelay(SkillLock.Up);//((SkillLock)pvSrc.ReadByte());
-                s.Update();
-            }
+			if ( s != null )
+				s.SetLockNoRelay( (SkillLock)pvSrc.ReadByte() );
 		}
 
 		public static void HelpRequest( NetState state, PacketReader pvSrc )
@@ -1083,6 +1125,11 @@ namespace Server.Network
 					{
 						// User pressed escape
 						t.Cancel( from, TargetCancelType.Canceled );
+					}
+					else if ( Target.TargetIDValidation && t.TargetID != targetID )
+					{
+						// Sanity, prevent fake target
+						return;
 					}
 					else
 					{
@@ -1388,7 +1435,7 @@ namespace Server.Network
 					}
 				}
 
-				from.NextActionTime = DateTime.Now + TimeSpan.FromSeconds( 0.5 );
+				from.NextActionTime = DateTime.Now + Mobile.ActionDelay;
 			}
 			else
 			{
@@ -1884,6 +1931,18 @@ namespace Server.Network
 			}
 		}
 
+		public delegate void PlayCharCallback( NetState state, bool val );
+
+		public static PlayCharCallback ThirdPartyAuthCallback = null, ThirdPartyHackedCallback = null;
+
+		private static byte[] m_ThirdPartyAuthKey = new byte[] 
+			{ 
+				0x9, 0x11, 0x83, (byte)'+', 0x4, 0x17, 0x83, 
+				0x5, 0x24, 0x85, 
+				0x7, 0x17, 0x87, 
+				0x6, 0x19, 0x88,
+			};
+
 		private class LoginTimer : Timer
 		{
 			private NetState m_State;
@@ -1916,7 +1975,43 @@ namespace Server.Network
 
 			pvSrc.Seek( 2, SeekOrigin.Current );
 			int flags = pvSrc.ReadInt32();
-			pvSrc.Seek( 24, SeekOrigin.Current );
+
+			if ( FeatureProtection.DisabledFeatures != 0 && ThirdPartyAuthCallback != null )
+			{
+				bool authOK = false;
+
+				ulong razorFeatures = (((ulong)pvSrc.ReadUInt32())<<32) | ((ulong)pvSrc.ReadUInt32());
+
+				if ( razorFeatures == (ulong)FeatureProtection.DisabledFeatures )
+				{
+					bool match = true;
+					for ( int i=0; match && i < m_ThirdPartyAuthKey.Length; i++ )
+						match = match && pvSrc.ReadByte() == m_ThirdPartyAuthKey[i];
+						
+					if ( match )
+						authOK = true;
+				}
+                else
+                {
+                    pvSrc.Seek( 16, SeekOrigin.Current );
+                }
+
+				ThirdPartyAuthCallback( state, authOK );
+			}
+			else
+			{
+				pvSrc.Seek( 24, SeekOrigin.Current );
+			}
+
+			if ( ThirdPartyHackedCallback != null )
+			{
+				pvSrc.Seek( -2, SeekOrigin.Current );
+				if ( pvSrc.ReadUInt16() == 0xDEAD )
+					ThirdPartyHackedCallback( state, true );
+			}
+
+			if ( !state.Running )
+				return;
 
 			int charSlot = pvSrc.ReadInt32();
 			int clientIP = pvSrc.ReadInt32();
@@ -2335,65 +2430,12 @@ namespace Server.Network
 			} while ( m_AuthIDWindow.ContainsKey( authID ) );
 
 			m_AuthIDWindow[authID] = new AuthIDPersistence( state.Version );
-            WriteID(authID, state);
-
+			
 			return authID;
 		}
 
-        private static void WriteID(int id, NetState state)
-        {
-            string cfg = "C:/test/authID.txt";
-            if (File.Exists(cfg))
-            {
-                List<String> list = new List<String>();
-
-                using (StreamWriter ip = new StreamWriter(cfg))
-                {
-                    ip.WriteLine((state.Version == null ? "unknown" : state.Version.SourceString));
-                    ip.WriteLine(id.ToString());
-                }
-            }
-        }
-
-        private static int ReadID(int id, out string version)
-        {
-            string cfg = "C:/test/authID.txt";
-            string myversion;
-            int myid = 0;
-            myversion = null;
-            if (File.Exists(cfg))
-            {
-                List<String> list = new List<String>();
-
-                using (StreamReader ip = new StreamReader(cfg))
-                {
-                    string line;
-
-                    while ((line = ip.ReadLine()) != null)
-                    {
-                        myversion = line;
-                        line = ip.ReadLine();
-                        myid = Int32.Parse(line.Trim());
-                    }
-                }
-            }
-
-            version = myversion;
-
-            if (id == myid)
-                return myid;
-
-            return 0;
-        }
-
-        private static void RemoveID(int id)
-        {
-        }
-
 		public static void GameLogin( NetState state, PacketReader pvSrc )
 		{
-            //string myversion = null;
-
 			if ( state.SentFirstPacket )
 			{
 				state.Dispose();
@@ -2404,34 +2446,26 @@ namespace Server.Network
 
 			int authID = pvSrc.ReadInt32();
 
-            /*if (ReadID(authID, out myversion) != 0 && !m_AuthIDWindow.ContainsKey(authID))
-            {
-                if (myversion != null && myversion != "unknown" && state.Version == null)
-                    state.Version = new CV(myversion);
-
-                m_AuthIDWindow.Add(authID, new AuthIDPersistence(state.Version));
-            }*/
-
 			if ( m_AuthIDWindow.ContainsKey( authID ) ) {
 				AuthIDPersistence ap = m_AuthIDWindow[authID];
 				m_AuthIDWindow.Remove( authID );
 
 				state.Version = ap.Version;
 			} else if ( m_ClientVerification ) {
-				Console.WriteLine( "Login: {0}: Invalid client detected, disconnecting 1", state );
+				Console.WriteLine( "Login: {0}: Invalid client detected, disconnecting", state );
 				state.Dispose();
 				return;
 			}
 			
 			if ( state.m_AuthID != 0 && authID != state.m_AuthID )
 			{
-				Console.WriteLine( "Login: {0}: Invalid client detected, disconnecting 2", state );
+				Console.WriteLine( "Login: {0}: Invalid client detected, disconnecting", state );
 				state.Dispose();
 				return;
 			}
 			else if ( state.m_AuthID == 0 && authID != state.m_Seed )
 			{
-				Console.WriteLine( "Login: {0}: Invalid client detected, disconnecting 3", state );
+				Console.WriteLine( "Login: {0}: Invalid client detected, disconnecting", state );
 				state.Dispose();
 				return;
 			}
@@ -2462,26 +2496,26 @@ namespace Server.Network
 			}
 		}
 
-        public static void PlayServer(NetState state, PacketReader pvSrc)
-        {
-            int index = pvSrc.ReadInt16();
-            ServerInfo[] info = state.ServerInfo;
-            IAccount a = state.Account;
+		public static void PlayServer( NetState state, PacketReader pvSrc )
+		{
+			int index = pvSrc.ReadInt16();
+			ServerInfo[] info = state.ServerInfo;
+			IAccount a = state.Account;
 
-            if (info == null || a == null || index < 0 || index >= info.Length)
-            {
-                state.Dispose();
-            }
-            else
-            {
-                ServerInfo si = info[index];
+			if ( info == null || a == null || index < 0 || index >= info.Length )
+			{
+				state.Dispose();
+			}
+			else
+			{
+				ServerInfo si = info[index];
 
-                state.m_AuthID = PlayServerAck.m_AuthID = GenerateAuthID(state);
+				state.m_AuthID = PlayServerAck.m_AuthID = GenerateAuthID( state );
 
-                state.SentFirstPacket = false;
-                state.Send(new PlayServerAck(si));
-            }
-        }
+				state.SentFirstPacket = false;
+				state.Send( new PlayServerAck( si ) );
+			}
+		}
 
 		public static void LoginServerSeed( NetState state, PacketReader pvSrc )
 		{

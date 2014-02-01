@@ -81,7 +81,6 @@ namespace Server
 	{
 		bool IsCasting{ get; }
 		void OnCasterHurt();
-        void OnCasterHurt( int damage );
 		void OnCasterKilled();
 		void OnConnectionChanged();
 		bool OnCasterMoving( Direction d );

@@ -5,7 +5,7 @@
  *   copyright            : (C) The RunUO Software Team
  *   email                : info@runuo.com
  *
- *   $Id: Packets.cs 675 2011-06-29 03:29:14Z mark $
+ *   $Id: Packets.cs 1080 2013-09-21 23:28:29Z eos@runuo.com $
  *
  ***************************************************************************/
 
@@ -791,7 +791,7 @@ namespace Server.Network
 			{
 				ItemListEntry e = entries[i];
 
-				m_Stream.Write( (short) (e.ItemID & 0x3FFF) );//m_Stream.Write( (ushort) e.ItemID );
+				m_Stream.Write( (ushort) e.ItemID );
 				m_Stream.Write( (short) e.Hue );
 
 				string name = e.Name;
@@ -805,53 +805,6 @@ namespace Server.Network
 					m_Stream.WriteAsciiFixed( name, nameLength );
 				}
 			}
-		}
-	}
-
-	public sealed class DisplayItemListMenuNew : Packet
-	{
-		public DisplayItemListMenuNew( ItemListMenu menu ) : base( 0x7C )
-		{
-			this.EnsureCapacity( 256 );
-
-			m_Stream.Write( (int) ((IMenu)menu).Serial );
-			m_Stream.Write( (short) 0 );
-
-			string question = menu.Question;
-
-			if ( question == null )
-				m_Stream.Write( (byte) 0 );
-			else
-			{
-				int questionLength = question.Length;
-				m_Stream.Write( (byte) questionLength );
-				m_Stream.WriteAsciiFixed( question, questionLength );
-			}
-
-			ItemListEntry[] entries = menu.Entries;
-
-			int entriesLength = (byte)(entries.Length);
-
-			m_Stream.Write( (byte) entriesLength );
-
-            for (int i = 0; i < entriesLength; ++i)
-            {
-                ItemListEntry e = entries[i];
-
-                m_Stream.Write((ushort)e.ItemID);
-                m_Stream.Write((short)e.Hue);
-
-                string name = e.Name;
-
-                if (name == null)
-                    m_Stream.Write((byte)0);
-                else
-                {
-                    int nameLength = name.Length;
-                    m_Stream.Write((byte)nameLength);
-                    m_Stream.WriteAsciiFixed(name, nameLength);
-                }
-            }
 		}
 	}
 
@@ -883,7 +836,7 @@ namespace Server.Network
 
 			for ( int i = 0; i < answersLength; ++i )
 			{
-				m_Stream.Write( (int) 2);
+				m_Stream.Write( (int) 0 );
 
 				string answer = answers[i];
 
@@ -949,12 +902,63 @@ namespace Server.Network
 	{
 		None = 0x00,
 		Disabled = 0x01,
+		Arrow = 0x02,
+		Highlighted = 0x04,
 		Colored = 0x20
 	}
 
 	public sealed class DisplayContextMenu : Packet
 	{
 		public DisplayContextMenu( ContextMenu menu ) : base( 0xBF )
+		{
+			ContextMenuEntry[] entries = menu.Entries;
+
+			int length = (byte) entries.Length;
+
+			this.EnsureCapacity( 12 + (length * 8) );
+
+			m_Stream.Write( (short) 0x14 );
+			m_Stream.Write( (short) 0x02 );
+
+			IEntity target = menu.Target as IEntity;
+
+			m_Stream.Write( (int) ( target == null ? Serial.MinusOne : target.Serial ) );
+
+			m_Stream.Write( (byte) length );
+
+			Point3D p;
+
+			if ( target is Mobile )
+				p = target.Location;
+			else if ( target is Item )
+				p = ((Item)target).GetWorldLocation();
+			else
+				p = Point3D.Zero;
+
+			for ( int i = 0; i < length; ++i )
+			{
+				ContextMenuEntry e = entries[i];
+
+				m_Stream.Write( (int) e.Number );
+				m_Stream.Write( (short) i );
+
+				int range = e.Range;
+
+				if ( range == -1 )
+					range = 18;
+
+				CMEFlags flags = (e.Enabled && menu.From.InRange( p, range )) ? CMEFlags.None : CMEFlags.Disabled;
+
+				flags |= e.Flags;
+
+				m_Stream.Write( (short) flags );
+			}
+		}
+	}
+
+	public sealed class DisplayContextMenuOld : Packet
+	{
+		public DisplayContextMenuOld( ContextMenu menu ) : base( 0xBF )
 		{
 			ContextMenuEntry[] entries = menu.Entries;
 
@@ -985,7 +989,7 @@ namespace Server.Network
 				ContextMenuEntry e = entries[i];
 
 				m_Stream.Write( (short) i );
-				m_Stream.Write( (ushort) e.Number );
+				m_Stream.Write( (ushort) ( e.Number - 3000000 ) );
 
 				int range = e.Range;
 
@@ -1573,6 +1577,77 @@ namespace Server.Network
 		}
 	}
 
+	public enum ScreenEffectType
+	{
+		FadeOut = 0x00,
+		FadeIn = 0x01,
+		LightFlash = 0x02,
+		FadeInOut = 0x03,
+		DarkFlash = 0x04
+	}
+
+	public class ScreenEffect : Packet
+	{
+		public ScreenEffect( ScreenEffectType type )
+			: base( 0x70, 28 )
+		{
+			m_Stream.Write( (byte)0x04 );
+			m_Stream.Fill( 8 );
+			m_Stream.Write( (short)type );
+			m_Stream.Fill( 16 );
+		}
+	}
+
+	public sealed class ScreenFadeOut : ScreenEffect
+	{
+		public static readonly Packet Instance = Packet.SetStatic( new ScreenFadeOut() );
+
+		public ScreenFadeOut()
+			: base( ScreenEffectType.FadeOut )
+		{ 
+		}
+	}
+
+	public sealed class ScreenFadeIn : ScreenEffect
+	{
+		public static readonly Packet Instance = Packet.SetStatic( new ScreenFadeIn() );
+
+		public ScreenFadeIn()
+			: base( ScreenEffectType.FadeIn )
+		{
+		}
+	}
+
+	public sealed class ScreenFadeInOut : ScreenEffect
+	{
+		public static readonly Packet Instance = Packet.SetStatic( new ScreenFadeInOut() );
+
+		public ScreenFadeInOut()
+			: base( ScreenEffectType.FadeInOut )
+		{ 
+		}
+	}
+
+	public sealed class ScreenLightFlash : ScreenEffect
+	{
+		public static readonly Packet Instance = Packet.SetStatic( new ScreenLightFlash() );
+
+		public ScreenLightFlash()
+			: base( ScreenEffectType.LightFlash )
+		{
+		}
+	}
+
+	public sealed class ScreenDarkFlash : ScreenEffect
+	{
+		public static readonly Packet Instance = Packet.SetStatic( new ScreenDarkFlash() );
+
+		public ScreenDarkFlash()
+			: base( ScreenEffectType.DarkFlash )
+		{ 
+		}
+	}
+
 	public enum DeleteResultType
 	{
 		PasswordInvalid,
@@ -1813,7 +1888,7 @@ namespace Server.Network
 			m_Stream.Write( (short) item.X );
 			m_Stream.Write( (short) item.Y );
 			m_Stream.Write( (int) parentSerial );
-			m_Stream.Write( (ushort) item.Hue );
+			m_Stream.Write( (ushort) ( item.QuestItem ? Item.QuestItemHue : item.Hue ) );
 		}
 	}
 
@@ -1841,7 +1916,7 @@ namespace Server.Network
 			m_Stream.Write( (short) item.Y );
 			m_Stream.Write( (byte) 0 ); // Grid Location?
 			m_Stream.Write( (int) parentSerial );
-			m_Stream.Write( (ushort) item.Hue );
+			m_Stream.Write( (ushort) ( item.QuestItem ? Item.QuestItemHue : item.Hue ) );
 		}
 	}
 
@@ -1875,7 +1950,7 @@ namespace Server.Network
 					m_Stream.Write( (short) loc.m_X );
 					m_Stream.Write( (short) loc.m_Y );
 					m_Stream.Write( (int) beheld.Serial );
-					m_Stream.Write( (ushort) child.Hue );
+					m_Stream.Write( (ushort) ( child.QuestItem ? Item.QuestItemHue : child.Hue ) );
 
 					++written;
 				}
@@ -1917,7 +1992,7 @@ namespace Server.Network
 					m_Stream.Write( (short) loc.m_Y );
 					m_Stream.Write( (byte) 0 ); // Grid Location?
 					m_Stream.Write( (int) beheld.Serial );
-					m_Stream.Write( (ushort) child.Hue );
+					m_Stream.Write( (ushort) ( child.QuestItem ? Item.QuestItemHue : child.Hue ) );
 
 					++written;
 				}
@@ -2976,9 +3051,23 @@ namespace Server.Network
 			string name = m.Name;
 			if ( name == null ) name = "";
 
-			bool sendMLExtended = (Core.ML && ns != null && ns.SupportsExpansion( Expansion.ML ));
+			int type;
 
-			this.EnsureCapacity( sendMLExtended ? 91 : 88 );
+			if ( Core.HS && ns != null && ns.ExtendedStatus )
+			{
+				type = 6;
+				EnsureCapacity( 121 );
+			}
+			else if ( Core.ML && ns != null && ns.SupportsExpansion( Expansion.ML ) )
+			{
+				type = 5;
+				EnsureCapacity( 91 );
+			}
+			else
+			{
+				type = Core.AOS ? 4 : 3;
+				EnsureCapacity( 88 );
+			}
 
 			m_Stream.Write( (int) m.Serial );
 			m_Stream.WriteAsciiFixed( name, 30 );
@@ -2988,7 +3077,7 @@ namespace Server.Network
 
 			m_Stream.Write( m.CanBeRenamedBy( m ) );
 
-			m_Stream.Write( (byte)(sendMLExtended ? 0x05 : Core.AOS ? 0x04 : 0x03) ); // type
+			m_Stream.Write( (byte) type );
 
 			m_Stream.Write( m.Female );
 
@@ -3006,7 +3095,7 @@ namespace Server.Network
 			m_Stream.Write( (short) (Core.AOS ? m.PhysicalResistance : (int)(m.ArmorRating + 0.5)) );
 			m_Stream.Write( (short) (Mobile.BodyWeight + m.TotalWeight) );
 
-			if( sendMLExtended )
+			if ( type >= 5 )
 			{
 				m_Stream.Write( (short)m.MaxWeight );
 				m_Stream.Write( (byte)(m.Race.RaceID + 1));	// Would be 0x00 if it's a non-ML enabled account but...
@@ -3017,7 +3106,7 @@ namespace Server.Network
 			m_Stream.Write( (byte) m.Followers );
 			m_Stream.Write( (byte) m.FollowersMax );
 
-			if ( Core.AOS )
+			if ( type >= 4 )
 			{
 				m_Stream.Write( (short) m.FireResistance ); // Fire
 				m_Stream.Write( (short) m.ColdResistance ); // Cold
@@ -3037,6 +3126,12 @@ namespace Server.Network
 
 				m_Stream.Write( (int) m.TithingPoints );
 			}
+
+			if ( type >= 6 )
+			{
+				for ( int i = 0; i < 15; ++i )
+					m_Stream.Write( (short) m.GetAOSStatus( i ) );
+			}
 		}
 	}
 
@@ -3051,9 +3146,28 @@ namespace Server.Network
 			string name = beheld.Name;
 			if ( name == null ) name = "";
 
-			bool sendMLExtended = (Core.ML && ns != null && ns.SupportsExpansion( Expansion.ML ));
+			int type;
 
-			this.EnsureCapacity( 43 + (beholder == beheld ? (sendMLExtended ? 48 : 45) : 0) );
+			if ( beholder != beheld )
+			{
+				type = 0;
+				EnsureCapacity( 43 );
+			}
+			else if ( Core.HS && ns != null && ns.ExtendedStatus )
+			{
+				type = 6;
+				EnsureCapacity( 121 );
+			}
+			else if ( Core.ML && ns != null && ns.SupportsExpansion( Expansion.ML ) )
+			{
+				type = 5;
+				EnsureCapacity( 91 );
+			}
+			else
+			{
+				type = Core.AOS ? 4 : 3;
+				EnsureCapacity( 88 );
+			}
 
 			m_Stream.Write( beheld.Serial );
 
@@ -3066,10 +3180,10 @@ namespace Server.Network
 
 			m_Stream.Write( beheld.CanBeRenamedBy( beholder ) );
 
-			if ( beholder == beheld )
-			{
-				m_Stream.Write( (byte)(sendMLExtended ? 0x05 : Core.AOS ? 0x04 : 0x03) ); // type
+			m_Stream.Write( (byte) type );
 
+			if ( type > 0 )
+			{
 				m_Stream.Write( beheld.Female );
 
 				m_Stream.Write( (short) beheld.Str );
@@ -3083,7 +3197,7 @@ namespace Server.Network
 				m_Stream.Write( (short) (Core.AOS ? beheld.PhysicalResistance : (int)(beheld.ArmorRating + 0.5)) );
 				m_Stream.Write( (short) (Mobile.BodyWeight + beheld.TotalWeight) );
 
-				if( sendMLExtended )
+				if ( type >= 5 )
 				{
 					m_Stream.Write( (short)beheld.MaxWeight );
 					m_Stream.Write( (byte)(beheld.Race.RaceID + 1) );	// Would be 0x00 if it's a non-ML enabled account but...
@@ -3094,7 +3208,7 @@ namespace Server.Network
 				m_Stream.Write( (byte) beheld.Followers );
 				m_Stream.Write( (byte) beheld.FollowersMax );
 
-				if ( Core.AOS )
+				if ( type >= 4 )
 				{
 					m_Stream.Write( (short) beheld.FireResistance ); // Fire
 					m_Stream.Write( (short) beheld.ColdResistance ); // Cold
@@ -3114,10 +3228,12 @@ namespace Server.Network
 
 					m_Stream.Write( (int) beheld.TithingPoints );
 				}
-			}
-			else
-			{
-				m_Stream.Write( (byte) 0x00 );
+
+				if ( type >= 6 )
+				{
+					for ( int i = 0; i < 15; ++i )
+						m_Stream.Write( (short) beheld.GetAOSStatus( i ) );
+				}
 			}
 		}
 
@@ -3777,6 +3893,75 @@ namespace Server.Network
 		}
 	}
 
+	[Flags]
+	public enum ThirdPartyFeature : ulong
+	{
+		FilterWeather	= 1 << 0,
+		FilterLight		= 1 << 1,
+
+		SmartTarget		= 1 << 2,
+		RangedTarget	= 1 << 3,
+
+		AutoOpenDoors	= 1 << 4,
+
+		DequipOnCast	= 1 << 5,
+		AutoPotionEquip	= 1 << 6,
+
+		ProtectHeals	= 1 << 7,
+
+		LoopedMacros	= 1 << 8,
+
+		UseOnceAgent	= 1 << 9,
+		RestockAgent	= 1 << 10,
+		SellAgent		= 1 << 11,
+		BuyAgent		= 1 << 12,
+
+		PotionHotkeys	= 1 << 13,
+
+		RandomTargets	= 1 << 14,
+		ClosestTargets	= 1 << 15, // All closest target hotkeys
+		OverheadHealth	= 1 << 16, // Health and Mana/Stam messages shown over player's heads
+
+		AutolootAgent	= 1 << 17,
+		BoneCutterAgent	= 1 << 18,
+		AdvancedMacros	= 1 << 19,
+		AutoRemount		= 1 << 20,
+		AutoBandage		= 1 << 21,
+		EnemyTargetShare	= 1 << 22,
+		FilterSeason	= 1 << 23,
+		SpellTargetShare	= 1 << 24,
+
+		All				= ulong.MaxValue
+	}
+
+	public static class FeatureProtection
+	{
+		private static ThirdPartyFeature m_Disabled = 0;
+
+		public static ThirdPartyFeature DisabledFeatures
+		{
+			get { return m_Disabled; }
+		}
+
+		public static void Disable( ThirdPartyFeature feature )
+		{
+			SetDisabled( feature, true );
+		}
+
+		public static void Enable( ThirdPartyFeature feature )
+		{
+			SetDisabled( feature, false );
+		}
+
+		public static void SetDisabled( ThirdPartyFeature feature, bool value )
+		{
+			if ( value )
+				m_Disabled |= feature;
+			else
+				m_Disabled &= ~feature;
+		}
+	}
+
 	public sealed class CharacterList : Packet
 	{
 		public CharacterList( IAccount a, CityInfo[] info ) : base( 0xA9 )
@@ -3835,7 +4020,39 @@ namespace Server.Network
 				flags |= (CharacterListFlags.SlotLimit & CharacterListFlags.OneCharacterSlot); // Limit Characters & One Character
 
 			m_Stream.Write( (int)(flags | m_AdditionalFlags) ); // Additional Flags
+
+			m_Stream.Write( (short) -1 );
+
+			ThirdPartyFeature disabled = FeatureProtection.DisabledFeatures;
+
+			if ( disabled != 0 )
+			{
+				if ( m_MD5Provider == null )
+					m_MD5Provider = new System.Security.Cryptography.MD5CryptoServiceProvider();
+
+				m_Stream.UnderlyingStream.Flush();
+
+				byte[] hashCode = m_MD5Provider.ComputeHash( m_Stream.UnderlyingStream.GetBuffer(), 0, (int) m_Stream.UnderlyingStream.Length );
+				byte[] buffer = new byte[28];
+
+				for ( int i = 0; i < count; ++i )
+				{
+					Utility.RandomBytes( buffer );
+
+					m_Stream.Seek( 35 + ( i * 60 ), SeekOrigin.Begin );
+					m_Stream.Write( buffer, 0, buffer.Length );
+				}
+
+				m_Stream.Seek( 35, SeekOrigin.Begin );
+				m_Stream.Write( (int) ((long)disabled>>32) );
+				m_Stream.Write( (int) disabled );
+
+				m_Stream.Seek( 95, SeekOrigin.Begin );
+				m_Stream.Write( hashCode, 0, hashCode.Length );
+			}
 		}
+
+		private static System.Security.Cryptography.MD5CryptoServiceProvider m_MD5Provider;
 
 		private static CharacterListFlags m_AdditionalFlags;
 
@@ -3850,7 +4067,7 @@ namespace Server.Network
 	{
 		public CharacterListOld( IAccount a, CityInfo[] info ) : base( 0xA9 )
 		{
-			this.EnsureCapacity( 5 + (a.Length * 60) + (info.Length * 63) );
+			this.EnsureCapacity( 9 + (a.Length * 60) + (info.Length * 63) );
 
 			int highSlot = -1;
 
@@ -3898,7 +4115,37 @@ namespace Server.Network
 				flags |= (CharacterListFlags.SlotLimit & CharacterListFlags.OneCharacterSlot); // Limit Characters & One Character
 
 			m_Stream.Write( (int)(flags | CharacterList.AdditionalFlags) ); // Additional Flags
+
+			ThirdPartyFeature disabled = FeatureProtection.DisabledFeatures;
+
+			if ( disabled != 0 )
+			{
+				if ( m_MD5Provider == null )
+					m_MD5Provider = new System.Security.Cryptography.MD5CryptoServiceProvider();
+
+				m_Stream.UnderlyingStream.Flush();
+
+				byte[] hashCode = m_MD5Provider.ComputeHash( m_Stream.UnderlyingStream.GetBuffer(), 0, (int) m_Stream.UnderlyingStream.Length );
+				byte[] buffer = new byte[28];
+
+				for ( int i = 0; i < count; ++i )
+				{
+					Utility.RandomBytes( buffer );
+
+					m_Stream.Seek( 35 + ( i * 60 ), SeekOrigin.Begin );
+					m_Stream.Write( buffer, 0, buffer.Length );
+				}
+
+				m_Stream.Seek( 35, SeekOrigin.Begin );
+				m_Stream.Write( (int) ((long)disabled>>32) );
+				m_Stream.Write( (int) disabled );
+
+				m_Stream.Seek( 95, SeekOrigin.Begin );
+				m_Stream.Write( hashCode, 0, hashCode.Length );
+			}
 		}
+
+		private static System.Security.Cryptography.MD5CryptoServiceProvider m_MD5Provider;
 	}
 
 	public sealed class ClearWeaponAbility : Packet
@@ -4241,6 +4488,8 @@ namespace Server.Network
 
 		public void OnSend()
 		{
+			Core.Set();
+
 			if ( (m_State & (State.Acquired | State.Static)) == 0 )
 				Free();
 		}

@@ -5,7 +5,7 @@
  *   copyright            : (C) The RunUO Software Team
  *   email                : info@runuo.com
  *
- *   $Id: Region.cs 649 2010-12-26 05:18:57Z asayre $
+ *   $Id: Region.cs 1067 2013-06-07 01:04:35Z eos@runuo.com $
  *
  ***************************************************************************/
 
@@ -127,7 +127,7 @@ namespace Server
 		private static Type m_DefaultRegionType = typeof( Region );
 		public static Type DefaultRegionType{ get{ return m_DefaultRegionType; } set{ m_DefaultRegionType = value; } }
 
-		private static TimeSpan m_StaffLogoutDelay = TimeSpan.FromSeconds( 10.0 );
+		private static TimeSpan m_StaffLogoutDelay = TimeSpan.Zero;
 		private static TimeSpan m_DefaultLogoutDelay = TimeSpan.FromMinutes( 5.0 );
 
 		public static TimeSpan StaffLogoutDelay{ get{ return m_StaffLogoutDelay; } set{ m_StaffLogoutDelay = value; } }
@@ -663,7 +663,7 @@ namespace Server
 			if ( m_Parent != null )
 				m_Parent.OnCriminalAction( m, message );
 			else if ( message )
-				m.SendAsciiMessage( "You've committed a criminal act!!" ); // You've committed a criminal act!!
+				m.SendLocalizedMessage( 1005040 ); // You've committed a criminal act!!
 		}
 
 		public virtual bool AllowBeneficial( Mobile from, Mobile target )
@@ -730,14 +730,6 @@ namespace Server
 
 			return true;
 		}
-
-        public virtual bool CheckLift(Mobile m, object o)
-        {
-            if (m_Parent != null)
-                return m_Parent.CheckLift(m, o);
-
-            return true;
-        }
 
 		public virtual bool OnBeforeDeath( Mobile m )
 		{
@@ -1134,12 +1126,12 @@ namespace Server
 			return true;
 		}
 
-		public static bool ReadEnum<T>( XmlElement xml, string attribute, ref T value )
+		public static bool ReadEnum<T>( XmlElement xml, string attribute, ref T value ) where T : struct
 		{
 			return ReadEnum( xml, attribute, ref value, true );
 		}
 
-		public static bool ReadEnum<T>( XmlElement xml, string attribute, ref T value, bool mandatory )
+		public static bool ReadEnum<T>( XmlElement xml, string attribute, ref T value, bool mandatory ) where T : struct // We can't limit the where clause to Enums only
 		{
 			string s = GetAttribute( xml, attribute, mandatory );
 
@@ -1147,11 +1139,23 @@ namespace Server
 				return false;
 
 			Type type = typeof(T);
+#if Framework_4_0
+			T tempVal;
 
+			if( type.IsEnum && Enum.TryParse( s, true, out tempVal ) )
+			{
+				value = tempVal;
+				return true;
+			}
+			else
+			{
+				Console.WriteLine( "Could not parse {0} enum attribute '{1}' in element '{2}'", type, attribute, xml.Name );
+				return false;
+			}
+#else
 			try
 			{
 				value = (T)Enum.Parse(type, s, true);
-				//TODO: On .NET 4.0, use Enum.TryParse
 			}
 			catch
 			{
@@ -1160,6 +1164,7 @@ namespace Server
 			}
 
 			return true;
+#endif
 		}
 
 		public static bool ReadMap( XmlElement xml, string attribute, ref Map value )

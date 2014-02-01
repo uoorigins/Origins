@@ -5,7 +5,7 @@
  *   copyright            : (C) The RunUO Software Team
  *   email                : info@runuo.com
  *
- *   $Id: GumpEntry.cs 4 2006-06-15 04:28:39Z mark $
+ *   $Id: GumpEntry.cs 644 2010-12-23 09:18:45Z asayre $
  *
  ***************************************************************************/
 

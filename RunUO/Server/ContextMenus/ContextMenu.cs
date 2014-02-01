@@ -5,7 +5,7 @@
  *   copyright            : (C) The RunUO Software Team
  *   email                : info@runuo.com
  *
- *   $Id: ContextMenu.cs 4 2006-06-15 04:28:39Z mark $
+ *   $Id: ContextMenu.cs 1070 2013-06-16 01:24:45Z eos@runuo.com $
  *
  ***************************************************************************/
 
@@ -92,6 +92,23 @@ namespace Server.ContextMenus
 			for ( int i = 0; i < m_Entries.Length; ++i )
 			{
 				m_Entries[i].Owner = this;
+			}
+		}
+
+		/// <summary>
+		/// Returns true if this ContextMenu requires packet version 2.
+		/// </summary>
+		public bool RequiresNewPacket
+		{
+			get
+			{
+				for ( int i = 0; i < m_Entries.Length; ++i )
+				{
+					if ( m_Entries[i].Number < 3000000 || m_Entries[i].Number > 3032767 )
+						return true;
+				}
+
+				return false;
 			}
 		}
 	}
