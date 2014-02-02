@@ -4300,15 +4300,6 @@ namespace Server.Mobiles
             //extras
             if (pack == LootPack.Poor)
             {
-                if (LootBag.ParentEntity == Backpack)
-                {
-                    switch (Utility.Random(4))
-                    {
-                        case 0: LootBag.DropItem(new Shirt(Loot.GetRandomHue())); break;
-                        case 1: LootBag.DropItem(new ShortPants(Loot.GetRandomHue())); break;
-                    }
-                }
-
                 switch (Utility.RandomMinMax(1, 2))
                 {
                     case 0: AddLootBackpack(LootPack.Poor); break;
@@ -4318,14 +4309,6 @@ namespace Server.Mobiles
             }
             else if (pack == LootPack.Meager)
             {
-                if (LootBag.ParentEntity == Backpack)
-                {
-                    switch (Utility.Random(4))
-                    {
-                        case 0: LootBag.DropItem(new TallStrawHat(Loot.GetRandomHue())); break;
-                        case 1: LootBag.DropItem(new StrawHat(Loot.GetRandomHue())); break;
-                    }
-                }
                 switch (Utility.RandomMinMax(1,2))
                 {
                     case 0: AddLootBackpack(LootPack.Meager); break;
@@ -4335,9 +4318,6 @@ namespace Server.Mobiles
             }
             else if (pack == LootPack.Average)
             {
-                if (LootBag.ParentEntity == Backpack)
-                    LootBag.DropItem(new Cloak(Loot.GetRandomHue()));
-
                 switch (Utility.RandomMinMax(1, 2))
                 {
                     case 0: AddLootBackpack(LootPack.Average); break;
@@ -4347,9 +4327,6 @@ namespace Server.Mobiles
             }
             else if (pack == LootPack.Rich)
             {
-                if (LootBag.ParentEntity == Backpack)
-                    LootBag.DropItem(new Cloak(Loot.GetRandomHue()));
-
                 switch (Utility.RandomMinMax(1, 2))
                 {
                     case 0: AddLootBackpack(LootPack.Rich); break;

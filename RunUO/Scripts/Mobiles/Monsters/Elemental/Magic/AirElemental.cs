@@ -58,7 +58,7 @@ namespace Server.Mobiles
         public override void GenerateLoot()
         {
             AddLoot( LootPack.MedScrolls );
-            AddLootBackpack( LootPack.FilthyRich );
+            AddLootBackpack( LootPack.RichPile );
         }
 
         public override void OnDeath( Container c )

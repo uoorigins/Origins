@@ -54,6 +54,7 @@ namespace Server.Mobiles
 		{
 			AddLoot( LootPack.HighScrolls );
 
+            AddLoot( LootPack.AveragePile );
             AddLootBackpack(LootPack.FilthyRich);
 		}
 
