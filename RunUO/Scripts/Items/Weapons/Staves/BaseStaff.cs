@@ -30,7 +30,7 @@ namespace Server.Items
             switch ( m_WandEffect )
             {
                 default:
-                case WandEffect.None: return "";
+                case WandEffect.None: return base.GetEffectString();
                 case WandEffect.Clumsiness: return "clumsiness";
                 case WandEffect.Curse: return "evil";
                 case WandEffect.Feeblemindedness: return "feeblemindedness";
