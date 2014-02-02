@@ -139,27 +139,36 @@ namespace Server.SkillHandlers
                 return;
             }
 
-            if ( m_Target.InRange( m_Player.Location, 1 ) )
+            if ( m_Target == null || !m_Target.Alive )
             {
                 Stop();
                 return;
             }
-            else if ( m_Target.GetDistanceToSqrt( m_Player.Location ) > 20 )
+
+            if ( m_Target != null && m_Target.InRange( m_Player.Location, 1 ) )
+            {
+                Stop();
+                return;
+            }
+            else if ( m_Target != null && m_Target.GetDistanceToSqrt( m_Player.Location ) > 20 )
             {
                 Stop();
                 return;
             }
             else
             {
-                m_Target.TargetLocation = new Point2D( (IPoint2D)m_Player.Location );
-                m_Target.BardEndTime = DateTime.Now;
-                m_Target.BardTarget = null;
-                m_Target.BardMaster = null;
-                m_Target.BardProvoked = false;
-                m_Target.Combatant = null;
-                m_Target.Warmode = false;
-                m_Target.NextCombatTime = DateTime.Now + TimeSpan.FromSeconds( 2.0 );
-                m_Target.AIObject.Action = ActionType.Wander;
+                if ( m_Target != null )
+                {
+                    m_Target.TargetLocation = new Point2D( (IPoint2D)m_Player.Location );
+                    m_Target.BardEndTime = DateTime.Now;
+                    m_Target.BardTarget = null;
+                    m_Target.BardMaster = null;
+                    m_Target.BardProvoked = false;
+                    m_Target.Combatant = null;
+                    m_Target.Warmode = false;
+                    m_Target.NextCombatTime = DateTime.Now + TimeSpan.FromSeconds( 2.0 );
+                    m_Target.AIObject.Action = ActionType.Wander;
+                }
             }
         }
     }
