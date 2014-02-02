@@ -185,6 +185,15 @@ namespace Server
 				new LootPackItem( typeof( BaseClothing ), 1 )
 			};
 
+        public static readonly LootPackItem[] OldItems = new LootPackItem[]
+			{
+				new LootPackItem( typeof( BaseArmor ), 3 ),
+				new LootPackItem( typeof( BaseWeapon ), 3 ),
+				new LootPackItem( typeof( BaseRanged ), 3 ),
+				new LootPackItem( typeof( BaseShield ), 3 ),
+                new LootPackItem( typeof( BaseJewel ), 2 )
+			};
+
         #region Old Magic Items
         public static readonly LootPackItem[] OldMagicItems = new LootPackItem[]
 			{
@@ -567,7 +576,7 @@ namespace Server
 
         public static readonly LootPack OldMeager = new LootPack( new LootPackEntry[]
 			{
-				new LootPackEntry( true, OldMagicItems,  45.00, 10, 1, (int)Intensity.Normal, (int)Intensity.Normal ),
+				new LootPackEntry( true, OldItems,       45.00, 1 ),
                 new LootPackEntry( true, PotionReagent,	 25.00, Utility.RandomMinMax( 3, 6 ) ),
 				new LootPackEntry( true, Missle,         40.00, Utility.RandomMinMax( 5, 15 ) ),
                 new LootPackEntry( true,  Clothing,     100.00, 1),
@@ -581,6 +590,7 @@ namespace Server
                 new LootPackEntry( true, OldMagicItems,  30.00, 10, 1, (int)Intensity.Level1Min, (int)Intensity.Level2Max ),
                 new LootPackEntry( true, PotionReagent,	 50.00, Utility.RandomMinMax( 3, 6 ) ),
 				new LootPackEntry( true, Missle,         50.00, Utility.RandomMinMax( 5, 15 ) ),
+                new LootPackEntry( true,  Clothing,     100.00, 1),
                 new LootPackEntry( true,  Beverage,     100.00, 1),
                 new LootPackEntry( true,  LightSource,  100.00, 1),
                 new LootPackEntry( true,  Food,         100.00, 1)
