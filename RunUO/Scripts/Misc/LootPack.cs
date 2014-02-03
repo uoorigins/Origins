@@ -930,52 +930,52 @@ namespace Server
                             #region Random Magic Effect
                             if ( 25 > rand )
                             {
-                                weapon.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
+                                weapon.Charges = Utility.RandomMinMax( 10, 30 );
                                 weapon.Effect = WeaponEffect.Clumsy;
                             }
                             else if ( 35 > rand )
                             {
-                                weapon.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
+                                weapon.Charges = Utility.RandomMinMax( 10, 30 );
                                 weapon.Effect = WeaponEffect.Feeblemind;
                             }
                             else if ( 45 > rand )
                             {
-                                weapon.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
+                                weapon.Charges = Utility.RandomMinMax( 1, 25 );
                                 weapon.Effect = WeaponEffect.MagicArrow;
                             }
                             else if ( 55 > rand )
                             {
-                                weapon.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
+                                weapon.Charges = Utility.RandomMinMax( 10, 30 );
                                 weapon.Effect = WeaponEffect.Weakness;
                             }
                             else if ( 65 > rand )
                             {
-                                weapon.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
+                                weapon.Charges = Utility.RandomMinMax( 1, 10 );
                                 weapon.Effect = WeaponEffect.Harm;
                             }
                             else if ( 75 > rand )
                             {
-                                weapon.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
+                                weapon.Charges = Utility.RandomMinMax( 1, 10 );
                                 weapon.Effect = WeaponEffect.Paralyze;
                             }
                             else if ( 80 > rand )
                             {
-                                weapon.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
+                                weapon.Charges = Utility.RandomMinMax( 1, 25 );
                                 weapon.Effect = WeaponEffect.Fireball;
                             }
                             else if ( 85 > rand )
                             {
-                                weapon.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
+                                weapon.Charges = Utility.RandomMinMax( 1, 30 );
                                 weapon.Effect = WeaponEffect.Curse;
                             }
                             else if ( 90 > rand )
                             {
-                                weapon.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
+                                weapon.Charges = Utility.RandomMinMax( 1, 30 );
                                 weapon.Effect = WeaponEffect.ManaDrain;
                             }
                             else
                             {
-                                weapon.Charges = Utility.RandomMinMax( m_MinIntensity, m_MaxIntensity );
+                                weapon.Charges = Utility.RandomMinMax( 1, 10 );
                                 weapon.Effect = WeaponEffect.Lightning;
                             }
                             #endregion
