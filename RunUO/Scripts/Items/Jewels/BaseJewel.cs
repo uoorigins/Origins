@@ -466,7 +466,7 @@ namespace Server.Items
                 displayText = displayText.Replace( "  ", " " );
             }
 
-            if ( !AsciiPlural )
+            if ( !AsciiPlural && Name == null )
             {
                 displayText = String.Format( "{0} {1}", GetBeginning( displayText ), displayText );
             }

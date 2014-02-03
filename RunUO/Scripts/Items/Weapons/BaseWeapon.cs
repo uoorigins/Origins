@@ -3229,7 +3229,10 @@ namespace Server.Items
                 displayText = displayText.Replace( "  ", " " );
             }
 
-            displayText = String.Format( "{0} {1}", GetBeginning( displayText ), displayText );
+            if ( Name == null )
+            {
+                displayText = String.Format( "{0} {1}", GetBeginning( displayText ), displayText );
+            }
 
             if ( this is BaseWand )
             {
