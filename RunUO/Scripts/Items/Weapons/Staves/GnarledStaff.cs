@@ -71,8 +71,8 @@ namespace Server.Items
                 Cast(new ClumsySpell(from, this as GnarledStaff));
             else if (StaffEffect == WandEffect.Identification)
                 base.OnWandUse(from);
-            else if (StaffEffect == WandEffect.Paralyze)
-                Cast(new ParalyzeSpell(from, this));
+            else if (StaffEffect == WandEffect.GreaterHealing)
+                Cast(new GreaterHealSpell(from, this));
             else if (StaffEffect == WandEffect.Feeblemindedness)
                 Cast(new FeeblemindSpell(from, this));
             else if (StaffEffect == WandEffect.Weakness)
@@ -83,8 +83,8 @@ namespace Server.Items
                 Cast(new HarmSpell(from, this));
             else if (StaffEffect == WandEffect.Fireball)
                 Cast(new FireballSpell(from, this));
-            else if (StaffEffect == WandEffect.Curse)
-                Cast(new CurseSpell(from, this));
+            else if (StaffEffect == WandEffect.Healing)
+                Cast(new HealSpell(from, this));
             else if (StaffEffect == WandEffect.Lightning)
                 Cast(new LightningSpell(from, this));
             else if (StaffEffect == WandEffect.ManaDraining)

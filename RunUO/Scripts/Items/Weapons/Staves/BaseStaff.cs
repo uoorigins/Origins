@@ -32,16 +32,16 @@ namespace Server.Items
                 default:
                 case WandEffect.None: return base.GetEffectString();
                 case WandEffect.Clumsiness: return "clumsiness";
-                case WandEffect.Curse: return "evil";
                 case WandEffect.Feeblemindedness: return "feeblemindedness";
-                case WandEffect.Fireball: return "daemon's breath";
-                case WandEffect.Harming: return "wounding";
+                case WandEffect.Fireball: return "fireballs";
+                case WandEffect.Harming: return "harming";
                 case WandEffect.Identification: return "identification";
-                case WandEffect.Lightning: return "thunder";
-                case WandEffect.MagicArrow: return "burning";
-                case WandEffect.ManaDraining: return "mage's bane";
-                case WandEffect.Paralyze: return "ghoul's touch";
+                case WandEffect.Lightning: return "lightning";
+                case WandEffect.MagicArrow: return "magic arrow";
+                case WandEffect.ManaDraining: return "mana draining";
                 case WandEffect.Weakness: return "weakness";
+                case WandEffect.Healing: return "healing";
+                case WandEffect.GreaterHealing: return "great healing";
             }
         }
 
