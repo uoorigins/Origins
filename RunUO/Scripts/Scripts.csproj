@@ -1756,13 +1756,13 @@
     <Compile Include="Items\Traps\SpikeTrap.cs" />
     <Compile Include="Items\Traps\StoneFaceTrap.cs" />
     <Compile Include="Items\Wands\BaseWand.cs" />
-    <None Include="Items\Wands\GreaterHealWand.cs.disable" />
-    <None Include="Items\Wands\HealWand.cs.disable" />
     <Compile Include="Items\Wands\ClumsyWand.cs" />
     <Compile Include="Items\Wands\CurseWand.cs" />
     <Compile Include="Items\Wands\FeebleWand.cs" />
     <Compile Include="Items\Wands\FireballWand.cs" />
+    <Compile Include="Items\Wands\GreaterHealWand.cs" />
     <Compile Include="Items\Wands\HarmWand.cs" />
+    <Compile Include="Items\Wands\HealWand.cs" />
     <Compile Include="Items\Wands\IDWand.cs" />
     <Compile Include="Items\Wands\LightningWand.cs" />
     <Compile Include="Items\Wands\MagicArrowWand.cs" />

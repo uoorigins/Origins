@@ -9,7 +9,7 @@ namespace Server.Items
 	public class MagicArrowWand : BaseWand
 	{
 		[Constructable]
-		public MagicArrowWand() : base( WandEffect.MagicArrow, 5, 30 )
+		public MagicArrowWand() : base( WandEffect.MagicArrow, 1, 25 )
 		{
 		}
 

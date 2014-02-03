@@ -9,7 +9,7 @@ namespace Server.Items
 	public class ManaDrainWand : BaseWand
 	{
 		[Constructable]
-		public ManaDrainWand() : base( WandEffect.ManaDraining, 5, 30 )
+		public ManaDrainWand() : base( WandEffect.ManaDraining, 1, 200 )
 		{
 		}
 

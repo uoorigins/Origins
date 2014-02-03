@@ -9,7 +9,7 @@ namespace Server.Items
 	public class CurseWand : BaseWand
 	{
 		[Constructable]
-		public CurseWand() : base( WandEffect.Curse, 1, 5 )
+		public CurseWand() : base( WandEffect.None, 0, 0 )
 		{
 		}
 

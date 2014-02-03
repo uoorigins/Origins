@@ -313,7 +313,7 @@ namespace Server
         private static Type[] m_WandTypes = new Type[]
 			{
 				typeof( ClumsyWand ),               typeof( FeebleWand ),           typeof( FireballWand ),
-				typeof( CurseWand ),                typeof( HarmWand ),             typeof( ParalyzeWand ),
+				typeof( CurseWand ),                typeof( HealWand ),             typeof( GreaterHealWand ),
 				typeof( IDWand ),                   typeof( LightningWand ),        typeof( MagicArrowWand ),
 				typeof( ManaDrainWand ),            typeof( WeaknessWand )          
                 
@@ -406,7 +406,7 @@ namespace Server
         {
             int rand = Utility.Random( 3 );
             if ( 2 > rand )
-                return Construct( m_WandTypes ) as BaseWand;
+                return Construct(Items.RandomWand.RandomWandType()) as BaseWand;
             else
                 return RandomGnarledStaff() as BaseStaff;
         }
@@ -545,25 +545,25 @@ namespace Server
             if ( Core.SE && inTokuno )
                 return Construct( m_SEArmorTypes, m_ArmorTypes ) as BaseArmor;
 
-            int random = Utility.RandomMinMax( 1, 100 );
+            int random = Utility.Random( 81 );
 
-            if ( random <= 20 )
+            if ( random < 10 )
             {
                 return Construct( m_ChainArmorTypes ) as BaseArmor;
             }
-            else if ( random <= 50 )
+            else if ( random < 40 )
             {
                 return Construct( m_LeatherArmorTypes ) as BaseArmor;
             }
-            else if ( random <= 70 )
+            else if ( random < 60 )
             {
                 return Construct( m_StuddedArmorTypes ) as BaseArmor;
             }
-            else if ( random <= 90 )
+            else if ( random < 75 )
             {
                 return Construct( m_RingmailArmorTypes ) as BaseArmor;
             }
-            else if ( random <= 99 )
+            else if ( random < 80 )
             {
                 return Construct( m_PlateArmorTypes ) as BaseArmor;
             }

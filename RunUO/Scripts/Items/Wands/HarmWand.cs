@@ -9,7 +9,7 @@ namespace Server.Items
 	public class HarmWand : BaseWand
 	{
 		[Constructable]
-		public HarmWand() : base( WandEffect.Harming, 5, 30 )
+		public HarmWand() : base( WandEffect.Harming, 1, 10 )
 		{
 		}
 

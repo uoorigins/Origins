@@ -9,7 +9,7 @@ namespace Server.Items
 	public class ClumsyWand : BaseWand
 	{
 		[Constructable]
-		public ClumsyWand() : base( WandEffect.Clumsiness, 5, 30 )
+		public ClumsyWand() : base( WandEffect.Clumsiness, 1, 60 )
 		{
 		}
 

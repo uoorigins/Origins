@@ -9,7 +9,7 @@ namespace Server.Items
 	public class ParalyzeWand : BaseWand
 	{
 		[Constructable]
-		public ParalyzeWand() : base( WandEffect.Paralyze, 10, 25 )
+		public ParalyzeWand() : base( WandEffect.None, 0, 0 )
 		{
 		}
 

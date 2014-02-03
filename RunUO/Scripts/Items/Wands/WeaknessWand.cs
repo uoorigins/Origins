@@ -9,7 +9,7 @@ namespace Server.Items
 	public class WeaknessWand : BaseWand
 	{
 		[Constructable]
-		public WeaknessWand() : base( WandEffect.Weakness, 5, 30 )
+		public WeaknessWand() : base( WandEffect.Weakness, 1, 60 )
 		{
 		}
 
