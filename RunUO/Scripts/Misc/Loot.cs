@@ -41,7 +41,8 @@ namespace Server
 				typeof( Katana ),				typeof( Kryss ),				typeof( Longsword ),
 				typeof( Scimitar ),				typeof( VikingSword ),
 				typeof( HammerPick ),			typeof( ButcherKnife ),			typeof( Cleaver ),
-				typeof( Dagger ),				typeof( SkinningKnife )
+				typeof( Dagger ),				typeof( SkinningKnife ),
+                typeof( Bow ),					typeof( Crossbow ),				typeof( HeavyCrossbow )
 			};
 
         public static Type[] WeaponTypes { get { return m_WeaponTypes; } }
