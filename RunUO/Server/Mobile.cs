@@ -2137,7 +2137,7 @@ namespace Server
 
 			protected override void OnTick()
 			{
-				m_Mobile.Combatant = null;
+				//m_Mobile.Combatant = null;
 			}
 		}
 
