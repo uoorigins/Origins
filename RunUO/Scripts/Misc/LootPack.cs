@@ -199,7 +199,6 @@ namespace Server
 				new LootPackItem( typeof( BaseClothing ), 2 ),
 				new LootPackItem( typeof( BaseArmor ), 3 ),
 				new LootPackItem( typeof( BaseWeapon ), 3 ),
-				new LootPackItem( typeof( BaseRanged ), 3 ),
 				new LootPackItem( typeof( BaseShield ), 3 ),
                 new LootPackItem( typeof( BaseWand ), 2),
                 new LootPackItem( typeof( BaseJewel ), 2 )
@@ -962,7 +961,7 @@ namespace Server
                             }
                             else if ( 45 > rand )
                             {
-                                weapon.Charges = Utility.RandomMinMax( 1, 25 );
+                                weapon.Charges = Utility.RandomMinMax( 10, 30 );
                                 weapon.Effect = WeaponEffect.MagicArrow;
                             }
                             else if ( 55 > rand )
@@ -972,32 +971,32 @@ namespace Server
                             }
                             else if ( 65 > rand )
                             {
-                                weapon.Charges = Utility.RandomMinMax( 1, 10 );
+                                weapon.Charges = Utility.RandomMinMax( 10, 30 );
                                 weapon.Effect = WeaponEffect.Harm;
                             }
                             else if ( 75 > rand )
                             {
-                                weapon.Charges = Utility.RandomMinMax( 1, 10 );
+                                weapon.Charges = Utility.RandomMinMax( 10, 30 );
                                 weapon.Effect = WeaponEffect.Paralyze;
                             }
                             else if ( 80 > rand )
                             {
-                                weapon.Charges = Utility.RandomMinMax( 1, 25 );
+                                weapon.Charges = Utility.RandomMinMax( 10, 30 );
                                 weapon.Effect = WeaponEffect.Fireball;
                             }
                             else if ( 85 > rand )
                             {
-                                weapon.Charges = Utility.RandomMinMax( 1, 30 );
+                                weapon.Charges = Utility.RandomMinMax( 10, 30 );
                                 weapon.Effect = WeaponEffect.Curse;
                             }
                             else if ( 90 > rand )
                             {
-                                weapon.Charges = Utility.RandomMinMax( 1, 30 );
+                                weapon.Charges = Utility.RandomMinMax( 10, 30 );
                                 weapon.Effect = WeaponEffect.ManaDrain;
                             }
                             else
                             {
-                                weapon.Charges = Utility.RandomMinMax( 1, 10 );
+                                weapon.Charges = Utility.RandomMinMax( 10, 30 );
                                 weapon.Effect = WeaponEffect.Lightning;
                             }
                             #endregion
