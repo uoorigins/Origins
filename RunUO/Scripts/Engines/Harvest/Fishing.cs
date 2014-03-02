@@ -98,6 +98,11 @@ namespace Server.Engines.Harvest
 			#endregion
 		}
 
+        public override bool CheckRange( Mobile from, Item tool, HarvestDefinition def, Map map, Point3D loc, bool timed )
+        {
+            return true;
+        }
+
 		public override void OnConcurrentHarvest( Mobile from, Item tool, HarvestDefinition def, object toHarvest )
 		{
             from.SendAsciiMessage("You are already fishing.");
