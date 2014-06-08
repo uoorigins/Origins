@@ -24,11 +24,11 @@ namespace Server
 			}
 			else
 			{
-				Register( new PoisonImpl( "Lesser",		0, 4, 26, 0.01, 15.0, 15.0, Utility.RandomMinMax(10,20)*1, 2 ) );
-				Register( new PoisonImpl( "Regular",	1, 5, 26, 0.02, 10.0, 10.0, Utility.RandomMinMax(10,20)*2, 2 ) );
-				Register( new PoisonImpl( "Greater",	2, 6, 26, 0.05, 10.0, 10.0, Utility.RandomMinMax(10,20)*3, 2 ) );
-				Register( new PoisonImpl( "Deadly",		3, 7, 26, 0.11, 5.0,   5.0, Utility.RandomMinMax(10,20)*4, 2 ) );
-				Register( new PoisonImpl( "Lethal",		4, 9, 26, 0.13, 5.0,   5.0, Utility.RandomMinMax(10,20)*5, 2 ) );
+				Register( new PoisonImpl( "Lesser",		0, 4, 26, 0.01, 15.0, 15.0, 10, 2 ) );
+				Register( new PoisonImpl( "Regular",	1, 5, 26, 0.02, 10.0, 10.0, 10, 2 ) );
+				Register( new PoisonImpl( "Greater",	2, 6, 26, 0.05, 10.0, 10.0, 10, 2 ) );
+				Register( new PoisonImpl( "Deadly",		3, 7, 26, 0.11, 5.0,   5.0, 15, 2 ) );
+				Register( new PoisonImpl( "Lethal",		4, 9, 26, 0.13, 5.0,   5.0, 20, 2 ) );
 			}
 		}
 
@@ -86,20 +86,6 @@ namespace Server
 
 			protected override void OnTick()
 			{
-				if ( (Core.AOS && m_Poison.Level < 4 && TransformationSpellHelper.UnderTransformation( m_Mobile, typeof( VampiricEmbraceSpell ) )) ||
-					(m_Poison.Level < 3 && OrangePetals.UnderEffect( m_Mobile )) ||
-					AnimalForm.UnderTransformation( m_Mobile, typeof( Unicorn ) ) )
-				{
-					if ( m_Mobile.CurePoison( m_Mobile ) )
-					{
-						m_Mobile.LocalOverheadMessage( MessageType.Emote, 0x3F, true, "* You feel yourself resisting the effects of the poison *" );
-
-						m_Mobile.NonlocalOverheadMessage( MessageType.Emote, 0x3F, true, String.Format( "* {0} seems resistant to the poison *", m_Mobile.Name ) );
-
-						Stop();
-						return;
-					}
-				}
 
 				if ( m_Index++ == m_Poison.m_Count )
 				{
