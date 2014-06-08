@@ -36,14 +36,14 @@ namespace Server.Mobiles
 			}
 
 			SetStr( 100 );
-			SetDex( 200 );
+			SetDex( 100 );
 			SetInt( 100 );
 
 			SetHits( 900 );
 			SetStam( 100 );
 			SetMana( 0 );
 
-			SetDamage( 14, 17 );
+			SetDamage( 10, 14 );
 
 			SetDamageType( ResistanceType.Physical, 0 );
 			SetDamageType( ResistanceType.Energy, 100 );

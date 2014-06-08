@@ -31,10 +31,10 @@ namespace Server.Mobiles
 			SetInt( 100 );
 
 			SetHits( 200 );
-			SetStam( 75 );
+			SetStam( 50 );
 			SetMana( 0 );
 
-			SetDamage( 7, 14 );
+			SetDamage( 5, 11 );
 
 			SetDamageType( ResistanceType.Physical, 60 );
 			SetDamageType( ResistanceType.Poison, 20 );
@@ -59,7 +59,7 @@ namespace Server.Mobiles
 
 		public override bool BleedImmune{ get{ return true; } }
 		public override Poison PoisonImmune { get { return Poison.Lethal; } }
-        public override Poison HitPoison { get { return Poison.Regular; } }
+        public override Poison HitPoison { get { return Poison.Lesser; } }
 
 		public override int GetAngerSound()
 		{
