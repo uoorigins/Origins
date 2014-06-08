@@ -873,10 +873,6 @@ namespace Server.Items
 
         public virtual bool CheckHit(Mobile attacker, Mobile defender)
         {
-            if (attacker is EnergyVortex || attacker is BladeSpirits)
-            {
-                return true;
-            }
 
             BaseWeapon atkWeapon = attacker.Weapon as BaseWeapon;
             BaseWeapon defWeapon = defender.Weapon as BaseWeapon;
