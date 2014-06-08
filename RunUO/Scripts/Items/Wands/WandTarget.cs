@@ -1,15 +1,18 @@
 using System;
 using Server;
 using Server.Items;
+using Server.Mobiles;
 
 namespace Server.Targeting
 {
+    [PlayerVendorTarget]
 	public class WandTarget : Target
 	{
 		private BaseWand m_Item;
 
 		public WandTarget( BaseWand item ) : base( 6, false, TargetFlags.None )
 		{
+            AllowNonlocal = true;
 			m_Item = item;
 		}
 
@@ -24,12 +27,14 @@ namespace Server.Targeting
 		}
 	}
 
+    [PlayerVendorTarget]
     public class StaffTarget : Target
     {
         private BaseStaff m_Item;
 
         public StaffTarget(BaseStaff item) : base(6, false, TargetFlags.None)
         {
+            AllowNonlocal = true;
             m_Item = item;
         }
 
