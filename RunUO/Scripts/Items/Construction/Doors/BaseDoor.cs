@@ -168,7 +168,7 @@ namespace Server.Items
 					{
 						if ( m.CheckAlive() )
 						{
-							m.SendLocalizedMessage( 500024 ); // Opening door...
+                            m.SendAsciiMessage( "Opening door..." ); // Opening door...
 							item.OnDoubleClick( m );
 						}
 
