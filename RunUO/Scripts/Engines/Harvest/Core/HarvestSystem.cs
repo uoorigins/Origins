@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Server;
 using Server.Items;
 using Server.Targeting;
+using Server.Gumps;
 
 namespace Server.Engines.Harvest
 {
@@ -89,9 +90,29 @@ namespace Server.Engines.Harvest
 			if ( !CheckHarvest( from, tool ) )
 				return false;
 
-			from.Target = new HarvestTarget( tool, this );
+			//from.Target = new HarvestTarget( tool, this );
+            CaptchaGump.sendCaptcha( from, HarvestSystem.SendHarvestTarget, new object[] { tool, this } );
+
 			return true;
 		}
+
+        public static void SendHarvestTarget( Mobile from, object o )
+        {
+            if ( !( o is object[] ) )
+                return;
+            object[] arglist = (object[])o;
+
+            if ( arglist.Length != 2 )
+                return;
+
+            if ( !( arglist[0] is Item ) )
+                return;
+
+            if ( !( arglist[1] is HarvestSystem ) )
+                return;
+
+            from.Target = new HarvestTarget( (Item)arglist[0], (HarvestSystem)arglist[1] );
+        }
 
 		public virtual void FinishHarvesting( Mobile from, Item tool, HarvestDefinition def, object toHarvest, object locked )
 		{

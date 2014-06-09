@@ -120,6 +120,8 @@
     <Compile Include="Custom\Beta\BetaCandle.cs" />
     <Compile Include="Custom\Beta\GreatLordStone.cs" />
     <Compile Include="Custom\BulletinBoards.cs" />
+    <Compile Include="Custom\Captcha\Captcha.cs" />
+    <Compile Include="Custom\Captcha\CaptchaFonts.cs" />
     <Compile Include="Custom\Cartography.cs" />
     <Compile Include="Custom\CC2.0.cs" />
     <Compile Include="Custom\ChatGump.cs" />

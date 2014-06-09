@@ -2,6 +2,7 @@ using System;
 using Server;
 using Server.Network;
 using Server.Engines.Craft;
+using Server.Gumps;
 
 namespace Server.Items
 {
@@ -122,13 +123,30 @@ namespace Server.Items
 			base.OnSingleClick( from );
 		}
 
-		public override void OnDoubleClick( Mobile from )
-		{
-			if ( IsChildOf( from.Backpack ) || Parent == from )
-			{
-				CraftSystem system = this.CraftSystem;
+        public override void OnDoubleClick( Mobile from )
+        {
+            CaptchaGump.sendCaptcha( from, BaseTool.OnDoubleClickRedirected, new object [] { this } );
+        }
 
-				int num = system.CanCraft( from, this, null );
+        public static void OnDoubleClickRedirected( Mobile from, object o )
+		{
+            if ( !( o is object[] ) )
+                return;
+            object[] arglist = (object[])o;
+
+            if ( arglist.Length != 1 )
+                return;
+
+            if ( !( arglist[0] is BaseTool ) )
+                return;
+
+            BaseTool tool = (BaseTool)arglist[0];
+
+            if ( tool.IsChildOf( from.Backpack ) || tool.Parent == from )
+			{
+                CraftSystem system = tool.CraftSystem;
+
+                int num = system.CanCraft( from, tool, null );
 
 				if ( num > 0 )
 				{
@@ -138,7 +156,7 @@ namespace Server.Items
 				{
 					CraftContext context = system.GetContext( from );
 
-					from.SendGump( new CraftGump( from, system, this, null ) );
+                    from.SendGump( new CraftGump( from, system, tool, null ) );
 				}
 			}
 			else
