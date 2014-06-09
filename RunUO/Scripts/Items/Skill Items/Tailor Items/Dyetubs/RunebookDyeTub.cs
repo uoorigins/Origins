@@ -6,8 +6,8 @@ namespace Server.Items
 	{
 		public override bool AllowDyables{ get{ return false; } }
 		public override bool AllowRunebooks{ get{ return true; } }
-		public override int TargetMessage{ get{ return 1049774; } } // Target the runebook or runestone to dye
-		public override int FailMessage{ get{ return 1049775; } } // You can only dye runestones or runebooks with this tub.
+		public override string TargetMessage{ get{ return "Target the runebook or runestone to dye"; } } // Target the runebook or runestone to dye
+		public override string FailMessage{ get{ return "You can only dye runestones or runebooks with this tub."; } } // You can only dye runestones or runebooks with this tub.
 		public override int LabelNumber{ get{ return 1049740; } } // Runebook Dye Tub
 		public override CustomHuePicker CustomHuePicker{ get{ return CustomHuePicker.LeatherDyeTub; } }
 

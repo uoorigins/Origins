@@ -6,8 +6,8 @@ namespace Server.Items
 	{
 		public override bool AllowDyables{ get{ return false; } }
 		public override bool AllowStatuettes{ get{ return true; } }
-		public override int TargetMessage{ get{ return 1049777; } } // Target the statuette to dye
-		public override int FailMessage{ get{ return 1049778; } } // You can only dye veteran reward statuettes with this tub.
+		public override string TargetMessage{ get{ return "Target the statuette to dye"; } } // Target the statuette to dye
+		public override string FailMessage{ get{ return "You can only dye veteran reward statuettes with this tub."; } } // You can only dye veteran reward statuettes with this tub.
 		public override int LabelNumber{ get{ return 1049741; } } // Reward Statuette Dye Tub
 		public override CustomHuePicker CustomHuePicker{ get{ return CustomHuePicker.LeatherDyeTub; } }
 

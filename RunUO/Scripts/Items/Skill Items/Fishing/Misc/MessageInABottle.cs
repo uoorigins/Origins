@@ -34,7 +34,7 @@ namespace Server.Items
 		}
 
 		[Constructable]
-		public MessageInABottle() : this( Map.Trammel )
+		public MessageInABottle() : this( Map.Felucca )
 		{
 		}
 
@@ -104,11 +104,11 @@ namespace Server.Items
 			{
 				Consume();
 				from.AddToBackpack( new SOS( m_TargetMap, m_Level ) );
-				from.LocalOverheadMessage( Network.MessageType.Regular, 0x3B2, 501891 ); // You extract the message from the bottle.
+				from.LocalOverheadMessage( Network.MessageType.Regular, 0x3B2, true, "You extract the message from the bottle." ); // You extract the message from the bottle.
 			}
 			else
 			{
-				from.SendLocalizedMessage( 1042001 ); // That must be in your pack for you to use it.
+				from.SendAsciiMessage( "That must be in your pack for you to use it." ); // That must be in your pack for you to use it.
 			}
 		}
 	}

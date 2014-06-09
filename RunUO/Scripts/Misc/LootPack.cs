@@ -671,6 +671,68 @@ namespace Server
 			} );
         #endregion
 
+        #region Pre-AOS Magic definitions
+        /*
+        5: 97 - 100
+        4: 89 - 96
+        3: 75 - 88
+        2: 50 - 74
+        1: 0  - 49
+        */
+
+        public static readonly LootPack OldAverageMagicItems = new LootPack( new LootPackEntry[]
+			{
+                new LootPackEntry( true, OldMagicItems,  15.00, 10, 1, (int)Intensity.Level1Min, (int)Intensity.Level2Max ),
+                new LootPackEntry( true, OldMagicItems,  15.00, 10, 1, (int)Intensity.Level1Min, (int)Intensity.Level2Max ),
+                new LootPackEntry( true, OldMagicItems,  15.00, 10, 1, (int)Intensity.Level1Min, (int)Intensity.Level2Max ),
+                new LootPackEntry( true, OldMagicItems,  30.00, 10, 1, (int)Intensity.Level1Min, (int)Intensity.Level2Max )
+			} );
+
+        public static readonly LootPack OldRichMagicItems = new LootPack( new LootPackEntry[]
+			{
+                new LootPackEntry( true, OldMagicItems,  20.00, 10, 1, (int)Intensity.Level1Min, (int)Intensity.Level5Max ),
+                new LootPackEntry( true, OldMagicItems,  20.00, 10, 1, (int)Intensity.Level1Min, (int)Intensity.Level5Max ),
+                new LootPackEntry( true, OldMagicItems,  20.00, 10, 1, (int)Intensity.Level1Min, (int)Intensity.Level5Max ),
+				new LootPackEntry( true, OldMagicItems,  40.00, 10, 1, (int)Intensity.Level1Min, (int)Intensity.Level5Max )
+			} );
+
+        public static readonly LootPack OldFilthyRichMagicItems = new LootPack( new LootPackEntry[]
+			{
+                new LootPackEntry( true, OldMagicItems,  25.00, 10, 1, (int)Intensity.Level1Min, (int)Intensity.Level5Max ),
+                new LootPackEntry( true, OldMagicItems,  25.00, 10, 1, (int)Intensity.Level1Min, (int)Intensity.Level5Max ),
+                new LootPackEntry( true, OldMagicItems,  25.00, 10, 1, (int)Intensity.Level1Min, (int)Intensity.Level5Max ),
+                new LootPackEntry( true, OldMagicItems,  55.00, 10, 1, (int)Intensity.Level1Min, (int)Intensity.Level5Max )
+			} );
+
+        //Blood
+        public static readonly LootPack OldUltraRichMagicItems = new LootPack( new LootPackEntry[]
+			{
+                new LootPackEntry( true, OldMagicItems,  25.00, 10, 1, (int)Intensity.Level3Min, (int)Intensity.Level5Max ),
+                new LootPackEntry( true, OldMagicItems,  25.00, 10, 1, (int)Intensity.Level3Min, (int)Intensity.Level5Max ),
+                new LootPackEntry( true, OldMagicItems,  25.00, 10, 1, (int)Intensity.Level3Min, (int)Intensity.Level5Max ),
+                new LootPackEntry( true, OldMagicItems,  40.00, 10, 1, (int)Intensity.Level3Min, (int)Intensity.Level5Max )
+			} );
+
+        //Dragon 
+        public static readonly LootPack OldSuperBossMagicItems = new LootPack( new LootPackEntry[]
+			{
+                new LootPackEntry( true, OldMagicItems,  25.00, 10, 1, (int)Intensity.Level3Min, (int)Intensity.Level5Max ),
+                new LootPackEntry( true, OldMagicItems,  25.00, 10, 1, (int)Intensity.Level3Min, (int)Intensity.Level5Max ),
+                new LootPackEntry( true, OldMagicItems,  25.00, 10, 1, (int)Intensity.Level3Min, (int)Intensity.Level5Max ),
+                new LootPackEntry( true, OldMagicItems,  45.00, 10, 1, (int)Intensity.Level4Min, (int)Intensity.Level5Max )
+			} );
+
+        //AW
+        public static readonly LootPack OldSpecialMagicItems = new LootPack( new LootPackEntry[]
+			{
+                new LootPackEntry( true, OldMagicItems,  25.00, 10, 1, (int)Intensity.Level3Min, (int)Intensity.Level5Max ),
+                new LootPackEntry( true, OldMagicItems,  25.00, 10, 1, (int)Intensity.Level3Min, (int)Intensity.Level5Max ),
+                new LootPackEntry( true, OldMagicItems,  25.00, 10, 1, (int)Intensity.Level3Min, (int)Intensity.Level5Max ),
+                new LootPackEntry( true, OldMagicItems,  25.00, 10, 1, (int)Intensity.Level3Min, (int)Intensity.Level5Max ),
+                new LootPackEntry( true, OldMagicItems,  80.00, 10, 1, (int)Intensity.Level4Min, (int)Intensity.Level5Max )
+			} );
+        #endregion
+
         #region Misc
         public static readonly LootPack RichNone = new LootPack( new LootPackEntry[]
 			{

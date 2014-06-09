@@ -10,6 +10,8 @@ namespace Server.Engines.Harvest
 {
 	public class Fishing : HarvestSystem
 	{
+        public static bool MoBEnabled = true; // are Message in a Bottle's enabled?
+
 		private static Fishing m_System;
 
 		public static Fishing System
@@ -106,7 +108,6 @@ namespace Server.Engines.Harvest
 		public override void OnConcurrentHarvest( Mobile from, Item tool, HarvestDefinition def, object toHarvest )
 		{
             from.SendAsciiMessage("You are already fishing.");
-			//from.SendLocalizedMessage( 500972 ); // You are already fishing.
 		}
 
 		private class MutateEntry
@@ -130,8 +131,9 @@ namespace Server.Engines.Harvest
 				/*new MutateEntry(  80.0,  80.0,  4080.0,  true, typeof( SpecialFishingNet ) ),
 				new MutateEntry(  80.0,  80.0,  4080.0,  true, typeof( BigFish ) ),
 				new MutateEntry(  90.0,  80.0,  4080.0,  true, typeof( TreasureMap ) ),
-				new MutateEntry( 100.0,  80.0,  4080.0,  true, typeof( MessageInABottle ) ),
 				new MutateEntry(   0.0, 125.0, -2375.0, false, typeof( PrizedFish ), typeof( WondrousFish ), typeof( TrulyRareFish ), typeof( PeculiarFish ) ),*/
+                new MutateEntry(  80.0,  80.0,  4080.0,  true, typeof( SpecialFishingNet ) ),
+                new MutateEntry( 100.0,  80.0,  4080.0,  true, typeof( MessageInABottle ) ),
 				new MutateEntry(   0.0, 105.0,  -420.0, false, typeof( Boots ), typeof( Shoes ), typeof( Sandals ), typeof( ThighBoots ) ),
 				new MutateEntry(   0.0, 200.0,  -200.0, false, new Type[1]{ null } )
 			};
@@ -179,6 +181,9 @@ namespace Server.Engines.Harvest
 			for ( int i = 0; i < m_MutateTable.Length; ++i )
 			{
 				MutateEntry entry = m_MutateTable[i];
+
+                if ( !MoBEnabled && ( entry.m_Types[entry.m_Types.Length - 1] == typeof( MessageInABottle ) || entry.m_Types[entry.m_Types.Length - 1] == typeof( SpecialFishingNet ) ) )
+                    continue;
 
 				if ( !deepWater && entry.m_DeepWater )
 					continue;
@@ -343,6 +348,7 @@ namespace Server.Engines.Harvest
 						if ( sos.IsAncient )
 							chest.Hue = 0x481;
 
+
 						TreasureMapChest.Fill( chest, Math.Max( 1, Math.Max( 4, sos.Level ) ) );
 
 						if ( sos.IsAncient )
@@ -403,7 +409,7 @@ namespace Server.Engines.Harvest
 
 				serp.PackItem( item );
 
-				m.SendLocalizedMessage( 503170 ); // Uh oh! That doesn't look like a fish!
+				m.SendAsciiMessage( "Uh oh! That doesn't look like a fish!" ); // Uh oh! That doesn't look like a fish!
 
 				return true; // we don't want to give the item to the player, it's on the serpent
 			}
@@ -418,53 +424,44 @@ namespace Server.Engines.Harvest
 		{
 			if ( item is BigFish )
 			{
-				from.SendLocalizedMessage( 1042635 ); // Your fishing pole bends as you pull a big fish from the depths!
+				from.SendAsciiMessage( "Your fishing pole bends as you pull a big fish from the depths!" ); // Your fishing pole bends as you pull a big fish from the depths!
 
 				((BigFish)item).Fisher = from;
 			}
 			else if ( item is WoodenChest || item is MetalGoldenChest )
 			{
-				from.SendLocalizedMessage( 503175 ); // You pull up a heavy chest from the depths of the ocean!
+				from.SendAsciiMessage( "You pull up a heavy chest from the depths of the ocean!" ); // You pull up a heavy chest from the depths of the ocean!
 			}
 			else
 			{
-				int number;
 				string name;
 
 				if ( item is BaseMagicFish )
 				{
-					number = 1008124;
 					name = "a mess of small fish";
 				}
 				else if ( item is Fish )
 				{
-					number = 1008124;
 					name = "a fish";
 				}
 				else if ( item is BaseShoes )
 				{
-					number = 1008124;
 					name = item.ItemData.Name;
 				}
 				else if ( item is TreasureMap )
 				{
-					number = 1008125;
 					name = "a sodden piece of parchment";
 				}
 				else if ( item is MessageInABottle )
 				{
-					number = 1008125;
 					name = "a bottle, with a message in it";
 				}
 				else if ( item is SpecialFishingNet )
 				{
-					number = 1008125;
 					name = "a special fishing net"; // TODO: this is just a guess--what should it really be named?
 				}
 				else
 				{
-					number = 1043297;
-
 					if ( (item.ItemData.Flags & TileFlag.ArticleA) != 0 )
 						name = "a " + item.ItemData.Name;
 					else if ( (item.ItemData.Flags & TileFlag.ArticleAn) != 0 )
@@ -472,12 +469,8 @@ namespace Server.Engines.Harvest
 					else
 						name = item.ItemData.Name;
 				}
-
-				if ( number == 1043297 )
-					from.SendLocalizedMessage( number, name );
-				else
-                    from.SendAsciiMessage(String.Format("You pull out an item : {0}", name)); 
-					//from.SendLocalizedMessage( number, true, name );
+                
+                from.SendAsciiMessage(String.Format("You pull out an item : {0}", name)); 
 			}
 		}
 

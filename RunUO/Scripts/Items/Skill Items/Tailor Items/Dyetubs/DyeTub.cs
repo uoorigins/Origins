@@ -125,10 +125,10 @@ namespace Server.Items
         }
 
 		// Select the clothing to dye.
-		public virtual int TargetMessage{ get{ return 500859; } }
+		public virtual string TargetMessage{ get{ return "Select the clothing to dye."; } }
 
-		// You can not dye that.
-		public virtual int FailMessage{ get{ return 1042083; } }
+        // You can not dye that.
+        public virtual string FailMessage { get { return "You can not dye that."; } }
 
 		public override void OnDoubleClick( Mobile from )
 		{

@@ -1,3 +1,5 @@
+using Server.Commands;
+using Server.Network;
 using System;
 
 namespace Server.Items
@@ -21,7 +23,21 @@ namespace Server.Items
 
 		public override void OnSingleClick( Mobile from )
 		{
-			this.LabelTo( from, 1050039, String.Format( "#{0}\t#1041645", LabelNumber ) );
+            string name = this.ItemData.Name;
+
+            if ( ( this.ItemData.Flags & TileFlag.ArticleA ) != 0 )
+                name = "a " + this.ItemData.Name;
+            else if ( ( this.ItemData.Flags & TileFlag.ArticleAn ) != 0 )
+                name = "an " + this.ItemData.Name;
+
+            if ( this.Name != null )
+            {
+                from.Send( new AsciiMessage( Serial, ItemID, MessageType.Label, 0, 3, "", this.Name ) );
+            }
+            else
+            {
+                from.Send( new AsciiMessage( Serial, ItemID, MessageType.Label, 0, 3, "", name));
+            }
 		}
 
 		public override void AddNameProperties( ObjectPropertyList list )
@@ -59,7 +75,7 @@ namespace Server.Items
 				return true;
 			}
 
-			from.SendLocalizedMessage( sender.FailMessage );
+			from.SendAsciiMessage( sender.FailMessage );
 			return false;
 		}
 

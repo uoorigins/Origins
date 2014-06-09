@@ -70,7 +70,7 @@ namespace Server.Items
 		}
 
 		[Constructable]
-		public SOS() : this( Map.Trammel )
+		public SOS() : this( Map.Felucca )
 		{
 		}
 
@@ -172,7 +172,7 @@ namespace Server.Items
 			}
 			else
 			{
-				from.SendLocalizedMessage( 1042001 ); // That must be in your pack for you to use it.
+				from.SendAsciiMessage( "That must be in your pack for you to use it." ); // That must be in your pack for you to use it.
 			}
 		}
 

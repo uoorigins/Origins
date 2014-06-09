@@ -99,9 +99,81 @@ namespace Server.Items
 			}
 		}
 
-		public static void Fill( LockableContainer cont, int level )
-		{
-		}
+        public static void Fill( LockableContainer cont, int level )
+        {
+            cont.Movable = false;
+            cont.Locked = true;
+            int numberItems;
+
+            if ( level == 0 )
+            {
+                cont.LockLevel = 0; // Can't be unlocked
+
+                cont.DropItem( new Gold( Utility.RandomMinMax( 50, 100 ) ) );
+
+                if ( Utility.RandomDouble() < 0.75 )
+                    cont.DropItem( new TreasureMap( 0, Map.Trammel ) );
+            }
+            else
+            {
+                cont.TrapType = TrapType.ExplosionTrap;
+                cont.TrapPower = level * 25;
+                cont.TrapLevel = level;
+
+                switch ( level )
+                {
+                    case 1: cont.RequiredSkill = 36; break;
+                    case 2: cont.RequiredSkill = 76; break;
+                    case 3: cont.RequiredSkill = 84; break;
+                    case 4: cont.RequiredSkill = 92; break;
+                    case 5: cont.RequiredSkill = 100; break;
+                    case 6: cont.RequiredSkill = 100; break;
+                }
+
+                cont.LockLevel = cont.RequiredSkill - 10;
+                cont.MaxLockLevel = cont.RequiredSkill + 40;
+				
+                cont.DropItem( new Gold( level * 1000 ) );
+
+                for ( int i = 0; i < level * 5; ++i )
+                    cont.DropItem( Loot.RandomScroll( 0, 63, SpellbookType.Regular ) );
+                
+                numberItems = level * 6;
+
+                for ( int i = 0; i < numberItems; ++i )
+                {
+                    LootPack.OldSuperBoss.Generate( null, cont, true, 100 );
+                }
+            }
+
+            int reagents;
+            if ( level == 0 )
+                reagents = 12;
+            else
+                reagents = level * 3;
+
+            for ( int i = 0; i < reagents; i++ )
+            {
+                Item item = Loot.RandomPossibleReagent();
+                item.Amount = Utility.RandomMinMax( 40, 60 );
+                cont.DropItem( item );
+            }
+
+            int gems;
+            if ( level == 0 )
+                gems = 2;
+            else
+                gems = level * 3;
+
+            for ( int i = 0; i < gems; i++ )
+            {
+                Item item = Loot.RandomGem();
+                cont.DropItem( item );
+            }
+
+            if ( level == 6 && Core.AOS )
+                cont.DropItem( (Item)Activator.CreateInstance( m_Artifacts[Utility.Random( m_Artifacts.Length )] ) );
+        }
 
 		public override bool CheckLocked( Mobile from )
 		{
@@ -135,28 +207,7 @@ namespace Server.Items
 			if ( m_Temporary )
 				return false;
 
-			if ( m.AccessLevel >= AccessLevel.GameMaster || m_Owner == null || m == m_Owner )
-				return true;
-
-			Party p = Party.Get( m_Owner );
-
-			if ( p != null && p.Contains( m ) )
-				return true;
-
-			Map map = this.Map;
-
-			if ( map != null && (map.Rules & MapRules.HarmfulRestrictions) == 0 )
-			{
-				if ( criminalAction )
-					m.CriminalAction( true );
-				else
-					m.SendLocalizedMessage( 1010630 ); // Taking someone else's treasure is a criminal offense!
-
-				return true;
-			}
-
-			m.SendLocalizedMessage( 1010631 ); // You did not discover this chest!
-			return false;
+            return true;
 		}
 
 		public override bool IsDecoContainer
@@ -195,7 +246,7 @@ namespace Server.Items
 		{
 			if ( m.AccessLevel < AccessLevel.GameMaster )
 			{
-				m.SendLocalizedMessage( 1048122, "", 0x8A5 ); // The chest refuses to be filled with treasure again.
+				m.SendAsciiMessage( 0x8A5, "The chest refuses to be filled with treasure again." ); // The chest refuses to be filled with treasure again.
 				return false;
 			}
 
@@ -299,7 +350,7 @@ namespace Server.Items
 			if ( Deleted || from != m_Owner || !from.InRange( GetWorldLocation(), 3 ) )
 				return;
 
-			from.SendLocalizedMessage( 1048124, "", 0x8A5 ); // The old, rusted chest crumbles when you hit it.
+			from.SendAsciiMessage( 0x8A5, "The old, rusted chest crumbles when you hit it." ); // The old, rusted chest crumbles when you hit it.
 			this.Delete();
 		}
 

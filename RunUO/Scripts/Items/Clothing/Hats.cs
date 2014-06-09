@@ -561,7 +561,7 @@ namespace Server.Items
 
 		public override bool Dye( Mobile from, DyeTub sender )
 		{
-			from.SendLocalizedMessage( sender.FailMessage );
+            from.SendAsciiMessage( sender.FailMessage );
 			return false;
 		}
 
@@ -629,7 +629,7 @@ namespace Server.Items
 
 		public override bool Dye( Mobile from, DyeTub sender )
 		{
-			from.SendLocalizedMessage( sender.FailMessage );
+            from.SendAsciiMessage( sender.FailMessage );
 			return false;
 		}
 
@@ -697,7 +697,7 @@ namespace Server.Items
 
 		public override bool Dye( Mobile from, DyeTub sender )
 		{
-			from.SendLocalizedMessage( sender.FailMessage );
+            from.SendAsciiMessage( sender.FailMessage );
 			return false;
 		}
 
@@ -765,7 +765,7 @@ namespace Server.Items
 
 		public override bool Dye( Mobile from, DyeTub sender )
 		{
-			from.SendLocalizedMessage( sender.FailMessage );
+            from.SendAsciiMessage( sender.FailMessage );
 			return false;
 		}
 
@@ -953,7 +953,7 @@ namespace Server.Items
 
 		public override bool Dye( Mobile from, DyeTub sender )
 		{
-			from.SendLocalizedMessage( sender.FailMessage );
+            from.SendAsciiMessage( sender.FailMessage );
 			return false;
 		}
 
@@ -1042,7 +1042,7 @@ namespace Server.Items
 
         public override bool Dye(Mobile from, DyeTub sender)
         {
-            from.SendLocalizedMessage(sender.FailMessage);
+            from.SendAsciiMessage( sender.FailMessage );
             return false;
         }
 
@@ -1138,7 +1138,7 @@ namespace Server.Items
 
 		public override bool Dye( Mobile from, DyeTub sender )
 		{
-			from.SendLocalizedMessage( sender.FailMessage );
+            from.SendAsciiMessage( sender.FailMessage );
 			return false;
 		}
 

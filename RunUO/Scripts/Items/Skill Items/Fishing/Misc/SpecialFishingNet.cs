@@ -87,16 +87,16 @@ namespace Server.Items
 		{
 			if ( m_InUse )
 			{
-				from.SendLocalizedMessage( 1010483 ); // Someone is already using that net!
+				from.SendAsciiMessage( "Someone is already using that net!" ); // Someone is already using that net!
 			}
 			else if ( IsChildOf( from.Backpack ) )
 			{
-				from.SendLocalizedMessage( 1010484 ); // Where do you wish to use the net?
+				from.SendAsciiMessage( "Where do you wish to use the net?" ); // Where do you wish to use the net?
 				from.BeginTarget( -1, true, TargetFlags.None, new TargetCallback( OnTarget ) );
 			}
 			else
 			{
-				from.SendLocalizedMessage( 1042001 ); // That must be in your pack for you to use it.
+				from.SendAsciiMessage( "That must be in your pack for you to use it." ); // That must be in your pack for you to use it.
 			}
 		}
 
@@ -119,7 +119,7 @@ namespace Server.Items
 
 			if ( !from.InRange( p3D, 6 ) )
 			{
-				from.SendLocalizedMessage( 500976 ); // You need to be closer to the water to fish!
+				from.SendAsciiMessage( "You need to be closer to the water to fish!" ); // You need to be closer to the water to fish!
 			}
 			else if ( FullValidation( map, x, y ) )
 			{
@@ -136,11 +136,11 @@ namespace Server.Items
 
 				Timer.DelayCall( TimeSpan.FromSeconds( 1.5 ), TimeSpan.FromSeconds( 1.0 ), 20, new TimerStateCallback( DoEffect ), new object[]{ p, 0, from } );
 
-				from.SendLocalizedMessage( 1010487 ); // You plunge the net into the sea...
+				from.SendAsciiMessage( "You plunge the net into the sea..." ); // You plunge the net into the sea...
 			}
 			else
 			{
-				from.SendLocalizedMessage( 1010485 ); // You can only use this net in deep water!
+                from.SendAsciiMessage( "You can only use this net in deep water!" ); // You can only use this net in deep water!
 			}
 		}
 
