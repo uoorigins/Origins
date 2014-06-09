@@ -46,6 +46,13 @@ namespace Server.Mobiles
 
 		public override void GenerateLoot()
 		{
+            if ( Utility.Random( 100 ) > 75 )
+                AddLoot( LootPack.HighScrolls );
+
+            AddLootBackpack( LootPack.Rich );
+
+            AddLoot( LootPack.RichNone );
+            AddLoot( LootPack.Gems, 2 );
 		}
 
 		public override bool HasBreath{ get{ return true; } }

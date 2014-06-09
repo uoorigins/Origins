@@ -45,9 +45,13 @@ namespace Server.Mobiles
 			CantWalk = true;
 		}
 
-		public override void GenerateLoot()
-		{
-		}
+        public override void GenerateLoot()
+        {
+            if ( Utility.Random( 100 ) > 75 )
+                AddLoot( LootPack.MedScrolls );
+
+            AddLootBackpack( LootPack.Rich );
+        }
 
 		public override bool HasBreath{ get{ return true; } }
 		public override int TreasureMapLevel{ get{ return 2; } }

@@ -8,7 +8,7 @@ namespace Server.Mobiles
 	[CorpseName( "a krakens corpse" )]
 	public class Kraken : BaseCreature
 	{
-
+        [Constructable]
 		public Kraken() : base( AIType.AI_Melee, FightMode.Closest, 10, 1, 0.2, 0.4 )
 		{
 			Name = "a kraken";
@@ -55,10 +55,18 @@ namespace Server.Mobiles
 			PackItem( new SpecialFishingNet() ); //Confirm?
 		}
 
-		public override void GenerateLoot()
-		{
-			AddLoot( LootPack.Rich );
-		}
+        public override bool AlwaysMurderer { get { return true; } }
+        public override bool HasBreath { get { return true; } } // fire breath enabled
+        public override bool AutoDispel { get { return true; } }
+
+        public override void GenerateLoot()
+        {
+            AddLootBackpack( LootPack.FilthyRich );
+
+            AddLoot( LootPack.RichNone );
+            AddLoot( LootPack.Gems, 6 );
+        }
+
 
 		public override int TreasureMapLevel{ get{ return 4; } }
 
