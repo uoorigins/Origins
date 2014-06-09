@@ -30,6 +30,8 @@ namespace Server.Items
             else if ( ( this.ItemData.Flags & TileFlag.ArticleAn ) != 0 )
                 name = "an " + this.ItemData.Name;
 
+            name += " recovered from a shipwreck";
+
             if ( this.Name != null )
             {
                 from.Send( new AsciiMessage( Serial, ItemID, MessageType.Label, 0, 3, "", this.Name ) );
