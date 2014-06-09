@@ -222,7 +222,13 @@ namespace Server.Items
 
 		public override bool TryDropItem( Mobile from, Item dropped, bool sendFullMessage )
 		{
-			if ( from.AccessLevel < AccessLevel.GameMaster && m_Locked )
+            if ( from == null )
+            {
+                DropItem( dropped );
+                return true;
+            }
+
+			if (from.AccessLevel < AccessLevel.GameMaster && m_Locked )
 			{
 				//from.SendLocalizedMessage( 501747 ); // It appears to be locked.
                 from.Send(new AsciiMessage(Serial, ItemID, MessageType.Regular, 0, 3, "", "It appears to be locked."));
