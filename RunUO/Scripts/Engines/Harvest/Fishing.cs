@@ -203,7 +203,7 @@ namespace Server.Engines.Harvest
 		private static Map SafeMap( Map map )
 		{
 			if ( map == null || map == Map.Internal )
-				return Map.Trammel;
+				return Map.Felucca;
 
 			return map;
 		}
