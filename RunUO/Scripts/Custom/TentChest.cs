@@ -56,7 +56,7 @@ namespace Server.Items
 		if (this.Locked == false)
 			from.Send( new AsciiMessage( Serial, ItemID, MessageType.Label, 0, 3, "", "(" + this.TotalItems + " items, " + this.TotalWeight + " stones)" ) );
 
-            if (m_House != null && BaseHouse.DecayEnabled && m_House.DecayPeriod != TimeSpan.Zero)
+            if (m_House != null && m_House.DecayPeriod != TimeSpan.Zero)
             {
                 string message;
                 string full;
