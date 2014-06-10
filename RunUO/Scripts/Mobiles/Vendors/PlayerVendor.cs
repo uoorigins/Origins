@@ -576,7 +576,9 @@ namespace Server.Mobiles
 		public int ChargePerDay
 		{
 			get
-			{ 
+			{
+                return 0;
+
 				if ( BaseHouse.NewVendorSystem )
 				{
 					return ChargePerRealWorldDay / 12;
@@ -1366,8 +1368,6 @@ namespace Server.Mobiles
 			{
 				if ( IsOwner( from ) )
 				{
-                    double days = (HoldGold + BankAccount) / ((double)ChargePerDay);
-
                     /*SayTo(from, true, String.Format("Amount of days I can work: {0}", ((int)days).ToString()));
                     SayTo(from, true, String.Format("Earth days: {0}", ((int)(days/12)).ToString()));
                     SayTo(from, true, String.Format("Gold held for you: {0}gp", HoldGold.ToString()));
@@ -1377,10 +1377,19 @@ namespace Server.Mobiles
                     SayTo(from, true, String.Format("I am holding {0} gold for you.", HoldGold.ToString()));
                     SayTo(from, true, String.Format("My current charge is {0} gold per day.", ChargePerDay.ToString()));
 
-                    if (((HoldGold + BankAccount) / ChargePerDay) > 0)
-                        SayTo(from, true, String.Format("Including your gold I'm holding, I have enough gold to continue working for {0} days. ({1} earth days)", ((int)days).ToString(), ((int)(days / 12)).ToString()));
+                    if ( ChargePerDay == 0 )
+                    {
+                        SayTo( from, true, String.Format( "Including your gold I'm holding, I have enough gold to continue working indefinitely." ) );
+                    }
                     else
-                        SayTo(from, true, String.Format("You need to give me {0} gold by the end of the day to retain my services.", (ChargePerDay - HoldGold - BankAccount).ToString()));
+                    {
+                        double days = ( HoldGold + BankAccount ) / ( (double)ChargePerDay );
+
+                        if ( ( ( HoldGold + BankAccount ) / ChargePerDay ) > 0 )
+                            SayTo( from, true, String.Format( "Including your gold I'm holding, I have enough gold to continue working for {0} days. ({1} earth days)", ( (int)days ).ToString(), ( (int)( days / 12 ) ).ToString() ) );
+                        else
+                            SayTo( from, true, String.Format( "You need to give me {0} gold by the end of the day to retain my services.", ( ChargePerDay - HoldGold - BankAccount ).ToString() ) );
+                    }
 					//SendOwnerGump( from );
 
 					e.Handled = true;
@@ -1433,7 +1442,6 @@ namespace Server.Mobiles
 			protected override void OnTick()
 			{
 				m_Vendor.m_NextPayTime = DateTime.Now + this.Interval;
-                return;
 
 				int pay;
 				int totalGold;
