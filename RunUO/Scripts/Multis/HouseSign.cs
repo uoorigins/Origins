@@ -120,7 +120,7 @@ namespace Server.Multis
 
 		public override void OnSingleClick( Mobile from )
 		{
-            if (m_Owner != null && BaseHouse.DecayEnabled && m_Owner.DecayPeriod != TimeSpan.Zero)
+            if (m_Owner != null && m_Owner.DecayPeriod != TimeSpan.Zero)
             {
                 string message;
 

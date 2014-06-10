@@ -25,6 +25,8 @@ namespace Server.Multis
         public abstract Rectangle2D[] AreaEast { get; }
         public Region Region { get { return m_Region; } }
 
+        public const bool DecayEnabled = false;
+
 		private static TimeSpan BoatDecayDelay = TimeSpan.FromDays( 24.0 );
 
 		public static BaseBoat FindBoatAt( IPoint2D loc, Map map )
@@ -111,7 +113,25 @@ namespace Server.Multis
 		public int NextNavPoint{ get{ return m_NextNavPoint; } set{ m_NextNavPoint = value; } }
 
 		[CommandProperty( AccessLevel.GameMaster )]
-		public DateTime TimeOfDecay{ get{ return m_DecayTime; } set{ m_DecayTime = value; if ( m_TillerMan != null ) m_TillerMan.InvalidateProperties(); } }
+		public DateTime TimeOfDecay
+        {
+            get
+            {
+                if ( !DecayEnabled )
+                {
+                    return DateTime.Now + BoatDecayDelay;
+                }
+
+                return m_DecayTime;
+            }
+
+            set
+            {
+                m_DecayTime = value;
+                if ( m_TillerMan != null )
+                    m_TillerMan.InvalidateProperties();
+            }
+        }
 
 		public int Status
 		{
@@ -295,7 +315,6 @@ namespace Server.Multis
 				case 1:
 				{
 					m_DecayTime = reader.ReadDeltaTime();
-                    m_DecayTime = DateTime.Now + BoatDecayDelay;
 
 					goto case 0;
 				}
