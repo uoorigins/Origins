@@ -140,7 +140,7 @@ namespace Server.Items
 
                 for ( int i = 0; i < numberItems; ++i )
                 {
-                    LootPack.OldSuperBoss.Generate( null, cont, true, 100 );
+                    LootPack.OldSuperBossMagicItems.Generate( null, cont, true, 100 );
                 }
             }
 
