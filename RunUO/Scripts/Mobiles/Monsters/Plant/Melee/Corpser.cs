@@ -13,7 +13,7 @@ namespace Server.Mobiles
 		{
 			Name = "a corpser";
 			Body = 8;
-			BaseSoundID = 353;
+			BaseSoundID = 352;
 
 			SetStr( 156, 180 );
 			SetDex( 26, 45 );
@@ -65,8 +65,8 @@ namespace Server.Mobiles
 			base.Deserialize( reader );
 			int version = reader.ReadInt();
 
-			/*if ( BaseSoundID == 352 )
-				BaseSoundID = 684;*/
+			if ( BaseSoundID == 353 )
+				BaseSoundID = 352;
 		}
 	}
 }
