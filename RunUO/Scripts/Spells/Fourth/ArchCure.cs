@@ -91,7 +91,7 @@ namespace Server.Spells.Fourth
 						}
 
 						m.FixedParticles( 0x373A, 10, 15, 5012, EffectLayer.Waist );
-						m.PlaySound( 0x1E0 );
+                        m.PlaySound( 488 );
 					}
 
 					//if ( cured > 0 )
