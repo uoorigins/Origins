@@ -46,7 +46,7 @@ namespace Server.Gumps
                 PlayerMobile pm = (PlayerMobile)from;
                 if (DateTime.Now > pm.NextCaptchaTime)
                 {
-                    from.SendAsciiMessage( 0x22, "You have been selected for an AFK check." );
+                    from.SendAsciiMessage( 0x22, "Please verify you are not AFK." );
                     pm.CloseGump( typeof( CaptchaGump ) );
                     pm.SendGump( new CaptchaGump(pm, act, actionObject));				
 
