@@ -90,7 +90,7 @@ namespace Server.Spells.Fifth
 					}
 
 					Caster.FixedParticles( 0x373A, 10, 15, 5036, EffectLayer.Head );
-					Caster.PlaySound( 0x3BD );
+					Caster.PlaySound( 0x1EC );
 
 					BaseArmor.ValidateMobile( Caster );
 					BaseClothing.ValidateMobile( Caster );

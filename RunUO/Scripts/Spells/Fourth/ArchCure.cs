@@ -61,7 +61,7 @@ namespace Server.Spells.Fourth
 					eable.Free();
 				}
 
-				Effects.PlaySound( p, Caster.Map, 0x299 );
+				Effects.PlaySound( p, Caster.Map, 488 );
 
 				if ( targets.Count > 0 )
 				{
