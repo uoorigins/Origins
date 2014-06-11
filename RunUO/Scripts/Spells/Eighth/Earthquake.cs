@@ -10,8 +10,8 @@ namespace Server.Spells.Eighth
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Earthquake", "In Vas Por",
-				233,
-				9012,
+                206,
+                9002,
 				false,
 				Reagent.Bloodmoss,
 				Reagent.Ginseng,

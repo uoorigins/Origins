@@ -9,8 +9,8 @@ namespace Server.Spells.Eighth
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Earth Elemental", "Kal Vas Xen Ylem",
-				269,
-				9020,
+                206,
+                9002,
 				false,
 				Reagent.Bloodmoss,
 				Reagent.MandrakeRoot,

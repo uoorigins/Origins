@@ -13,8 +13,8 @@ namespace Server.Spells.Seventh
 	{
 		private static SpellInfo m_Info = new SpellInfo(
 				"Gate Travel", "Vas Rel Por",
-				263,
-				9032,
+                206,
+                9002,
 				Reagent.BlackPearl,
 				Reagent.MandrakeRoot,
 				Reagent.SulfurousAsh
