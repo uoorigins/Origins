@@ -150,7 +150,7 @@ namespace Server.Spells.Fourth
 			{
 				m_Owner = owner;
 
-				owner.Caster.LocalOverheadMessage( MessageType.Regular, 0x3B2, true, "Select Marked item." ); // Select Marked item.
+				//owner.Caster.LocalOverheadMessage( MessageType.Regular, 0x3B2, true, "Select Marked item." ); // Select Marked item.
 			}
 
 			protected override void OnTarget( Mobile from, object o )
