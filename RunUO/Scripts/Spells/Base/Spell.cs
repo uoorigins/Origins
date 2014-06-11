@@ -501,7 +501,7 @@ namespace Server.Spells
 
                     if (ShowHandMovement && m_Caster.Body.IsHuman)
                     {
-                        int count = (int)Math.Ceiling(castDelay.TotalSeconds / (AnimateDelay.TotalSeconds));
+                        int count = (int)Math.Ceiling( castDelay.TotalSeconds );//(int)Math.Ceiling( castDelay.TotalSeconds / ( AnimateDelay.TotalSeconds ) );
 
                         if (count != 0)
                         {
@@ -826,7 +826,7 @@ namespace Server.Spells
 		{
 			private Spell m_Spell;
 
-			public AnimTimer( Spell spell, int count ) : base( TimeSpan.Zero, AnimateDelay, count )
+			public AnimTimer( Spell spell, int count ) : base( TimeSpan.Zero, AnimateDelay - TimeSpan.FromSeconds(0.25), count )
 			{
 				m_Spell = spell;
 
@@ -835,11 +835,12 @@ namespace Server.Spells
 
 			protected override void OnTick()
 			{
-				if ( m_Spell.State != SpellState.Casting || m_Spell.m_Caster.Spell != m_Spell )
-				{
-					Stop();
-					return;
-				}
+                if ( m_Spell.State != SpellState.Casting || m_Spell.m_Caster.Spell != m_Spell )
+                {
+                    m_Spell.Caster.Animate( m_Spell.m_Info.Action, 7, 1, true, false, 0 );
+                    Stop();
+                    return;
+                }
 
 				if ( !m_Spell.Caster.Mounted && m_Spell.Caster.Body.IsHuman && m_Spell.m_Info.Action >= 0 )
 					m_Spell.Caster.Animate( m_Spell.m_Info.Action, 7, 1, true, false, 0 );
