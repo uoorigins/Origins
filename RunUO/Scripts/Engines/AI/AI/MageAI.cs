@@ -46,7 +46,7 @@ namespace Server.Mobiles
 
 		private const double HealChance = 0.0; // 10% chance to heal at gm magery
 		private const double TeleportChance = 0.0; // 5% chance to teleport at gm magery
-		private const double DispelChance = 0.0; // 75% chance to dispel at gm magery
+		private const double DispelChance = 0.02; // 75% chance to dispel at gm magery
 
 		public virtual double ScaleByMagery( double v )
 		{
@@ -350,10 +350,10 @@ namespace Server.Mobiles
 					}
 					case 7:	// Paralyze them.
 					{
-						/*m_Mobile.DebugSay( "Attempting to paralyze" );
+						m_Mobile.DebugSay( "Attempting to paralyze" );
 
 						if ( m_Mobile.Skills[SkillName.Magery].Value > 50.0 )
-							spell = new ParalyzeSpell( m_Mobile, null );*/
+							spell = new ParalyzeSpell( m_Mobile, null );
                         goto default;
 					}
 					case 8: // Drain mana
