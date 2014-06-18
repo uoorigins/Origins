@@ -4,6 +4,7 @@ using Server;
 using Server.Guilds;
 using Server.Prompts;
 using System.Collections.Generic;
+using Server.Menus.Questions;
 
 namespace Server.Gumps
 {
@@ -20,16 +21,15 @@ namespace Server.Gumps
 
 		public override void OnCancel( Mobile from )
 		{
-			if ( GuildGump.BadLeader( m_Mobile, m_Guild ) )
+			if ( GuildMenu.BadLeader( m_Mobile, m_Guild ) )
 				return;
 
-			GuildGump.EnsureClosed( m_Mobile );
-			m_Mobile.SendGump( new GuildWarAdminGump( m_Mobile, m_Guild ) );
+			m_Mobile.SendMenu( new GuildWarAdminMenu( m_Mobile, m_Guild ) );
 		}
 
 		public override void OnResponse( Mobile from, string text )
 		{
-			if ( GuildGump.BadLeader( m_Mobile, m_Guild ) )
+			if ( GuildMenu.BadLeader( m_Mobile, m_Guild ) )
 				return;
 
 			text = text.Trim();
@@ -38,15 +38,13 @@ namespace Server.Gumps
 			{
 				List<Guild> guilds = Utility.CastConvertList<BaseGuild, Guild>( Guild.Search( text ) );
 
-				GuildGump.EnsureClosed( m_Mobile );
-
 				if ( guilds.Count > 0 )
 				{
-					m_Mobile.SendGump( new GuildDeclareWarGump( m_Mobile, m_Guild, guilds ) );
+					m_Mobile.SendMenu( new GuildDeclareWarMenu( m_Mobile, m_Guild, 0, guilds ) );
 				}
 				else
 				{
-					m_Mobile.SendGump( new GuildWarAdminGump( m_Mobile, m_Guild ) );
+					m_Mobile.SendMenu( new GuildWarAdminMenu( m_Mobile, m_Guild ) );
 					m_Mobile.SendAsciiMessage( "No guilds found matching - try another name in the search" ); // No guilds found matching - try another name in the search
 				}
 			}

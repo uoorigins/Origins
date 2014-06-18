@@ -14,9 +14,14 @@ namespace Server.Menus.Questions
         private Mobile m_Mobile;
 		private Guild m_Guild;
 
-        public GuildMenu(Mobile beholder, Guild guild, string loyalty)
-            : base(String.Format("{0} (Guild {1} {2})", guild.Name, guild.Leader.Female ? "Mistress" : "Master", guild.Leader.Name),
-                new string[] { "Recruit someone into the guild.",
+        public GuildMenu(Mobile beholder, Guild guild)
+            : base(String.Format("{0} (Guild {1} {2})", guild.Name, guild.Leader.Female ? "Mistress" : "Master", guild.Leader.Name), null)
+        {
+            m_Mobile = beholder;
+			m_Guild = guild;
+            string loyalty = m_Mobile.GuildFealty.Name;
+
+            Answers = new string[] { "Recruit someone into the guild.",
                 "View the current roster.",
                 "View the guild's charter.",
                 String.Format("Declare your fealty. You are currently loyal to {0}.", loyalty),
@@ -24,10 +29,7 @@ namespace Server.Menus.Questions
                 "Resign from the guild.",
                 "View list of candidates who have been sponsored to the guild.",
                 String.Format("Access Guild {0} functions.", guild.Leader.Female ? "Mistress" : "Master"),
-                String.Format("View list of guilds that {0} has declared war on.", guild.Name) })
-        {
-            m_Mobile = beholder;
-			m_Guild = guild;
+                String.Format("View list of guilds that {0} has declared war on.", guild.Name) };
         }
 
         public static bool BadLeader(Mobile m, Guild g)
@@ -56,7 +58,6 @@ namespace Server.Menus.Questions
 
         public override void OnResponse(NetState state, int index)
         {
-            //Mobile from = state.Mobile;
             if (BadMember(m_Mobile, m_Guild))
                 return;
 
@@ -66,15 +67,15 @@ namespace Server.Menus.Questions
             }
             else if (index == 1) // roster
             {
-                m_Mobile.SendMenu(new GuildRosterMenu(m_Mobile, m_Guild));
+                m_Mobile.SendMenu(new GuildRosterMenu(m_Mobile, m_Guild, 0));
             }
-           /* else if (index == 2) // charter
+            else if (index == 2) // charter
             {
                 m_Mobile.SendMenu(new GuildCharterMenu(m_Mobile, m_Guild));
             }
             else if (index == 3) // fealty
             {
-                m_Mobile.SendMenu(new DeclareFealtyMenu(m_Mobile, m_Guild));
+                m_Mobile.SendMenu(new DeclareFealtyMenu(m_Mobile, m_Guild, 0));
             }
             else if (index == 4) //abbreviation
             {
@@ -88,7 +89,7 @@ namespace Server.Menus.Questions
             }
             else if (index == 6) // candidates
             {
-                m_Mobile.SendMenu(new GuildCandidatesMenu(m_Mobile, m_Guild));
+                m_Mobile.SendMenu(new GuildCandidatesMenu(m_Mobile, m_Guild, 0));
             }
             else if (index == 7) // guildmaster functions
             {
@@ -98,7 +99,7 @@ namespace Server.Menus.Questions
             else if (index == 8) // wars
             {
                 m_Mobile.SendMenu(new GuildWarMenu(m_Mobile, m_Guild));
-            }*/
+            }
         }
     }
 }

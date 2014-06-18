@@ -243,8 +243,7 @@ namespace Server.Items
 				m_Guild.Accepted.Remove( from );
 				m_Guild.AddMember( from );
 
-				GuildGump.EnsureClosed( from );
-				from.SendGump( new GuildGump( from, m_Guild ) );
+				from.SendMenu( new GuildMenu( from, m_Guild ) );
 			}
 			else if( from.AccessLevel < AccessLevel.GameMaster && !m_Guild.IsMember( from ) )
 			{
@@ -252,9 +251,7 @@ namespace Server.Items
 			}
 			else
 			{
-				GuildGump.EnsureClosed( from );
-				from.SendGump( new GuildGump( from, m_Guild ) );
-                //from.SendMenu(new GuildMenu(from, m_Guild, LoyaltyCheck(from, m_Guild)));
+				from.SendMenu( new GuildMenu( from, m_Guild ) );
 			}
 		}
 
