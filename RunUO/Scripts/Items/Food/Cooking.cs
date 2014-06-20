@@ -143,6 +143,14 @@ namespace Server.Items
 
                     from.AddToBackpack( new UncookedCheesePizza() );
                 }
+                else if ( targeted is HumanJerky )
+                {
+                    m_Item.Delete();
+
+                    ( (HumanJerky)targeted ).Consume();
+
+                    from.AddToBackpack( new UnbakedMeatPie() );
+                }
                 else if ( targeted is FishSteak )
                 {
                     m_Item.Delete();
