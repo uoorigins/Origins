@@ -53,7 +53,7 @@ namespace Server.Menus.Questions
 
                 m_StringList.Add( name );
 
-                if ( i + 1 == m_List.Count )
+                if ( i + 1 == m_List.Count && i != begin)
                 {
                     m_StringList.Add( "Previous page" );
                 }
