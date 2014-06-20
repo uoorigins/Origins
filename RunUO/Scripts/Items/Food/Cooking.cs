@@ -111,22 +111,62 @@ namespace Server.Items
 
                     from.AddToBackpack(new SweetDough());
                 }
-				/*else if ( targeted is CheeseWheel )
+				else if ( targeted is CookedBird )
 				{
 					m_Item.Delete();
 
-					((CheeseWheel)targeted).Consume();
+					((CookedBird)targeted).Consume();
 
-					from.AddToBackpack( new CheesePizza() );
+					from.AddToBackpack( new UnbakedMeatPie() );
 				}
+                else if ( targeted is Ham )
+                {
+                    m_Item.Delete();
+
+                    ( (Ham)targeted ).Consume();
+
+                    from.AddToBackpack( new UnbakedMeatPie() );
+                }
+                else if ( targeted is Pear )
+                {
+                    m_Item.Delete();
+
+                    ( (Pear)targeted ).Consume();
+
+                    from.AddToBackpack( new UnbakedFruitPie() );
+                }
+                else if ( targeted is CheeseWheel)
+                {
+                    m_Item.Delete();
+
+                    ( (CheeseWheel)targeted ).Consume();
+
+                    from.AddToBackpack( new UncookedCheesePizza() );
+                }
+                else if ( targeted is FishSteak )
+                {
+                    m_Item.Delete();
+
+                    ( (FishSteak)targeted ).Consume();
+
+                    from.AddToBackpack( new UnbakedMeatPie() );
+                }
+                else if ( targeted is Pumpkin )
+                {
+                    m_Item.Delete();
+
+                    ( (Pumpkin)targeted ).Consume();
+
+                    from.AddToBackpack( new UnbakedPumpkinPie() );
+                }
 				else if ( targeted is Sausage )
 				{
 					m_Item.Delete();
 
 					((Sausage)targeted).Consume();
 
-					from.AddToBackpack( new SausagePizza() );
-				}*/
+					from.AddToBackpack( new UncookedSausagePizza() );
+				}
 				else if ( targeted is Apple )
 				{
 					m_Item.Delete();
