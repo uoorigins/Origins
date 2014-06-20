@@ -2,6 +2,7 @@ using System;
 using Server;
 using Server.Guilds;
 using Server.Prompts;
+using Server.Menus.Questions;
 
 namespace Server.Gumps
 {
@@ -18,16 +19,15 @@ namespace Server.Gumps
 
 		public override void OnCancel( Mobile from )
 		{
-			if ( GuildGump.BadLeader( m_Mobile, m_Guild ) )
+			if ( GuildMenu.BadLeader( m_Mobile, m_Guild ) )
 				return;
 
-			GuildGump.EnsureClosed( m_Mobile );
-			m_Mobile.SendGump( new GuildmasterGump( m_Mobile, m_Guild ) );
+			m_Mobile.SendMenu( new GuildmasterMenu( m_Mobile, m_Guild ) );
 		}
 
 		public override void OnResponse( Mobile from, string text )
 		{
-			if ( GuildGump.BadLeader( m_Mobile, m_Guild ) )
+            if ( GuildMenu.BadLeader( m_Mobile, m_Guild ) )
 				return;
 
 			text = text.Trim();
@@ -38,8 +38,7 @@ namespace Server.Gumps
 			if ( text.Length > 0 )
 				m_Guild.Website = text;
 
-			GuildGump.EnsureClosed( m_Mobile );
-			m_Mobile.SendGump( new GuildmasterGump( m_Mobile, m_Guild ) );
+            m_Mobile.SendMenu( new GuildmasterMenu( m_Mobile, m_Guild ) );
 		}
 	}
 }
