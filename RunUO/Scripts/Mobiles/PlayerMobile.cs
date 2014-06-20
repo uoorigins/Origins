@@ -97,6 +97,19 @@ namespace Server.Mobiles
 
 		private DesignContext m_DesignContext;
 
+        private BaseHouse m_ProtectedHouse;
+        public BaseHouse ProtectedHouse
+        {
+            get
+            {
+                return m_ProtectedHouse;
+            }
+            set
+            {
+                m_ProtectedHouse = value;
+            }
+        }
+
 		private NpcGuild m_NpcGuild;
 		private DateTime m_NpcGuildJoinTime;
 		private DateTime m_NextBODTurnInTime;
@@ -3264,6 +3277,11 @@ namespace Server.Mobiles
 
 			switch ( version )
 			{
+                case 29:
+                    {
+                        m_ProtectedHouse = (BaseHouse)reader.ReadItem();
+                        goto case 28;
+                    }
                 case 28:
                     {
                         m_Companion = reader.ReadBool();
@@ -3574,8 +3592,9 @@ namespace Server.Mobiles
 
 			base.Serialize( writer );
 			
-			writer.Write( (int) 28 ); // version
+			writer.Write( (int) 29 ); // version
 
+            writer.Write( m_ProtectedHouse );
             writer.Write((bool)m_Companion);
             writer.Write((bool)m_BountyMark);
             writer.Write( (bool)m_AssumePlayAsGhost );

@@ -14,7 +14,7 @@ namespace Server.Menus.Questions
         private Guild m_Guild;
         private List<String> m_StringList;
 
-        private const string DefaultWebsite = "http://www.runuo.com/";
+        private const string DefaultWebsite = "http://www.uoorigins.com/";
 
         public GuildCharterMenu( Mobile from, Guild guild )
             : base( "", null )

@@ -137,6 +137,23 @@ namespace Server.Multis
             }
         }
 
+        public bool IsKeyOwner( Mobile from )
+        {
+            if ( from.AccessLevel > AccessLevel.GameMaster )
+            {
+                return true;
+            }
+
+            if ( from != null && !from.Deleted && from.Backpack != null )
+            {
+                return Key.ContainsKey( from.Backpack, keyValue );
+            }
+            else
+            {
+                return false;
+            }
+        }
+
 		[CommandProperty( AccessLevel.GameMaster )]
 		public virtual DecayLevel DecayLevel
 		{
@@ -1138,6 +1155,7 @@ namespace Server.Multis
 		{
 			m_AllHouses.Add( this );
 
+
 			m_LastRefreshed = DateTime.Now;
 
 			m_BuiltOn = DateTime.Now;
@@ -1757,7 +1775,7 @@ namespace Server.Multis
 
 		public bool LockDown( Mobile m, Item item, bool checkIsInside )
 		{
-			if ( !IsCoOwner( m ) || !IsActive )
+			if ( !IsKeyOwner( m ) || !IsActive )
 				return false;
 
 			if ( item.Movable && !IsSecure( item ) )
@@ -1769,46 +1787,56 @@ namespace Server.Multis
 
 				if ( checkIsInside && item.RootParent is Mobile )
 				{
-					m.SendLocalizedMessage( 1005525 );//That is not in your house
+					m.SendAsciiMessage( "That is not in your house" );//That is not in your house
 				}
 				else if ( checkIsInside && !IsInside( item.GetWorldLocation(), item.ItemData.Height ) )
 				{
-					m.SendLocalizedMessage( 1005525 );//That is not in your house
-				}
-				else if ( Ethics.Ethic.IsImbued( item ) )
-				{
-					m.SendLocalizedMessage( 1005377 );//You cannot lock that down
+					m.SendAsciiMessage( "That is not in your house" );//That is not in your house
 				}
 				else if ( IsSecure( rootItem ) )
 				{
-					m.SendLocalizedMessage( 501737 ); // You need not lock down items in a secure container.
+					m.SendAsciiMessage( "You need not lock down items in a secure container." ); // You need not lock down items in a secure container.
 				}
 				else if ( parentItem != null && !IsLockedDown( parentItem ) )
 				{
-					m.SendLocalizedMessage( 501736 ); // You must lockdown the container first!
+					m.SendAsciiMessage( "You must lockdown the container first!" ); // You must lockdown the container first!
 				}
 				else if ( !(item is VendorRentalContract) && ( IsAosRules ? (!CheckAosLockdowns( amt ) || !CheckAosStorage( amt )) : (this.LockDownCount + amt) > m_MaxLockDowns ) )
 				{
-					m.SendLocalizedMessage( 1005379 );//That would exceed the maximum lock down limit for this house
+					m.SendAsciiMessage( "That would exceed the maximum lock down limit for this house" );//That would exceed the maximum lock down limit for this house
 				}
 				else
 				{
+                    //enable protection
+                    if (this.LockDownCount == 0)
+                    {
+                        PlayerMobile pm = m as PlayerMobile;
+                        Guild guild = pm.Guild as Guild;
+
+                        pm.SendAsciiMessage( "This house is now under the protection of " + pm.Guild.Name + "." );
+                        pm.ProtectedHouse = this;
+                        this.ChangeSignType( guild.GuildHouseSignItemID );
+
+                        if ( m_Sign != null )
+                            m_Sign.InvalidateProperties();
+                    }
+
 					SetLockdown( item, true );
 					return true;
 				}
 			} 
 			else if ( m_LockDowns.IndexOf( item ) != -1 )
 			{
-				m.LocalOverheadMessage( MessageType.Regular, 0x3E9, 1005526 ); //That is already locked down
+				m.LocalOverheadMessage( MessageType.Regular, 0x3E9, true, "That is already locked down" ); //That is already locked down
 				return true;
 			}
 			else if ( item is HouseSign || item is Static )
 			{
-				m.LocalOverheadMessage( MessageType.Regular, 0x3E9, 1005526 ); // This is already locked down.
+				m.LocalOverheadMessage( MessageType.Regular, 0x3E9, true, "This is already locked down." ); // This is already locked down.
 			}
 			else
 			{
-				m.SendLocalizedMessage( 1005377 );//You cannot lock that down
+				m.SendAsciiMessage( "You cannot lock that down" );//You cannot lock that down
 			}
 
 			return false;
@@ -2080,12 +2108,12 @@ namespace Server.Multis
 
 		public void Release( Mobile m, Item item )
 		{
-			if ( !IsCoOwner( m ) || !IsActive )
+			if ( !IsKeyOwner( m ) || !IsActive )
 				return;
 
 			if ( IsLockedDown( item ) )
 			{
-				item.PublicOverheadMessage( Server.Network.MessageType.Label, 0x3B2, 501657 );//[no longer locked down]
+				item.PublicOverheadMessage( Server.Network.MessageType.Label, 0x3B2, true, "no longer locked down" );//[no longer locked down]
 				SetLockdown( item, false );
 				//TidyItemList( m_LockDowns );
 
@@ -2098,9 +2126,45 @@ namespace Server.Multis
 			}
 			else
 			{
-				m.LocalOverheadMessage( MessageType.Regular, 0x3E9, 1010416 ); // This is not locked down or secured.
+				m.LocalOverheadMessage( MessageType.Regular, 0x3E9, true, "This is not locked down or secured." ); // This is not locked down or secured.
 			}
+
+            //disable protection
+            if ( this.LockDownCount == 0 )
+            {
+                DisableProtection(m);
+            }
 		}
+
+        public void DisableProtection(Mobile m)
+        {
+            if ( m != null )
+            {
+                PlayerMobile pm = m as PlayerMobile;
+                Guild guild = pm.Guild as Guild;
+                pm.SendAsciiMessage( "This house is no longer under the protection of " + pm.Guild.Name + "." );
+                pm.ProtectedHouse = null;
+            }
+
+            ArrayList items = new ArrayList(m_LockDowns);
+
+            foreach(Item item in items)
+            {
+                if (IsLockedDown(item))
+                {
+                    SetLockdown( item, false );
+                }
+                else if ( IsSecure( item ) )
+                {
+                    ReleaseSecure( m, item );
+                }
+            }
+
+            this.ChangeSignType( 0xBD2 );
+
+            if ( m_Sign != null )
+                m_Sign.InvalidateProperties();
+        }
 		
 		public void AddSecure( Mobile m, Item item )
 		{
@@ -3819,7 +3883,7 @@ namespace Server.Multis
 
 		protected override void OnTarget( Mobile from, object targeted )
 		{
-			if ( !from.Alive || m_House.Deleted || !m_House.IsCoOwner( from ) )
+			if ( !from.Alive || m_House.Deleted || !m_House.IsKeyOwner( from ) )
 				return;
 
 			if ( targeted is Item )
@@ -3837,8 +3901,8 @@ namespace Server.Multis
 					}
 					else if ( (Item)targeted is AddonComponent )
 					{
-						from.LocalOverheadMessage( MessageType.Regular, 0x3E9, 501727 ); // You cannot lock that down!
-						from.LocalOverheadMessage( MessageType.Regular, 0x3E9, 501732 ); // I cannot lock this down!
+						from.LocalOverheadMessage( MessageType.Regular, 0x3E9, true, "You cannot lock that down!" ); // You cannot lock that down!
+						from.LocalOverheadMessage( MessageType.Regular, 0x3E9, true, "I cannot lock this down!" ); // I cannot lock this down!
 					}
 					else
 					{
@@ -3852,7 +3916,7 @@ namespace Server.Multis
 			}
 			else 
 			{
-				from.SendLocalizedMessage( 1005377 ); //You cannot lock that down
+				from.SendAsciiMessage( "You cannot lock that down" ); //You cannot lock that down
 			}
 		}
 	}

@@ -243,6 +243,65 @@ namespace Server.Regions
 			return base.OnDoubleClick( from, o );
 		}
 
+        public override void OnSpeech( SpeechEventArgs e )
+        {
+            base.OnSpeech( e );
+
+            Mobile from = e.Mobile;
+            Item sign = m_House.Sign;
+
+            bool isKeyOwner = m_House.IsKeyOwner( from );
+            bool houseIsProtected = m_House.LockDownCount > 0;
+
+            if ( !from.Alive )
+                return;
+
+            if ( !isKeyOwner )
+                return;
+
+            if ( !m_House.IsInside( from ) || !m_House.IsActive )
+                return;
+
+            if ( !houseIsProtected )
+            {
+                if ( from.Guild != null )
+                {
+                    Guild guild = (Guild)from.Guild;
+
+                    if ( !guild.IsProtected( from ) )
+                    {
+                        from.SendAsciiMessage( "You have not been offered protection by your guild" );
+                    }
+                    else
+                    {
+                        if ( e.HasKeyword( 0x23 ) ) // I wish to lock this down
+                        {
+                            from.SendAsciiMessage( "Lock what down?" ); // Lock what down?
+                            from.Target = new LockdownTarget( false, m_House );
+                        }
+                        else if ( e.HasKeyword( 0x24 ) ) // I wish to release this
+                        {
+                            from.SendAsciiMessage( "Choose the item you wish to release" ); // Choose the item you wish to release
+                            from.Target = new LockdownTarget( true, m_House );
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if ( e.HasKeyword( 0x23 ) ) // I wish to lock this down
+                {
+                    from.SendAsciiMessage( "Lock what down?" ); // Lock what down?
+                    from.Target = new LockdownTarget( false, m_House );
+                }
+                else if ( e.HasKeyword( 0x24 ) ) // I wish to release this
+                {
+                    from.SendAsciiMessage( "Choose the item you wish to release" ); // Choose the item you wish to release
+                    from.Target = new LockdownTarget( true, m_House );
+                }
+            }
+        }
+
 		public override bool OnSingleClick( Mobile from, object o )
 		{
 			if ( o is Item )
@@ -250,9 +309,9 @@ namespace Server.Regions
 				Item item = (Item)o;
 
 				if ( m_House.IsLockedDown( item ) )
-					item.LabelTo( from, 501643 ); // [locked down]
+					item.LabelTo( from, 501643 ); // locked down
 				else if ( m_House.IsSecure( item ) )
-					item.LabelTo( from, 501644 ); // [locked down & secure]
+					item.LabelTo( from, 501644 ); // locked down & secure
 			}
 
 			return base.OnSingleClick( from, o );

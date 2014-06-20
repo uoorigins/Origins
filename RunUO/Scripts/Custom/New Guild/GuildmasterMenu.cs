@@ -41,6 +41,7 @@ namespace Server.Menus.Questions
             list.Add( "Set the guildmaster's title." );
             list.Add( "Grant a title to another member." );
             list.Add( "Move this guildstone." );
+            list.Add( "Access Guild Protection menu." );
             list.Add( "Return to the main menu." );
 
             Answers = list.ToArray();
@@ -53,7 +54,12 @@ namespace Server.Menus.Questions
 
             switch ( index )
             {
-                case 9: // Main menu
+                case 9: //guild protection
+                    {
+                        m_Mobile.SendMenu( new GuildProtectionMenu( m_Mobile, m_Guild ) );
+                        break;
+                    }
+                case 10: // Main menu
                     {
                         m_Mobile.SendMenu( new GuildMenu( m_Mobile, m_Guild ) );
 

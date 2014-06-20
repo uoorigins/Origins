@@ -187,6 +187,7 @@
     <Compile Include="Custom\New Guild\GuildListMenu.cs" />
     <Compile Include="Custom\New Guild\GuildmasterMenu.cs" />
     <Compile Include="Custom\New Guild\GuildMenu.cs" />
+    <Compile Include="Custom\New Guild\GuildProtectionMenu.cs" />
     <Compile Include="Custom\New Guild\GuildRejectWarMenu.cs" />
     <Compile Include="Custom\New Guild\GuildRescindDeclarationGump.cs" />
     <Compile Include="Custom\New Guild\GuildRosterMenu.cs" />

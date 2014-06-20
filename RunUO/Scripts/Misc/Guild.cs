@@ -9,6 +9,8 @@ using Server.Network;
 using Server.Targeting;
 using Server.Commands;
 using Server.Commands.Generic;
+using Server.Multis;
+using Server.Accounting;
 
 namespace Server.Guilds
 {
@@ -947,6 +949,14 @@ namespace Server.Guilds
 
 		private List<Mobile> m_Members;
 
+        private List<Mobile> m_Protected;
+        private int m_GuildSignItemID;
+        private DateTime m_LastProtectionPayment;
+        public TimeSpan ProtectionPeriod = TimeSpan.FromDays( 7.0 );
+        public const int ProtectionFeeInital = 10000;
+        public const int ProtectionRateLeader = 5000;
+        public const int ProtectionRateMember = 250;
+
 		private Item m_Guildstone;
 		private Item m_Teleporter;
 
@@ -973,6 +983,10 @@ namespace Server.Guilds
 		{
 			#region Ctor mumbo-jumbo
 			m_Leader = leader;
+
+            m_Protected = new List<Mobile>();
+            m_GuildSignItemID = 3028;
+            m_LastProtectionPayment = DateTime.Now;
 
 			m_Members = new List<Mobile>();
 			m_Allies = new List<Guild>();
@@ -1077,6 +1091,8 @@ namespace Server.Guilds
 
 		public void Disband()
 		{
+            ClearAllProtection();
+
 			m_Leader = null;
 
 			BaseGuild.List.Remove( this.Id );
@@ -1092,6 +1108,8 @@ namespace Server.Guilds
 			}
 
 			m_Members.Clear();
+
+            m_Protected.Clear();
 
 			for ( int i = m_Allies.Count - 1; i >= 0; --i )
 				if ( i < m_Allies.Count )
@@ -1116,6 +1134,11 @@ namespace Server.Guilds
 		{
 			return m_Members.Contains( m );
 		}
+
+        public bool IsProtected( Mobile m )
+        {
+            return m_Protected.Contains( m );
+        }
 
 		public bool IsAlly( Guild g )
 		{
@@ -1174,12 +1197,19 @@ namespace Server.Guilds
 			if ( this.LastFealty+TimeSpan.FromDays( 1.0 ) < DateTime.Now )
 				this.CalculateGuildmaster();
 
+            if ( this.m_LastProtectionPayment + ProtectionPeriod < DateTime.Now )
+                this.ChargeProtection();
+
 			CheckExpiredWars();
 
 			if( Alliance != null )
 				Alliance.CheckLeader();
 
-			writer.Write( (int) 5 );//version
+			writer.Write( (int) 6 );//version
+
+            writer.Write( m_Protected, true );
+            writer.Write( (int)m_GuildSignItemID );
+            writer.Write( m_LastProtectionPayment );
 
 			#region War Serialization
 			writer.Write( m_PendingWars.Count );
@@ -1246,8 +1276,15 @@ namespace Server.Guilds
 
 			switch ( version )
 			{
+                case 6:
+                    {
+                        m_Protected = reader.ReadStrongMobileList();
+                        m_GuildSignItemID = reader.ReadInt();
+                        m_LastProtectionPayment = reader.ReadDateTime();
+                        goto case 5;
+                    }
 				case 5:
-				{
+				{                   
 					int count = reader.ReadInt();
 
 					m_PendingWars = new List<WarDeclaration>();
@@ -1327,6 +1364,13 @@ namespace Server.Guilds
 				}
 			}
 
+            if ( m_Protected == null )
+            {
+                m_Protected = new List<Mobile>();
+                m_GuildSignItemID = 3028;
+                m_LastProtectionPayment = DateTime.Now;
+            }
+
 			if ( m_AllyDeclarations == null )
 				m_AllyDeclarations = new List<Guild>();
 
@@ -1399,6 +1443,7 @@ namespace Server.Guilds
 		{
 			if ( m_Members.Contains( m ) )
 			{
+                RemoveProtection( m );
 				m_Members.Remove( m );
 				m.Guild = null;
 				
@@ -1420,6 +1465,56 @@ namespace Server.Guilds
 					Disband();
 			}
 		}
+
+        public bool AddProtection(Mobile m)
+        {
+            if ( !m_Protected.Contains( m ) )
+            {
+                //Check IP for protection
+                Account theirAccount = (Account)m.Account;
+                ArrayList theirAccounts = new ArrayList( AdminGump.GetSharedAccounts( theirAccount.LoginIPs ) );
+
+                if ( theirAccount.GetTag( "Protection" ) != null )
+                {
+                    return false;
+                }
+                else
+                {
+                    foreach ( Account accnt in theirAccounts )
+                    {
+                        if ( accnt.GetTag( "Protection" ) != null )
+                        {
+                            return false;
+                        }
+                    }
+                }
+
+                theirAccount.SetTag( "Protection", "true" );
+                m_Protected.Add( m );
+                return true;
+            }
+
+            return true;
+        }
+
+        public void RemoveProtection( Mobile m )
+        {
+            if ( m_Protected.Contains( m ) )
+            {
+                PlayerMobile pm = m as PlayerMobile;
+                BaseHouse house = pm.ProtectedHouse;
+
+                Account theirAccount = (Account)m.Account;
+
+                theirAccount.RemoveTag( "Protected" );
+                m_Protected.Remove( m );
+
+                if ( house != null )
+                {
+                    house.DisableProtection(m);
+                }
+            }
+        }
 
 		public void AddAlly( Guild g )
 		{
@@ -1639,6 +1734,48 @@ namespace Server.Guilds
 
 		#endregion
 
+        public void ChargeProtection()
+        {
+            m_LastProtectionPayment = DateTime.Now;
+            BankBox bank = Leader.FindBankNoCreate();
+
+            if ( bank != null )
+            {
+                List<Mobile> protectedmembers = new List<Mobile>(m_Protected);
+
+                //charge GM
+                if ( !( bank.ConsumeTotal( typeof( Gold ), 5000 ) ) )
+                {
+                    ClearAllProtection();
+                    return;
+                }
+
+                //charge members
+                foreach ( Mobile m in protectedmembers )
+                {
+                    if ( m != Leader )
+                    {
+                        if ( !( bank.ConsumeTotal( typeof( Gold ), 250 ) ) )
+                        {
+                            RemoveProtection( m );
+                        }
+                    }
+                }
+            }
+        }
+
+        public void ClearAllProtection()
+        {
+            List<Mobile> protectedmembers = new List<Mobile>( m_Protected );
+
+            foreach ( Mobile m in protectedmembers )
+            {
+                RemoveProtection( m );
+            }
+
+            Protected.Clear();
+        }
+
 		#region Getters & Setters
 		[CommandProperty( AccessLevel.GameMaster )]
 		public Item Guildstone
@@ -1843,6 +1980,38 @@ namespace Server.Guilds
 				return m_Members;
 			}
 		}
+
+        public List<Mobile> Protected
+        {
+            get
+            {
+                return m_Protected;
+            }
+        }
+
+        public int GuildHouseSignItemID
+        {
+            get
+            {
+                return m_GuildSignItemID;
+            }
+            set
+            {
+                m_GuildSignItemID = value;
+            }
+        }
+
+        public DateTime LastProtectionPayment
+        {
+            set
+            {
+                m_LastProtectionPayment = value;
+            }
+            get
+            {
+                return m_LastProtectionPayment;
+            }
+        }
 
 		#endregion
 
