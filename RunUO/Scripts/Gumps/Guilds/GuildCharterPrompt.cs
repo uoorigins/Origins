@@ -41,7 +41,6 @@ namespace Server.Gumps
 			m_Mobile.SendAsciiMessage( "Enter the new website for the guild (50 characters max):" ); // Enter the new website for the guild (50 characters max):
 			m_Mobile.Prompt = new GuildWebsitePrompt( m_Mobile, m_Guild );
 
-			m_Mobile.SendMenu( new GuildmasterMenu( m_Mobile, m_Guild ) );
 		}
 	}
 }
