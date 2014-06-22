@@ -17,7 +17,7 @@ namespace Server.Multis
 
         public override HousePlacementEntry ConvertEntry { get { return HousePlacementEntry.TwoStoryFoundations[0]; } }
 
-        public BlueTent(Mobile owner, int id) : base(id, owner, 1370, 10)
+        public BlueTent(Mobile owner, int id) : base(id, owner, 425, 3)
         {
             uint keyValue = CreateTentKeys(owner);
 
@@ -75,7 +75,7 @@ namespace Server.Multis
 
         //public override HousePlacementEntry ConvertEntry { get { return HousePlacementEntry.TwoStoryFoundations[0]; } }
 
-        public GreenTent(Mobile owner, int id) : base(id, owner, 1370, 10)
+        public GreenTent(Mobile owner, int id) : base(id, owner, 425, 3)
         {
             uint keyValue = CreateTentKeys(owner);
 
