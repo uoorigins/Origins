@@ -2148,10 +2148,24 @@ namespace Server.Multis
         {
             if ( m != null )
             {
-                PlayerMobile pm = m as PlayerMobile;
-                Guild guild = pm.Guild as Guild;
-                pm.SendAsciiMessage( "This house is no longer under the protection of " + pm.Guild.Name + "." );
-                pm.ProtectedHouse = null;
+
+                List<Mobile> list = World.Mobiles.Values.ToList();
+                PlayerMobile pm;
+
+                foreach ( Mobile mobile in list )
+                {
+                    pm = mobile as PlayerMobile;
+
+                    if ( pm != null && pm.Guild != null )
+                    {
+                        BaseHouse house = pm.ProtectedHouse;
+                        if ( house != null && house == this )
+                        {
+                            m.SendAsciiMessage( "This house is no longer under the protection of " + pm.Guild.Name + "." );
+                            pm.ProtectedHouse = null;
+                        }
+                    }
+                }
             }
 
             ArrayList lockdowns = new ArrayList(m_LockDowns);
