@@ -3191,8 +3191,7 @@ namespace Server.Multis
 		{
 			get
 			{
-                //double
-				return m_MaxSecures*2;
+				return m_MaxSecures;
 			}
 			set
 			{
