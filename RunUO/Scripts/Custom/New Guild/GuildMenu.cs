@@ -19,7 +19,13 @@ namespace Server.Menus.Questions
         {
             m_Mobile = beholder;
 			m_Guild = guild;
-            string loyalty = m_Mobile.GuildFealty.Name;
+
+            Mobile fealty = m_Mobile.GuildFealty;
+
+            if ( fealty == null )
+                fealty = beholder;
+
+            string loyalty = fealty.Name;
 
             Answers = new string[] { "Recruit someone into the guild.",
                 "View the current roster.",
