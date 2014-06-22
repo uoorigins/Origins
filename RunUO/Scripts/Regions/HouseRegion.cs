@@ -7,6 +7,7 @@ using Server.Spells;
 using Server.Spells.Sixth;
 using Server.Guilds;
 using Server.Gumps;
+using Server.Network;
 
 namespace Server.Regions
 {
@@ -251,7 +252,7 @@ namespace Server.Regions
             Item sign = m_House.Sign;
 
             bool isKeyOwner = m_House.IsKeyOwner( from );
-            bool houseIsProtected = m_House.LockDownCount > 0;
+            bool houseIsProtected = m_House.LockDownCount > 0 || m_House.SecureCount > 0;
 
             if ( !from.Alive )
                 return;
@@ -279,6 +280,16 @@ namespace Server.Regions
                             from.SendAsciiMessage( "Lock what down?" ); // Lock what down?
                             from.Target = new LockdownTarget( false, m_House );
                         }
+                        else if ( e.HasKeyword( 0x25 ) ) // I wish to secure this
+                        {
+                            from.SendAsciiMessage( "Choose the item you wish to secure" ); // Choose the item you wish to secure
+                            from.Target = new SecureTarget( false, m_House );
+                        }
+                        else if ( e.HasKeyword( 0x26 ) ) // I wish to unsecure this
+                        {
+                            from.SendAsciiMessage( "Choose the item you wish to unsecure" ); // Choose the item you wish to unsecure
+                            from.Target = new SecureTarget( true, m_House );
+                        }
                         else if ( e.HasKeyword( 0x24 ) ) // I wish to release this
                         {
                             from.SendAsciiMessage( "Choose the item you wish to release" ); // Choose the item you wish to release
@@ -293,6 +304,16 @@ namespace Server.Regions
                 {
                     from.SendAsciiMessage( "Lock what down?" ); // Lock what down?
                     from.Target = new LockdownTarget( false, m_House );
+                }
+                else if ( e.HasKeyword( 0x25 ) ) // I wish to secure this
+                {
+                    from.SendAsciiMessage( "Choose the item you wish to secure" ); // Choose the item you wish to secure
+                    from.Target = new SecureTarget( false, m_House );
+                }
+                else if ( e.HasKeyword( 0x26 ) ) // I wish to unsecure this
+                {
+                    from.SendAsciiMessage( "Choose the item you wish to unsecure" ); // Choose the item you wish to unsecure
+                    from.Target = new SecureTarget( true, m_House );
                 }
                 else if ( e.HasKeyword( 0x24 ) ) // I wish to release this
                 {
@@ -309,9 +330,9 @@ namespace Server.Regions
 				Item item = (Item)o;
 
 				if ( m_House.IsLockedDown( item ) )
-					item.LabelTo( from, 501643 ); // locked down
+                    from.Send(new AsciiMessage(item.Serial, item.ItemID, MessageType.Label, 0, 3, "", "locked down"));
 				else if ( m_House.IsSecure( item ) )
-					item.LabelTo( from, 501644 ); // locked down & secure
+                    from.Send( new AsciiMessage( item.Serial, item.ItemID, MessageType.Label, 0, 3, "", "locked down & secure" ) );
 			}
 
 			return base.OnSingleClick( from, o );

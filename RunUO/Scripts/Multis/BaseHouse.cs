@@ -13,6 +13,8 @@ using Server.ContextMenus;
 using Server.Gumps;
 using Server.Guilds;
 using Server.Engines.BulkOrders;
+using Server.Menus.Questions;
+using System.Linq;
 
 namespace Server.Multis
 {
@@ -1808,13 +1810,20 @@ namespace Server.Multis
 				else
 				{
                     //enable protection
-                    if (this.LockDownCount == 0)
+                    if ( this.LockDownCount == 0 && this.SecureCount == 0 )
                     {
                         PlayerMobile pm = m as PlayerMobile;
                         Guild guild = pm.Guild as Guild;
 
+                        if ( pm.ProtectedHouse != null )
+                        {
+                            pm.SendAsciiMessage( "You already have a protected house." );
+                            return false;
+                        }
+
                         pm.SendAsciiMessage( "This house is now under the protection of " + pm.Guild.Name + "." );
                         pm.ProtectedHouse = this;
+                        this.Owner = pm;
                         this.ChangeSignType( guild.GuildHouseSignItemID );
 
                         if ( m_Sign != null )
@@ -2115,7 +2124,12 @@ namespace Server.Multis
 			{
 				item.PublicOverheadMessage( Server.Network.MessageType.Label, 0x3B2, true, "no longer locked down" );//[no longer locked down]
 				SetLockdown( item, false );
-				//TidyItemList( m_LockDowns );
+
+                //disable protection
+                if ( this.LockDownCount == 0 && this.SecureCount == 0 )
+                {
+                    DisableProtection( m );
+                }
 
 				if ( item is RewardBrazier )
 					((RewardBrazier) item).TurnOff();
@@ -2128,12 +2142,6 @@ namespace Server.Multis
 			{
 				m.LocalOverheadMessage( MessageType.Regular, 0x3E9, true, "This is not locked down or secured." ); // This is not locked down or secured.
 			}
-
-            //disable protection
-            if ( this.LockDownCount == 0 )
-            {
-                DisableProtection(m);
-            }
 		}
 
         public void DisableProtection(Mobile m)
@@ -2146,17 +2154,22 @@ namespace Server.Multis
                 pm.ProtectedHouse = null;
             }
 
-            ArrayList items = new ArrayList(m_LockDowns);
+            ArrayList lockdowns = new ArrayList(m_LockDowns);
+            ArrayList secures = new ArrayList( m_Secures );
 
-            foreach(Item item in items)
+            foreach ( Item item in lockdowns )
             {
                 if (IsLockedDown(item))
                 {
                     SetLockdown( item, false );
                 }
-                else if ( IsSecure( item ) )
+            }
+
+            foreach ( SecureInfo info in secures )
+            {
+                if ( IsSecure( info.Item ) )
                 {
-                    ReleaseSecure( m, item );
+                    ReleaseSecure( m, info.Item );
                 }
             }
 
@@ -2173,11 +2186,11 @@ namespace Server.Multis
 
 			if ( !IsInside( item ) )
 			{
-				m.SendLocalizedMessage( 1005525 ); // That is not in your house
+				m.SendAsciiMessage( "That is not in your house" ); // That is not in your house
 			}
 			else if ( IsLockedDown( item ) )
 			{
-				m.SendLocalizedMessage( 1010550 ); // This is already locked down and cannot be secured.
+				m.SendAsciiMessage( "This is already locked down and cannot be secured." ); // This is already locked down and cannot be secured.
 			}
 			else if ( !(item is Container) )
 			{
@@ -2193,31 +2206,51 @@ namespace Server.Multis
 
 				if ( info != null )
 				{
-					m.SendGump( new Gumps.SetSecureLevelGump( m_Owner, info, this ) );
+					m.SendMenu( new SetSecureLevelMenu( m_Owner, info, this ) );
 				}
 				else if ( item.Parent != null )
 				{
-					m.SendLocalizedMessage( 1010423 ); // You cannot secure this, place it on the ground first.
+					m.SendAsciiMessage( "You cannot secure this, place it on the ground first." ); // You cannot secure this, place it on the ground first.
 				}
 				else if ( !item.Movable )
 				{
-					m.SendLocalizedMessage( 1010424 ); // You cannot secure this.
+					m.SendAsciiMessage( "You cannot secure this." ); // You cannot secure this.
 				}
 				else if ( !IsAosRules && SecureCount >= MaxSecures )
 				{
 					// The maximum number of secure items has been reached : 
-					m.SendLocalizedMessage( 1008142, true, MaxSecures.ToString() );
+					m.SendAsciiMessage( "The maximum number of secure items has been reached : " + MaxSecures.ToString() );
 				}
 				else if ( IsAosRules ? !CheckAosLockdowns( 1 ) : ((LockDownCount + 125) >= MaxLockDowns) )
 				{
-					m.SendLocalizedMessage( 1005379 ); // That would exceed the maximum lock down limit for this house
+					m.SendAsciiMessage( "That would exceed the maximum lock down limit for this house" ); // That would exceed the maximum lock down limit for this house
 				}
 				else if ( IsAosRules && !CheckAosStorage( item.TotalItems ) )
 				{
-					m.SendLocalizedMessage( 1061839 ); // This action would exceed the secure storage limit of the house.
+					m.SendAsciiMessage( "This action would exceed the secure storage limit of the house." ); // This action would exceed the secure storage limit of the house.
 				}
 				else
 				{
+                    //enable protection
+                    if ( this.SecureCount == 0 && this.LockDownCount == 0)
+                    {
+                        PlayerMobile pm = m as PlayerMobile;
+                        Guild guild = pm.Guild as Guild;
+
+                        if ( pm.ProtectedHouse != null )
+                        {
+                            pm.SendAsciiMessage( "You already have a protected house." );
+                            return;
+                        }
+
+                        pm.SendAsciiMessage( "This house is now under the protection of " + pm.Guild.Name + "." );
+                        pm.ProtectedHouse = this;
+                        this.ChangeSignType( guild.GuildHouseSignItemID );
+
+                        if ( m_Sign != null )
+                            m_Sign.InvalidateProperties();
+                    }
+
 					info = new SecureInfo( (Container)item, SecureLevel.Owner );
 
 					item.IsLockedDown = false;
@@ -2227,11 +2260,50 @@ namespace Server.Multis
 					m_LockDowns.Remove( item );
 					item.Movable = false;
 
-					m.CloseGump( typeof ( SetSecureLevelGump ) );
-					m.SendGump( new Gumps.SetSecureLevelGump( m_Owner, info, this ) );
+					m.SendMenu( new SetSecureLevelMenu( m_Owner, info, this ) );
 				}
 			}
 		}
+
+        private class SetSecureLevelMenu : QuestionMenu
+        {
+            private ISecurable m_Info;
+
+            public SetSecureLevelMenu( Mobile owner, ISecurable info, BaseHouse house )
+                : base( "SET ACCESS", null )
+            {
+                m_Info = info;
+                List<String> list = new List<String>();
+
+                list.Add("Owner Only");
+                list.Add("Guild Members");
+                list.Add("Anyone");
+
+                Answers = list.ToArray();
+            }
+
+            public override void OnResponse( NetState state, int index )
+            {
+                SecureLevel level = m_Info.Level;
+
+                switch ( index )
+                {
+                    case 0: level = SecureLevel.Owner; break;
+                    case 1: level = SecureLevel.Guild; break;
+                    case 2: level = SecureLevel.Anyone; break;
+                }
+
+                if ( m_Info.Level == level )
+                {
+                    state.Mobile.SendAsciiMessage( "Access level unchanged." ); // Access level unchanged.
+                }
+                else
+                {
+                    m_Info.Level = level;
+                    state.Mobile.SendAsciiMessage( "New access level set." ); // New access level set.
+                }
+            }
+        }
 
 		public virtual bool IsCombatRestricted( Mobile m )
 		{
@@ -2262,9 +2334,7 @@ namespace Server.Multis
 
 			switch ( level )
 			{
-				case SecureLevel.Owner: return IsOwner( m );
-				case SecureLevel.CoOwners: return IsCoOwner( m );
-				case SecureLevel.Friends: return IsFriend( m );
+				case SecureLevel.Owner: return IsKeyOwner( m );
 				case SecureLevel.Anyone: return true;
 				case SecureLevel.Guild: return IsGuildMember( m );
 			}
@@ -2274,26 +2344,32 @@ namespace Server.Multis
 
 		public void ReleaseSecure( Mobile m, Item item )
 		{
-			if ( m_Secures == null || !IsOwner( m ) || item is StrongBox || !IsActive )
+			if ( m_Secures == null || item is StrongBox || !IsActive )
 				return;
 
 			for ( int i = 0; i < m_Secures.Count; ++i )
 			{
 				SecureInfo info = (SecureInfo)m_Secures[i];
 
-				if ( info.Item == item && HasSecureAccess( m, info.Level ) )
+				if ( info.Item == item )
 				{
 					item.IsLockedDown = false;
 					item.IsSecure = false;
 					item.Movable = true;
 					item.SetLastMoved();
-					item.PublicOverheadMessage( Server.Network.MessageType.Label, 0x3B2, 501656 );//[no longer secure]
+					item.PublicOverheadMessage( Server.Network.MessageType.Label, 0x3B2, true, "no longer secure" );//no longer secure
 					m_Secures.RemoveAt( i );
+
+                    //disable protection
+                    if ( this.LockDownCount == 0 && this.SecureCount == 0 )
+                    {
+                        DisableProtection( m );
+                    }
 					return;
 				}
 			}
 
-			m.SendLocalizedMessage( 501717 );//This isn't secure...
+			m.SendAsciiMessage( "This isn't secure..." );//This isn't secure...
 		}
 
 		public override bool Decays
@@ -2354,7 +2430,7 @@ namespace Server.Multis
 			sb.Movable = false;
 			sb.IsLockedDown = false;
 			sb.IsSecure = true;
-			m_Secures.Add( new SecureInfo( sb, SecureLevel.CoOwners ) );
+			m_Secures.Add( new SecureInfo( sb, SecureLevel.Owner ) );
 			sb.MoveToWorld( from.Location, from.Map );
 		}
 
@@ -2916,7 +2992,7 @@ namespace Server.Multis
 							if ( c != null )
 							{
 								c.IsSecure = true;
-								m_Secures.Add( new SecureInfo( c, SecureLevel.CoOwners ) );
+								m_Secures.Add( new SecureInfo( c, SecureLevel.Owner ) );
 							}
 						}
 					}
@@ -3563,10 +3639,10 @@ namespace Server.Multis
 			if ( m == null )
 				return false;
 
-			if ( m == m_Owner || m.AccessLevel >= AccessLevel.GameMaster )
+			if ( m.AccessLevel >= AccessLevel.GameMaster )
 				return true;
 
-			return IsAosRules && CheckAccount( m, m_Owner );
+            return IsKeyOwner( m );
 		}
 
 		public bool IsCoOwner( Mobile m )
@@ -3582,10 +3658,30 @@ namespace Server.Multis
 
 		public bool IsGuildMember( Mobile m )
 		{
-			if( m == null || Owner == null || Owner.Guild == null )
-				return false;
+            if ( m == null || m.Guild == null )
+                return false;
 
-			return ( m.Guild == Owner.Guild );
+            if ( IsKeyOwner( m ) )
+                return true;
+
+            List<Mobile> list = World.Mobiles.Values.ToList();
+            PlayerMobile pm;
+
+            foreach ( Mobile mobile in list )
+            {
+                pm = mobile as PlayerMobile;
+
+                if ( pm != null && pm.Guild != null )
+                {
+                    BaseHouse house = pm.ProtectedHouse;
+                    if ( house != null && house == this  )
+                    {
+                        return ( m.Guild == pm.Guild );
+                    }
+                }
+            }
+
+			return false;
 		}
 
 		public void RemoveKeys( Mobile m )
@@ -3806,8 +3902,8 @@ namespace Server.Multis
 	public enum SecureLevel
 	{
 		Owner,
-		CoOwners,
-		Friends,
+        CoOwners,
+        Friends,
 		Anyone,
 		Guild
 	}
@@ -3888,27 +3984,14 @@ namespace Server.Multis
 
 			if ( targeted is Item )
 			{
-				if ( m_Release )
-				{
-					m_House.Release( from, (Item)targeted );
-				}
-				else
-				{
-					if ( targeted is VendorRentalContract || ( targeted is Container && ((Container)targeted).FindItemByType( typeof( VendorRentalContract ) ) != null ) )
-					{
-						from.LocalOverheadMessage( MessageType.Regular, 0x3B2, 1062392 ); // You must double click the contract in your pack to lock it down.
-						from.LocalOverheadMessage( MessageType.Regular, 0x3B2, 501732 ); // I cannot lock this down!
-					}
-					else if ( (Item)targeted is AddonComponent )
-					{
-						from.LocalOverheadMessage( MessageType.Regular, 0x3E9, true, "You cannot lock that down!" ); // You cannot lock that down!
-						from.LocalOverheadMessage( MessageType.Regular, 0x3E9, true, "I cannot lock this down!" ); // I cannot lock this down!
-					}
-					else
-					{
-						m_House.LockDown( from, (Item)targeted );
-					}
-				}
+                if ( m_Release )
+                {
+                    m_House.Release( from, (Item)targeted );
+                }
+                else
+                {
+                    m_House.LockDown( from, (Item)targeted );
+                }
 			}
 			else if ( targeted is StaticTarget )
 			{
@@ -3941,7 +4024,7 @@ namespace Server.Multis
 
 		protected override void OnTarget( Mobile from, object targeted )
 		{
-			if ( !from.Alive || m_House.Deleted || !m_House.IsCoOwner( from ) )
+            if ( !from.Alive || m_House.Deleted || !m_House.IsKeyOwner( from ) )
 				return;
 
 			if ( targeted is Item )
@@ -3965,7 +4048,7 @@ namespace Server.Multis
 			} 
 			else 
 			{
-				from.SendLocalizedMessage( 1010424 );//You cannot secure this
+				from.SendAsciiMessage( "You cannot secure this" );//You cannot secure this
 			}
 		}
 	}
