@@ -45,14 +45,18 @@ namespace Server.Mobiles
 			CanSwim = true;
 			CantWalk = true;
 
-			Rope rope = new Rope();
-			rope.ItemID = 0x14F8;
-			PackItem( rope );
+            if ( Utility.RandomDouble() < 0.1 )
+            {
+                Rope rope = new Rope();
+                rope.ItemID = 0x14F8;
+
+                PackItem( rope );
+            }
 			
 			if( Utility.RandomDouble() < .05 )
 				PackItem( new MessageInABottle() );
 				
-			PackItem( new SpecialFishingNet() ); //Confirm?
+			//PackItem( new SpecialFishingNet() ); //Confirm?
 		}
 
         public override bool AlwaysMurderer { get { return true; } }
