@@ -170,10 +170,8 @@ namespace Server.Multis
 					Point3D p = new Point3D( ip );
 
 					Region region = Region.Find( p, from.Map );
-
-					if ( region.IsPartOf( typeof( DungeonRegion ) ) )
-						from.SendAsciiMessage( "You can not place a ship inside a dungeon." ); // You can not place a ship inside a dungeon.
-					else if ( region.IsPartOf( typeof( HouseRegion ) ) || region.IsPartOf( typeof( ChampionSpawnRegion ) ) )
+                    
+                    if ( region.IsPartOf( typeof( HouseRegion ) ) || region.IsPartOf( typeof( ChampionSpawnRegion ) ) )
                         from.SendAsciiMessage("A boat may not be placed in this area."); // A boat may not be placed in this area.
 					else
 						m_Deed.OnPlacement( from, p );
