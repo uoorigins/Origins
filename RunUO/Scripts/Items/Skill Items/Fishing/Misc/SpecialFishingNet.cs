@@ -16,10 +16,10 @@ namespace Server.Items
 		{
 			Weight = 1.0;
 
-			if ( 0.01 > Utility.RandomDouble() )
+			/*if ( 0.01 > Utility.RandomDouble() )
 				Hue = Utility.RandomList( m_Hues );
-			else
-				Hue = 0x8A0;
+			else*/
+            Hue = 0x8A0;
 		}
 
 		private static int[] m_Hues = new int[]
