@@ -1087,6 +1087,10 @@ namespace Server.Multis
 				return true;
 			else if ( item is RewardBrazier )
 				return true;
+            else if ( item is AddonComponent )
+            {
+                return true;
+            }
 
 			return false;
 		}
