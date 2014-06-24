@@ -6,6 +6,7 @@ using Server.Gumps;
 using Server.Items;
 using Server.Network;
 using Server.Targeting;
+using Server.Menus.Questions;
 
 namespace Server.Mobiles
 {
@@ -60,6 +61,41 @@ namespace Server.Mobiles
 				m_Trainer.BeginStable( m_From );
 			}
 		}
+
+        private class ClaimListMenu : QuestionMenu
+        {
+            private AnimalTrainer m_Trainer;
+            private Mobile m_From;
+            private List<BaseCreature> m_List;
+
+            public ClaimListMenu( AnimalTrainer trainer, Mobile from, List<BaseCreature> list )
+                : base( "Select a pet to retrieve from the stables:", null )
+            {
+                m_Trainer = trainer;
+                m_From = from;
+                m_List = list;
+
+                List<String> answersList = new List<String>();
+
+                for ( int i = 0; i < list.Count; ++i )
+                {
+                    BaseCreature pet = list[i];
+
+                    if ( pet == null || pet.Deleted )
+                        continue;
+
+                    answersList.Add( pet.Name );
+                }
+
+                Answers = answersList.ToArray();
+            }
+
+            public override void OnResponse( NetState state, int index )
+            {
+                if ( index >= 0 && index < m_List.Count )
+                    m_Trainer.EndClaimList( m_From, m_List[index] );
+            }
+        }
 
 		private class ClaimListGump : Gump
 		{
@@ -206,7 +242,7 @@ namespace Server.Mobiles
 			}
 
 			if ( list.Count > 0 )
-				from.SendGump( new ClaimListGump( this, from, list ) );
+				from.SendMenu( new ClaimListMenu( this, from, list ) );
 			else
 				SayTo( from, true, "But I have no animals stabled with me at the moment!" ); // But I have no animals stabled with me at the moment!
 		}
@@ -321,13 +357,20 @@ namespace Server.Mobiles
 			}
 		}
 
-		public void Claim( Mobile from )
+        public void Claim( Mobile from )
+        {
+            Claim( from, null );
+        }
+
+		public void Claim( Mobile from, String petName )
 		{
 			if ( Deleted || !from.CheckAlive() )
 				return;
 
 			bool claimed = false;
 			int stabled = 0;
+
+            bool claimByName = ( petName != null );
 
 			for ( int i = 0; i < from.Stabled.Count; ++i )
 			{
@@ -342,6 +385,9 @@ namespace Server.Mobiles
 				}
 
 				++stabled;
+
+                if ( claimByName && !Insensitive.Equals( pet.Name, petName ) )
+                    continue;
 
 				if ( (from.Followers + pet.ControlSlots) <= from.FollowersMax )
 				{
@@ -375,7 +421,9 @@ namespace Server.Mobiles
                 SayTo(from, true, "Here you go... and good day to you!"); // Here you go... and good day to you!
 			else if ( stabled == 0 )
                 SayTo(from, true, "But I have no animals stabled with me at the moment!"); // But I have no animals stabled with me at the moment!
-		}
+            else if ( claimByName )
+                BeginClaimList( from );
+        }
 
 		public override bool HandlesOnSpeech( Mobile from )
 		{
@@ -390,18 +438,22 @@ namespace Server.Mobiles
                 return;
             }
 
-			if ( !e.Handled && e.HasKeyword( 0x0008 ) )
+            if ( !e.Handled && e.HasKeyword( 0x0008 ) ) // *stable*
 			{
 				e.Handled = true;
 				BeginStable( e.Mobile );
 			}
-			else if ( !e.Handled && e.HasKeyword( 0x0009 ) )
-			{
-				e.Handled = true;
+            else if ( !e.Handled && e.HasKeyword( 0x0009 ) ) // *claim*
+            {
+                e.Handled = true;
 
-				if ( Insensitive.Equals( e.Speech, "claim" ) )
-					Claim( e.Mobile );
-			}
+                int index = e.Speech.IndexOf( ' ' );
+
+                if ( index != -1 )
+                    Claim( e.Mobile, e.Speech.Substring( index ).Trim() );
+                else
+                    Claim( e.Mobile );
+            }
 			else
 			{
 				base.OnSpeech( e );
