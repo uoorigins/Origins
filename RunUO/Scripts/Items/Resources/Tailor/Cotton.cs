@@ -77,12 +77,12 @@ namespace Server.Items
 		{
 			if ( IsChildOf( from.Backpack ) )
 			{
-				from.SendLocalizedMessage( 502655 ); // What spinning wheel do you wish to spin this on?
+				from.SendAsciiMessage( "What spinning wheel do you wish to spin this on?" ); // What spinning wheel do you wish to spin this on?
 				from.Target = new PickWheelTarget( this );
 			}
 			else
 			{
-				from.SendLocalizedMessage( 1042001 ); // That must be in your pack for you to use it.
+                from.SendAsciiMessage( "That must be in your pack for you to use it." ); // That must be in your pack for you to use it.
 			}
 		}
 
@@ -92,7 +92,7 @@ namespace Server.Items
 			item.Hue = hue;
 
 			from.AddToBackpack( item );
-			from.SendLocalizedMessage( 1010577 ); // You put the spools of thread in your backpack.
+            from.SendAsciiMessage( "You put the spools of thread in your backpack." ); // You put the spools of thread in your backpack.
 		}
 
 		private class PickWheelTarget : Target
@@ -120,11 +120,11 @@ namespace Server.Items
 
 					if ( !m_Cotton.IsChildOf( from.Backpack ) )
 					{
-						from.SendLocalizedMessage( 1042001 ); // That must be in your pack for you to use it.
+                        from.SendAsciiMessage( "That must be in your pack for you to use it." ); // That must be in your pack for you to use it.
 					}
 					else if ( wheel.Spinning )
 					{
-						from.SendLocalizedMessage( 502656 ); // That spinning wheel is being used.
+                        from.SendAsciiMessage( "That spinning wheel is being used." ); // That spinning wheel is being used.
 					}
 					else
 					{
@@ -134,7 +134,7 @@ namespace Server.Items
 				}
 				else
 				{
-					from.SendLocalizedMessage( 502658 ); // Use that on a spinning wheel.
+                    from.SendAsciiMessage( "Use that on a spinning wheel." ); // Use that on a spinning wheel.
 				}
 			}
 		}
