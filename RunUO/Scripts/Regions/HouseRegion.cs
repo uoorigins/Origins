@@ -57,9 +57,9 @@ namespace Server.Regions
 		public override bool SendInaccessibleMessage( Item item, Mobile from )
 		{
 			if ( item is Container )
-				item.SendLocalizedMessageTo( from, 501647 ); // That is secure.
+                 from.Send(new AsciiMessage(item.Serial, item.ItemID, MessageType.Label, 0, 3, "", "That is secure."));
 			else
-				item.SendLocalizedMessageTo( from, 1061637 ); // You are not allowed to access this.
+                from.Send( new AsciiMessage( item.Serial, item.ItemID, MessageType.Label, 0, 3, "", "You are not allowed to access this." ) );
 
 			return true;
 		}
