@@ -1499,14 +1499,15 @@ namespace Server.Guilds
 
         public void RemoveProtection( Mobile m )
         {
+            Account theirAccount = (Account)m.Account;
+
+            theirAccount.RemoveTag( "Protection" );
+
             if ( m_Protected.Contains( m ) )
             {
                 PlayerMobile pm = m as PlayerMobile;
                 BaseHouse house = pm.ProtectedHouse;
 
-                Account theirAccount = (Account)m.Account;
-
-                theirAccount.RemoveTag( "Protected" );
                 m_Protected.Remove( m );
 
                 if ( house != null )
