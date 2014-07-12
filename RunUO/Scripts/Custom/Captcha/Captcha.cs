@@ -485,7 +485,7 @@ namespace Server.Gumps
                         from.SendAsciiMessage( 0x22, "Verification succeeded. Thank you!" );
 
                         PlayerMobile pm = (PlayerMobile)from;
-                        pm.NextCaptchaTime = DateTime.Now + TimeSpan.FromMinutes(Utility.RandomMinMax(60,65));
+                        pm.NextCaptchaTime = DateTime.Now + TimeSpan.FromMinutes(Utility.RandomMinMax(30,65));
                     }
 
                     //call our delegate and pass it our mobile & argument
