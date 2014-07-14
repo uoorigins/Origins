@@ -175,6 +175,7 @@
     <Compile Include="Custom\Hireables\HireThief.cs" />
     <Compile Include="Custom\Hireables\HireWarrior.cs" />
     <Compile Include="Custom\HumanJerky.cs" />
+    <Compile Include="Custom\LoginGump.cs" />
     <Compile Include="Custom\New Guild\DeclareFealtyMenu.cs" />
     <Compile Include="Custom\New Guild\GrantGuildTitleMenu.cs" />
     <Compile Include="Custom\New Guild\GuildAcceptWarMenu.cs" />
@@ -232,6 +233,7 @@
     <Compile Include="Custom\NPCSpeech\Towns\BritainHigh.cs" />
     <Compile Include="Custom\NPCSpeech\Towns\BritainLow.cs" />
     <Compile Include="Custom\NPCSpeech\Towns\BritainMedium.cs" />
+    <Compile Include="Custom\Platinum.cs" />
     <Compile Include="Custom\PolymorphMenu.cs" />
     <Compile Include="Custom\RazorNegotiator.cs" />
     <Compile Include="Custom\ReadBookFromTxt.cs" />

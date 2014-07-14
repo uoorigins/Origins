@@ -13,6 +13,7 @@ using System.Collections;
 using Server.Targeting;
 using System.Collections.Generic;
 using System.Linq;
+using Server.Mobiles;
 
 namespace Server.Gumps
 {
@@ -124,7 +125,7 @@ namespace Server.Gumps
 			this.Dragable=true;
 			this.Resizable=false;
 
-            AddBackground(0, 0, 190, 330, 9200);
+            AddBackground(0, 0, 190, 355, 9200);
             AddButton(16, 269, 4005, 4007, 1, GumpButtonType.Reply, 0);
             AddLabel(40, 11, 0, @"UO: Origins Chat");
 
@@ -165,8 +166,13 @@ namespace Server.Gumps
 
             AddLabel(54, 270, 0, (isvisible ? @"Hide Name" : @"Show Name"));
 
-
             AddLabel(56, 298, 0, @"Quit Chat");
+
+            PlayerMobile pm = from as PlayerMobile;
+
+            AddHtml( 48, 325, 126, 18, @"<basefont color=black size=5>Receive on Login</basefont>", false, false );
+            AddCheck( 16, 320, 2152, 2154, ( pm != null ? pm.ShowChat : true ), 0 );
+
             AddButton(16, 296, 4017, 4019, 0, GumpButtonType.Reply, 0);
 
         }
@@ -174,6 +180,12 @@ namespace Server.Gumps
         public override void OnResponse(NetState sender, RelayInfo info)
         {
             Mobile from = sender.Mobile;
+            PlayerMobile pm = from as PlayerMobile;
+
+            if ( pm != null )
+            {
+                pm.ShowChat = info.IsSwitched( 0 );
+            }
 
             switch(info.ButtonID)
             {

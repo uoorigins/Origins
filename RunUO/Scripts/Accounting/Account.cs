@@ -90,6 +90,14 @@ namespace Server.Accounting
 			set { m_LoginIPs = value; }
 		}
 
+        /// <summary>
+        /// List of characters on this account.
+        /// </summary>
+        public Mobile[] Mobiles
+        {
+            get { return m_Mobiles; }
+        }
+
 		/// <summary>
 		/// List of account comments. Type of contained objects is AccountComment.
 		/// </summary>
@@ -225,6 +233,16 @@ namespace Server.Accounting
 			get { return m_LastLogin; }
 			set { m_LastLogin = value; }
 		}
+
+        /// <summary>
+        /// Gets or sets the account's wallet balance.
+        /// </summary>
+        private int m_WalletBalance;
+        public int WalletBalance
+        {
+            get { return m_WalletBalance; }
+            set { m_WalletBalance = value; }
+        }
 
 		/// <summary>
 		/// An account is considered inactive based upon LastLogin and InactiveDuration.  If the account is empty, it is based upon EmptyInactiveDuration
@@ -706,6 +724,8 @@ namespace Server.Accounting
 			if ( this.Young )
 				CheckYoung();
 
+            m_WalletBalance = Utility.GetXMLInt32( Utility.GetText( node["wallet"], "0" ), 0 );
+
 			Accounts.Add( this );
 		}
 
@@ -1022,6 +1042,10 @@ namespace Server.Accounting
 				xml.WriteString( XmlConvert.ToString( m_Flags ) );
 				xml.WriteEndElement();
 			}
+
+            xml.WriteStartElement( "wallet" );
+            xml.WriteString( XmlConvert.ToString( m_WalletBalance ) );
+            xml.WriteEndElement();
 
 			xml.WriteStartElement( "created" );
 			xml.WriteString( XmlConvert.ToString( m_Created, XmlDateTimeSerializationMode.Local ) );

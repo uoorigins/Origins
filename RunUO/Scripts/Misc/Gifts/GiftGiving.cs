@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Server;
 using Server.Accounting;
 using Server.Items;
+using Server.Mobiles;
+using System.Linq;
 
 namespace Server.Misc
 {
@@ -50,6 +52,28 @@ namespace Server.Misc
 
 				giver.DelayGiveGift( TimeSpan.FromSeconds( 5.0 ), e.Mobile );
 			}
+
+            if ( acct.LastLogin.Month != now.Month || acct.LastLogin.Year != now.Year )
+            {
+                int coins = 0;
+                foreach ( Mobile m in acct.Mobiles.ToList() )
+                {
+                    PlayerMobile pm = m as PlayerMobile;
+
+                    if ( pm != null )
+                    {
+                        if ( pm.MonthlyGameTime.Hours > 500 )
+                        {
+                            pm.MonthlyGameTime = TimeSpan.FromHours( 500 );
+                        }
+
+                        coins += (int)pm.MonthlyGameTime.TotalHours / 50;
+
+                        pm.MonthlyGameTime = TimeSpan.Zero;
+                    }
+                }
+                acct.WalletBalance += coins;
+            }
 
 			acct.LastLogin = now;
 		}

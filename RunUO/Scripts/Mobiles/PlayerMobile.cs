@@ -27,6 +27,7 @@ using Server.Spells.Spellweaving;
 using Server.Menus.Questions;
 using Server.Engines.PartySystem;
 using System.Net;
+using System.Linq;
 
 namespace Server.Mobiles
 {
@@ -108,6 +109,20 @@ namespace Server.Mobiles
             {
                 m_ProtectedHouse = value;
             }
+        }
+
+        private bool m_ShowChat;
+        public bool ShowChat
+        {
+            get { return m_ShowChat; }
+            set { m_ShowChat = value; }
+        }
+
+        private bool m_ShowNews;
+        public bool ShowNews
+        {
+            get { return m_ShowNews; }
+            set { m_ShowNews = value; }
         }
 
 		private NpcGuild m_NpcGuild;
@@ -876,7 +891,7 @@ namespace Server.Mobiles
 		private static void OnLogin( LoginEventArgs e )
 		{
 			Mobile from = e.Mobile;
-
+            PlayerMobile pm = from as PlayerMobile;
             Region region = Region.Find(from.Location, from.Map);
             from.Send(PlayMusic.GetInstance(region.Music));
 
@@ -900,27 +915,36 @@ namespace Server.Mobiles
 
             ChatSystem system = null;
 
-            foreach (Item item in World.Items.Values)
+            if ( pm != null && pm.ShowChat )
             {
-                if (item is ChatSystem)
-                    system = item as ChatSystem;
+                foreach ( Item item in World.Items.Values.ToList() )
+                {
+                    if ( item is ChatSystem )
+                        system = item as ChatSystem;
+                }
+
+                if ( system == null )
+                    system = new ChatSystem();
+
+                system.AddPlayer( from );
             }
 
-            if (system == null)
-                system = new ChatSystem();
-
-            system.AddPlayer(from);
-            
             if (from.Player)
             {
-                PlayerMobile pm = from as PlayerMobile;
                 if (pm.HasMenu)
                 {
                     pm.CantWalk = false;
                     pm.HasMenu = false;
                 }
             }
+
+
             from.CantWalk = false;
+
+            if ( pm != null && pm.ShowNews )
+            {
+                from.SendGump( new LoginGump( from ) );
+            }
 
             string[] BetaAccounts = new string[]
             {   "jeff",
@@ -1488,6 +1512,7 @@ namespace Server.Mobiles
 			if ( pm != null )
 			{
 				pm.m_GameTime += (DateTime.Now - pm.m_SessionStart);
+                pm.m_MonthlyGameTime += ( DateTime.Now - pm.m_SessionStart );
 
 				if ( pm.m_Quest != null )
 					pm.m_Quest.StopTimer();
@@ -2963,6 +2988,9 @@ namespace Server.Mobiles
 
 		public PlayerMobile()
 		{
+            m_ShowChat = true;
+            m_ShowChat = true;
+
 			m_VisList = new List<Mobile>();
 			m_PermaFlags = new List<Mobile>();
 			m_AntiMacroTable = new Hashtable();
@@ -2970,6 +2998,7 @@ namespace Server.Mobiles
 			m_BOBFilter = new Engines.BulkOrders.BOBFilter();
 
 			m_GameTime = TimeSpan.Zero;
+            m_MonthlyGameTime = TimeSpan.Zero;
 			m_ShortTermElapse = TimeSpan.FromHours( 8.0 );
             m_DeathCountElapse = TimeSpan.FromMinutes( 20.0 );
 			m_LongTermElapse = TimeSpan.FromHours( 12.0/*40.0*/ );
@@ -3277,6 +3306,13 @@ namespace Server.Mobiles
 
 			switch ( version )
 			{
+                case 30:
+                    {
+                        m_ShowChat = reader.ReadBool();
+                        m_ShowNews = reader.ReadBool();
+                        m_MonthlyGameTime = reader.ReadTimeSpan();
+                        goto case 29;
+                    }
                 case 29:
                     {
                         m_ProtectedHouse = (BaseHouse)reader.ReadItem();
@@ -3508,6 +3544,13 @@ namespace Server.Mobiles
 				}
 			}
 
+            if ( version < 30 )
+            {
+                m_ShowChat = true;
+                m_ShowNews = true;
+                m_MonthlyGameTime = TimeSpan.Zero;
+            }
+
 			// Professions weren't verified on 1.0 RC0
 			if ( !CharacterCreation.VerifyProfession( m_Profession ) )
 				m_Profession = 0;
@@ -3592,8 +3635,11 @@ namespace Server.Mobiles
 
 			base.Serialize( writer );
 			
-			writer.Write( (int) 29 ); // version
+			writer.Write( (int) 30 ); // version
 
+            writer.Write( (bool)m_ShowChat );
+            writer.Write( (bool)m_ShowNews );
+            writer.Write( m_MonthlyGameTime );
             writer.Write( m_ProtectedHouse );
             writer.Write((bool)m_Companion);
             writer.Write((bool)m_BountyMark);
@@ -3726,6 +3772,21 @@ namespace Server.Mobiles
 		{
 			get{ return m_SessionStart; }
 		}
+
+        private TimeSpan m_MonthlyGameTime;
+        [CommandProperty( AccessLevel.GameMaster )]
+        public TimeSpan MonthlyGameTime
+        {
+            get
+            {
+
+                if ( NetState != null )
+                    return m_MonthlyGameTime + ( DateTime.Now - m_SessionStart );
+                else
+                    return m_MonthlyGameTime;
+            }
+            set { m_MonthlyGameTime = value; }
+        }
 
 		[CommandProperty( AccessLevel.GameMaster )]
 		public TimeSpan GameTime
