@@ -141,7 +141,7 @@ namespace Server.Gumps
 
 			AddItem(515, 174, 3826);
             AddHtml( 334, 175, 64, 18, @"<basefont color=black size=5>Balance:</basefont>", false, false );
-			AddButton(338, 200, 4005, 4007, 0, GumpButtonType.Reply, 1);
+			AddButton(338, 200, 4005, 4007, 1, GumpButtonType.Reply, 0);
             AddHtml( 376, 200, 179, 18, @"<basefont color=black size=5>Deposit to Bank Account</basefont>", false, false );
 
             AddImage( 293, 253, 92 );
@@ -156,14 +156,16 @@ namespace Server.Gumps
             double total = 0;
 
             int i = 0;
+            int count = 0;
             for ( i = 0; i < list.Count; i++ )
             {
                 pm = (PlayerMobile)list[i];
                 if ( pm != null )
                 {
-                    AddLabel( 334, 305+(i*15), 2057, pm.Name );
-                    AddLabel( 500, 305+(i*15), 2057, String.Format("{0:0.0}", pm.MonthlyGameTime.TotalHours));
+                    AddLabel( 334, 305+(count*15), 2057, pm.Name );
+                    AddLabel( 500, 305+(count*15), 2057, String.Format("{0:0.0}", pm.MonthlyGameTime.TotalHours));
                     total += pm.MonthlyGameTime.TotalHours;
+                    count++;
                 }
             }
 
