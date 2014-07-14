@@ -136,8 +136,8 @@ namespace Server.Gumps
             TimeSpan accountGametime = account.TotalGameTime;
             TimeSpan playerGametime = pm.GameTime;
 
-            AddLabel( 505, 122, 2057, Math.Round( accountGametime.TotalHours / 24, 1 ).ToString() + @" days" );
-            AddLabel( 505, 142, 2057, Math.Round( playerGametime.TotalHours / 24, 1 ).ToString() + @" days" );
+            AddLabel( 515, 122, 2057, Math.Round( accountGametime.TotalHours / 24, 1 ).ToString() + @" days" );
+            AddLabel( 515, 142, 2057, Math.Round( playerGametime.TotalHours / 24, 1 ).ToString() + @" days" );
             AddLabel( 395, 175, 2057, account.WalletBalance.ToString() + @" coins" );
 
 			AddItem(515, 174, 3826);
