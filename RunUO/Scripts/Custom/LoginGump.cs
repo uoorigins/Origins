@@ -129,15 +129,15 @@ namespace Server.Gumps
             AddPage( walletPage );
             AddHtml( 345, 95, 153, 18, @"<basefont color=black size=5>My Wallet</basefont>", false, false );
             AddHtml( 345, 257, 160, 18, @"<basefont color=black size=5>Activity This Month</basefont>", false, false );
-            AddHtml( 334, 122, 96, 18, @"<basefont color=black size=5>Account Gametime:</basefont>", false, false );
-            AddHtml( 334, 142, 74, 18, String.Format(@"<basefont color=black size=5>{0}'s Gametime:</basefont>", from.Name), false, false );
+            AddHtml( 334, 122, 200, 18, @"<basefont color=black size=5>Account Gametime:</basefont>", false, false );
+            AddHtml( 334, 142, 200, 18, String.Format(@"<basefont color=black size=5>{0}'s Gametime:</basefont>", from.Name), false, false );
 
             TimeSpan age = TimeSpan.FromDays( ( DateTime.Now - account.Created ).Days );
             TimeSpan accountGametime = account.TotalGameTime;
             TimeSpan playerGametime = pm.GameTime;
 
-            AddLabel( 430, 122, 2057, Math.Round( accountGametime.TotalHours / 24, 1 ).ToString() + @" days" );
-            AddLabel( 405, 142, 2057, Math.Round( playerGametime.TotalHours / 24, 1 ).ToString() + @" days" );
+            AddLabel( 505, 122, 2057, Math.Round( accountGametime.TotalHours / 24, 1 ).ToString() + @" days" );
+            AddLabel( 505, 142, 2057, Math.Round( playerGametime.TotalHours / 24, 1 ).ToString() + @" days" );
             AddLabel( 395, 175, 2057, account.WalletBalance.ToString() + @" coins" );
 
 			AddItem(515, 174, 3826);
