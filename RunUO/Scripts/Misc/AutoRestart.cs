@@ -11,7 +11,7 @@ namespace Server.Misc
 	{
 		public static bool Enabled = true; // is the script enabled?
 
-		private static TimeSpan RestartTime = TimeSpan.FromHours( 0.0 ); // time of day at which to restart
+		private static TimeSpan RestartTime = TimeSpan.FromHours( 5.0 ); // time of day at which to restart
 		private static TimeSpan RestartDelay = TimeSpan.FromMinutes(15.0); // how long the server should remain active before restart (period of 'server wars')
         private static TimeSpan RestartDay = TimeSpan.FromDays( 7.0 ); // restart every 7 days
 
