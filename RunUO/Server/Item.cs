@@ -2765,6 +2765,14 @@ namespace Server
 			}
 		}
 
+        public virtual string AsciiName
+        {
+            get
+            {
+                return "<placeholder>";
+            }
+        }
+
 		[CommandProperty( AccessLevel.GameMaster )]
 		public int TotalGold
 		{
@@ -4550,6 +4558,10 @@ namespace Server
 			{
 				if ( this.Name == null )
 				{
+                    string parse = Parse( LabelNumber );
+                    if ( parse == "" || AsciiName != "<placeholder>" )
+                        parse = AsciiName;
+
 					if ( m_Amount <= 1 )
 						ns.Send( new AsciiMessage( m_Serial, m_ItemID, MessageType.Label, 0, 3, "", Parse(LabelNumber)) );
 					else

@@ -7,6 +7,7 @@ using Server.Network;
 using Server.ContextMenus;
 using Server.Engines.VeteranRewards;
 using Server.Menus.Questions;
+using Server.Menus;
 
 namespace Server.Items
 {	
@@ -54,29 +55,26 @@ namespace Server.Items
 			}
 			else if ( !m.InRange( ankh.GetWorldLocation(), 2 ) )
 			{
-				m.SendLocalizedMessage( 500446 ); // That is too far away.
+                m.SendLocalizedMessage( "That is too far away." ); // That is too far away.
 			}
 			else if ( m.Alive )
 			{
-				m.SendLocalizedMessage( 1060197 ); // You are not dead, and thus cannot be resurrected!
+                m.SendLocalizedMessage( "You are not dead, and thus cannot be resurrected!" ); // You are not dead, and thus cannot be resurrected!
 			}
-			else if ( m.AnkhNextUse > DateTime.Now )
-			{			
-				TimeSpan delay = m.AnkhNextUse - DateTime.Now;
+            else if ( m.AnkhNextUse > DateTime.Now )
+            {
+                TimeSpan delay = m.AnkhNextUse - DateTime.Now;
 
-				if ( delay.TotalMinutes > 0 )
-					m.SendLocalizedMessage( 1079265, Math.Round( delay.TotalMinutes ).ToString() ); // You must wait ~1_minutes~ minutes before you can use this item.
-				else
-					m.SendLocalizedMessage( 1079263, Math.Round( delay.TotalSeconds ).ToString() ); // You must wait ~1_seconds~ seconds before you can use this item.		
-			}
-			else
-			{
-				    m.CloseGump( typeof( ResurrectGump ) );
-                    m.SendMenu(new ResurrectGump(m, ResurrectMessage.VirtueShrine));
-
-				//m.CloseGump( typeof( AnkhResurrectGump ) );
-			//m.SendGump( new AnkhResurrectGump( m, ResurrectMessage.VirtueShrine ) );
-			}
+                if ( delay.TotalMinutes > 0 )
+                    m.SendLocalizedMessage( String.Format( "You must wait {0} minutes before you can use this item.", Math.Round( delay.TotalMinutes ) ) ); // You must wait ~1_minutes~ minutes before you can use this item.
+                else
+                    m.SendLocalizedMessage( String.Format( "You must wait {0} seconds before you can use this item.", Math.Round( delay.TotalSeconds ) ) ); // You must wait ~1_seconds~ seconds before you can use this item.		
+            }
+            else
+            {
+                m.CloseGump( typeof( ResurrectGump ) );
+                m.SendMenu( new ResurrectGump( m, ResurrectMessage.VirtueShrine ) );
+            }
 		}
 
 		private class ResurrectEntry : ContextMenuEntry
@@ -233,6 +231,7 @@ namespace Server.Items
 	public class AnkhOfSacrificeDeed : BaseAddonDeed, IRewardItem, IRewardOption
 	{
 		public override int LabelNumber{ get{ return 1080397; } } // Deed For An Ankh Of Sacrifice
+        public override string AsciiName{ get{ return "a deed for an ankh of sacrifice"; } }
 
 		public override BaseAddon Addon
 		{ 
@@ -255,7 +254,7 @@ namespace Server.Items
 			set{ m_IsRewardItem = value; InvalidateProperties(); }
 		}
 		
-		 
+		[Constructable] 
 		public AnkhOfSacrificeDeed() : this( false )
 		{
 		}
@@ -279,11 +278,10 @@ namespace Server.Items
 			
 			if ( IsChildOf( from.Backpack ) )
 			{
-				from.CloseGump( typeof( RewardOptionGump ) );
-				from.SendGump( new RewardOptionGump( this ) );
+				from.SendMenu( new RewardOptionMenu( this ) );
 			}
 			else
-				from.SendLocalizedMessage( 1062334 ); // This item must be in your backpack to be used.   
+                from.SendLocalizedMessage( "This item must be in your backpack to be used." ); // This item must be in your backpack to be used.   
 		}
 		
 		public override void GetProperties( ObjectPropertyList list )
@@ -314,8 +312,8 @@ namespace Server.Items
 
 		public void GetOptions( RewardOptionList list )
 		{
-			list.Add( 1, 1080398 ); // Ankh of Sacrifice South
-			list.Add( 2, 1080399 ); // Ankh of Sacrifice East
+            list.Add( 1, "Ankh of Sacrifice South" ); // Ankh of Sacrifice South
+			list.Add( 2, "Ankh of Sacrifice East" ); // Ankh of Sacrifice East
 		}
 
 		public void OnOptionSelected( Mobile from, int option )

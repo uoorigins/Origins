@@ -296,7 +296,7 @@ namespace Server.Factions
 						}
 						else if ( MerchantTitles.IsQualified( m_From, mti ) )
 						{
-							m_From.SendLocalizedMessage( mti.Assigned );
+							m_From.SendLocalizedMessage( (int)mti.Assigned );
 
 							if ( pl != null )
 								pl.MerchantTitle = newTitle;

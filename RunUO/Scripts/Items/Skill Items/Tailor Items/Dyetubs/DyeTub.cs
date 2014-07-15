@@ -18,6 +18,11 @@ namespace Server.Items
 
 		public virtual CustomHuePicker CustomHuePicker{ get{ return null; } }
 
+        public virtual bool AllowBolts
+        {
+            get { return true; }
+        }
+
 		public virtual bool AllowRunebooks
 		{
 			get{ return false; }
@@ -143,6 +148,10 @@ namespace Server.Items
 			}
 		}
 
+        protected virtual void AfterDye(Mobile from)
+        {
+        }
+
 		private class InternalTarget : Target
 		{
 			private DyeTub m_Tub;
@@ -160,12 +169,17 @@ namespace Server.Items
 
 					if ( item is IDyable && m_Tub.AllowDyables )
 					{
-						if ( !from.InRange( m_Tub.GetWorldLocation(), 1 ) || !from.InRange( item.GetWorldLocation(), 1 ) )
-                            from.SendAsciiMessage("That is too far away."); // That is too far away.
-						else if ( item.Parent is Mobile )
-                            from.SendAsciiMessage("Can't Dye clothing that is being worn."); // Can't Dye clothing that is being worn.
-						else if ( ((IDyable)item).Dye( from, m_Tub ) )
-							from.PlaySound( 0x23E );
+                        if ( !from.InRange( m_Tub.GetWorldLocation(), 1 ) || !from.InRange( item.GetWorldLocation(), 1 ) )
+                            from.SendAsciiMessage( "That is too far away." ); // That is too far away.
+                        else if ( item.Parent is Mobile )
+                            from.SendAsciiMessage( "Can't Dye clothing that is being worn." ); // Can't Dye clothing that is being worn.
+                        else if ( !m_Tub.AllowBolts && ( item is BoltOfCloth || item is Cloth || item is UncutCloth || item is BaseClothMaterial || item is Wool || item is Cotton || item is OilCloth) )
+                            from.SendAsciiMessage( "You can't dye this with a charged dye tub." );
+                        else if ( ( (IDyable)item ).Dye( from, m_Tub ) )
+                        {
+                            from.PlaySound( 0x23E );
+                            m_Tub.AfterDye( from );
+                        }
 					}
 					else if ( (FurnitureAttribute.Check( item ) || (item is PotionKeg)) && m_Tub.AllowFurniture )
 					{
@@ -184,15 +198,15 @@ namespace Server.Items
 									BaseHouse house = BaseHouse.FindHouseAt( item );
 
 									if ( house == null || !house.IsLockedDown( item ) )
-										from.SendLocalizedMessage( 501022 ); // Furniture must be locked down to paint it.
+                                        from.SendLocalizedMessage( "Furniture must be locked down to paint it." ); // Furniture must be locked down to paint it.
 									else if ( !house.IsCoOwner( from ) )
-										from.SendLocalizedMessage( 501023 ); // You must be the owner to use this item.
+                                        from.SendLocalizedMessage( "You must be the owner to use this item." ); // You must be the owner to use this item.
 									else
 										okay = true;
 								}
 								else
 								{
-									from.SendLocalizedMessage( 1048135 ); // The furniture must be in your backpack to be painted.
+                                    from.SendLocalizedMessage( "The furniture must be in your backpack to be painted." ); // The furniture must be in your backpack to be painted.
 								}
 							}
 
@@ -200,6 +214,7 @@ namespace Server.Items
 							{
 								item.Hue = m_Tub.DyedHue;
 								from.PlaySound( 0x23E );
+                                m_Tub.AfterDye(from);
 							}
 						}
 					}
@@ -211,48 +226,51 @@ namespace Server.Items
 						}
 						else if ( !item.Movable )
 						{
-							from.SendLocalizedMessage( 1049776 ); // You cannot dye runes or runebooks that are locked down.
+                            from.SendLocalizedMessage( "You cannot dye runes or runebooks that are locked down." ); // You cannot dye runes or runebooks that are locked down.
 						}
 						else
 						{
 							item.Hue = m_Tub.DyedHue;
 							from.PlaySound( 0x23E );
+                            m_Tub.AfterDye(from);
 						}
 					}
 					else if ( item is MonsterStatuette && m_Tub.AllowStatuettes )
 					{
 						if ( !from.InRange( m_Tub.GetWorldLocation(), 1 ) || !from.InRange( item.GetWorldLocation(), 1 ) )
 						{
-							from.SendLocalizedMessage( 500446 ); // That is too far away.
+							from.SendLocalizedMessage( "That is too far away." ); // That is too far away.
 						}
 						else if ( !item.Movable )
 						{
-							from.SendLocalizedMessage( 1049779 ); // You cannot dye statuettes that are locked down.
+                            from.SendLocalizedMessage( "You cannot dye statuettes that are locked down." ); // You cannot dye statuettes that are locked down.
 						}
 						else
 						{
 							item.Hue = m_Tub.DyedHue;
 							from.PlaySound( 0x23E );
+                            m_Tub.AfterDye(from);
 						}
 					}
 					else if ( (item is BaseArmor && (((BaseArmor)item).MaterialType == ArmorMaterialType.Leather || ((BaseArmor)item).MaterialType == ArmorMaterialType.Studded)) && m_Tub.AllowLeather )
 					{
 						if ( !from.InRange( m_Tub.GetWorldLocation(), 1 ) || !from.InRange( item.GetWorldLocation(), 1 ) )
 						{
-							from.SendLocalizedMessage( 500446 ); // That is too far away.
+							from.SendLocalizedMessage( "That is too far away." ); // That is too far away.
 						}
 						else if ( !item.Movable )
 						{
-							from.SendLocalizedMessage( 1042419 ); // You may not dye leather items which are locked down.
+                            from.SendLocalizedMessage( "You may not dye leather items which are locked down." ); // You may not dye leather items which are locked down.
 						}
 						else if ( item.Parent is Mobile )
 						{
-							from.SendLocalizedMessage( 500861 ); // Can't Dye clothing that is being worn.
+							from.SendLocalizedMessage( "Can't Dye clothing that is being worn." ); // Can't Dye clothing that is being worn.
 						}
 						else
 						{
 							item.Hue = m_Tub.DyedHue;
 							from.PlaySound( 0x23E );
+                            m_Tub.AfterDye(from);
 						}
 					}
 					else

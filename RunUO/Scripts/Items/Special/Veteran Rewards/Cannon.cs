@@ -6,6 +6,7 @@ using Server.Mobiles;
 using Server.Network;
 using Server.Engines.Quests.Haven;
 using Server.Engines.VeteranRewards;
+using Server.Menus;
 
 namespace Server.Items
 {
@@ -423,11 +424,10 @@ namespace Server.Items
 		
 			if ( IsChildOf( from.Backpack ) )
 			{
-				from.CloseGump( typeof( RewardOptionGump ) );
-				from.SendGump( new RewardOptionGump( this ) );
+				from.SendMenu( new RewardOptionMenu( this ) );
 			}
 			else
-				from.SendLocalizedMessage( 1042038 ); // You must have the object in your backpack to use it.          	
+                from.SendLocalizedMessage( "You must have the object in your backpack to use it." ); // You must have the object in your backpack to use it.          	
 		}
 
 		public override void Serialize( GenericWriter writer )
@@ -452,10 +452,10 @@ namespace Server.Items
 
 		public void GetOptions( RewardOptionList list )
 		{
-			list.Add( (int) CannonDirection.South, 1075386 ); // South
-			list.Add( (int) CannonDirection.East, 1075387 ); // East
-			list.Add( (int) CannonDirection.North, 1075389 ); // North
-			list.Add( (int) CannonDirection.West, 1075390 ); // West
+			list.Add( (int) CannonDirection.South, "South" ); // South
+			list.Add( (int) CannonDirection.East, "East" ); // East
+			list.Add( (int) CannonDirection.North, "North" ); // North
+            list.Add( (int)CannonDirection.West, "West" ); // West
 		}
 
 		public void OnOptionSelected( Mobile from, int option )

@@ -3,6 +3,7 @@ using Server;
 using Server.Gumps;
 using Server.Network;
 using Server.Engines.VeteranRewards;
+using Server.Menus;
 
 namespace Server.Items
 {
@@ -128,8 +129,7 @@ namespace Server.Items
 			
 			if ( IsChildOf( from.Backpack ) )
 			{
-				from.CloseGump( typeof( RewardOptionGump ) );
-				from.SendGump( new RewardOptionGump( this ) );
+				from.SendMenu( new RewardOptionMenu( this ) );
 			}
 			else
 				from.SendLocalizedMessage( 1062334 ); // This item must be in your backpack to be used.    
@@ -163,10 +163,10 @@ namespace Server.Items
 
 		public void GetOptions( RewardOptionList list )
 		{
-			list.Add( (int) MinotaurStatueType.AttackSouth, 1080410 ); // Minotaur Attack South
-			list.Add( (int) MinotaurStatueType.AttackEast, 1080411 ); // Minotaur Attack East
-			list.Add( (int) MinotaurStatueType.DefendSouth, 1080412 ); // Minotaur Defend South
-			list.Add( (int) MinotaurStatueType.DefendEast, 1080413 ); // Minotaur Defend East
+            list.Add( (int)MinotaurStatueType.AttackSouth, "Minotaur Attack South" ); // Minotaur Attack South
+			list.Add( (int) MinotaurStatueType.AttackEast, "Minotaur Attack East" ); // Minotaur Attack East
+            list.Add( (int)MinotaurStatueType.DefendSouth, "Minotaur Defend South" ); // Minotaur Defend South
+            list.Add( (int)MinotaurStatueType.DefendEast, "Minotaur Defend East" ); // Minotaur Defend East
 		}
 
 		public void OnOptionSelected( Mobile from, int option )

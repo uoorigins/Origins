@@ -123,10 +123,9 @@ namespace Server.Items
 			set{ m_IsRewardItem = value; InvalidateProperties(); }
 		}
 		
-		 
+		[Constructable]
 		public FlamingHeadDeed() : base( 0x14F0 )
 		{			
-			LootType = LootType.Blessed;
 			Weight = 1.0;
 		}
 
@@ -153,14 +152,14 @@ namespace Server.Items
 
 				if ( house != null && house.IsOwner( from ) )
 				{
-					from.SendLocalizedMessage( 1042264 ); // Where would you like to place this head?
+                    from.SendLocalizedMessage( "Where would you like to place this head?" ); // Where would you like to place this head?
 					from.Target = new InternalTarget( this );
 				}
 				else
-					from.SendLocalizedMessage( 502115 ); // You must be in your house to do this.
+                    from.SendLocalizedMessage( "You must be in your house to do this." ); // You must be in your house to do this.
 			}
 			else
-				from.SendLocalizedMessage( 1042038 ); // You must have the object in your backpack to use it.          	
+				from.SendLocalizedMessage(  "You must have the object in your backpack to use it." ); // You must have the object in your backpack to use it.          	
 		}
 
 		public override void Serialize( GenericWriter writer )
@@ -238,19 +237,19 @@ namespace Server.Items
 									m_Head.Delete();
 								}
 								else		
-									from.SendLocalizedMessage( 1042266 ); // The head must be placed next to a wall.
+									from.SendLocalizedMessage( "The head must be placed next to a wall." ); // The head must be placed next to a wall.
 							}
 							else
-								from.SendLocalizedMessage( 1042266 ); // The head must be placed next to a wall.
+								from.SendLocalizedMessage( "The head must be placed next to a wall." ); // The head must be placed next to a wall.
 						}
 						else
-							from.SendLocalizedMessage( 1042036 ); // That location is not in your house.			
+							from.SendLocalizedMessage( "That location is not in your house." ); // That location is not in your house.			
 					}
 					else
-						from.SendLocalizedMessage( 502115 ); // You must be in your house to do this.
+                        from.SendLocalizedMessage( "You must be in your house to do this." ); // You must be in your house to do this.
 				}
 				else
-					from.SendLocalizedMessage( 1042038 ); // You must have the object in your backpack to use it.     
+                    from.SendLocalizedMessage( "You must have the object in your backpack to use it.  " ); // You must have the object in your backpack to use it.     
 			}
 		}
 	}

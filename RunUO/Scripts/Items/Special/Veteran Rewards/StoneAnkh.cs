@@ -4,6 +4,7 @@ using Server.Multis;
 using Server.Gumps;
 using Server.Network;
 using Server.Engines.VeteranRewards;
+using Server.Menus.Questions;
 
 namespace Server.Items
 {	
@@ -91,7 +92,7 @@ namespace Server.Items
 		
 		public override void OnChop( Mobile from )
 		{
-			from.SendLocalizedMessage( 500489 ); // You can't use an axe on that.
+            from.SendLocalizedMessage( "You can't use an axe on that." ); // You can't use an axe on that.
 			return;
 		}
 
@@ -115,10 +116,10 @@ namespace Server.Items
 						from.SendGump( new RewardDemolitionGump( this, 1049783 ) ); // Do you wish to re-deed this decoration?
 					}
 					else
-					from.SendLocalizedMessage( 1049784 ); // You can only re-deed this decoration if you are the house owner or originally placed the decoration.
+                            from.SendLocalizedMessage( "You can only re-deed this decoration if you are the house owner or originally placed the decoration." ); // You can only re-deed this decoration if you are the house owner or originally placed the decoration.
 				}
 				else
-				from.Say( 1019045 ); // I can't reach that.
+                    from.Say( true, "I can't reach that." ); // I can't reach that.
 			}
 
 		public override void Serialize( GenericWriter writer )
@@ -142,7 +143,7 @@ namespace Server.Items
 	
 	public class StoneAnkhDeed : BaseAddonDeed, IRewardItem
 	{
-		public override int LabelNumber{ get{ return 1049773; } } // deed for a stone ankh
+		public override string AsciiName{ get{ return "a deed for a stone ankh"; } } // deed for a stone ankh
 		
 		private bool m_East;
 		private bool m_IsRewardItem;
@@ -165,7 +166,7 @@ namespace Server.Items
 			} 
 		}
 
-		 
+		[Constructable] 
 		public StoneAnkhDeed() : base()
 		{
 			LootType = LootType.Blessed;
@@ -182,11 +183,10 @@ namespace Server.Items
 			
 			if ( IsChildOf( from.Backpack ) )
 			{
-				from.CloseGump( typeof( InternalGump ) );
-				from.SendGump( new InternalGump( this ) );
+				from.SendMenu( new InternalMenu( this ) );
 			}
 			else
-				from.SendLocalizedMessage( 1042038 ); // You must have the object in your backpack to use it.    
+				from.SendLocalizedMessage( "You must have the object in your backpack to use it." ); // You must have the object in your backpack to use it.    
 		}
 		
 		private void SendTarget( Mobile m )
@@ -220,49 +220,23 @@ namespace Server.Items
 			m_IsRewardItem = reader.ReadBool();
 		}
 		
-		private class InternalGump : Gump
+		private class InternalMenu : QuestionMenu
 		{
 			private StoneAnkhDeed m_Deed;
-				
-			private enum Buttons
-			{
-				Cancel,
-				South,
-				East
-			}
 
-			public InternalGump( StoneAnkhDeed deed ) : base( 150, 50 )
+            public InternalMenu( StoneAnkhDeed deed )
+                : base( "Select your choice from the menu below", new string[] { "South", "East" } )
 			{
 				m_Deed = deed;				
-				
-				Closable = true;
-				Disposable = true;
-				Dragable = true;
-				Resizable = false;
-
-				AddPage( 0 );
-
-				AddBackground( 0, 0, 300, 150, 0xA28 );
-
-				AddItem( 90, 30, 0x4 );
-				AddItem( 112, 30, 0x5 );
-				AddButton( 50, 35, 0x867, 0x869, (int) Buttons.South, GumpButtonType.Reply, 0 ); // South
-
-				AddItem( 170, 30, 0x2 );
-				AddItem( 192, 30, 0x3 );
-				AddButton( 145, 35, 0x867, 0x869, (int) Buttons.East, GumpButtonType.Reply, 0 ); // East
 			}
 
-			public override void OnResponse( NetState sender, RelayInfo info )
+			public override void OnResponse( NetState sender, int index )
 			{
 				if ( m_Deed == null || m_Deed.Deleted )
 					return;
-					
-				if ( info.ButtonID != (int) Buttons.Cancel )
-				{
-					m_Deed.m_East = ( info.ButtonID == (int) Buttons.East );
+
+					m_Deed.m_East = ( index != 0 );
 					m_Deed.SendTarget( sender.Mobile );
-				}
 			}
 		}
 	}

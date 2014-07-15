@@ -6,6 +6,7 @@ using Server.Gumps;
 using Server.Multis;
 using Server.Network;
 using Server.Engines.VeteranRewards;
+using Server.Menus;
 
 namespace Server.Items
 {	
@@ -358,11 +359,10 @@ namespace Server.Items
 		
 			if ( IsChildOf( from.Backpack ) )
 			{
-				from.CloseGump( typeof( RewardOptionGump ) );
-				from.SendGump( new RewardOptionGump( this ) );
+				from.SendMenu( new RewardOptionMenu( this ) );
 			}
 			else
-				from.SendLocalizedMessage( 1062334 ); // This item must be in your backpack to be used.       	
+                from.SendLocalizedMessage( "This item must be in your backpack to be used. " ); // This item must be in your backpack to be used.       	
 		}
 
 		public override void Serialize( GenericWriter writer )
@@ -389,10 +389,10 @@ namespace Server.Items
 
 		public void GetOptions( RewardOptionList list )
 		{
-			list.Add( (int) MiningCartType.OreSouth, 1080391 );
-			list.Add( (int) MiningCartType.OreEast, 1080390 );
-			list.Add( (int) MiningCartType.GemSouth, 1080500 );
-			list.Add( (int) MiningCartType.GemEast, 1080499 );
+			list.Add( (int) MiningCartType.OreSouth, "Mining Cart South" );
+            list.Add( (int)MiningCartType.OreEast, "Mining Cart East" );
+            list.Add( (int)MiningCartType.GemSouth, "Gem Cart South" );
+            list.Add( (int)MiningCartType.GemEast, "Gem Cart East" );
 		}
 
 		public void OnOptionSelected( Mobile from, int choice )

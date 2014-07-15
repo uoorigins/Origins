@@ -33,16 +33,15 @@ namespace Server.Items
 		{
 			0x19AA, 0x19BB
 		};
-		
-		 
+
+        [Constructable] 
 		public RewardBrazier() : this( Utility.RandomList( m_Art ) )
 		{	
 		}
 
-		 
+		[Constructable] 
 		public RewardBrazier( int itemID ) : base( itemID )
 		{
-			LootType = LootType.Blessed;
 			Weight = 10.0;
 		}
 
@@ -73,7 +72,7 @@ namespace Server.Items
 		{
 			if ( !from.InRange( this.GetWorldLocation(), 2 ) )
 			{
-				from.LocalOverheadMessage( MessageType.Regular, 0x3B2, 1019045 ); // I can't reach that.
+				from.LocalOverheadMessage( MessageType.Regular, 0x3B2, true, "I can't reach that." ); // I can't reach that.
 			}
 			else if ( IsLockedDown )
 			{
@@ -87,10 +86,10 @@ namespace Server.Items
 						TurnOn();
 				}
 				else
-					from.SendLocalizedMessage( 502436 ); // That is not accessible.
+                    from.SendLocalizedMessage( "That is not accessible." ); // That is not accessible.
 			}
 			else
-				from.SendLocalizedMessage( 502692 ); // This must be in a house and be locked down to work.
+                from.SendLocalizedMessage( "This must be in a house and be locked down to work." ); // This must be in a house and be locked down to work.
 		}
 
 		public override void OnLocationChange( Point3D old )
@@ -141,10 +140,9 @@ namespace Server.Items
 			set{ m_IsRewardItem = value; InvalidateProperties(); }
 		}
 
-		 
+		[Constructable] 
 		public RewardBrazierDeed() : base( 0x14F0 )
 		{
-			LootType = LootType.Blessed;
 			Weight = 1.0;
 		}
 
@@ -163,7 +161,7 @@ namespace Server.Items
 				from.SendGump( new InternalGump( this ) );
 			}
 			else
-				from.SendLocalizedMessage( 1042038 ); // You must have the object in your backpack to use it.
+                from.SendLocalizedMessage( "You must have the object in your backpack to use it." ); // You must have the object in your backpack to use it.
 		}
 
 		public override void GetProperties( ObjectPropertyList list )
@@ -233,7 +231,7 @@ namespace Server.Items
 					if ( !m.PlaceInBackpack( brazier ) )
 					{
 						brazier.Delete();
-						m.SendLocalizedMessage( 1078837 ); // Your backpack is full! Please make room and try again.
+                        m.SendLocalizedMessage( "Your backpack is full! Please make room and try again." ); // Your backpack is full! Please make room and try again.
 					}
 					else
 						m_Brazier.Delete();

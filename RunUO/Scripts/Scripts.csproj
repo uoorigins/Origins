@@ -124,6 +124,7 @@
     <Compile Include="Custom\Captcha\CaptchaFonts.cs" />
     <Compile Include="Custom\Cartography.cs" />
     <Compile Include="Custom\CC2.0.cs" />
+    <Compile Include="Custom\ChargedDyeTub.cs" />
     <Compile Include="Custom\ChatGump.cs" />
     <Compile Include="Custom\ChatSystem.cs" />
     <Compile Include="Custom\CilolocParser.cs" />

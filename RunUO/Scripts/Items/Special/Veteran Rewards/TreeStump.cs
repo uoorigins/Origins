@@ -4,6 +4,7 @@ using Server.Gumps;
 using Server.Network;
 using Server.Multis;
 using Server.Engines.VeteranRewards;
+using Server.Menus;
 
 namespace Server.Items
 {	
@@ -198,8 +199,7 @@ namespace Server.Items
 		
 			if ( IsChildOf( from.Backpack ) )
 			{
-				from.CloseGump( typeof( RewardOptionGump ) );
-				from.SendGump( new RewardOptionGump( this ) );
+				from.SendMenu( new RewardOptionMenu( this ) );
 			}
 			else
 				from.SendLocalizedMessage( 1062334 ); // This item must be in your backpack to be used.          	
@@ -227,10 +227,10 @@ namespace Server.Items
 		
 		public void GetOptions( RewardOptionList list )
 		{
-			list.Add( 1, 1080403 ); // Tree Stump with Axe West
-			list.Add( 2, 1080404 ); // Tree Stump with Axe North
-			list.Add( 3, 1080401 ); // Tree Stump East
-			list.Add( 4, 1080402 ); // Tree Stump South
+            list.Add( 1, "Tree Stump with Axe West" ); // Tree Stump with Axe West
+            list.Add( 2, "Tree Stump with Axe North" ); // Tree Stump with Axe North
+            list.Add( 3, "Tree Stump East" ); // Tree Stump East
+            list.Add( 4, "Tree Stump South" ); // Tree Stump South
 		}
 
 		public void OnOptionSelected( Mobile from, int option )

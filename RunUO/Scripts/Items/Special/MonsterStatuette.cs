@@ -169,16 +169,14 @@ namespace Server.Items
 			get { return 1.0; }
 		}
 
-		 
+		[Constructable] 
 		public MonsterStatuette() : this( MonsterStatuetteType.Crocodile )
 		{
 		}
 
-		 
+		[Constructable] 
 		public MonsterStatuette( MonsterStatuetteType type ) : base( MonsterStatuetteInfo.GetInfo( type ).ItemID )
 		{
-			LootType = LootType.Blessed;
-
 			m_Type = type;
 
 			if( m_Type == MonsterStatuetteType.Slime )
@@ -235,7 +233,7 @@ namespace Server.Items
 			}
 			else
 			{
-				from.SendLocalizedMessage( 502691 ); // You must be the owner to use this.
+                from.SendLocalizedMessage( "You must be the owner to use this." ); // You must be the owner to use this.
 			}
 		}
 
@@ -268,11 +266,11 @@ namespace Server.Items
 					m_Statuette.TurnedOn = newValue;
 
 					if ( newValue && !m_Statuette.IsLockedDown )
-						from.SendLocalizedMessage( 502693 ); // Remember, this only works when locked down.
+                        from.SendLocalizedMessage( "Remember, this only works when locked down." ); // Remember, this only works when locked down.
 				}
 				else
 				{
-					from.SendLocalizedMessage( 502694 ); // Cancelled action.
+					from.SendLocalizedMessage( "Cancelled action." ); // Cancelled action.
 				}
 			}
 		}

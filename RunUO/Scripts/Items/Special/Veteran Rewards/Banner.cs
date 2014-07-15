@@ -40,7 +40,6 @@ namespace Server.Items
 		 
 		public Banner( int itemID ) : base( itemID )
 		{		
-			LootType = LootType.Blessed;
 			Movable = false;
 		}
 
@@ -68,10 +67,10 @@ namespace Server.Items
 					from.SendGump( new RewardDemolitionGump( this, 1018318 ) ); // Do you wish to re-deed this banner?
 				}
 				else
-					from.SendLocalizedMessage( 1018330 ); // You can only re-deed a banner if you placed it or you are the owner of the house.
+					from.SendAsciiMessage( "You can only re-deed a banner if you placed it or you are the owner of the house." ); // You can only re-deed a banner if you placed it or you are the owner of the house.
 			}
 			else
-				from.LocalOverheadMessage( MessageType.Regular, 0x3B2, 1019045 ); // I can't reach that.
+				from.LocalOverheadMessage( MessageType.Regular, 0x3B2, true, "I can't reach that." ); // I can't reach that.
 		}
 
 		public override void Serialize( GenericWriter writer )
@@ -127,9 +126,9 @@ namespace Server.Items
 			set{ m_IsRewardItem = value; InvalidateProperties(); }
 		}
 		 
+        [Constructable]
 		public BannerDeed() : base( 0x14F0 )
 		{			
-			LootType = LootType.Blessed;
 			Weight = 1.0;
 		}
 
@@ -160,10 +159,10 @@ namespace Server.Items
 					from.SendGump( new InternalGump( this ) );
 				}
 				else
-					from.SendLocalizedMessage( 502092 ); // You must be in your house to do this.
+					from.SendAsciiMessage( "You must be in your house to do this." ); // You must be in your house to do this.
 			}
 			else
-				from.SendLocalizedMessage( 1042038 ); // You must have the object in your backpack to use it.          	
+				from.SendLocalizedMessage( "You must have the object in your backpack to use it." ); // You must have the object in your backpack to use it.          	
 		}
 
 		public override void Serialize( GenericWriter writer )
@@ -237,7 +236,7 @@ namespace Server.Items
 				{
 					if ( ( info.ButtonID & 0x1 ) == 0 )
 					{
-						m.SendLocalizedMessage( 1042037 ); // Where would you like to place this banner?
+						m.SendLocalizedMessage( "Where would you like to place this banner?" ); // Where would you like to place this banner?
 						m.Target = new InternalTarget( m_Banner, info.ButtonID );
 					}
 				}
@@ -306,19 +305,19 @@ namespace Server.Items
 									m_Banner.Delete();
 								}
 								else
-									from.SendLocalizedMessage( 1042039 ); // The banner must be placed next to a wall.								
+									from.SendLocalizedMessage( "The banner must be placed next to a wall." ); // The banner must be placed next to a wall.								
 							}
 							else
-								from.SendLocalizedMessage( 1042036 ); // That location is not in your house.
+                                from.SendLocalizedMessage( "That location is not in your house." ); // That location is not in your house.
 						}
 						else
-							from.SendLocalizedMessage( 500269 ); // You cannot build that there.		
+							from.SendLocalizedMessage( "You cannot build that there." ); // You cannot build that there.		
 					}
 					else
-						from.SendLocalizedMessage( 502092 ); // You must be in your house to do this.
+                        from.SendLocalizedMessage( "You must be in your house to do this." ); // You must be in your house to do this.
 				}
 				else
-					from.SendLocalizedMessage( 1042038 ); // You must have the object in your backpack to use it.     
+                    from.SendLocalizedMessage( "You must have the object in your backpack to use it." ); // You must have the object in your backpack to use it.     
 			}
 			
 			private class FacingGump : Gump

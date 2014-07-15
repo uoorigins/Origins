@@ -10911,6 +10911,11 @@ namespace Server
 				ns.Send( MessageLocalized.InstantiateGeneric( number ) );
 		}
 
+        public void SendLocalizedMessage( string text )
+        {
+            SendAsciiMessage( text );
+        }
+
 		public void SendLocalizedMessage( int number, string args )
 		{
 			SendLocalizedMessage( number, args, 0x3B2 );
