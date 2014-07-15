@@ -13,6 +13,7 @@ namespace Server.Misc
 
 		private static TimeSpan RestartTime = TimeSpan.FromHours( 0.0 ); // time of day at which to restart
 		private static TimeSpan RestartDelay = TimeSpan.FromMinutes(15.0); // how long the server should remain active before restart (period of 'server wars')
+        private static TimeSpan RestartDay = TimeSpan.FromDays( 7.0 ); // restart every 7 days
 
 		private static TimeSpan WarningDelay = TimeSpan.FromMinutes( 3.0 ); // at what interval should the shutdown message be displayed?
 
@@ -51,12 +52,12 @@ namespace Server.Misc
 			m_RestartTime = DateTime.Now.Date + RestartTime;
 
 			if ( m_RestartTime < DateTime.Now )
-				m_RestartTime += TimeSpan.FromDays( 1.0 );
+                m_RestartTime += RestartDay;
 		}
 
 		private void Warning_Callback()
 		{
-            World.Broadcast( 0x35, true, "[System]: The server is restarting shortly for daily maintenance." );
+            World.Broadcast( 0x35, true, "[System]: The server is restarting shortly for weekly maintenance." );
 		}
 
 		private void Restart_Callback()
