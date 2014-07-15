@@ -130,7 +130,7 @@ namespace Server.Gumps
             AddHtml( 345, 95, 153, 18, @"<basefont color=black size=5>My Wallet</basefont>", false, false );
             AddHtml( 345, 257, 160, 18, @"<basefont color=black size=5>Activity This Month</basefont>", false, false );
             AddHtml( 334, 122, 200, 18, @"<basefont color=black size=5>Account Gametime:</basefont>", false, false );
-            AddHtml( 334, 142, 200, 18, String.Format(@"<basefont color=black size=5>{0}'s Gametime:</basefont>", from.Name), false, false );
+            AddHtml( 334, 142, 200, 45, String.Format(@"<basefont color=black size=5>{0}'s Gametime:</basefont>", from.Name), false, false );
 
             TimeSpan age = TimeSpan.FromDays( ( DateTime.Now - account.Created ).Days );
             TimeSpan accountGametime = account.TotalGameTime;
@@ -140,10 +140,12 @@ namespace Server.Gumps
             AddLabel( 515, 142, 2057, Math.Round( playerGametime.TotalHours / 24, 1 ).ToString() + @" days" );
             AddLabel( 395, 175, 2057, account.WalletBalance.ToString() + @" coins" );
 
-			AddItem(515, 174, 3826);
+			AddItem(515, 174, 3826, 1000);
             AddHtml( 334, 175, 64, 18, @"<basefont color=black size=5>Balance:</basefont>", false, false );
 			AddButton(338, 200, 4005, 4007, 1, GumpButtonType.Reply, 0);
             AddHtml( 376, 200, 179, 18, @"<basefont color=black size=5>Deposit to Bank Account</basefont>", false, false );
+            AddButton( 338, 223, 4005, 4007, 2, GumpButtonType.Reply, 0 );
+            AddHtml( 376, 223, 220, 18, @"<basefont color=black size=5>Learn About Platinum</basefont>", false, false );
 
             AddImage( 293, 253, 92 );
             AddImage( 344, 253, 93 );
@@ -218,6 +220,11 @@ namespace Server.Gumps
                     }
 					break;
 				}
+                case 2: //learn
+                {
+                    from.LaunchBrowser( "http://www.uoorigins.com/threads/platinum-and-veteran-rewards.1863/" );
+                    break;
+                }
 
             }
         }
