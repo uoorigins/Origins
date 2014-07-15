@@ -53,6 +53,7 @@ namespace Server.Misc
 				giver.DelayGiveGift( TimeSpan.FromSeconds( 5.0 ), e.Mobile );
 			}
 
+            //Platinum
             if ( acct.LastLogin.Month != now.Month || acct.LastLogin.Year != now.Year )
             {
                 int coins = 0;
@@ -72,7 +73,12 @@ namespace Server.Misc
                         pm.MonthlyGameTime = TimeSpan.Zero;
                     }
                 }
-                acct.WalletBalance += coins;
+
+                //Not Too young
+                if ( DateTime.Now - acct.Created > TimeSpan.FromDays( 30.0 ) )
+                {
+                    acct.WalletBalance += coins;
+                }
             }
 
 			acct.LastLogin = now;
