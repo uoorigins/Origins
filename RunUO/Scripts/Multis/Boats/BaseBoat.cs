@@ -18,7 +18,7 @@ namespace Server.Multis
 
 	public abstract class BaseBoat : BaseMulti
 	{
-		private static Rectangle2D[] m_BritWrap = new Rectangle2D[]{ new Rectangle2D( 16, 16, 6140 - 32, 4096 - 32 ), new Rectangle2D( 5136, 2320, 992, 1760 ) };
+        private static Rectangle2D[] m_BritWrap = new Rectangle2D[] { new Rectangle2D( 16, 16, 5120 - 32, 4096 - 32 ), new Rectangle2D( 5136, 16, 992, 4096 - 32 ) };
 		private static Rectangle2D[] m_IlshWrap = new Rectangle2D[]{ new Rectangle2D( 16, 16, 2304 - 32, 1600 - 32 ) };
 		private static Rectangle2D[] m_TokunoWrap = new Rectangle2D[] { new Rectangle2D( 16, 16, 1448 - 32, 1448 - 32 ) };
         public abstract Rectangle2D[] AreaNorth { get; }
