@@ -1,5 +1,6 @@
 ﻿using System;
 using Server;
+using Server.Network;
 
 namespace Server.Items
 {
@@ -34,6 +35,32 @@ namespace Server.Items
         public Platinum( Serial serial )
             : base( serial )
         {
+        }
+
+        public override void OnSingleClick( Mobile from )
+        {
+            if ( this.Name != null )
+            {
+                if ( Amount >= 2 )
+                {
+                    from.Send( new AsciiMessage( Serial, ItemID, MessageType.Label, 0, 3, "", Amount + " " + this.Name ) );
+                }
+                else
+                {
+                    from.Send( new AsciiMessage( Serial, ItemID, MessageType.Label, 0, 3, "", this.Name ) );
+                }
+            }
+            else
+            {
+                if ( Amount >= 2 )
+                {
+                    from.Send( new AsciiMessage( Serial, ItemID, MessageType.Label, 0, 3, "", Amount + " platinum coins" ) );
+                }
+                else
+                {
+                    from.Send( new AsciiMessage( Serial, ItemID, MessageType.Label, 0, 3, "", "platinum coin" ) );
+                }
+            }
         }
 
         public override int GetDropSound()
