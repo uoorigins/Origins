@@ -954,8 +954,8 @@ namespace Server.Guilds
         private DateTime m_LastProtectionPayment;
         public TimeSpan ProtectionPeriod = TimeSpan.FromDays( 7.0 );
         public const int ProtectionFeeInital = 10000;
-        public const int ProtectionRateLeader = 5000;
-        public const int ProtectionRateMember = 250;
+        public const int ProtectionRateLeader = 10000;
+        public const int ProtectionRateMember = 500;
 
 		private Item m_Guildstone;
 		private Item m_Teleporter;
@@ -1744,23 +1744,25 @@ namespace Server.Guilds
             {
                 List<Mobile> protectedmembers = new List<Mobile>(m_Protected);
 
-                //charge GM
-                if ( !( bank.ConsumeTotal( typeof( Gold ), 5000 ) ) )
-                {
-                    ClearAllProtection();
-                    return;
-                }
-
-                //charge members
+                //calculate member discount
+                int discount = 0;
+                
                 foreach ( Mobile m in protectedmembers )
                 {
                     if ( m != Leader )
                     {
-                        if ( !( bank.ConsumeTotal( typeof( Gold ), 250 ) ) )
-                        {
-                            RemoveProtection( m );
-                        }
+                        discount += Guild.ProtectionRateMember;
                     }
+                }
+
+                if ( discount > 5000 )
+                    discount = 5000;
+
+                //charge GM
+                if ( !( bank.ConsumeTotal( typeof( Gold ), Guild.ProtectionRateLeader - discount ) ) )
+                {
+                    ClearAllProtection();
+                    return;
                 }
             }
         }

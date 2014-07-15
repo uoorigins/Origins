@@ -31,7 +31,10 @@ namespace Server.Menus.Questions
                     if ( m == m_Guild.Leader )
                         total += Guild.ProtectionRateLeader;
                     else
-                        total += Guild.ProtectionRateMember;
+                        total -= Guild.ProtectionRateMember;
+
+                    if ( total < 5000 )
+                        total = 5000;
                 }
                 TimeSpan days = m_Guild.LastProtectionPayment.AddDays(m_Guild.ProtectionPeriod.TotalDays) - DateTime.Now;
 
