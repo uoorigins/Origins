@@ -62,7 +62,7 @@ namespace Server.Mobiles
 
 				m_Mobile.Combatant = m_Mobile.FocusMob;
 				Action = ActionType.Combat;
-				m_NextCastTime = DateTime.Now + TimeSpan.FromDays(1);
+				m_NextCastTime = DateTime.Now;
 			}
 			else if ( SmartAI && m_Mobile.Mana < m_Mobile.ManaMax )
 			{
@@ -319,7 +319,7 @@ namespace Server.Mobiles
 				if ( spell != null )
 					return spell;
 
-				switch ( Utility.Random( 16 ) )
+				switch ( Utility.Random( 12 ) )
 				{
 					case 0:
 					case 1:
@@ -399,32 +399,23 @@ namespace Server.Mobiles
 				}
 				case 2: // Set up a combo
 				{
-					if ( m_Mobile.Mana < 40 && m_Mobile.Mana > 15 )
-					{
-						if ( c.Paralyzed && !c.Poisoned )
-						{
-							m_Mobile.DebugSay( "I am going to meditate" );
-
-							m_Mobile.UseSkill( SkillName.Meditation );
-						}
-						else if ( !c.Poisoned )
-						{
-							spell = new ParalyzeSpell( m_Mobile, null );
-						}
-					}
-					else if ( m_Mobile.Mana > 60 )
-					{
-						if ( Utility.Random( 2 ) == 0 && !c.Paralyzed && !c.Frozen && !c.Poisoned )
-						{
-							m_Combo = 0;
-							spell = new ParalyzeSpell( m_Mobile, null );
-						}
-						else
-						{
-							m_Combo = 1;
-							spell = new ExplosionSpell( m_Mobile, null );
-						}
-					}
+                    if ( m_Mobile.Mana < 40 && m_Mobile.Mana > 15 )
+                    {
+                        spell = new ParalyzeSpell( m_Mobile, null );
+                    }
+                    else if ( m_Mobile.Mana > 60 )
+                    {
+                        if ( Utility.Random( 2 ) == 0 && !c.Paralyzed && !c.Frozen && !c.Poisoned )
+                        {
+                            m_Combo = 0;
+                            spell = new ParalyzeSpell( m_Mobile, null );
+                        }
+                        else
+                        {
+                            m_Combo = 3;
+                            spell = new ExplosionSpell( m_Mobile, null );
+                        }
+                    }
 
 					break;
 				}
@@ -442,7 +433,7 @@ namespace Server.Mobiles
 			if ( m_Combo == 0 )
 			{
 				spell = new ExplosionSpell( m_Mobile, null );
-				++m_Combo; // Move to next spell
+				m_Combo = 4; // Move to next spell
 			}
 			/*else if ( m_Combo == 1 )
 			{
@@ -459,27 +450,16 @@ namespace Server.Mobiles
 
 			if ( m_Combo == 3 && spell == null )
 			{
-				switch ( Utility.Random( 3 ) )
+				switch ( Utility.Random( 2 ) )
 				{
 					default:
 					case 0:
-					{
-						/*if ( c.Int < c.Dex )
-							spell = new FeeblemindSpell( m_Mobile, null );
-						else
-							spell = new ClumsySpell( m_Mobile, null );*/
-
-						++m_Combo; // Move to next spell
-
-						break;
-					}
-					case 1:
 					{
 						spell = new EnergyBoltSpell( m_Mobile, null );
 						m_Combo = -1; // Reset combo state
 						break;
 					}
-					case 2:
+					case 1:
 					{
 						spell = new FlameStrikeSpell( m_Mobile, null );
 						m_Combo = -1; // Reset combo state
