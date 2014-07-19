@@ -486,37 +486,38 @@ namespace Server
 
         public static readonly LootPack AveragePile = new LootPack( new LootPackEntry[]
 			{
-                new LootPackEntry(  true, Gold,			100.00, "1d150+150" )
+                new LootPackEntry(  true, Gold,			100.00, "1d150+150" ),
+                new LootPackEntry(  true, Platinum,			0.25, "1" )
 			} );
 
         public static readonly LootPack RichPile = new LootPack( new LootPackEntry[]
 			{
                 new LootPackEntry(  true, Gold,			100.00, "1d50+250" ),
-                new LootPackEntry(  true, Platinum,			0.1, "1" )
+                new LootPackEntry(  true, Platinum,			0.50, "1" )
 			} );
 
         public static readonly LootPack FilthyRichPile = new LootPack( new LootPackEntry[]
 			{
                 new LootPackEntry(  true, Gold,			100.00, "1d100+400" ),
-                new LootPackEntry(  true, Platinum,			0.20, "1" )
+                new LootPackEntry(  true, Platinum,			1.50, "1" )
 
 			} );
 
         public static readonly LootPack SpecialPile = new LootPack( new LootPackEntry[]
 			{
                 new LootPackEntry(  true, Gold,			100.00, "1d400+1600" ),
-                new LootPackEntry(  true, Platinum,			1.33, "1" )
+                new LootPackEntry(  true, Platinum,			5.00, "1" )
 			} );
 
         public static readonly LootPack UltraRichPile = new LootPack( new LootPackEntry[]
 			{
                 new LootPackEntry(  true, Gold,			100.00, "1d500+500" ),
-                new LootPackEntry(  true, Platinum,			0.33, "1" )
+                new LootPackEntry(  true, Platinum,			1.50, "1" )
 			} );
         public static readonly LootPack SuperBossPile = new LootPack( new LootPackEntry[]
 			{
                 new LootPackEntry(  true, Gold,			100.00, "1d200+1100" ),
-                new LootPackEntry(  true, Platinum,			1.00, "1" )
+                new LootPackEntry(  true, Platinum,			4.00, "1" )
 			} );
         #endregion
 
