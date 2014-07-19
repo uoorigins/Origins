@@ -243,6 +243,7 @@
     <Compile Include="Custom\ResurrectGump.cs" />
     <Compile Include="Custom\SayCommand.cs" />
     <Compile Include="Custom\SimpleInvasionSpawner.cs" />
+    <Compile Include="Custom\SpawnBarrels.cs" />
     <Compile Include="Custom\SpeechHelper.cs" />
     <Compile Include="Custom\StaffCloak.cs" />
     <Compile Include="Custom\StaticExport.cs" />
