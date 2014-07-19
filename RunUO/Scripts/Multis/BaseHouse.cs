@@ -4000,25 +4000,30 @@ namespace Server.Multis
 			if ( !from.Alive || m_House.Deleted || !m_House.IsKeyOwner( from ) )
 				return;
 
-			if ( targeted is Item )
-			{
+            if ( targeted is Item )
+            {
                 if ( m_Release )
                 {
                     m_House.Release( from, (Item)targeted );
+                }
+                else if ( (Item)targeted is AddonComponent )
+                {
+                    from.LocalOverheadMessage( MessageType.Regular, 0x3E9, true, "You cannot lock that down!" ); // You cannot lock that down!
+                    from.LocalOverheadMessage( MessageType.Regular, 0x3E9, true, "I cannot lock this down!" ); // I cannot lock this down!
                 }
                 else
                 {
                     m_House.LockDown( from, (Item)targeted );
                 }
-			}
-			else if ( targeted is StaticTarget )
-			{
-				return;
-			}
-			else 
-			{
-				from.SendAsciiMessage( "You cannot lock that down" ); //You cannot lock that down
-			}
+            }
+            else if ( targeted is StaticTarget )
+            {
+                return;
+            }
+            else
+            {
+                from.SendAsciiMessage( "You cannot lock that down" ); //You cannot lock that down
+            }
 		}
 	}
 
