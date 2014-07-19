@@ -140,7 +140,7 @@ namespace Server.Gumps
             AddLabel( 515, 142, 2057, Math.Round( playerGametime.TotalHours / 24, 1 ).ToString() + @" days" );
             AddLabel( 395, 175, 2057, account.WalletBalance.ToString() + @" coins" );
 
-			AddItem(515, 174, 3826, 1000);
+            AddItem( 515, 174, 3826, 1154 );
             AddHtml( 334, 175, 64, 18, @"<basefont color=black size=5>Balance:</basefont>", false, false );
 			AddButton(338, 200, 4005, 4007, 1, GumpButtonType.Reply, 0);
             AddHtml( 376, 200, 179, 18, @"<basefont color=black size=5>Deposit to Bank Account</basefont>", false, false );
