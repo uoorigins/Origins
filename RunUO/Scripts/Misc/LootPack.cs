@@ -119,7 +119,7 @@ namespace Server
 
         public static readonly LootPackItem[] Platinum = new LootPackItem[]
 			{
-				new LootPackItem( typeof( Gold ), 1 )
+				new LootPackItem( typeof( Platinum), 1 )
 			};
 
         public static readonly LootPackItem[] Instruments = new LootPackItem[]
