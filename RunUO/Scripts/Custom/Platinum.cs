@@ -29,7 +29,7 @@ namespace Server.Items
         {
             Stackable = true;
             Amount = amount;
-            Hue = 1000;
+            Hue = 1154;
         }
 
         public Platinum( Serial serial )
