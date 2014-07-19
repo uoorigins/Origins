@@ -5752,9 +5752,16 @@ namespace Server.Mobiles
                 {
                     BaseCreature c = (BaseCreature)m;
 
-                    if ( c.Map != Map.Internal && !c.Controlled && c.LastOwner != null && (c.ReleaseTime + TimeSpan.FromDays(2.0)) < DateTime.Now)
+                    if ( c.Map != Map.Internal && !c.Controlled && c.LastOwner != null && (c.ReleaseTime + TimeSpan.FromDays(7.0)) < DateTime.Now)
                     {
-                        toRemove.Add(c);
+                        if ( BaseHouse.FindHouseAt( c ) != null && c.ReleaseTime + TimeSpan.FromDays( 45.0 ) < DateTime.Now )
+                        {
+                            toRemove.Add( c );
+                        }
+                        else
+                        {
+                            toRemove.Add( c );
+                        }
                     }
                 }
 
