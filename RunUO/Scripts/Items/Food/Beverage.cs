@@ -1094,6 +1094,24 @@ namespace Server.Items
 				if ( src == null && item is AddonComponent )
 					src = ( ((AddonComponent)item).Addon as IWaterSource );
 
+                //full barrel
+                if ( item.ItemID == 5453 && this.Quantity == 0 )
+                {
+                    if ( from.Map != item.Map || !from.InRange( item.GetWorldLocation(), 2 ) || !from.InLOS( item ) )
+                    {
+                        from.LocalOverheadMessage( MessageType.Regular, 0x3B2, true, "I can't reach that." ); // I can't reach that.
+                        return;
+                    }
+
+                    this.Content = BeverageType.Water;
+                    this.Poison = null;
+                    this.Poisoner = null;
+                    this.Quantity = this.MaxQuantity;
+                    item.ItemID = 3703;
+                    item.Movable = true;
+                    item.Name = "a barrel";
+                }
+
 				if ( src == null || src.Quantity <= 0 )
 					return;
 
@@ -1317,6 +1335,43 @@ namespace Server.Items
 					from.PlaySound( 0x4E );
 				}
 			}
+            else if ( targ is Item && this.Content == BeverageType.Water )
+            {
+                Item item = ( (Item)targ );
+
+                //empty barrel
+                if ( item.ItemID == 3703 && this.Quantity == this.MaxQuantity )
+                {
+                    Static barrel = new Static( 5453 );
+                    barrel.Name = "a water barrel";
+
+                    if ( item.Parent != null && from.Backpack != null && from.Backpack == item.Parent )
+                    {
+                        barrel.MoveToWorld( from.Location );
+                        barrel.Map = from.Map;
+                    }
+                    else if ( item.Parent != null && from.FindBankNoCreate() != null && from.BankBox == item.Parent )
+                    {
+                        barrel.MoveToWorld( from.Location );
+                        barrel.Map = from.Map;
+                    }
+                    else if ( item.Parent != null && item.Parent is Item)
+                    {
+                        Item parent = ((Item)item.Parent);
+                        barrel.MoveToWorld( parent.Location );
+                        barrel.Map = parent.Map;
+                    }
+                    else
+                    {
+                        barrel.MoveToWorld( item.Location );
+                        barrel.Map = item.Map;
+                    }
+
+                    this.Quantity = 0;
+
+                    item.Delete();
+                }
+            }
 			else if ( from == targ )
 			{
 				if ( from.Thirst < 20 )
