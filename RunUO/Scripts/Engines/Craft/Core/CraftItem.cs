@@ -8,6 +8,7 @@ using Server.Factions;
 using Server.Mobiles;
 using Server.Commands;
 using Server.Targeting;
+using System.Linq;
 
 namespace Server.Engines.Craft
 {
@@ -714,10 +715,41 @@ namespace Server.Engines.Craft
 			
 			int index = 0;
 
+            double platChance = 0.025; //2.5% base
+
 			// Consume ALL
 			if ( consumeType == ConsumeType.All )
 			{
 				m_ResHue = 0; m_ResAmount = 0; m_System = craftSystem;
+
+                int amountTotal = 0;
+                foreach (int value in amounts.ToList())
+                {
+                    amountTotal += value;
+                }
+
+                platChance *= amountTotal;
+
+                if ( isFailure )
+                {
+                    platChance /= 2;
+                }
+
+                if ( platChance > 0.3 )
+                {
+                    platChance = 0.3;
+                }
+
+                if ( platChance > Utility.RandomDouble() && (from is PlayerMobile) && ((PlayerMobile)from).LastCraftPlatinum + TimeSpan.FromDays(1.0) < DateTime.Now )
+                {
+                    from.AddToBackpack( new Platinum() );
+                    from.SendAsciiMessage( "Some platinum has been put in your backpack." );
+                }
+
+                if ( from is PlayerMobile )
+                {
+                    ( (PlayerMobile)from ).LastCraftPlatinum = DateTime.Now;
+                }
 
 				if ( IsQuantityType( types ) )
 					index = ConsumeQuantity( ourPack, types, amounts );
@@ -726,17 +758,42 @@ namespace Server.Engines.Craft
 
 				resHue = m_ResHue;
 			}
-
 			// Consume Half ( for use all resource craft type )
 			else if ( consumeType == ConsumeType.Half )
 			{
+                int amountTotal = 0;
 				for ( int i = 0; i < amounts.Length; i++ )
 				{
 					amounts[i] /= 2;
 
 					if ( amounts[i] < 1 )
 						amounts[i] = 1;
+
+                    amountTotal += amounts[i];
 				}
+
+                platChance *= amountTotal;
+
+                if ( isFailure )
+                {
+                    platChance /= 2;
+                }
+
+                if ( platChance > 0.3 )
+                {
+                    platChance = 0.3;
+                }
+
+                if ( platChance > Utility.RandomDouble() && ( from is PlayerMobile ) && ( (PlayerMobile)from ).LastCraftPlatinum + TimeSpan.FromDays( 1.0 ) < DateTime.Now )
+                {
+                    from.AddToBackpack( new Platinum() );
+                    from.SendAsciiMessage( "Some platinum has been put in your backpack." );
+                }
+
+                if ( from is PlayerMobile )
+                {
+                    ( (PlayerMobile)from ).LastCraftPlatinum = DateTime.Now;
+                }
 
 				m_ResHue = 0; m_ResAmount = 0; m_System = craftSystem;
 
@@ -1165,6 +1222,8 @@ namespace Server.Engines.Craft
                     }
                     else
                         from.AddToBackpack(item);
+
+
 
 					if( from.AccessLevel > AccessLevel.Player )
 						CommandLogging.WriteLine( from, "Crafting {0} with craft system {1}", CommandLogging.Format( item ), craftSystem.GetType().Name );

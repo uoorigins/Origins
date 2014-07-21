@@ -111,6 +111,27 @@ namespace Server.Mobiles
             }
         }
 
+        private DateTime m_LastCraftPlatinum;
+        public DateTime LastCraftPlatinum
+        {
+            get { return m_LastCraftPlatinum; }
+            set { m_LastCraftPlatinum = value; }
+        }
+
+        private DateTime m_LastPvPPlatinum;
+        public DateTime LastPvPPlatinum
+        {
+            get { return m_LastPvPPlatinum; }
+            set { m_LastPvPPlatinum = value; }
+        }
+
+        private DateTime m_LastGatherPlatinum;
+        public DateTime LastGatherPlatinum
+        {
+            get { return m_LastGatherPlatinum; }
+            set { m_LastGatherPlatinum = value; }
+        }
+
         private bool m_ShowChat;
         public bool ShowChat
         {
@@ -2991,6 +3012,10 @@ namespace Server.Mobiles
             m_ShowChat = true;
             m_ShowChat = true;
 
+            m_LastCraftPlatinum = DateTime.Now;
+            m_LastPvPPlatinum = DateTime.Now;
+            m_LastGatherPlatinum = DateTime.Now;
+
 			m_VisList = new List<Mobile>();
 			m_PermaFlags = new List<Mobile>();
 			m_AntiMacroTable = new Hashtable();
@@ -3306,6 +3331,13 @@ namespace Server.Mobiles
 
 			switch ( version )
 			{
+                case 31:
+                    {
+                        m_LastCraftPlatinum = reader.ReadDateTime();
+                        m_LastPvPPlatinum = reader.ReadDateTime();
+                        m_LastGatherPlatinum = reader.ReadDateTime();
+                        goto case 30;
+                    }
                 case 30:
                     {
                         m_ShowChat = reader.ReadBool();
@@ -3544,6 +3576,13 @@ namespace Server.Mobiles
 				}
 			}
 
+            if ( version < 31 )
+            {
+                m_LastCraftPlatinum = DateTime.Now;
+                m_LastPvPPlatinum = DateTime.Now;
+                m_LastGatherPlatinum = DateTime.Now;
+            }
+
             if ( version < 30 )
             {
                 m_ShowChat = true;
@@ -3635,7 +3674,11 @@ namespace Server.Mobiles
 
 			base.Serialize( writer );
 			
-			writer.Write( (int) 30 ); // version
+			writer.Write( (int) 31 ); // version
+
+            writer.Write(m_LastCraftPlatinum);
+            writer.Write(m_LastPvPPlatinum);
+            writer.Write(m_LastGatherPlatinum);
 
             writer.Write( (bool)m_ShowChat );
             writer.Write( (bool)m_ShowNews );
