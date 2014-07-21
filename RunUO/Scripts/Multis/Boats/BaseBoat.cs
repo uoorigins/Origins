@@ -1343,7 +1343,6 @@ namespace Server.Multis
 						continue;
 
 					LandTile landTile = map.Tiles.GetLandTile( tx, ty );
-					StaticTile[] tiles = map.Tiles.GetStaticTiles( tx, ty, true );
 
 					bool hasWater = false;
 
@@ -1351,6 +1350,8 @@ namespace Server.Multis
 						hasWater = true;
 
 					int z = p.Z;
+
+                    StaticTile[] tiles = map.Tiles.GetStaticTiles( tx, ty, true );
 
 					//int landZ = 0, landAvg = 0, landTop = 0;
 
@@ -1377,13 +1378,61 @@ namespace Server.Multis
 
 			IPooledEnumerable eable = map.GetItemsInBounds( new Rectangle2D( p.X + newComponents.Min.X, p.Y + newComponents.Min.Y, newComponents.Width, newComponents.Height ) );
 
-			foreach ( Item item in eable )
+            foreach ( Item item in eable )
 			{
 				if ( item is BaseMulti || item.ItemID > TileData.MaxItemValue || item.Z < p.Z || !item.Visible )
 					continue;
 
 				int x = item.X - p.X + newComponents.Min.X;
 				int y = item.Y - p.Y + newComponents.Min.Y;
+
+
+                Plank plank = item as Plank;
+                int plankx = 0;
+                int planky = 0;
+                bool checkplank = false;
+
+                if ( plank != null )
+                {
+                    plankx = plank.X;
+                    planky = plank.Y;
+                }
+
+                //east, west, north, south
+                if ( plank != null && plank.ItemID == 16084 )
+                {
+                    plankx += 1;
+                    checkplank = true;
+                }
+                else if ( plank != null && plank.ItemID == 16085 )
+                {
+                    plankx -= 1;
+                    checkplank = true;
+                }
+                else if ( plank != null && plank.ItemID == 16009 )
+                {
+                    planky -= 1;
+                    checkplank = true;
+                }
+                else if ( plank != null && plank.ItemID == 16004 )
+                {
+                    planky += 1;
+                    checkplank = true;
+                }
+
+                if ( plank != null && checkplank )
+                {
+                    StaticTile[] tiles = map.Tiles.GetStaticTiles( plankx, planky, true );
+
+                    for ( int i = 0; i < tiles.Length; ++i )
+                    {
+                        StaticTile tile = tiles[i];
+                        bool isWater = ( tile.ID >= 0x1796 && tile.ID <= 0x17B2 );
+
+                        if ( !isWater )
+                            return false;
+                    }
+                }
 
 				if ( x >= 0 && x < newComponents.Width && y >= 0 && y < newComponents.Height && newComponents.Tiles[x][y].Length == 0 )
 					continue;
