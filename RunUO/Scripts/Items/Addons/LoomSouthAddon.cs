@@ -53,6 +53,13 @@ namespace Server.Items
 	{
 		public override BaseAddon Addon{ get{ return new LoomSouthAddon(); } }
 		public override int LabelNumber{ get{ return 1044344; } } // loom (south)
+        public override string AsciiName
+        {
+            get
+            {
+                return "a loom deed (south)";
+            }
+        }
 
 		[Constructable]
 		public LoomSouthDeed()
