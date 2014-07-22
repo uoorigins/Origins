@@ -79,6 +79,8 @@ namespace Server.Mobiles
 
 	public class PlayerMobile : Mobile, IHonorTarget
 	{
+        private const bool InstaHitEnabled = true;
+
 		private class CountAndTimeStamp
 		{
 			private int m_Count;
@@ -3974,12 +3976,14 @@ namespace Server.Mobiles
 		}
         public override void OnAfterMove(Point3D oldLocation)
         {
-            Mobile from = (Mobile)this;
-            Item item = FindItemOnLayer(Layer.TwoHanded);
+            if ( !InstaHitEnabled )
+            {
+                Mobile from = (Mobile)this;
+                Item item = FindItemOnLayer( Layer.TwoHanded );
 
-            if (item != null && item is BaseRanged && Location != oldLocation)
-                ((BaseWeapon)item).ResetSwingState(1);
-
+                if ( item != null && item is BaseRanged && Location != oldLocation )
+                    ( (BaseWeapon)item ).ResetSwingState( 1 );
+            }
         }
 
 		protected override bool OnMove( Direction d )
