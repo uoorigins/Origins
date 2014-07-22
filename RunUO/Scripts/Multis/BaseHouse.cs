@@ -2191,7 +2191,14 @@ namespace Server.Multis
                 }
             }
 
-            this.ChangeSignType( 0xBD2 );
+            if ( ItemID == 0x7A || this.ItemID == 0x7C || this.ItemID == 0x7E )
+            {
+                ChangeSignType( 0xBD0 );
+            }
+            else
+            {
+                ChangeSignType( 0xBD2 );
+            }
 
             if ( m_Sign != null )
                 m_Sign.InvalidateProperties();
