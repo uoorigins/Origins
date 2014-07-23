@@ -18,8 +18,7 @@ namespace Server.Items
         }
 
         [Constructable]
-        public Platinum( int amountFrom, int amountTo )
-            : this( Utility.RandomMinMax( amountFrom, amountTo ) )
+        public Platinum( int amountFrom, int amountTo ) : this( Utility.RandomMinMax( amountFrom, amountTo ) )
         {
         }
 
