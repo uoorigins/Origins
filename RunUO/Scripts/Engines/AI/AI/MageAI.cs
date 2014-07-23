@@ -319,7 +319,7 @@ namespace Server.Mobiles
 				if ( spell != null )
 					return spell;
 
-				switch ( Utility.Random( 12 ) )
+				switch ( Utility.Random( 14 ) )
 				{
 					case 0:
 					case 1:
@@ -331,24 +331,10 @@ namespace Server.Mobiles
 							spell = new PoisonSpell( m_Mobile, null );*/
                         goto default;
 					}
-					case 3:	// Bless ourselves.
-                    /*
-					{
-						m_Mobile.DebugSay( "Blessing myself" );
-
-						spell = new BlessSpell( m_Mobile, null );
-						break;
-					}*/
+					case 3:
 					case 4:
 					case 5:
-					case 6: // Curse them.
-					{
-						m_Mobile.DebugSay( "Attempting to curse" );
-
-						spell = GetRandomCurseSpell();
-                        goto default;
-					}
-					case 7:	// Paralyze them.
+					case 6:	// Paralyze them.
 					{
 						m_Mobile.DebugSay( "Attempting to paralyze" );
 
@@ -356,14 +342,13 @@ namespace Server.Mobiles
 							spell = new ParalyzeSpell( m_Mobile, null );
                         goto default;
 					}
-					case 8: // Drain mana
+					case 7: // Drain mana
 					{
 						m_Mobile.DebugSay( "Attempting to drain mana" );
 
 						spell = GetRandomManaDrainSpell();
 						break;
 					}
-
 					default: // Damage them.
 					{
 						m_Mobile.DebugSay( "Just doing damage" );
