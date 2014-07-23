@@ -34,7 +34,7 @@ namespace Server.Mobiles
 			SetStam( 50 );
 			SetMana( 0 );
 
-			SetDamage( 5, 11 );
+            SetDamage( 10, 14 );
 
 			SetDamageType( ResistanceType.Physical, 60 );
 			SetDamageType( ResistanceType.Poison, 20 );

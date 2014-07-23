@@ -36,7 +36,6 @@ namespace Server.SkillHandlers
 
 			public InternalFirstTarget( Mobile from, BaseInstrument instrument ) : base( BaseInstrument.GetBardRange( from, SkillName.Provocation ), false, TargetFlags.None )
 			{
-                CheckLOS = false;
 				m_Instrument = instrument;
 			}
 
@@ -92,7 +91,6 @@ namespace Server.SkillHandlers
 
 			public InternalSecondTarget( Mobile from, BaseInstrument instrument, BaseCreature creature ) : base( BaseInstrument.GetBardRange( from, SkillName.Provocation ), false, TargetFlags.None )
 			{
-                CheckLOS = false;
 				m_Instrument = instrument;
 				m_Creature = creature;
 			}
