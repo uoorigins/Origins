@@ -329,7 +329,7 @@ namespace Server.Mobiles
 
 						/*if ( !c.Poisoned )
 							spell = new PoisonSpell( m_Mobile, null );*/
-                        goto default;
+                        goto case 6;
 					}
 					case 3:
 					case 4:
@@ -366,23 +366,16 @@ namespace Server.Mobiles
 			if ( spell != null )
 				return spell;
 
-			switch ( Utility.Random( 3 ) )
+			switch ( Utility.Random( 2 ) )
 			{
 				default:
-				case 0: // Poison them
-				{
-					/*if ( !c.Poisoned )
-						spell = new PoisonSpell( m_Mobile, null );*/
-
-					break;
-				}
-				case 1: // Deal some damage
+				case 0: // Deal some damage
 				{
 					spell = GetRandomDamageSpell();
 
 					break;
 				}
-				case 2: // Set up a combo
+				case 1: // Set up a combo
 				{
                     if ( m_Mobile.Mana < 40 && m_Mobile.Mana > 15 )
                     {
@@ -420,18 +413,6 @@ namespace Server.Mobiles
 				spell = new ExplosionSpell( m_Mobile, null );
 				m_Combo = 4; // Move to next spell
 			}
-			/*else if ( m_Combo == 1 )
-			{
-				spell = new WeakenSpell( m_Mobile, null );
-				++m_Combo; // Move to next spell
-			}
-			else if ( m_Combo == 2 )
-			{
-				if ( !c.Poisoned )
-					spell = new PoisonSpell( m_Mobile, null );
-
-				++m_Combo; // Move to next spell
-			}*/
 
 			if ( m_Combo == 3 && spell == null )
 			{
