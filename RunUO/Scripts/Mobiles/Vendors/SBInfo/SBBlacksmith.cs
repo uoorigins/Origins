@@ -20,7 +20,7 @@ namespace Server.Mobiles
 		{ 
 			public InternalBuyInfo() 
 			{ 	
-				Add( new GenericBuyInfo( typeof( IronIngot ), 9, 9, 0x1BF2, 0 ) );
+				//Add( new GenericBuyInfo( typeof( IronIngot ), 9, 9, 0x1BF2, 0 ) );
 				Add( new GenericBuyInfo( typeof( Tongs ), 15, 9, 0xFBB, 0 ) ); 
  
 				Add( new GenericBuyInfo( typeof( BronzeShield ), 91, 9, 0x1B72, 0 ) );
@@ -115,7 +115,7 @@ namespace Server.Mobiles
 			public InternalSellInfo() 
 			{ 
 				Add( typeof( Tongs ), 8 ); 
-				Add( typeof( IronIngot ), 5 ); 
+				//Add( typeof( IronIngot ), 5 ); 
 
 				Add( typeof( Buckler ), 34 );
 				Add( typeof( BronzeShield ), 46 );

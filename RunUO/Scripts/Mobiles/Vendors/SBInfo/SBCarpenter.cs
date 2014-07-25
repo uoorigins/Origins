@@ -22,7 +22,7 @@ namespace Server.Mobiles
 			{
 				Add( new GenericBuyInfo( typeof( Nails ), 3, 9, 0x102E, 0 ) );
 				Add( new GenericBuyInfo( typeof( Axle ), 2, 9, 0x105B, 0 ) );
-				Add( new GenericBuyInfo( typeof( Board ), 3, 9, 0x1BD7, 0 ) );
+				//Add( new GenericBuyInfo( typeof( Board ), 3, 9, 0x1BD7, 0 ) );
 				Add( new GenericBuyInfo( typeof( DrawKnife ), 10, 9, 0x10E4, 0 ) );
 				Add( new GenericBuyInfo( typeof( Froe ), 10, 9, 0x10E5, 0 ) );
 				Add( new GenericBuyInfo( typeof( Scorp ), 10, 9, 0x10E7, 0 ) );
@@ -75,7 +75,7 @@ namespace Server.Mobiles
 				Add( typeof( JointingPlane ), 6 );
 				Add( typeof( MouldingPlane ), 6 );
 				Add( typeof( DovetailSaw ), 7 );
-				Add( typeof( Board ), 2 );
+				//Add( typeof( Board ), 2 );
 				Add( typeof( Axle ), 1 );
 
 				Add( typeof( Club ), 13 );
@@ -85,7 +85,7 @@ namespace Server.Mobiles
 				Add( typeof( Tambourine ), 10 );
 				Add( typeof( Drums ), 10 );
 
-				Add( typeof( Log ), 1 );
+				//Add( typeof( Log ), 1 );
 			}
 		}
 	}

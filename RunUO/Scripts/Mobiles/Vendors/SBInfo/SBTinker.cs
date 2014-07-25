@@ -40,8 +40,8 @@ namespace Server.Mobiles
 				Add( new GenericBuyInfo( typeof( Lockpick ), 12, 9, 0x14FC, 0 ) );
 
                 Add(new GenericBuyInfo(typeof(TinkerTools), 7, 9, /*0x1EB8*/0x1EBC, 0));
-				Add( new GenericBuyInfo( typeof( Board ), 3, 9, 0x1BD7, 0 ) );
-				Add( new GenericBuyInfo( typeof( IronIngot ), 9, 9, 0x1BF2, 0 ) );
+				//Add( new GenericBuyInfo( typeof( Board ), 3, 9, 0x1BD7, 0 ) );
+				//Add( new GenericBuyInfo( typeof( IronIngot ), 9, 9, 0x1BF2, 0 ) );
 				Add( new GenericBuyInfo( typeof( SewingKit ), 3, 9, 0xF9D, 0 ) );
 
 				Add( new GenericBuyInfo( typeof( DrawKnife ), 10, 9, 0x10E4, 0 ) );
@@ -119,8 +119,8 @@ namespace Server.Mobiles
 				Add( typeof( Lockpick ), 6 );
 				Add( typeof( TinkerTools ), 3 );
 
-				Add( typeof( Board ), 1 );
-				Add( typeof( Log ), 1 );
+				//Add( typeof( Board ), 1 );
+				//Add( typeof( Log ), 1 );
 
 				Add( typeof( Pickaxe ), 16 );
 				Add( typeof( Hammer ), 3 );
