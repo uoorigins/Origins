@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using Server;
 using Server.Items;
 using Server.Targeting;
@@ -10,7 +13,7 @@ using Server.Regions;
 using Server.ContextMenus;
 using Server.Engines.Quests;
 using Server.Engines.Quests.Necro;
-using MoveImpl=Server.Movement.MovementImpl;
+using MoveImpl = Server.Movement.MovementImpl;
 using Server.Spells;
 using Server.Spells.Spellweaving;
 
@@ -2343,6 +2346,16 @@ namespace Server.Mobiles
 
 			if( delay < 0.0 )
 				delay = 0.0;
+
+			if (double.IsNaN(delay))
+			{
+				using (StreamWriter op = new StreamWriter("nan_transform.txt", true))
+				{
+					op.WriteLine(String.Format("NaN in TransformMoveDelay: {0}, {1}, {2}, {3}", DateTime.UtcNow, this.GetType().ToString(), m_Mobile == null ? "null" : m_Mobile.GetType().ToString(), m_Mobile.HitsMax));
+				}
+
+				return 1.0;
+			}
 
 			return delay;
 		}

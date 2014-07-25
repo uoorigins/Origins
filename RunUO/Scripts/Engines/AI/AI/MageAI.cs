@@ -323,12 +323,8 @@ namespace Server.Mobiles
 				{
 					case 0:
 					case 1:
-					case 2:	// Poison them
+					case 2:
 					{
-						m_Mobile.DebugSay( "Attempting to poison" );
-
-						/*if ( !c.Poisoned )
-							spell = new PoisonSpell( m_Mobile, null );*/
                         goto case 6;
 					}
 					case 3:
