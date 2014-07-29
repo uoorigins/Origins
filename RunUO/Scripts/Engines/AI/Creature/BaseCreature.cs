@@ -18,6 +18,7 @@ using Server.Spells.Bushido;
 using Server.Spells.Spellweaving;
 using Server.Spells.Necromancy;
 using Server.SkillHandlers;
+using System.Linq;
 
 namespace Server.Mobiles
 {
@@ -5728,7 +5729,7 @@ namespace Server.Mobiles
 
 		public LoyaltyTimer() : base( InternalDelay, InternalDelay )
 		{
-			m_NextHourlyCheck = DateTime.Now + TimeSpan.FromHours( 1.0 );
+            m_NextHourlyCheck = DateTime.Now + TimeSpan.FromHours( 1.0 );
 			Priority = TimerPriority.FiveSeconds;
 		}
 
@@ -5746,30 +5747,52 @@ namespace Server.Mobiles
 			// added array for wild creatures in house regions to be removed
 			List<BaseCreature> toRemove = new List<BaseCreature>();
 
-			foreach ( Mobile m in World.Mobiles.Values )
+			foreach ( Mobile m in World.Mobiles.Values.ToList() )
 			{
-                if (m is BaseCreature)
-                {
-                    BaseCreature c = (BaseCreature)m;
-
-                    if ( c.Map != Map.Internal && !c.Controlled && c.LastOwner != null && (c.ReleaseTime + TimeSpan.FromDays(7.0)) < DateTime.Now)
-                    {
-                        if ( BaseHouse.FindHouseAt( c ) != null && c.ReleaseTime + TimeSpan.FromDays( 45.0 ) < DateTime.Now )
-                        {
-                            toRemove.Add( c );
-                        }
-                        else
-                        {
-                            toRemove.Add( c );
-                        }
-                    }
-                }
-
 				if ( m is BaseMount && ((BaseMount)m).Rider != null )
 				{
 					((BaseCreature)m).OwnerAbandonTime = DateTime.MinValue;
 					continue;
 				}
+
+                if ( m is BaseCreature )
+                {
+                    BaseCreature c = (BaseCreature)m;
+
+                    if ( c.Map != Map.Internal && !c.Controlled && c.LastOwner != null && ( c.ReleaseTime + TimeSpan.FromDays( 7.0 ) ) < DateTime.Now )
+                    {
+                        toRemove.Add( c );
+                    }
+                }
+
+                if ( m is BaseCreature && BaseHouse.FindHouseAt(m) != null )
+                {
+                    BaseCreature c = (BaseCreature)m;
+
+                    IPooledEnumerable eable = c.GetMobilesInRange( 1 );
+                    int counter = 0;
+                    int maxCount = 2;
+
+                    foreach ( Mobile mobile in eable )
+                    {
+                        if ( mobile == m )
+                            continue;
+
+                        counter++;
+
+                        if ( mobile is BaseCreature )
+                        {
+                            BaseCreature creature = mobile as BaseCreature;
+
+                            if ( counter > maxCount )
+                            {
+                                toRemove.Add( creature );    
+                            }
+                        }
+                    }
+
+                    eable.Free();
+                }
 
 				if ( m is BaseCreature )
 				{
