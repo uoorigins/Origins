@@ -63,9 +63,22 @@ namespace Server.Spells.Fifth
 				SpellHelper.CheckReflect( (int)this.Circle, ref from, ref target );
 
                 //this is what the demo says, is it right? Seems overpowered
-                int stat = (Caster.Int - target.Int);
+                int casterInt = Caster.Int;
+                int targetInt = target.Int;
+
+                if ( casterInt > 100 )
+                {
+                    casterInt = 100;
+                }
+
+                if ( targetInt > 100 )
+                {
+                    targetInt = 100;
+                }
+
+                int stat = ( casterInt - targetInt );
                 if (stat <= 0)
-                    stat = (target.Int - Caster.Int);
+                    stat = ( targetInt - casterInt );
 
                 stat /= 4;
 
