@@ -69,8 +69,11 @@ namespace Server.Mobiles
 			get{ return OppositionGroup.SavagesAndOrcs; }
 		}
 
-        public override bool IsEnemy(Mobile m)
+        public override bool IsEnemy( Mobile m )
         {
+            bool isFightingOrc = false;
+            isFightingOrc = m != null && m.Combatant != null && ( m.Combatant is OrcishMage || m.Combatant is Orc || m.Combatant is OrcCaptain || m.Combatant is OrcishLord );
+
             if ( m.Player && m.FindItemOnLayer( Layer.Helm ) is OrcishKinMask || ( m.Guild != null && m.Guild.Id == 34 ) )
             {
                 if ( Combatant != null && Combatant.Guild != null && Combatant.Guild.Id == 34 )
@@ -78,10 +81,15 @@ namespace Server.Mobiles
                     return true;
                 }
 
+                if ( m.Guild != null && m.Guild.Id == 34 && isFightingOrc )
+                {
+                    return true;
+                }
+
                 return false;
             }
 
-            return base.IsEnemy(m);
+            return base.IsEnemy( m );
         }
 
 		public override void AggressiveAction( Mobile aggressor, bool criminal )

@@ -70,9 +70,17 @@ namespace Server.Mobiles
 
         public override bool IsEnemy(Mobile m)
         {
+            bool isFightingOrc = false;
+            isFightingOrc = m != null && m.Combatant != null && ( m.Combatant is OrcishMage || m.Combatant is Orc || m.Combatant is OrcCaptain || m.Combatant is OrcishLord);
+
             if ( m.Player && m.FindItemOnLayer( Layer.Helm ) is OrcishKinMask || ( m.Guild != null && m.Guild.Id == 34 ) )
             {
                 if ( Combatant != null && Combatant.Guild != null && Combatant.Guild.Id == 34 )
+                {
+                    return true;
+                }
+
+                if ( m.Guild != null && m.Guild.Id == 34 && isFightingOrc )
                 {
                     return true;
                 }
