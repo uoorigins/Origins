@@ -43,7 +43,7 @@ namespace Server.Mobiles
 			SetStam( 100 );
 			SetMana( 0 );
 
-			SetDamage( 14, 17 );
+			SetDamage( 12, 14 );
 
 			SetDamageType( ResistanceType.Physical, 0 );
 			SetDamageType( ResistanceType.Energy, 100 );
