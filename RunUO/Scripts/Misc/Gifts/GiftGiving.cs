@@ -56,7 +56,9 @@ namespace Server.Misc
             //Platinum
             if ( acct.LastLogin.Month != now.Month || acct.LastLogin.Year != now.Year )
             {
+                double hours = 0;
                 int coins = 0;
+
                 foreach ( Mobile m in acct.Mobiles.ToList() )
                 {
                     PlayerMobile pm = m as PlayerMobile;
@@ -68,11 +70,13 @@ namespace Server.Misc
                             pm.MonthlyGameTime = TimeSpan.FromHours( 500 );
                         }
 
-                        coins += (int)pm.MonthlyGameTime.TotalHours / 50;
+                        hours += pm.MonthlyGameTime.TotalHours;
 
                         pm.MonthlyGameTime = TimeSpan.Zero;
                     }
                 }
+
+                coins = (int)hours / 50;
 
                 //Not Too young
                 if ( DateTime.Now - acct.Created > TimeSpan.FromDays( 30.0 ) )
