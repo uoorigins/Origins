@@ -209,7 +209,8 @@ namespace Server.Gumps
                         if ( account.WalletBalance > 0 )
                         {
                             from.BankBox.DropItem( new Platinum(account.WalletBalance) );
-                            from.SendAsciiMessage("You have deposited {0} platinum coins in to your bank box.");
+                            from.SendAsciiMessage(String.Format("You have deposited {0} platinum coins in to your bank box.", account.WalletBalance));
+                            account.WalletBalance = 0;
                         }
                         else
                         {
