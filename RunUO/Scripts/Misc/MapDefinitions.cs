@@ -15,8 +15,8 @@ namespace Server.Misc
 			 * 4) Changing or removing any predefined maps may cause server instability.
 			 */
 
-			RegisterMap( 0, 0, 0, 7168, 4096, 0, "Felucca",		MapRules.FeluccaRules );
-			RegisterMap( 1, 1, 1, 7168, 4096, 0, "Trammel",		MapRules.FeluccaRules );
+			RegisterMap( 0, 0, 0, 7168, 4096, 1, "Felucca",		MapRules.FeluccaRules );
+			RegisterMap( 1, 1, 1, 7168, 4096, 1, "Trammel",		MapRules.FeluccaRules );
 			RegisterMap( 2, 2, 2, 2304, 1600, 1, "Ilshenar",	MapRules.TrammelRules );
 			RegisterMap( 3, 3, 3, 2560, 2048, 1, "Malas",		MapRules.TrammelRules );
 			RegisterMap( 4, 4, 4, 1448, 1448, 1, "Tokuno",		MapRules.TrammelRules );
