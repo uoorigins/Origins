@@ -44,10 +44,17 @@ namespace Server.Spells
 
 		public override int GetMana()
 		{
-			if( Scroll is BaseWand || Scroll is BaseJewel || Scroll is GnarledStaff || Scroll is BaseStationary )
+			if (Scroll != null && ( Scroll is BaseWand || Scroll is BaseJewel || Scroll is GnarledStaff || Scroll is BaseStationary ))
 				return 0;
 
-			return m_ManaTable[(int)Circle];
+            if ( Scroll != null )
+            {
+                return m_ManaTable[(int)Circle] / 2;
+            }
+            else
+            {
+                return m_ManaTable[(int)Circle];
+            }
 		}
 
 		public override double GetResistSkill( Mobile m )
