@@ -173,30 +173,30 @@ namespace Server.Items
 						if ( ((AddonComponent)item).Addon.Components.Count == 1 && Core.SE )
 							isDecorableComponent = true;
 
-					if ( house == null || !house.IsCoOwner( from ) )
+					if ( house == null || !house.IsKeyOwner( from ) )
 					{
-						from.SendLocalizedMessage( 502092 ); // You must be in your house to do this.
+						from.SendAsciiMessage( "You must be in your house to do this." ); // You must be in your house to do this.
 					}
 					else if ( item.Parent != null || !house.IsInside( item ) )
 					{
-						from.SendLocalizedMessage( 1042270 ); // That is not in your house.
+						from.SendAsciiMessage( "That is not in your house." ); // That is not in your house.
 					}
 					else if ( !house.IsLockedDown( item ) && !house.IsSecure( item ) && !isDecorableComponent )
 					{
 						if ( item is AddonComponent && m_Decorator.Command == DecorateCommand.Up )
-							from.SendLocalizedMessage( 1042274 ); // You cannot raise it up any higher.
+                            from.SendLocalizedMessage( "You cannot raise it up any higher." ); // You cannot raise it up any higher.
 						else if ( item is AddonComponent && m_Decorator.Command == DecorateCommand.Down )
-							from.SendLocalizedMessage( 1042275 ); // You cannot lower it down any further.
+                            from.SendLocalizedMessage( "You cannot lower it down any further." ); // You cannot lower it down any further.
 						else
-							from.SendLocalizedMessage( 1042271 ); // That is not locked down.
+							from.SendLocalizedMessage( "That is not locked down." ); // That is not locked down.
 					}
 					else if ( item is VendorRentalContract )
 					{
-						from.SendLocalizedMessage( 1062491 ); // You cannot use the house decorator on that object.
+						from.SendLocalizedMessage( "You cannot use the house decorator on that object." ); // You cannot use the house decorator on that object.
 					}
 					else if ( item.TotalWeight + item.PileWeight > 100 )
 					{
-						from.SendLocalizedMessage( 1042272 ); // That is too heavy.
+                        from.SendLocalizedMessage( "That is too heavy." ); // That is too heavy.
 					}
 					else
 					{
@@ -225,7 +225,7 @@ namespace Server.Items
 				if( attributes.Length > 0 )
 					attributes[0].Flip( item );
 				else
-					from.SendLocalizedMessage( 1042273 ); // You cannot turn that.
+                    from.SendLocalizedMessage( "You cannot turn that." ); // You cannot turn that.
 			}
 
 			private static void Up( Item item, Mobile from )
@@ -235,7 +235,7 @@ namespace Server.Items
 				if ( floorZ > int.MinValue && item.Z < (floorZ + 15) ) // Confirmed : no height checks here
 					item.Location = new Point3D( item.Location, item.Z + 1 );
 				else
-					from.SendLocalizedMessage( 1042274 ); // You cannot raise it up any higher.
+                    from.SendLocalizedMessage( "You cannot raise it up any higher." ); // You cannot raise it up any higher.
 			}
 
 			private static void Down( Item item, Mobile from )
@@ -245,7 +245,7 @@ namespace Server.Items
 				if ( floorZ > int.MinValue && item.Z > GetFloorZ( item ) )
 					item.Location = new Point3D( item.Location, item.Z - 1 );
 				else
-					from.SendLocalizedMessage( 1042275 ); // You cannot lower it down any further.
+                    from.SendLocalizedMessage( "You cannot lower it down any further." ); // You cannot lower it down any further.
 			}
 
 			private static int GetFloorZ( Item item )

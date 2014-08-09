@@ -20,7 +20,7 @@ namespace Server.Mobiles
 		{
 			public InternalBuyInfo()
 			{
-				//Add( new GenericBuyInfo( "1041280", typeof( InteriorDecorator ), 10001, 9, 0xFC1, 0 ) );
+				Add( new GenericBuyInfo( "1041280", typeof( InteriorDecorator ), 10001, 9, 0xFC1, 0 ) );
 				if ( Core.AOS )
 					Add( new GenericBuyInfo( "1060651", typeof( HousePlacementTool ), 627, 9, 0x14F6, 0 ));
 			}
