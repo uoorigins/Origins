@@ -181,32 +181,31 @@ namespace Server.Items
 					{
 						from.SendAsciiMessage( "That is not in your house." ); // That is not in your house.
 					}
-					else if ( !house.IsLockedDown( item ) && !house.IsSecure( item ) && !isDecorableComponent )
-					{
-						if ( item is AddonComponent && m_Decorator.Command == DecorateCommand.Up )
-                            from.SendLocalizedMessage( "You cannot raise it up any higher." ); // You cannot raise it up any higher.
-						else if ( item is AddonComponent && m_Decorator.Command == DecorateCommand.Down )
-                            from.SendLocalizedMessage( "You cannot lower it down any further." ); // You cannot lower it down any further.
-						else
-							from.SendLocalizedMessage( "That is not locked down." ); // That is not locked down.
-					}
-					else if ( item is VendorRentalContract )
-					{
-						from.SendLocalizedMessage( "You cannot use the house decorator on that object." ); // You cannot use the house decorator on that object.
-					}
-					else if ( item.TotalWeight + item.PileWeight > 100 )
-					{
+                    else if ( item is AddonComponent && m_Decorator.Command == DecorateCommand.Up )
+                    {
+                        from.SendLocalizedMessage( "You cannot raise it up any higher." ); // You cannot raise it up any higher.
+                    }
+                    else if ( item is AddonComponent && m_Decorator.Command == DecorateCommand.Down )
+                    {
+                        from.SendLocalizedMessage( "You cannot lower it down any further." ); // You cannot lower it down any further.
+                    }
+                    else if ( item is VendorRentalContract )
+                    {
+                        from.SendLocalizedMessage( "You cannot use the house decorator on that object." ); // You cannot use the house decorator on that object.
+                    }
+                    else if ( item.TotalWeight + item.PileWeight > 100 )
+                    {
                         from.SendLocalizedMessage( "That is too heavy." ); // That is too heavy.
-					}
-					else
-					{
-						switch ( m_Decorator.Command )
-						{
-							case DecorateCommand.Up:	Up( item, from );	break;
-							case DecorateCommand.Down:	Down( item, from );	break;
-							case DecorateCommand.Turn:	Turn( item, from );	break;
-						}
-					}
+                    }
+                    else
+                    {
+                        switch ( m_Decorator.Command )
+                        {
+                            case DecorateCommand.Up: Up( item, from ); break;
+                            case DecorateCommand.Down: Down( item, from ); break;
+                            case DecorateCommand.Turn: Turn( item, from ); break;
+                        }
+                    }
 				}
 				
 				from.Target = new InternalTarget( m_Decorator );
